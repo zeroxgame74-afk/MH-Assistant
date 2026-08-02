@@ -224,7 +224,8 @@
             color: #f5b042;
             margin-left: 2px;
         }
-        .message .bubble .site-card {
+
+        .site-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 215, 100, 0.08);
             border-radius: 10px;
@@ -235,7 +236,7 @@
             gap: 8px;
             flex-wrap: wrap;
         }
-        .message .bubble .site-card .site-img {
+        .site-card .site-img {
             width: 34px;
             height: 34px;
             border-radius: 6px;
@@ -243,21 +244,21 @@
             background: #0b0b0e;
             flex-shrink: 0;
         }
-        .message .bubble .site-card .site-info {
+        .site-card .site-info {
             flex: 1;
             min-width: 50px;
         }
-        .message .bubble .site-card .site-info .site-name {
+        .site-card .site-info .site-name {
             font-family: 'Vazirmatn', sans-serif;
             font-weight: 700;
             color: #f5efe6;
             font-size: 0.75rem;
         }
-        .message .bubble .site-card .site-info .site-desc {
+        .site-card .site-info .site-desc {
             font-size: 0.6rem;
             color: #b0a99b;
         }
-        .message .bubble .site-card .site-link {
+        .site-card .site-link {
             color: #f5b042;
             text-decoration: none;
             font-size: 0.55rem;
@@ -271,11 +272,12 @@
             gap: 3px;
             flex-shrink: 0;
         }
-        .message .bubble .site-card .site-link:hover {
+        .site-card .site-link:hover {
             background: rgba(245, 176, 66, 0.08);
             border-color: #f5b042;
         }
-        .message .bubble .design-mini {
+
+        .design-mini {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 215, 100, 0.06);
             border-radius: 8px;
@@ -285,20 +287,21 @@
             align-items: center;
             gap: 6px;
         }
-        .message .bubble .design-mini .d-icon {
+        .design-mini .d-icon {
             font-size: 0.9rem;
             color: #f5b042;
         }
-        .message .bubble .design-mini .d-name {
+        .design-mini .d-name {
             font-family: 'Vazirmatn', sans-serif;
             font-weight: 600;
             color: #f5efe6;
             font-size: 0.7rem;
         }
-        .message .bubble .design-mini .d-desc {
+        .design-mini .d-desc {
             font-size: 0.55rem;
             color: #b0a99b;
         }
+
         .social-links {
             display: flex;
             gap: 4px;
@@ -320,6 +323,7 @@
         .social-links a:hover {
             background: rgba(245, 176, 66, 0.1);
         }
+
         .quick-replies {
             display: flex;
             flex-wrap: wrap;
@@ -353,6 +357,7 @@
             color: #f5efe6;
             transform: translateY(-2px);
         }
+
         .input-area {
             display: flex;
             align-items: center;
@@ -403,6 +408,7 @@
         .input-area button:active {
             transform: scale(0.93);
         }
+
         .typing-indicator {
             display: none;
             padding: 3px 10px;
@@ -433,6 +439,7 @@
             align-items: center;
             gap: 4px;
         }
+
         @media (max-width: 380px) {
             .chat-container {
                 padding: 6px 6px 8px;
@@ -487,7 +494,7 @@
                 <div class="bubble">
                     <i class="fas fa-hand-peace"></i> سلام! <strong>MH Assistant</strong> هستم.<br>
                     <span style="color:#f5b042;">دستیار شخصی</span> شما<br>
-                    <span style="color:#b0a99b;font-size:0.7rem;">👇 هر چیزی بپرس، حتی اگه اشتباه بنویسی!</span>
+                    <span style="color:#b0a99b;font-size:0.7rem;">👇 هر چیزی بپرس!</span>
                 </div>
             </div>
         </div>
@@ -521,7 +528,6 @@
             job: 'توسعه‌دهنده وب و طراح گرافیک',
             startYear: '۱۴۰۳',
             skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js'],
-            goal: 'ترکیب هنر و تکنولوژی برای خلق فضاهای دیجیتال خاص',
 
             sites: [{
                 name: 'ZEROX',
@@ -554,7 +560,7 @@
         };
 
         // ============================================================
-        //  دیکشنری سوالات تصادفی (با کلیدهای نزدیک)
+        //  دیکشنری سوالات تصادفی
         // ============================================================
         const randomReplies = {
             'رنگ': 'رنگ مورد علاقه‌ام طلاییه، چون نماد انرژی و موفقیت 🌟',
@@ -565,8 +571,6 @@
             'ورزش': 'والیبال و فوتبال رو دوست دارم 🏐⚽',
             'سریال': '«بازی تاج و تخت» و «بریکینگ بد» 📺',
             'بازی': 'بازی‌های استراتژی و ماجراجویی 🎮',
-            'کشور': 'ایران، با همه قشنگی‌هاش 🇮🇷',
-            'شهر': 'اصفهان، نصف جهان 🏛️',
             'هوا': 'آب و هوا رو نمیدونم! ولی اگه بارونه چایی داغ عالیه ☕',
             'بارون': 'بارون که میاد، دلم برای خونه تنگ میشه 🌧️',
             'برف': 'برف بازی و آدم برفی یادت نره ❄️',
@@ -590,26 +594,8 @@
         };
 
         // ============================================================
-        //  تابع پیدا کردن نزدیک‌ترین کلمه (برای اشتباهات املایی)
+        //  تابع نزدیک‌ترین کلمه
         // ============================================================
-        function findClosestWord(input, wordList) {
-            let closest = null;
-            let minDistance = Infinity;
-
-            for (const word of wordList) {
-                const distance = levenshteinDistance(input, word);
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closest = word;
-                }
-            }
-
-            // اگه فاصله بیشتر از ۳ بود، یعنی خیلی دور هست
-            if (minDistance > 3) return null;
-            return closest;
-        }
-
-        // الگوریتم Levenshtein برای تشخیص شباهت کلمات
         function levenshteinDistance(a, b) {
             const matrix = [];
             for (let i = 0; i <= b.length; i++) {
@@ -634,8 +620,22 @@
             return matrix[b.length][a.length];
         }
 
+        function findClosestWord(input, wordList) {
+            let closest = null;
+            let minDistance = Infinity;
+            for (const word of wordList) {
+                const distance = levenshteinDistance(input, word);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest = word;
+                }
+            }
+            if (minDistance > 3) return null;
+            return closest;
+        }
+
         // ============================================================
-        //  موتور پردازش نهایی
+        //  موتور پاسخگویی
         // ============================================================
         function getReply(input) {
             const text = input.trim();
@@ -645,150 +645,114 @@
                 return `چیزی ننوشتی! یه سوال بپرس.`;
             }
 
-            // ===== لیست کلمات کلیدی برای تشخیص نزدیک =====
-            const allKeywords = [
-                'کی هستی', 'هستی', 'کیا',
-                'اینستا', 'اینستاگرام', 'insta',
-                'تلگرام', 'telegram',
-                'سایت', 'پروژه', 'zerox', 'کالفود', 'کوروش',
-                'طراحی', 'گرافیک', 'یا علی', 'اهواز',
-                'مهارت', 'تخصص',
-                'برنامه', 'اپ', 'اپلیکیشن',
-                'ارتباط', 'تماس',
-                'همه چیز', 'کامل'
-            ];
-
-            // ===== 1. بررسی کلمات کلیدی با تشخیص نزدیک =====
-            let foundKeyword = null;
-            for (const word of lower.split(/\s+/)) {
-                const closest = findClosestWord(word, allKeywords);
-                if (closest) {
-                    foundKeyword = closest;
-                    break;
-                }
+            // ===== 1. کی هستی؟ =====
+            if (lower.includes('کی هستی') || lower === 'کی' || lower === 'هستی') {
+                return `
+              <i class="fas fa-robot"></i> <strong>من MH Assistant هستم!</strong><br>
+              <span style="color:#f5b042;">دستیار شخصی</span> شما<br>
+              ساخته‌شده توسط <strong>${data.name}</strong><br>
+              ${data.job} از سال ${data.startYear}
+            `;
             }
 
-            // ===== 2. پاسخ بر اساس نزدیک‌ترین کلمه پیدا شده =====
-            if (foundKeyword) {
-                const kw = foundKeyword;
+            // ===== 2. اینستاگرام =====
+            if (lower.includes('اینستا') || lower.includes('اینستاگرام') || lower.includes('insta')) {
+                return `
+              <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
+              <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a>
+            `;
+            }
 
-                // کی هستی؟
-                if (kw === 'کی هستی' || kw === 'هستی' || kw === 'کیا') {
-                    return `
-                <i class="fas fa-robot"></i> <strong>من MH Assistant هستم!</strong><br>
-                <span style="color:#f5b042;">دستیار شخصی</span> شما<br>
-                ساخته‌شده توسط <strong>${data.name}</strong><br>
-                ${data.job} از سال ${data.startYear}
-              `;
-                }
+            // ===== 3. تلگرام =====
+            if (lower.includes('تلگرام') || lower.includes('telegram')) {
+                return `
+              <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
+              <a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a>
+            `;
+            }
 
-                // اینستاگرام
-                if (kw === 'اینستا' || kw === 'اینستاگرام' || kw === 'insta') {
-                    return `
-                <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
-                <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a>
-              `;
-                }
-
-                // تلگرام
-                if (kw === 'تلگرام' || kw === 'telegram') {
-                    return `
-                <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
-                <a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a>
-              `;
-                }
-
-                // سایت‌ها
-                if (kw === 'سایت' || kw === 'پروژه' || kw === 'zerox' || kw === 'کالفود' || kw === 'کوروش') {
-                    let reply = `<i class="fas fa-laptop-code"></i> <strong>سایت‌ها:</strong><br>`;
-                    data.sites.forEach(s => {
-                        reply += `
-                  <div class="site-card">
-                    <img class="site-img" src="${s.img}" onerror="this.style.display='none'">
-                    <div class="site-info">
-                      <div class="site-name">${s.name}</div>
-                      <div class="site-desc">${s.desc}</div>
-                    </div>
-                    <a href="${s.link}" target="_blank" class="site-link">
-                      <i class="fas fa-external-link-alt"></i> مشاهده
-                    </a>
+            // ===== 4. سایت‌ها =====
+            if (lower.includes('سایت') || lower.includes('پروژه') || lower.includes('zerox') ||
+                lower.includes('کالفود') || lower.includes('کوروش')) {
+                let reply = `<i class="fas fa-laptop-code"></i> <strong>سایت‌ها:</strong><br>`;
+                data.sites.forEach(s => {
+                    reply += `
+                <div class="site-card">
+                  <img class="site-img" src="${s.img}" onerror="this.style.display='none'">
+                  <div class="site-info">
+                    <div class="site-name">${s.name}</div>
+                    <div class="site-desc">${s.desc}</div>
                   </div>
-                `;
-                    });
-                    return reply;
-                }
-
-                // طراحی‌ها
-                if (kw === 'طراحی' || kw === 'گرافیک' || kw === 'یا علی' || kw === 'اهواز') {
-                    let reply = `<i class="fas fa-palette"></i> <strong>طراحی‌ها:</strong><br>`;
-                    data.designs.forEach(d => {
-                        reply += `
-                  <div class="design-mini">
-                    <div class="d-icon"><i class="fas fa-paint-brush"></i></div>
-                    <div>
-                      <div class="d-name">${d.name}</div>
-                      <div class="d-desc">${d.desc}</div>
-                    </div>
-                  </div>
-                `;
-                    });
-                    return reply;
-                }
-
-                // مهارت‌ها
-                if (kw === 'مهارت' || kw === 'تخصص') {
-                    let reply = `<i class="fas fa-code"></i> <strong>مهارت‌ها:</strong><br>`;
-                    data.skills.forEach(s => {
-                        reply += `🔹 ${s}<br>`;
-                    });
-                    return reply;
-                }
-
-                // برنامه‌ها
-                if (kw === 'برنامه' || kw === 'اپ' || kw === 'اپلیکیشن') {
-                    return `<i class="fas fa-puzzle-piece"></i> برنامه‌ها: ${data.apps}`;
-                }
-
-                // ارتباط
-                if (kw === 'ارتباط' || kw === 'تماس') {
-                    return `
-                <i class="fas fa-share-alt"></i> <strong>راه‌های ارتباطی:</strong><br>
-                <div class="social-links">
-                  <a href="${data.social.telegram}" target="_blank"><i class="fab fa-telegram-plane"></i> تلگرام</a>
-                  <a href="${data.social.instagram}" target="_blank"><i class="fab fa-instagram"></i> اینستاگرام</a>
+                  <a href="${s.link}" target="_blank" class="site-link">
+                    <i class="fas fa-external-link-alt"></i> مشاهده
+                  </a>
                 </div>
               `;
-                }
+                });
+                return reply;
+            }
 
-                // همه چیز
-                if (kw === 'همه چیز' || kw === 'کامل') {
-                    return `
-                <i class="fas fa-robot"></i> <strong>همه چیز:</strong><br>
-                <i class="fas fa-user-astronaut"></i> ${data.job} از سال ${data.startYear}<br>
-                <i class="fas fa-laptop-code"></i> سایت‌ها: ${data.sites.map(s => s.name).join('، ')}<br>
-                <i class="fas fa-palette"></i> طراحی‌ها: ${data.designs.map(d => d.name).join('، ')}<br>
-                <i class="fas fa-code"></i> مهارت‌ها: ${data.skills.join('، ')}
+            // ===== 5. طراحی‌ها =====
+            if (lower.includes('طراحی') || lower.includes('گرافیک') || lower.includes('یا علی') || lower.includes('اهواز')) {
+                let reply = `<i class="fas fa-palette"></i> <strong>طراحی‌ها:</strong><br>`;
+                data.designs.forEach(d => {
+                    reply += `
+                <div class="design-mini">
+                  <div class="d-icon"><i class="fas fa-paint-brush"></i></div>
+                  <div>
+                    <div class="d-name">${d.name}</div>
+                    <div class="d-desc">${d.desc}</div>
+                  </div>
+                </div>
               `;
-                }
+                });
+                return reply;
             }
 
-            // ===== 3. دیکشنری سوالات تصادفی (با تشخیص نزدیک) =====
-            const randomKeys = Object.keys(randomReplies);
-            for (const key of randomKeys) {
+            // ===== 6. مهارت‌ها =====
+            if (lower.includes('مهارت') || lower.includes('تخصص') || lower.includes('چی بلدی')) {
+                let reply = `<i class="fas fa-code"></i> <strong>مهارت‌ها:</strong><br>`;
+                data.skills.forEach(s => {
+                    reply += `🔹 ${s}<br>`;
+                });
+                return reply;
+            }
+
+            // ===== 7. برنامه‌ها =====
+            if (lower.includes('برنامه') || lower.includes('اپ') || lower.includes('اپلیکیشن')) {
+                return `<i class="fas fa-puzzle-piece"></i> برنامه‌ها: ${data.apps}`;
+            }
+
+            // ===== 8. ارتباط =====
+            if (lower.includes('ارتباط') || lower.includes('تماس') || lower.includes('راه')) {
+                return `
+              <i class="fas fa-share-alt"></i> <strong>راه‌های ارتباطی:</strong><br>
+              <div class="social-links">
+                <a href="${data.social.telegram}" target="_blank"><i class="fab fa-telegram-plane"></i> تلگرام</a>
+                <a href="${data.social.instagram}" target="_blank"><i class="fab fa-instagram"></i> اینستاگرام</a>
+              </div>
+            `;
+            }
+
+            // ===== 9. همه چیز =====
+            if (lower.includes('همه چیز') || lower.includes('کامل')) {
+                return `
+              <i class="fas fa-robot"></i> <strong>همه چیز:</strong><br>
+              <i class="fas fa-user-astronaut"></i> ${data.job} از سال ${data.startYear}<br>
+              <i class="fas fa-laptop-code"></i> سایت‌ها: ${data.sites.map(s => s.name).join('، ')}<br>
+              <i class="fas fa-palette"></i> طراحی‌ها: ${data.designs.map(d => d.name).join('، ')}<br>
+              <i class="fas fa-code"></i> مهارت‌ها: ${data.skills.join('، ')}
+            `;
+            }
+
+            // ===== 10. دیکشنری تصادفی (با تشخیص نزدیک) =====
+            for (const [key, reply] of Object.entries(randomReplies)) {
                 if (lower.includes(key)) {
-                    return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${randomReplies[key]}`;
+                    return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${reply}`;
                 }
             }
 
-            // اگه کلمه نزدیک پیدا نشد، بررسی میکنیم آیا کلمه‌ای نزدیک به کلیدهای تصادفی هست
-            for (const key of randomKeys) {
-                const closest = findClosestWord(lower, [key]);
-                if (closest) {
-                    return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${randomReplies[key]}`;
-                }
-            }
-
-            // ===== 4. سلام و احوالپرسی =====
+            // ===== 11. سلام و احوالپرسی =====
             if (lower.includes('سلام') || lower.includes('درود') || lower.includes('الو')) {
                 return `<i class="fas fa-hand-peace"></i> سلام! <strong>MH Assistant</strong> هستم. چطور می‌تونم کمک کنم؟`;
             }
@@ -801,18 +765,16 @@
                 return `<i class="fas fa-heart" style="color:#f5b042;"></i> خواهش می‌کنم! خوشحالم که کمک کردم.`;
             }
 
-            // ===== 5. پاسخ پیش‌فرض =====
+            // ===== 12. پاسخ پیش‌فرض =====
             return `
             <i class="fas fa-robot"></i> <strong>MH Assistant</strong> - دستیار شخصی<br><br>
-            سوال "<strong>${text}</strong>" رو دریافت کردم.<br><br>
             می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span><br><br>
-            <span style="color:#b0a99b;font-size:0.65rem;">یا هر چیزی مثل <strong style="color:#f5b042;">فیلم</strong>، <strong style="color:#f5b042;">غذا</strong>، <strong style="color:#f5b042;">رنگ</strong> بپرس!</span>
+            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span>
           `;
         }
 
         // ============================================================
-        //  توابع
+        //  توابع اصلی
         // ============================================================
         const messagesBox = document.getElementById('messagesBox');
         const userInput = document.getElementById('userInput');
@@ -834,7 +796,7 @@
                 const reply = getReply(text);
                 addMessage('bot', reply);
                 isTyping = false;
-            }, 500);
+            }, 400);
         }
 
         function askQuestion(text) {
