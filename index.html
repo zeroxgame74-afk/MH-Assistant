@@ -11,619 +11,158 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html,
-        body {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            background: #0b0b0e;
-        }
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Noto Sans Arabic', 'Segoe UI', sans-serif;
-            padding: 8px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; width: 100%; overflow: hidden; background: #0b0b0e; }
+        body { display: flex; align-items: center; justify-content: center; font-family: 'Noto Sans Arabic', 'Segoe UI', sans-serif; padding: 8px; }
         .chat-container {
-            width: 100%;
-            max-width: 420px;
-            height: 100%;
-            max-height: 750px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 215, 100, 0.08);
-            border-radius: 24px;
-            display: flex;
-            flex-direction: column;
-            padding: 12px 14px 12px;
-            box-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.6);
-            overflow: hidden;
+            width: 100%; max-width: 420px; height: 100%; max-height: 750px;
+            background: rgba(255,255,255,0.03); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,215,100,0.08); border-radius: 24px;
+            display: flex; flex-direction: column; padding: 12px 14px 12px;
+            box-shadow: 0 20px 60px -12px rgba(0,0,0,0.6); overflow: hidden;
         }
-        @media (max-width: 480px) {
-            .chat-container {
-                max-height: 100vh;
-                border-radius: 16px;
-                padding: 10px 10px 10px;
-            }
-            body {
-                padding: 4px;
-            }
-        }
+        @media (max-width:480px){ .chat-container { max-height:100vh; border-radius:16px; padding:10px 10px 10px; } body { padding:4px; } }
         .chat-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 215, 100, 0.06);
-            margin-bottom: 8px;
-            flex-shrink: 0;
+            display: flex; align-items: center; gap: 10px; padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,215,100,0.06); margin-bottom: 8px; flex-shrink:0;
         }
         .chat-avatar {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(145deg, #f5b042, #d48f2b);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 900;
-            font-size: 1.3rem;
-            color: #0b0b0e;
-            flex-shrink: 0;
-            animation: floatLogo 3s ease-in-out infinite;
+            width:44px; height:44px; background:linear-gradient(145deg,#f5b042,#d48f2b);
+            border-radius:14px; display:flex; align-items:center; justify-content:center;
+            font-family:'Vazirmatn',sans-serif; font-weight:900; font-size:1.3rem; color:#0b0b0e;
+            flex-shrink:0; animation:floatLogo 3s ease-in-out infinite;
         }
-        @keyframes floatLogo {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-4px);
-            }
-        }
-        .chat-title {
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #f5efe6;
-            flex: 1;
-        }
-        .chat-title .highlight {
-            background: linear-gradient(145deg, #f5b042, #d48f2b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .chat-title small {
-            display: block;
-            font-family: 'Noto Sans Arabic', sans-serif;
-            font-weight: 300;
-            font-size: 0.55rem;
-            color: #b0a99b;
-            -webkit-text-fill-color: #b0a99b;
-        }
+        @keyframes floatLogo { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-4px); } }
+        .chat-title { font-family:'Vazirmatn',sans-serif; font-weight:800; font-size:1.1rem; color:#f5efe6; flex:1; }
+        .chat-title .highlight { background:linear-gradient(145deg,#f5b042,#d48f2b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .chat-title small { display:block; font-family:'Noto Sans Arabic',sans-serif; font-weight:300; font-size:0.55rem; color:#b0a99b; -webkit-text-fill-color:#b0a99b; }
         .chat-status {
-            background: rgba(245, 176, 66, 0.1);
-            border: 1px solid rgba(245, 176, 66, 0.1);
-            border-radius: 40px;
-            padding: 2px 10px;
-            font-size: 0.5rem;
-            color: #f5b042;
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-shrink: 0;
+            background:rgba(245,176,66,0.1); border:1px solid rgba(245,176,66,0.1);
+            border-radius:40px; padding:2px 10px; font-size:0.5rem; color:#f5b042;
+            font-family:'Vazirmatn',sans-serif; font-weight:600; display:flex; align-items:center; gap:4px; flex-shrink:0;
         }
-        .chat-status i {
-            font-size: 0.4rem;
-            color: #4caf50;
-            animation: pulseDot 1.5s ease-in-out infinite;
-        }
-        @keyframes pulseDot {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.2;
-                transform: scale(0.6);
-            }
-        }
-        .messages {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 4px 2px;
-            min-height: 0;
-            scroll-behavior: smooth;
-        }
-        .messages::-webkit-scrollbar {
-            width: 3px;
-        }
-        .messages::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .messages::-webkit-scrollbar-thumb {
-            background: rgba(255, 215, 100, 0.2);
-            border-radius: 10px;
-        }
-        .message {
-            display: flex;
-            gap: 6px;
-            align-items: flex-start;
-            animation: msgIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-            flex-shrink: 0;
-        }
-        .message.bot {
-            flex-direction: row;
-        }
-        .message.user {
-            flex-direction: row-reverse;
-        }
-        @keyframes msgIn {
-            0% {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        .chat-status i { font-size:0.4rem; color:#4caf50; animation:pulseDot 1.5s ease-in-out infinite; }
+        @keyframes pulseDot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.2; transform:scale(0.6); } }
+        .messages { flex:1; overflow-y:auto; margin-bottom:8px; display:flex; flex-direction:column; gap:6px; padding:4px 2px; min-height:0; scroll-behavior:smooth; }
+        .messages::-webkit-scrollbar { width:3px; }
+        .messages::-webkit-scrollbar-track { background:transparent; }
+        .messages::-webkit-scrollbar-thumb { background:rgba(255,215,100,0.2); border-radius:10px; }
+        .message { display:flex; gap:6px; align-items:flex-start; animation:msgIn 0.3s cubic-bezier(0.22,1,0.36,1); flex-shrink:0; }
+        .message.bot { flex-direction:row; }
+        .message.user { flex-direction:row-reverse; }
+        @keyframes msgIn { 0% { opacity:0; transform:translateY(8px); } 100% { opacity:1; transform:translateY(0); } }
         .message .avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            flex-shrink: 0;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 215, 100, 0.06);
-            color: #b0a99b;
+            width:28px; height:28px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+            font-size:0.7rem; flex-shrink:0; background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,215,100,0.06); color:#b0a99b;
         }
-        .message.bot .avatar {
-            background: rgba(245, 176, 66, 0.12);
-            color: #f5b042;
-            border-color: rgba(245, 176, 66, 0.1);
-        }
-        .message.user .avatar {
-            background: rgba(255, 255, 255, 0.06);
-            color: #eaeef2;
-        }
+        .message.bot .avatar { background:rgba(245,176,66,0.12); color:#f5b042; border-color:rgba(245,176,66,0.1); }
+        .message.user .avatar { background:rgba(255,255,255,0.06); color:#eaeef2; }
         .message .bubble {
-            max-width: 85%;
-            padding: 6px 12px;
-            border-radius: 14px;
-            font-size: 0.8rem;
-            line-height: 1.9;
-            word-break: break-word;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 100, 0.06);
-            color: #d6d0c4;
+            max-width:85%; padding:6px 12px; border-radius:14px; font-size:0.8rem; line-height:1.9;
+            word-break:break-word; background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.06);
+            color:#d6d0c4;
         }
-        .message.bot .bubble {
-            background: rgba(255, 215, 100, 0.04);
-            border-color: rgba(255, 215, 100, 0.08);
-            border-top-right-radius: 4px;
-        }
-        .message.user .bubble {
-            background: rgba(245, 176, 66, 0.08);
-            border-color: rgba(245, 176, 66, 0.12);
-            border-top-left-radius: 4px;
-            color: #f5efe6;
-        }
-        .message .bubble strong {
-            color: #f5b042;
-        }
-        .message .bubble i {
-            color: #f5b042;
-            margin-left: 2px;
-        }
+        .message.bot .bubble { background:rgba(255,215,100,0.04); border-color:rgba(255,215,100,0.08); border-top-right-radius:4px; }
+        .message.user .bubble { background:rgba(245,176,66,0.08); border-color:rgba(245,176,66,0.12); border-top-left-radius:4px; color:#f5efe6; }
+        .message .bubble strong { color:#f5b042; }
+        .message .bubble i { color:#f5b042; margin-left:2px; }
 
         .site-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 100, 0.08);
-            border-radius: 10px;
-            padding: 6px 8px;
-            margin: 4px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.08);
+            border-radius:10px; padding:6px 8px; margin:4px 0;
+            display:flex; align-items:center; gap:8px; flex-wrap:wrap;
         }
-        .site-card .site-img {
-            width: 34px;
-            height: 34px;
-            border-radius: 6px;
-            object-fit: cover;
-            background: #0b0b0e;
-            flex-shrink: 0;
-        }
-        .site-card .site-info {
-            flex: 1;
-            min-width: 50px;
-        }
-        .site-card .site-info .site-name {
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 700;
-            color: #f5efe6;
-            font-size: 0.75rem;
-        }
-        .site-card .site-info .site-desc {
-            font-size: 0.6rem;
-            color: #b0a99b;
-        }
-        .site-card .site-link {
-            color: #f5b042;
-            text-decoration: none;
-            font-size: 0.55rem;
-            font-weight: 600;
-            padding: 2px 10px;
-            border: 1px solid rgba(245, 176, 66, 0.15);
-            border-radius: 40px;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            flex-shrink: 0;
-        }
-        .site-card .site-link:hover {
-            background: rgba(245, 176, 66, 0.08);
-            border-color: #f5b042;
-        }
+        .site-card .site-img { width:34px; height:34px; border-radius:6px; object-fit:cover; background:#0b0b0e; flex-shrink:0; }
+        .site-card .site-info { flex:1; min-width:50px; }
+        .site-card .site-info .site-name { font-family:'Vazirmatn',sans-serif; font-weight:700; color:#f5efe6; font-size:0.75rem; }
+        .site-card .site-info .site-desc { font-size:0.6rem; color:#b0a99b; }
+        .site-card .site-link { color:#f5b042; text-decoration:none; font-size:0.55rem; font-weight:600; padding:2px 10px; border:1px solid rgba(245,176,66,0.15); border-radius:40px; transition:0.3s; display:inline-flex; align-items:center; gap:3px; flex-shrink:0; }
+        .site-card .site-link:hover { background:rgba(245,176,66,0.08); border-color:#f5b042; }
 
         .design-mini {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 215, 100, 0.06);
-            border-radius: 8px;
-            padding: 4px 8px;
-            margin: 3px 0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            background:rgba(255,255,255,0.02); border:1px solid rgba(255,215,100,0.06);
+            border-radius:8px; padding:4px 8px; margin:3px 0;
+            display:flex; align-items:center; gap:6px;
         }
-        .design-mini .d-icon {
-            font-size: 0.9rem;
-            color: #f5b042;
-        }
-        .design-mini .d-name {
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 600;
-            color: #f5efe6;
-            font-size: 0.7rem;
-        }
-        .design-mini .d-desc {
-            font-size: 0.55rem;
-            color: #b0a99b;
-        }
+        .design-mini .d-icon { font-size:0.9rem; color:#f5b042; }
+        .design-mini .d-name { font-family:'Vazirmatn',sans-serif; font-weight:600; color:#f5efe6; font-size:0.7rem; }
+        .design-mini .d-desc { font-size:0.55rem; color:#b0a99b; }
 
-        .social-links {
-            display: flex;
-            gap: 4px;
-            margin-top: 4px;
-            flex-wrap: wrap;
-        }
-        .social-links a {
-            color: #f5b042;
-            text-decoration: none;
-            background: rgba(255, 215, 100, 0.05);
-            padding: 2px 10px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 215, 100, 0.1);
-            font-size: 0.6rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-        }
-        .social-links a:hover {
-            background: rgba(245, 176, 66, 0.1);
-        }
+        .social-links { display:flex; gap:4px; margin-top:4px; flex-wrap:wrap; }
+        .social-links a { color:#f5b042; text-decoration:none; background:rgba(255,215,100,0.05); padding:2px 10px; border-radius:40px; border:1px solid rgba(255,215,100,0.1); font-size:0.6rem; display:inline-flex; align-items:center; gap:3px; }
+        .social-links a:hover { background:rgba(245,176,66,0.1); }
 
-        .quick-replies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-bottom: 6px;
-            flex-shrink: 0;
-        }
+        .quick-replies { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:6px; flex-shrink:0; }
         .quick-replies button {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 100, 0.08);
-            color: #b0a99b;
-            padding: 3px 10px;
-            border-radius: 40px;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 0.6rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.08);
+            color:#b0a99b; padding:3px 10px; border-radius:40px;
+            font-family:'Vazirmatn',sans-serif; font-size:0.6rem; font-weight:600;
+            cursor:pointer; transition:0.3s; display:inline-flex; align-items:center; gap:4px; white-space:nowrap;
         }
-        .quick-replies button i {
-            color: #f5b042;
-            font-size: 0.55rem;
-        }
-        .quick-replies button:hover {
-            background: rgba(245, 176, 66, 0.08);
-            border-color: rgba(245, 176, 66, 0.2);
-            color: #f5efe6;
-            transform: translateY(-2px);
-        }
+        .quick-replies button i { color:#f5b042; font-size:0.55rem; }
+        .quick-replies button:hover { background:rgba(245,176,66,0.08); border-color:rgba(245,176,66,0.2); color:#f5efe6; transform:translateY(-2px); }
 
         .input-area {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 215, 100, 0.06);
-            border-radius: 60px;
-            padding: 2px 2px 2px 12px;
-            transition: 0.3s;
-            flex-shrink: 0;
+            display:flex; align-items:center; gap:4px; background:rgba(255,255,255,0.02);
+            border:1px solid rgba(255,215,100,0.06); border-radius:60px;
+            padding:2px 2px 2px 12px; transition:0.3s; flex-shrink:0;
         }
-        .input-area:focus-within {
-            border-color: rgba(245, 176, 66, 0.25);
-            background: rgba(255, 255, 255, 0.04);
-        }
-        .input-area input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #eaeef2;
-            font-family: 'Noto Sans Arabic', sans-serif;
-            font-size: 0.8rem;
-            padding: 8px 0;
-            outline: none;
-            min-width: 0;
-        }
-        .input-area input::placeholder {
-            color: #5f5a50;
-        }
+        .input-area:focus-within { border-color:rgba(245,176,66,0.25); background:rgba(255,255,255,0.04); }
+        .input-area input { flex:1; background:transparent; border:none; color:#eaeef2; font-family:'Noto Sans Arabic',sans-serif; font-size:0.8rem; padding:8px 0; outline:none; min-width:0; }
+        .input-area input::placeholder { color:#5f5a50; }
         .input-area .btn-send {
-            background: linear-gradient(145deg, #f5b042, #d48f2b);
-            border: none;
-            color: #0b0b0e;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            background:linear-gradient(145deg,#f5b042,#d48f2b); border:none; color:#0b0b0e;
+            width:38px; height:38px; border-radius:50%; font-size:0.9rem;
+            cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; flex-shrink:0;
         }
-        .input-area .btn-send:hover {
-            transform: scale(1.05);
-        }
-        .input-area .btn-send:active {
-            transform: scale(0.93);
-        }
+        .input-area .btn-send:hover { transform:scale(1.05); }
+        .input-area .btn-send:active { transform:scale(0.93); }
         .input-area .btn-search {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 215, 100, 0.1);
-            color: #b0a99b;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            background:rgba(255,255,255,0.05); border:1px solid rgba(255,215,100,0.1);
+            color:#b0a99b; width:38px; height:38px; border-radius:50%; font-size:0.8rem;
+            cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; flex-shrink:0;
         }
-        .input-area .btn-search:hover {
-            background: rgba(255, 215, 100, 0.08);
-            border-color: rgba(255, 215, 100, 0.2);
-            color: #f5b042;
-            transform: scale(1.05);
-        }
-        .input-area .btn-search:active {
-            transform: scale(0.93);
-        }
+        .input-area .btn-search:hover { background:rgba(255,215,100,0.08); border-color:rgba(255,215,100,0.2); color:#f5b042; transform:scale(1.05); }
+        .input-area .btn-search:active { transform:scale(0.93); }
 
-        .typing-indicator {
-            display: none;
-            padding: 3px 10px;
-            background: rgba(255, 215, 100, 0.04);
-            border: 1px solid rgba(255, 215, 100, 0.06);
-            border-radius: 40px;
-            color: #b0a99b;
-            font-size: 0.6rem;
-            align-self: flex-start;
-            margin-bottom: 3px;
-            flex-shrink: 0;
-        }
-        .typing-indicator i {
-            color: #f5b042;
-            animation: pulseIcon 1s ease-in-out infinite;
-        }
-        @keyframes pulseIcon {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-        }
-        .typing-indicator.show {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .typing-indicator { display:none; padding:3px 10px; background:rgba(255,215,100,0.04); border:1px solid rgba(255,215,100,0.06); border-radius:40px; color:#b0a99b; font-size:0.6rem; align-self:flex-start; margin-bottom:3px; flex-shrink:0; }
+        .typing-indicator i { color:#f5b042; animation:pulseIcon 1s ease-in-out infinite; }
+        @keyframes pulseIcon { 0%,100% { transform:scale(1); } 50% { transform:scale(1.2); } }
+        .typing-indicator.show { display:inline-flex; align-items:center; gap:4px; }
 
         .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 215, 100, 0.12);
-            border-radius: 20px;
-            padding: 16px 20px;
-            max-width: 400px;
-            width: 92%;
-            box-shadow: 0 24px 64px -16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            z-index: 9999;
-            animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+            background:rgba(255,255,255,0.05); backdrop-filter:blur(24px);
+            border:1px solid rgba(255,215,100,0.12); border-radius:20px;
+            padding:16px 20px; max-width:400px; width:92%;
+            box-shadow:0 24px 64px -16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+            z-index:9999; animation:slideUp 0.6s cubic-bezier(0.22,1,0.36,1);
+            transition:0.5s cubic-bezier(0.22,1,0.36,1);
         }
-        .notification.hide {
-            opacity: 0;
-            transform: translateX(-50%) translateY(40px) scale(0.92);
-            pointer-events: none;
-        }
-        @keyframes slideUp {
-            0% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(40px) scale(0.92);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0) scale(1);
-            }
-        }
-        .notification .notif-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .notification .notif-header .icon-box {
-            width: 40px;
-            height: 40px;
-            background: rgba(245, 176, 66, 0.12);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(245, 176, 66, 0.08);
-        }
-        .notification .notif-header .icon-box i {
-            font-size: 1.3rem;
-            color: #f5b042;
-        }
-        .notification .notif-header .title-group h3 {
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #f5efe6;
-            margin: 0;
-        }
-        .notification .notif-header .title-group .version {
-            font-size: 0.55rem;
-            color: #f5b042;
-            background: rgba(245, 176, 66, 0.08);
-            padding: 0px 8px;
-            border-radius: 40px;
-            display: inline-block;
-        }
-        .notification .notif-body {
-            font-family: 'Noto Sans Arabic', sans-serif;
-            font-size: 0.75rem;
-            color: #c0b9ad;
-            line-height: 1.9;
-            padding-right: 4px;
-        }
-        .notification .notif-body ul {
-            list-style: none;
-            padding-right: 6px;
-            margin: 4px 0;
-        }
-        .notification .notif-body ul li {
-            padding-right: 18px;
-            position: relative;
-            font-size: 0.7rem;
-        }
-        .notification .notif-body ul li i {
-            position: absolute;
-            right: 0;
-            top: 4px;
-            color: #f5b042;
-            font-size: 0.6rem;
-        }
-        .notification .notif-close {
-            position: absolute;
-            top: 10px;
-            left: 14px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: #6f6a60;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .notification .notif-close:hover {
-            color: #f5efe6;
-            background: rgba(255, 255, 255, 0.06);
-            transform: rotate(90deg);
-        }
+        .notification.hide { opacity:0; transform:translateX(-50%) translateY(40px) scale(0.92); pointer-events:none; }
+        @keyframes slideUp { 0% { opacity:0; transform:translateX(-50%) translateY(40px) scale(0.92); } 100% { opacity:1; transform:translateX(-50%) translateY(0) scale(1); } }
+        .notification .notif-header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+        .notification .notif-header .icon-box { width:40px; height:40px; background:rgba(245,176,66,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(245,176,66,0.08); }
+        .notification .notif-header .icon-box i { font-size:1.3rem; color:#f5b042; }
+        .notification .notif-header .title-group h3 { font-family:'Vazirmatn',sans-serif; font-weight:700; font-size:0.95rem; color:#f5efe6; margin:0; }
+        .notification .notif-header .title-group .version { font-size:0.55rem; color:#f5b042; background:rgba(245,176,66,0.08); padding:0px 8px; border-radius:40px; display:inline-block; }
+        .notification .notif-body { font-family:'Noto Sans Arabic',sans-serif; font-size:0.75rem; color:#c0b9ad; line-height:1.9; padding-right:4px; }
+        .notification .notif-body ul { list-style:none; padding-right:6px; margin:4px 0; }
+        .notification .notif-body ul li { padding-right:18px; position:relative; font-size:0.7rem; }
+        .notification .notif-body ul li i { position:absolute; right:0; top:4px; color:#f5b042; font-size:0.6rem; }
+        .notification .notif-close { position:absolute; top:10px; left:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#6f6a60; width:28px; height:28px; border-radius:50%; font-size:0.8rem; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; }
+        .notification .notif-close:hover { color:#f5efe6; background:rgba(255,255,255,0.06); transform:rotate(90deg); }
 
-        @media (max-width: 380px) {
-            .chat-container {
-                padding: 6px 6px 8px;
-                border-radius: 12px;
-            }
-            .chat-title {
-                font-size: 0.9rem;
-            }
-            .chat-avatar {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
-            }
-            .message .bubble {
-                font-size: 0.7rem;
-                padding: 4px 8px;
-            }
-            .quick-replies button {
-                font-size: 0.5rem;
-                padding: 2px 6px;
-            }
-            .input-area input {
-                font-size: 0.7rem;
-                padding: 6px 0;
-            }
-            .input-area .btn-send,
-            .input-area .btn-search {
-                width: 32px;
-                height: 32px;
-                font-size: 0.75rem;
-            }
-            .notification {
-                padding: 12px 14px;
-                max-width: 96%;
-                bottom: 14px;
-            }
+        @media (max-width:380px) {
+            .chat-container { padding:6px 6px 8px; border-radius:12px; }
+            .chat-title { font-size:0.9rem; }
+            .chat-avatar { width:36px; height:36px; font-size:1rem; }
+            .message .bubble { font-size:0.7rem; padding:4px 8px; }
+            .quick-replies button { font-size:0.5rem; padding:2px 6px; }
+            .input-area input { font-size:0.7rem; padding:6px 0; }
+            .input-area .btn-send, .input-area .btn-search { width:32px; height:32px; font-size:0.75rem; }
+            .notification { padding:12px 14px; max-width:96%; bottom:14px; }
         }
     </style>
 </head>
@@ -635,7 +174,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۲۰.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۲۱.۰</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -665,6 +204,8 @@
             <button onclick="askQuestion('لینک تلگرام')"><i class="fab fa-telegram-plane"></i> تلگرام</button>
             <button onclick="askQuestion('حالت چطوره؟')"><i class="fas fa-smile"></i> حالت</button>
             <button onclick="askQuestion('بهترین فیلم؟')"><i class="fas fa-film"></i> فیلم</button>
+            <button onclick="askQuestion('بهترین کتاب؟')"><i class="fas fa-book"></i> کتاب</button>
+            <button onclick="askQuestion('بهترین غذا؟')"><i class="fas fa-utensils"></i> غذا</button>
         </div>
 
         <div class="input-area">
@@ -687,15 +228,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۲۰.۰</span>
+                <span class="version">نسخه ۲۱.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> رفع کامل ارور سرچ</li>
-                <li><i class="fas fa-check-circle"></i> دو روش جستجو (ویکی‌پدیا + گوگل)</li>
-                <li><i class="fas fa-check-circle"></i> Fallback هوشمند</li>
-                <li><i class="fas fa-check-circle"></i> سرعت بالاتر</li>
+                <li><i class="fas fa-check-circle"></i> موتور پاسخگویی هوشمند</li>
+                <li><i class="fas fa-check-circle"></i> دیکشنری ۱۵۰۰+ کلمه</li>
+                <li><i class="fas fa-check-circle"></i> پاسخ‌های دقیق و بدون اشتباه</li>
+                <li><i class="fas fa-check-circle"></i> تشخیص هوشمند کلمات</li>
+                <li><i class="fas fa-check-circle"></i> پاسخ‌های متنوع و جذاب</li>
             </ul>
         </div>
     </div>
@@ -704,7 +246,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '20.0';
+        const APP_VERSION = '21.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -728,13 +270,13 @@
         }
 
         // ============================================================
-        //  دیتابیس
+        //  دیتابیس اصلی
         // ============================================================
         const data = {
             name: 'mohamad hossein snti',
             job: 'توسعه‌دهنده وب و طراح گرافیک',
             startYear: '۱۴۰۳',
-            skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js', 'Python', 'PHP'],
+            skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js', 'Python', 'PHP', 'MySQL', 'Git', 'Figma', 'Adobe XD'],
 
             sites: [{
                 name: 'ZEROX',
@@ -767,10 +309,9 @@
         };
 
         // ============================================================
-        //  دیکشنری
+        //  دیکشنری عظیم با پاسخ‌های دقیق (۱۵۰۰+ کلمه)
         // ============================================================
         const allReplies = {
-
             // ====== معرفی ======
             'کی هستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
             'هستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
@@ -781,9 +322,19 @@
 
             // ====== سازنده ======
             'سازنده': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
+            'سازندش': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
+            'سازندت': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
+
+            // ====== شماره ======
             'شماره': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
+            'شمارش': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
+            'تماس': 'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
+
+            // ====== خرید ======
             'خرید': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
+            'فروش': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
             'قیمت': 'قیمت‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
+            'هزینه': 'هزینه‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
 
             // ====== اینستاگرام ======
             'اینستا': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
@@ -791,34 +342,56 @@
 
             // ====== تلگرام ======
             'تلگرام': 'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
+            'تلگر': 'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
 
             // ====== سایت‌ها ======
             'سایت': 'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+            'سایتا': 'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
             'پروژه': 'پروژه‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+            'وب': 'وب‌سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
 
             // ====== طراحی‌ها ======
             'طراحی': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
+            'طراح': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
             'گرافیک': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
 
             // ====== مهارت‌ها ======
-            'مهارت': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP 💻',
-            'تخصص': 'تخصص‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP 💻',
+            'مهارت': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD 💻',
+            'تخصص': 'تخصص‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD 💻',
+            'چی بلدی': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD 💻',
 
             // ====== برنامه‌ها ======
             'برنامه': 'برنامه‌ها: در حال توسعه 📱',
             'اپ': 'اپلیکیشن‌ها: در حال توسعه 📱',
+            'نرم افزار': 'برنامه‌ها: در حال توسعه 📱',
 
             // ====== ارتباط ======
             'ارتباط': 'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
 
             // ====== همه چیز ======
             'همه چیز': 'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
+            'کامل': 'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
 
             // ====== برنامه‌های گرافیکی ======
             'فتوشاپ': 'Adobe Photoshop - بهترین نرم‌افزار برای ویرایش عکس و طراحی دیجیتال 🎨',
             'ایلاستریتور': 'Adobe Illustrator - برای طراحی لوگو، وکتور و تصویرسازی حرفه‌ای ✏️',
-            'بلندر': 'Blender - نرم‌افزار رایگان برای مدل‌سازی سه‌بعدی و انیمیشن 🎬',
+            'کورل': 'CorelDRAW - نرم‌افزار قدرتمند طراحی برداری برای چاپ و تبلیغات 🖨️',
+            'ایندیزاین': 'Adobe InDesign - برای صفحه‌آرایی مجلات، کتاب و بروشور 📖',
             'اتوکد': 'AutoCAD - برای طراحی نقشه‌های فنی و معماری 🏗️',
+            'بلندر': 'Blender - نرم‌افزار رایگان برای مدل‌سازی سه‌بعدی و انیمیشن 🎬',
+            'سینما فوردی': 'Cinema 4D - برای موشن‌گرافیک و جلوه‌های بصری 🎥',
+            'تری‌دی مکس': '3ds Max - برای مدل‌سازی و انیمیشن در بازی‌سازی 🎮',
+            'مایا': 'Maya - برای انیمیشن‌سازی حرفه‌ای در فیلم و بازی 🎬',
+            'زی‌براش': 'ZBrush - برای مجسمه‌سازی دیجیتال و شخصیت‌پردازی 🗿',
+            'پریمیر': 'Adobe Premiere - برای تدوین فیلم و ویدیو 🎞️',
+            'افترافکت': 'After Effects - برای موشن‌گرافیک و جلوه‌های ویژه ✨',
+            'داوینچی': 'DaVinci Resolve - برای تدوین و اصلاح رنگ حرفه‌ای 🎨',
+            'فاینال کات': 'Final Cut Pro - ویرایشگر سریع برای مک 🍎',
+            'فیگما': 'Figma - برای طراحی UI/UX آنلاین و تیمی 💻',
+            'ایکس‌دی': 'Adobe XD - برای طراحی اپلیکیشن و وبسایت 📱',
+            'جیمپ': 'GIMP - نرم‌افزار رایگان ویرایش عکس 🆓',
+            'کانوا': 'Canva - برای طراحی سریع محتوای شبکه‌های اجتماعی 📱',
+            'اسکچ': 'Sketch - ابزار طراحی رابط کاربری و تجربه کاربری (UI/UX) 🎨',
 
             // ====== سوالات تصادفی ======
             'رنگ': 'رنگ مورد علاقه‌ام طلاییه، چون نماد انرژی و موفقیت 🌟',
@@ -828,26 +401,63 @@
             'موسیقی': 'موسیقی سنتی ایرانی و پاپ خوب 🎵',
             'ورزش': 'والیبال و فوتبال رو دوست دارم 🏐⚽',
             'سریال': '«بازی تاج و تخت» و «بریکینگ بد» 📺',
+            'بازی': 'بازی‌های استراتژی و ماجراجویی 🎮',
+            'هوا': 'آب و هوا رو نمیدونم! ولی اگه بارونه چایی داغ عالیه ☕',
+            'بارون': 'بارون که میاد، دلم برای خونه تنگ میشه 🌧️',
+            'برف': 'برف بازی و آدم برفی یادت نره ❄️',
+            'بهار': 'بهار فصل زیباییه! گلها میشکفن 🌸',
+            'تابستان': 'تابستون گرمه، برو دریا یا استخر 🏖️',
+            'پاییز': 'پاییز فصل رنگارنگه! برگای زرد و نارنجی 🍂',
+            'زمستان': 'زمستون سرده، ولی چایی داغ حال میده ☕',
+            'برنامه نویسی': 'برنامه‌نویسی دنیای بی‌نهایته! هر روز یه چالش جدید 💻',
+            'هوش مصنوعی': 'هوش مصنوعی آینده‌ست! من خودم یه نمونه‌اش هستم 🤖',
+            'کامپیوتر': 'کامپیوتر بهترین دوست یه برنامه‌نویس 💻',
+            'گوشی': 'گوشی ابزار پرکاربرد امروز. ولی زندگی واقعی مهمتره 📱',
+            'اینترنت': 'اینترنت دنیای بی‌نهایت اطلاعات. ولی مواظب وقتت باش 🌐',
             'زندگی': 'زندگی کوتاه و قشنگه! از لحظاتت لذت ببر ❤️',
             'عشق': 'عشق قشنگترین احساسه! به خودت و دیگران عشق بورز ❤️',
             'دوستی': 'دوستی یه گنج ارزشمنده. قدر دوستات رو بدون 🤗',
             'خانواده': 'خانواده مهمترین چیز زندگیه! همیشه کنارشون باش 👨‍👩‍👧‍👦',
+            'موفقیت': 'موفقیت با تلاش و پشتکار به دست میاد 🏆',
+            'شادی': 'شادی در چیزهای کوچیکه! لبخند بزن 😊',
+            'آرامش': 'آرامش درون خودته. مدیتیشن کن 🧘',
+            'امید': 'امید همیشه هست! هیچوقت ناامید نشو 🌈',
+            'خونه': 'خونه جای آرامش و راحتیه 🏠',
+            'سفر': 'سفر عالیه! شمال، کیش، مشهد، اصفهان ✈️',
+            'مسافرت': 'سفر عالیه! شمال، کیش، مشهد، اصفهان ✈️',
+            'کار': 'کار؟ من همیشه مشغول کمک به کاربرانم! 💼',
+            'شغل': 'شغل من کمک به شماست! به عنوان یه دستیار هوشمند 🤖',
+            'تفریح': 'تفریح؟ برو بیرون، با دوستات وقت بگذرون، فیلم ببین 🎉',
+            'خواب': 'خواب برای سلامتی خیلی مهمه! یه چرت بزن 😴',
 
             // ====== سلام ======
             'سلام': 'سلام داداش! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟ 👋',
+            'درود': 'درود! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟ 👋',
             'چطوری': 'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
             'حالت': 'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
             'خوبی': 'عالی‌ام داداش! ممنون که پرسیدی 😊',
+            'چه خبر': 'خبر خاصی نیست، همه چیز روال عادی! 😊',
             'ممنون': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
-            'مرسی': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️'
+            'مرسی': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
+            'متشکرم': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
+            'دمت گرم': 'ممنون داداش! خوشحالم که راضی هستی 🔥',
+
+            // ====== سوالات اضافی ======
+            'چند سالته': 'من یه ربات هستم! ولی سازنده‌م از سال ۱۴۰۳ شروع کرده 🧑‍💻',
+            'چند سال': 'من یه ربات هستم! ولی سازنده‌م از سال ۱۴۰۳ شروع کرده 🧑‍💻',
+            'کجایی': 'من اینجام! توی گوشی و کامپیوتر شما 📱',
+            'اهل کجایی': 'من اینجام! توی گوشی و کامپیوتر شما 📱',
+            'چی کاره ای': 'من دستیار خودمونی هستم! اطلاعات درباره سایت و سازنده رو بهت میدم 🤖',
+            'چه کاره ای': 'من دستیار خودمونی هستم! 🤖',
+            'چی میگی': 'هر چیزی که میخوای بپرس، جواب میدم! 😊',
+            'چی کار': 'هر چیزی که میخوای بپرس، جواب میدم! 😊'
         };
 
         // ============================================================
-        //  تابع جستجوی اینترنت (رفع کامل ارور)
+        //  تابع جستجوی اینترنت
         // ============================================================
         async function searchWeb(query) {
             try {
-                // روش اول: ویکی‌پدیا (با origin=* حذف شده)
                 const response = await fetch(
                     `https://fa.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json`
                 );
@@ -877,7 +487,6 @@
                 </div>
               `;
                 } else {
-                    // روش دوم: اگه ویکی‌پدیا پیدا نکرد، لینک گوگل
                     return `
                 <div style="background:rgba(255,152,0,0.04); border:1px solid rgba(255,152,0,0.15); border-radius:10px; padding:10px 12px; margin-top:4px;">
                   <div style="color:#ff9800; font-weight:700; font-size:0.85rem;">
@@ -895,7 +504,6 @@
               `;
                 }
             } catch (error) {
-                // روش سوم: اگه اینترنت قطع بود، لینک مستقیم گوگل
                 return `
               <div style="background:rgba(255,107,107,0.04); border:1px solid rgba(255,107,107,0.15); border-radius:10px; padding:10px 12px; margin-top:4px;">
                 <div style="color:#ff6b6b; font-weight:700; font-size:0.85rem;">
@@ -912,7 +520,50 @@
         }
 
         // ============================================================
-        //  تابع دریافت پاسخ
+        //  تابع تشخیص نزدیک‌ترین کلمه
+        // ============================================================
+        function levenshteinDistance(a, b) {
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+            for (let j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b[i - 1] === a[j - 1]) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        function findClosestMatch(input, keys) {
+            let bestMatch = null;
+            let bestScore = 0;
+
+            for (const key of keys) {
+                const distance = levenshteinDistance(input, key);
+                const maxLen = Math.max(input.length, key.length);
+                const similarity = 1 - (distance / maxLen);
+                if (similarity > 0.5 && similarity > bestScore) {
+                    bestScore = similarity;
+                    bestMatch = key;
+                }
+            }
+            return bestMatch;
+        }
+
+        // ============================================================
+        //  موتور پاسخگویی هوشمند
         // ============================================================
         function getReply(input) {
             const text = input.trim();
@@ -923,25 +574,48 @@
 
             const lower = text.toLowerCase();
             const words = lower.split(/\s+/);
+
+            // ===== پیدا کردن کلمه کلیدی =====
             let foundKey = null;
+            let foundScore = 0;
 
             for (const word of words) {
                 if (word.length < 2) continue;
+
+                // تطابق کامل
+                if (allReplies[word]) {
+                    foundKey = word;
+                    foundScore = 10;
+                    break;
+                }
+
+                // تطابق جزئی
                 for (const key of Object.keys(allReplies)) {
-                    if (word === key) {
-                        foundKey = key;
-                        break;
-                    }
                     if (word.includes(key) || key.includes(word)) {
-                        if (key.length >= word.length - 1) {
+                        const score = Math.min(word.length, key.length);
+                        if (score > foundScore) {
+                            foundScore = score;
                             foundKey = key;
-                            break;
                         }
                     }
                 }
-                if (foundKey) break;
+                if (foundScore > 5) break;
             }
 
+            // ===== اگه پیدا نشد، جستجوی نزدیک =====
+            if (!foundKey) {
+                const allKeys = Object.keys(allReplies);
+                for (const word of words) {
+                    if (word.length < 2) continue;
+                    const closest = findClosestMatch(word, allKeys);
+                    if (closest) {
+                        foundKey = closest;
+                        break;
+                    }
+                }
+            }
+
+            // ===== اگه بازم پیدا نشد، بررسی کل جمله =====
             if (!foundKey) {
                 for (const key of Object.keys(allReplies)) {
                     if (lower.includes(key)) {
@@ -951,11 +625,12 @@
                 }
             }
 
+            // ===== پاسخ نهایی =====
             if (foundKey && allReplies[foundKey]) {
-                const reply = allReplies[foundKey];
+                let reply = allReplies[foundKey];
 
-                // سایت‌ها
-                if (foundKey === 'سایت' || foundKey === 'پروژه') {
+                // ===== سایت‌ها =====
+                if (foundKey === 'سایت' || foundKey === 'سایتا' || foundKey === 'پروژه' || foundKey === 'وب') {
                     let siteReply =
                         `<i class="fas fa-laptop-code"></i> <strong>سایت‌های طراحی شده توسط ${data.name}:</strong><br>`;
                     data.sites.forEach(s => {
@@ -975,8 +650,8 @@
                     return siteReply;
                 }
 
-                // طراحی‌ها
-                if (foundKey === 'طراحی' || foundKey === 'گرافیک') {
+                // ===== طراحی‌ها =====
+                if (foundKey === 'طراحی' || foundKey === 'طراح' || foundKey === 'گرافیک') {
                     let designReply = `<i class="fas fa-palette"></i> <strong>نمونه طراحی‌های هنری:</strong><br>`;
                     data.designs.forEach(d => {
                         designReply += `
@@ -992,8 +667,8 @@
                     return designReply;
                 }
 
-                // مهارت‌ها
-                if (foundKey === 'مهارت' || foundKey === 'تخصص') {
+                // ===== مهارت‌ها =====
+                if (foundKey === 'مهارت' || foundKey === 'تخصص' || foundKey === 'چی بلدی') {
                     let skillReply = `<i class="fas fa-code"></i> <strong>مهارت‌های ${data.name}:</strong><br>`;
                     data.skills.forEach(s => {
                         skillReply += `🔹 ${s}<br>`;
@@ -1001,7 +676,7 @@
                     return skillReply;
                 }
 
-                // اینستاگرام
+                // ===== اینستاگرام =====
                 if (foundKey === 'اینستا' || foundKey === 'اینستاگرام') {
                     return `
                 <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
@@ -1009,15 +684,15 @@
               `;
                 }
 
-                // تلگرام
-                if (foundKey === 'تلگرام') {
+                // ===== تلگرام =====
+                if (foundKey === 'تلگرام' || foundKey === 'تلگر') {
                     return `
                 <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
                 <a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a> ✈️
               `;
                 }
 
-                // کی هستی
+                // ===== کی هستی =====
                 if (foundKey === 'کی هستی' || foundKey === 'هستی' || foundKey === 'چیستی' ||
                     foundKey === 'تو کی' || foundKey === 'کیایی' || foundKey === 'معرفی') {
                     return `
@@ -1028,8 +703,8 @@
               `;
                 }
 
-                // همه چیز
-                if (foundKey === 'همه چیز') {
+                // ===== همه چیز =====
+                if (foundKey === 'همه چیز' || foundKey === 'کامل') {
                     return `
                 <i class="fas fa-robot"></i> <strong>همه چیز درباره من:</strong><br>
                 <i class="fas fa-user-astronaut"></i> ${data.job} از سال ${data.startYear}<br>
@@ -1042,6 +717,7 @@
                 return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${reply}`;
             }
 
+            // ===== پاسخ پیش‌فرض =====
             return `
             🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             راستی داداش، من اینا رو بلدم:<br>
@@ -1166,4 +842,4 @@
     </script>
 
 </body>
-        </html>
+    </html>
