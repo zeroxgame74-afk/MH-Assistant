@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant</title>
+    <title>MH Assistant - هوشمندترین</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,13 +57,6 @@
             }
             body {
                 padding: 4px;
-            }
-        }
-
-        @media (max-height: 700px) {
-            .chat-container {
-                max-height: 100vh;
-                border-radius: 16px;
             }
         }
 
@@ -254,10 +247,6 @@
         .message .bubble i {
             color: #f5b042;
             margin-left: 2px;
-        }
-        .message .bubble .highlight-text {
-            color: #f5b042;
-            font-weight: 700;
         }
 
         .message .bubble .site-card {
@@ -539,7 +528,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> پردازش کامل کلمات</small>
+                <small><i class="fas fa-robot"></i> پاسخ به همه چیز</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -551,17 +540,20 @@
                 <div class="avatar"><i class="fas fa-robot"></i></div>
                 <div class="bubble">
                     <i class="fas fa-hand-peace"></i> سلام! من <strong>MH Assistant</strong> هستم.<br>
-                    <strong>هر چیزی</strong> بپرسی، کلمه به کلمه پردازش میکنم.<br>
-                    <span style="color:#f5b042;font-size:0.7rem;">👇 هر جمله‌ای بنویس، میفهمم!</span>
+                    <strong>هر چیزی</strong> بپرسی، حتی سوالات بی‌ربط، جواب میدم!<br>
+                    <span style="color:#f5b042;font-size:0.7rem;">👇 هر چی تو ذهنت هست بپرس!</span>
                 </div>
             </div>
         </div>
 
         <div class="quick-replies">
-            <button onclick="askQuestion('لطفا بگو لینک اینستاگرام سازنده')"><i class="fab fa-instagram"></i> لینک اینستا</button>
-            <button onclick="askQuestion('سلام چه سایت هایی ساختی؟')"><i class="fas fa-laptop-code"></i> سایت‌ها</button>
-            <button onclick="askQuestion('کی هستی و چه کاره ای؟')"><i class="fas fa-question"></i> کی هستی؟</button>
-            <button onclick="askQuestion('راه ارتباطی با تو چیه؟')"><i class="fas fa-share-alt"></i> ارتباط</button>
+            <button onclick="askQuestion('کی هستی؟')"><i class="fas fa-question"></i> کی هستی؟</button>
+            <button onclick="askQuestion('سایت‌ها')"><i class="fas fa-laptop-code"></i> سایت‌ها</button>
+            <button onclick="askQuestion('طراحی‌ها')"><i class="fas fa-palette"></i> طراحی‌ها</button>
+            <button onclick="askQuestion('مهارت‌ها')"><i class="fas fa-code"></i> مهارت‌ها</button>
+            <button onclick="askQuestion('لینک اینستاگرام')"><i class="fab fa-instagram"></i> اینستا</button>
+            <button onclick="askQuestion('آب و هوا چطوره؟')"><i class="fas fa-cloud"></i> آب و هوا</button>
+            <button onclick="askQuestion('فیلم خوب پیشنهاد بده')"><i class="fas fa-film"></i> فیلم</button>
         </div>
 
         <div class="input-area">
@@ -575,7 +567,7 @@
 
     <script>
         // ============================================================
-        //  دیتابیس
+        //  دیتابیس کامل
         // ============================================================
         const data = {
             name: 'mohamad hossein snti',
@@ -583,7 +575,7 @@
             startYear: '۱۴۰۳',
             skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js'],
             goal: 'ترکیب هنر و تکنولوژی برای خلق فضاهای دیجیتال خاص',
-            bio: 'توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳',
+            bio: 'توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳. عاشق کد تمیز، طراحی مینیمال و تجربه کاربری روان.',
 
             sites: [{
                 name: 'ZEROX',
@@ -616,7 +608,33 @@
         };
 
         // ============================================================
-        //  موتور پردازش کامل کلمات (هوشمند)
+        //  دیکشنری پاسخ‌های کلی (برای سوالات بی‌ربط)
+        // ============================================================
+        const generalReplies = {
+            'اب و هوا': 'آب و هوا رو نمیدونم! ولی اگه هوات گرفته، یه چایی خنک کن و فیلم ببین 🍵',
+            'فیلم': 'فیلم خوب؟ بستگی به سلیقه‌ت داره! ولی «افسانه‌ی خزندگان» و «شکارچی روح» رو پیشنهاد میکنم 🎬',
+            'غذا': 'غذا؟ پیتزا، ساندویچ، کباب... هرچی دوست داری! ولی من خودم پیتزا رو بیشتر دوست دارم 🍕',
+            'ورزش': 'ورزش عالیه! فوتبال، والیبال، بدنسازی... من خودم والیبال رو بیشتر دوست دارم 🏐',
+            'کتاب': 'کتاب خوب؟ «هزار توی خورشید» و «شازده کوچولو» رو پیشنهاد میکنم 📚',
+            'مدرسه': 'مدرسه؟ بله، مدرسه جای خوبیه برای یاد گرفتن. ولی خونه‌ام جای بهتریه برای استراحت! 😄',
+            'کار': 'کار؟ من همیشه مشغول کمک به کاربرانم! اگه کاری داری، بگو کمکت کنم 💼',
+            'خواب': 'خواب؟ چه خوب! خواب برای سلامتی خیلی مهمه. یه چرت بزن، بعد بیا سوال بپرس 😴',
+            'تفریح': 'تفریح؟ برو بیرون، با دوستات وقت بگذرون، فیلم ببین، بازی کن... زندگی کوتاهه، لذت ببر! 🎉',
+            'دوست': 'دوست؟ دوستای خوب مثل گنج هستن. ازشون مراقبت کن 🤝',
+            'خونه': 'خونه؟ جای آرامش و راحتی. برو یه استراحت کن 🏠',
+            'موسیقی': 'موسیقی؟ روح رو تازه میکنه. به نظرم موسیقی سنتی ایرانی یا پاپ گوش کن 🎵',
+            'سفر': 'سفر؟ چه عالی! شمال ایران، کیش، مشهد... هرکدوم یه جای خاصی دارن ✈️',
+            'درخت': 'درخت؟ نفس زندگی! درخت بکار تا دنیا سبزتر بشه 🌳',
+            'آسمان': 'آسمون؟ همیشه بالا رو نگاه کن، ستاره‌ها منتظرن 🌌',
+            'کامپیوتر': 'کامپیوتر؟ بهترین دوست یه برنامه‌نویس! من خودم عاشق کد زدنم 💻',
+            'گوشی': 'گوشی؟ ابزار پرکاربرد امروز. ولی یادت نره که زندگی واقعی هم مهمه 📱',
+            'اینترنت': 'اینترنت؟ دنیای بی‌نهایت اطلاعات. ولی مواظب باش وقتت رو نخوره 🌐',
+            'خندیدن': 'خندیدن؟ بهترین داروی دنیا! پس بخند که عمرت طولانی‌تر بشه 😂',
+            'گریه': 'گریه؟ بعضی وقتا لازمه. ولی بعدش قوی‌تر برمیگردی 😢'
+        };
+
+        // ============================================================
+        //  موتور هوشمند (پاسخ به همه چیز)
         // ============================================================
         function getReply(input) {
             const text = input.trim();
@@ -626,107 +644,39 @@
                 return `چیزی ننوشتی! یه سوال بپرس.`;
             }
 
-            // ===== مرحله 1: شکستن به کلمات =====
-            const words = lower.split(/\s+/);
+            // ===== 1. سوالات اختصاصی (درباره سایت) =====
 
-            // ===== مرحله 2: تشخیص کلمات کلیدی =====
-            let found = {
-                identity: false,
-                site: false,
-                design: false,
-                skill: false,
-                social: false,
-                app: false,
-                greeting: false,
-                feeling: false,
-                thank: false,
-                link: false,
-                instagram: false,
-                telegram: false,
-                creator: false,
-                all: false,
-                help: false
-            };
-
-            const keywords = {
-                identity: ['کی', 'هستی', 'کیا', 'چه کسی', 'تو کی', 'هستید', 'کیایی'],
-                site: ['سایت', 'وب', 'پروژه', 'لینک', 'zerox', 'کالفود', 'کوروش', 'گیم', 'نمونه کار', 'آدرس', 'ساختی', 'چی ساختی',
-                    'کارها'
-                ],
-                design: ['طراحی', 'گرافیک', 'هنری', 'عکس', 'تصویر', 'یا علی', 'اهواز', 'شهید', 'پالت', 'نقاشی', 'اثر', 'هنر'],
-                skill: ['مهارت', 'توانایی', 'بلد', 'تخصص', 'چه چیزایی', 'یاد', 'چه کارهایی', 'چی بلدی'],
-                social: ['تلگرام', 'اینستاگرام', 'شبکه', 'اجتماعی', 'تماس', 'ارتباط', 'پیام', 'آیدی', 'کانال', 'راه', 'سوشال'],
-                app: ['برنامه', 'اپ', 'نرم', 'افزار', 'ابزار', 'اپلیکیشن', 'موبایل', 'اندروید'],
-                greeting: ['سلام', 'درود', 'هی', 'الو', 'هلو', 'صبح', 'عصر', 'شب', 'بخیر'],
-                feeling: ['خوب', 'چطوری', 'حالت', 'اوضاع', 'خبر', 'چی می‌کنی', 'خوشی', 'چه خبر'],
-                thank: ['ممنون', 'مرسی', 'متشکرم', 'دمت گرم', 'دستت', 'تشکر', 'سپاس'],
-                link: ['لینک', 'آدرس', 'url', 'لینکش'],
-                instagram: ['اینستا', 'اینستاگرام', 'insta', 'instagram'],
-                telegram: ['تلگرام', 'telegram', 'تلگر'],
-                creator: ['سازنده', 'صاحب', 'مالک', 'ساخت', 'ساخته', 'سازندش'],
-                all: ['همه', 'تمام', 'لیست', 'همش'],
-                help: ['راهنمایی', 'کمک', 'لطفا', 'میشه', 'بگو', 'بگید']
-            };
-
-            words.forEach(word => {
-                for (const [topic, kws] of Object.entries(keywords)) {
-                    if (kws.some(kw => word.includes(kw) || kw.includes(word))) {
-                        found[topic] = true;
-                    }
-                }
-            });
-
-            // ===== مرحله 3: ساخت پاسخ بر اساس کلمات تشخیص داده شده =====
-
-            // ---- اگر اینستاگرام و لینک و سازنده رو گفت ----
-            if (found.instagram && found.link && found.creator) {
+            // کی هستی؟
+            if (lower === 'کی' || lower === 'هستی' || lower === 'کیا' ||
+                lower.includes('کی هستی') || lower.includes('تو کی') || lower.includes('چه کسی') ||
+                lower.includes('معرفی') || lower.includes('خودت')) {
                 return `
-              <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام سازنده:</strong><br>
-              <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a><br>
-              <span style="color:#b0a99b;font-size:0.7rem;">👤 سازنده: <strong>${data.name}</strong></span>
+              <i class="fas fa-robot"></i> <strong>من ربات دستیار MH Assistant هستم!</strong><br>
+              ساخته‌شده توسط <strong>${data.name}</strong><br>
+              ${data.job} از سال ${data.startYear}
             `;
             }
 
-            // ---- اگر اینستاگرام رو گفت ----
-            if (found.instagram || found.social) {
-                let reply = `<i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>اینستاگرام:</strong><br>`;
-                reply += `<a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a>`;
-                if (found.creator || text.includes('سازنده')) {
-                    reply += `<br><span style="color:#b0a99b;font-size:0.7rem;">👤 سازنده: <strong>${data.name}</strong></span>`;
-                }
-                return reply;
+            // لینک اینستاگرام
+            if (lower.includes('اینستا') || lower.includes('اینستاگرام') || lower.includes('insta')) {
+                return `
+              <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
+              <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a>
+            `;
             }
 
-            // ---- اگر تلگرام رو گفت ----
-            if (found.telegram) {
-                let reply = `<i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>تلگرام:</strong><br>`;
-                reply += `<a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a>`;
-                if (found.creator || text.includes('سازنده')) {
-                    reply += `<br><span style="color:#b0a99b;font-size:0.7rem;">👤 سازنده: <strong>${data.name}</strong></span>`;
-                }
-                return reply;
+            // تلگرام
+            if (lower.includes('تلگرام') || lower.includes('telegram')) {
+                return `
+              <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>تلگرام:</strong><br>
+              <a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a>
+            `;
             }
 
-            // ---- اگر کی هستی + هر چیز دیگه ----
-            if (found.identity) {
-                let reply = `<i class="fas fa-robot"></i> <strong>من ربات دستیار MH Assistant هستم!</strong><br>`;
-                reply += `ساخته‌شده توسط <strong>${data.name}</strong><br>`;
-                reply += `${data.job} از سال ${data.startYear}`;
-
-                if (found.site) {
-                    reply += `<br><br><i class="fas fa-laptop-code"></i> سایت‌ها: ${data.sites.map(s => s.name).join('، ')}`;
-                }
-                if (found.skill) {
-                    reply += `<br><br><i class="fas fa-code"></i> مهارت‌ها: ${data.skills.join('، ')}`;
-                }
-                if (found.social) {
-                    reply += `<br><br><i class="fas fa-share-alt"></i> اینستاگرام: ${data.social.instagram}`;
-                }
-                return reply;
-            }
-
-            // ---- اگر سایت‌ها ----
-            if (found.site) {
+            // سایت‌ها
+            if (lower.includes('سایت') || lower.includes('پروژه') || lower.includes('zerox') ||
+                lower.includes('کالفود') || lower.includes('کوروش') || lower.includes('گیم') ||
+                lower.includes('نمونه کار')) {
                 let reply = `<i class="fas fa-laptop-code"></i> <strong>سایت‌های ${data.name}:</strong><br>`;
                 data.sites.forEach(s => {
                     reply += `
@@ -742,14 +692,12 @@
                 </div>
               `;
                 });
-                if (found.creator || text.includes('سازنده')) {
-                    reply += `<br><span style="color:#b0a99b;font-size:0.7rem;">👤 سازنده: <strong>${data.name}</strong></span>`;
-                }
                 return reply;
             }
 
-            // ---- اگر طراحی‌ها ----
-            if (found.design) {
+            // طراحی‌ها
+            if (lower.includes('طراحی') || lower.includes('گرافیک') || lower.includes('هنری') ||
+                lower.includes('عکس') || lower.includes('تصویر') || lower.includes('یا علی') || lower.includes('اهواز')) {
                 let reply = `<i class="fas fa-palette"></i> <strong>طراحی‌های ${data.name}:</strong><br>`;
                 data.designs.forEach(d => {
                     reply += `
@@ -765,8 +713,9 @@
                 return reply;
             }
 
-            // ---- اگر مهارت‌ها ----
-            if (found.skill) {
+            // مهارت‌ها
+            if (lower.includes('مهارت') || lower.includes('تخصص') || lower.includes('چی بلدی') ||
+                lower.includes('توانایی') || lower.includes('چه کارهایی')) {
                 let reply = `<i class="fas fa-code"></i> <strong>مهارت‌های ${data.name}:</strong><br>`;
                 data.skills.forEach(s => {
                     reply += `🔹 ${s}<br>`;
@@ -774,62 +723,51 @@
                 return reply;
             }
 
-            // ---- اگر برنامه‌ها ----
-            if (found.app) {
+            // برنامه‌ها
+            if (lower.includes('برنامه') || lower.includes('اپ') || lower.includes('اپلیکیشن')) {
                 return `<i class="fas fa-puzzle-piece"></i> برنامه‌ها: ${data.apps}`;
             }
 
-            // ---- اگر همه رو خواست ----
-            if (found.all || text.includes('همه چیز') || text.includes('کامل')) {
+            // ارتباط
+            if (lower.includes('ارتباط') || lower.includes('تماس') || lower.includes('راه')) {
                 return `
-              <i class="fas fa-robot"></i> <strong>همه چیز درباره ${data.name}:</strong><br><br>
-              <i class="fas fa-user-astronaut"></i> <strong>معرفی:</strong> ${data.job} از سال ${data.startYear}<br>
-              <i class="fas fa-heart" style="color:#f5b042;"></i> <strong>هدف:</strong> ${data.goal}<br><br>
-              <i class="fas fa-laptop-code"></i> <strong>سایت‌ها:</strong> ${data.sites.map(s => s.name).join('، ')}<br>
-              <i class="fas fa-palette"></i> <strong>طراحی‌ها:</strong> ${data.designs.map(d => d.name).join('، ')}<br>
-              <i class="fas fa-code"></i> <strong>مهارت‌ها:</strong> ${data.skills.join('، ')}<br>
-              <i class="fab fa-instagram"></i> <strong>اینستاگرام:</strong> ${data.social.instagram}
+              <i class="fas fa-share-alt"></i> <strong>راه‌های ارتباطی:</strong><br>
+              <div class="social-links">
+                <a href="${data.social.telegram}" target="_blank"><i class="fab fa-telegram-plane"></i> تلگرام</a>
+                <a href="${data.social.instagram}" target="_blank"><i class="fab fa-instagram"></i> اینستاگرام</a>
+              </div>
             `;
             }
 
-            // ---- اگر سلام ----
-            if (found.greeting) {
-                let reply = `<i class="fas fa-hand-peace"></i> سلام! خوش اومدی به <strong>MH Assistant</strong>.`;
-                if (found.help) {
-                    reply += `<br><span style="color:#b0a99b;font-size:0.7rem;">هر چیزی بپرس، پردازش میکنم!</span>`;
+            // ===== 2. پاسخ‌های کلی (برای سوالات بی‌ربط) =====
+
+            for (const [key, reply] of Object.entries(generalReplies)) {
+                if (lower.includes(key)) {
+                    return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${reply}`;
                 }
-                return reply;
             }
 
-            // ---- اگر احوالپرسی ----
-            if (found.feeling) {
+            // ===== 3. سلام و احوالپرسی =====
+            if (lower.includes('سلام') || lower.includes('درود') || lower.includes('الو')) {
+                return `<i class="fas fa-hand-peace"></i> سلام! خوش اومدی به <strong>MH Assistant</strong>.`;
+            }
+
+            if (lower.includes('خوب') || lower.includes('چطوری') || lower.includes('حالت')) {
                 return `<i class="fas fa-smile"></i> ممنون! من <strong>MH Assistant</strong> هستم و عالی‌ام.`;
             }
 
-            // ---- اگر تشکر ----
-            if (found.thank) {
+            if (lower.includes('ممنون') || lower.includes('مرسی') || lower.includes('متشکرم')) {
                 return `<i class="fas fa-heart" style="color:#f5b042;"></i> خواهش می‌کنم! خوشحالم که کمک کردم.`;
             }
 
-            // ---- اگر درخواست کمک ----
-            if (found.help) {
-                return `
-              <i class="fas fa-robot"></i> <strong>چطور می‌تونم کمک کنم؟</strong><br>
-              می‌تونی از اینا بپرسی:<br>
-              <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span>
-            `;
-            }
-
-            // ===== پاسخ پیش‌فرض (هر چیزی که تشخیص نداد) =====
+            // ===== 4. پاسخ پیش‌فرض هوشمند (برای هر چیزی که تشخیص نداد) =====
             return `
             <i class="fas fa-robot"></i> <strong>من MH Assistant هستم!</strong><br>
-            جمله "<strong>${text}</strong>" رو کلمه به کلمه پردازش کردم.<br><br>
-            کلماتی که تشخیص دادم:<br>
-            <span style="color:#f5b042;font-size:0.7rem;">
-              ${words.map(w => `"${w}"`).join(' • ')}
-            </span><br><br>
-            می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span>
+            سوال "<strong>${text}</strong>" رو دریافت کردم.<br><br>
+            راستش من تخصص‌م درباره <strong>${data.name}</strong> و کارهاش هست.<br>
+            ولی می‌تونم از اینا بپرسی:<br>
+            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span><br><br>
+            <span style="color:#b0a99b;font-size:0.65rem;">یا هر چیزی مثل <strong style="color:#f5b042;">فیلم</strong>، <strong style="color:#f5b042;">غذا</strong>، <strong style="color:#f5b042;">ورزش</strong> بپرس، نظرمو میگم!</span>
           `;
         }
 
@@ -887,7 +825,7 @@
             if (!typing) {
                 typing = document.createElement('div');
                 typing.className = 'typing-indicator';
-                typing.innerHTML = '<i class="fas fa-robot"></i> در حال پردازش کلمات...';
+                typing.innerHTML = '<i class="fas fa-robot"></i> در حال پردازش...';
                 messagesBox.appendChild(typing);
             }
             typing.classList.add('show');
