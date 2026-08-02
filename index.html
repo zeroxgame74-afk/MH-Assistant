@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | در حال به‌روزرسانی</title>
+    <title>MH Assistant | دستیار شخصی</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -115,14 +115,20 @@
         }
         .chat-status i {
             font-size: 0.4rem;
-            color: #f5b042;
-            animation: pulseDot 1.2s ease-in-out infinite;
+            color: #4caf50;
+            animation: pulseDot 1.5s ease-in-out infinite;
         }
         @keyframes pulseDot {
-            0%, 100% { opacity: 0.4; transform: scale(0.9); }
-            50% { opacity: 1; transform: scale(1.3); }
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.2;
+                transform: scale(0.6);
+            }
         }
-
         .messages {
             flex: 1;
             overflow-y: auto;
@@ -133,8 +139,6 @@
             padding: 4px 2px;
             min-height: 0;
             scroll-behavior: smooth;
-            justify-content: center; /* مرکز کردن محتوا */
-            align-items: center;
         }
         .messages::-webkit-scrollbar {
             width: 3px;
@@ -146,83 +150,178 @@
             background: rgba(255, 215, 100, 0.2);
             border-radius: 10px;
         }
-
-        /* کادر اطلاع‌رسانی جدید */
-        .update-box {
-            background: rgba(255, 215, 100, 0.04);
-            border: 1px solid rgba(255, 215, 100, 0.12);
-            border-radius: 20px;
-            padding: 24px 20px;
-            max-width: 320px;
-            text-align: center;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            animation: floatUp 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-            margin: 0 4px;
-        }
-        @keyframes floatUp {
-            0% { opacity: 0; transform: translateY(20px) scale(0.96); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .update-box .icon-big {
-            font-size: 3.2rem;
-            color: #f5b042;
-            margin-bottom: 10px;
-            display: block;
-            filter: drop-shadow(0 0 12px rgba(245,176,66,0.2));
-        }
-        .update-box h2 {
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 800;
-            font-size: 1.3rem;
-            background: linear-gradient(145deg, #f5b042, #d48f2b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 6px;
-        }
-        .update-box .sub {
-            color: #d6d0c4;
-            font-size: 0.9rem;
-            font-weight: 400;
-            margin-bottom: 4px;
-            line-height: 1.8;
-        }
-        .update-box .sub i {
-            color: #f5b042;
-            margin: 0 2px;
-        }
-        .update-box .highlight-text {
-            color: #f5b042;
-            font-weight: 600;
-            font-size: 1rem;
-            display: inline-block;
-            margin-top: 6px;
-            padding: 4px 14px;
-            background: rgba(245,176,66,0.06);
-            border-radius: 40px;
-            border: 1px solid rgba(245,176,66,0.08);
-        }
-        .update-box .loader-dots {
+        .message {
             display: flex;
+            gap: 6px;
+            align-items: flex-start;
+            animation: msgIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+            flex-shrink: 0;
+        }
+        .message.bot {
+            flex-direction: row;
+        }
+        .message.user {
+            flex-direction: row-reverse;
+        }
+        @keyframes msgIn {
+            0% {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .message .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
             justify-content: center;
+            font-size: 0.7rem;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 215, 100, 0.06);
+            color: #b0a99b;
+        }
+        .message.bot .avatar {
+            background: rgba(245, 176, 66, 0.12);
+            color: #f5b042;
+            border-color: rgba(245, 176, 66, 0.1);
+        }
+        .message.user .avatar {
+            background: rgba(255, 255, 255, 0.06);
+            color: #eaeef2;
+        }
+        .message .bubble {
+            max-width: 85%;
+            padding: 6px 12px;
+            border-radius: 14px;
+            font-size: 0.8rem;
+            line-height: 1.7;
+            word-break: break-word;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 100, 0.06);
+            color: #d6d0c4;
+        }
+        .message.bot .bubble {
+            background: rgba(255, 215, 100, 0.04);
+            border-color: rgba(255, 215, 100, 0.08);
+            border-top-right-radius: 4px;
+        }
+        .message.user .bubble {
+            background: rgba(245, 176, 66, 0.08);
+            border-color: rgba(245, 176, 66, 0.12);
+            border-top-left-radius: 4px;
+            color: #f5efe6;
+        }
+        .message .bubble strong {
+            color: #f5b042;
+        }
+        .message .bubble i {
+            color: #f5b042;
+            margin-left: 2px;
+        }
+
+        .site-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 100, 0.08);
+            border-radius: 10px;
+            padding: 6px 8px;
+            margin: 4px 0;
+            display: flex;
+            align-items: center;
             gap: 8px;
-            margin-top: 14px;
+            flex-wrap: wrap;
         }
-        .update-box .loader-dots span {
-            width: 10px;
-            height: 10px;
-            background: #f5b042;
-            border-radius: 50%;
-            display: inline-block;
-            animation: bounceDot 1.4s infinite ease-in-out both;
+        .site-card .site-img {
+            width: 34px;
+            height: 34px;
+            border-radius: 6px;
+            object-fit: cover;
+            background: #0b0b0e;
+            flex-shrink: 0;
         }
-        .update-box .loader-dots span:nth-child(1) { animation-delay: 0s; }
-        .update-box .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
-        .update-box .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes bounceDot {
-            0%, 80%, 100% { transform: scale(0.4); opacity: 0.3; }
-            40% { transform: scale(1); opacity: 1; }
+        .site-card .site-info {
+            flex: 1;
+            min-width: 50px;
+        }
+        .site-card .site-info .site-name {
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+            color: #f5efe6;
+            font-size: 0.75rem;
+        }
+        .site-card .site-info .site-desc {
+            font-size: 0.6rem;
+            color: #b0a99b;
+        }
+        .site-card .site-link {
+            color: #f5b042;
+            text-decoration: none;
+            font-size: 0.55rem;
+            font-weight: 600;
+            padding: 2px 10px;
+            border: 1px solid rgba(245, 176, 66, 0.15);
+            border-radius: 40px;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            flex-shrink: 0;
+        }
+        .site-card .site-link:hover {
+            background: rgba(245, 176, 66, 0.08);
+            border-color: #f5b042;
+        }
+
+        .design-mini {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 215, 100, 0.06);
+            border-radius: 8px;
+            padding: 4px 8px;
+            margin: 3px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .design-mini .d-icon {
+            font-size: 0.9rem;
+            color: #f5b042;
+        }
+        .design-mini .d-name {
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 600;
+            color: #f5efe6;
+            font-size: 0.7rem;
+        }
+        .design-mini .d-desc {
+            font-size: 0.55rem;
+            color: #b0a99b;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 4px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+        .social-links a {
+            color: #f5b042;
+            text-decoration: none;
+            background: rgba(255, 215, 100, 0.05);
+            padding: 2px 10px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 215, 100, 0.1);
+            font-size: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .social-links a:hover {
+            background: rgba(245, 176, 66, 0.1);
         }
 
         .quick-replies {
@@ -231,7 +330,6 @@
             gap: 4px;
             margin-bottom: 6px;
             flex-shrink: 0;
-            justify-content: center;
         }
         .quick-replies button {
             background: rgba(255, 255, 255, 0.03);
@@ -242,24 +340,22 @@
             font-family: 'Vazirmatn', sans-serif;
             font-size: 0.6rem;
             font-weight: 600;
-            cursor: default; /* غیرفعال */
+            cursor: pointer;
+            transition: 0.3s;
             display: inline-flex;
             align-items: center;
             gap: 4px;
             white-space: nowrap;
-            opacity: 0.6;
-            filter: grayscale(0.3);
-            transition: 0.2s;
         }
         .quick-replies button i {
             color: #f5b042;
             font-size: 0.55rem;
         }
         .quick-replies button:hover {
-            transform: none;
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 215, 100, 0.08);
-            color: #b0a99b;
+            background: rgba(245, 176, 66, 0.08);
+            border-color: rgba(245, 176, 66, 0.2);
+            color: #f5efe6;
+            transform: translateY(-2px);
         }
 
         .input-area {
@@ -272,44 +368,165 @@
             padding: 2px 2px 2px 12px;
             transition: 0.3s;
             flex-shrink: 0;
-            opacity: 0.5;
         }
         .input-area:focus-within {
-            border-color: rgba(245, 176, 66, 0.15);
+            border-color: rgba(245, 176, 66, 0.25);
+            background: rgba(255, 255, 255, 0.04);
         }
         .input-area input {
             flex: 1;
             background: transparent;
             border: none;
-            color: #5f5a50;
+            color: #eaeef2;
             font-family: 'Noto Sans Arabic', sans-serif;
             font-size: 0.8rem;
             padding: 8px 0;
             outline: none;
             min-width: 0;
-            cursor: not-allowed;
         }
         .input-area input::placeholder {
-            color: #3d3a33;
+            color: #5f5a50;
         }
         .input-area button {
-            background: rgba(245, 176, 66, 0.15);
+            background: linear-gradient(145deg, #f5b042, #d48f2b);
             border: none;
-            color: #5f5a50;
+            color: #0b0b0e;
             width: 38px;
             height: 38px;
             border-radius: 50%;
             font-size: 0.9rem;
-            cursor: not-allowed;
-            transition: 0.2s;
+            cursor: pointer;
+            transition: 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
         }
         .input-area button:hover {
-            transform: scale(1);
-            background: rgba(245, 176, 66, 0.15);
+            transform: scale(1.05);
+        }
+        .input-area button:active {
+            transform: scale(0.93);
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 3px 10px;
+            background: rgba(255, 215, 100, 0.04);
+            border: 1px solid rgba(255, 215, 100, 0.06);
+            border-radius: 40px;
+            color: #b0a99b;
+            font-size: 0.6rem;
+            align-self: flex-start;
+            margin-bottom: 3px;
+            flex-shrink: 0;
+        }
+        .typing-indicator i {
+            color: #f5b042;
+            animation: pulseIcon 1s ease-in-out infinite;
+        }
+        @keyframes pulseIcon {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+        .typing-indicator.show {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ===== نوتیفیکیشن ===== */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(11, 11, 14, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 100, 0.15);
+            border-radius: 16px;
+            padding: 14px 18px;
+            max-width: 400px;
+            width: 92%;
+            box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: 0.5s ease;
+        }
+        .notification.hide {
+            opacity: 0;
+            transform: translateX(-50%) translateY(30px) scale(0.95);
+            pointer-events: none;
+        }
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(30px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+        }
+        .notification .notif-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+        .notification .notif-header i {
+            font-size: 1.4rem;
+            color: #f5b042;
+        }
+        .notification .notif-header h3 {
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #f5efe6;
+            margin: 0;
+        }
+        .notification .notif-body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+            font-size: 0.8rem;
+            color: #b0a99b;
+            line-height: 1.8;
+        }
+        .notification .notif-body ul {
+            list-style: none;
+            padding-right: 6px;
+            margin: 4px 0;
+        }
+        .notification .notif-body ul li {
+            padding-right: 18px;
+            position: relative;
+            font-size: 0.75rem;
+        }
+        .notification .notif-body ul li i {
+            position: absolute;
+            right: 0;
+            top: 3px;
+            color: #f5b042;
+            font-size: 0.65rem;
+        }
+        .notification .notif-close {
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            background: none;
+            border: none;
+            color: #5f5a50;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .notification .notif-close:hover {
+            color: #f5efe6;
+            transform: rotate(90deg);
         }
 
         @media (max-width: 380px) {
@@ -325,15 +542,9 @@
                 height: 36px;
                 font-size: 1rem;
             }
-            .update-box {
-                padding: 16px 12px;
-                max-width: 260px;
-            }
-            .update-box h2 {
-                font-size: 1.1rem;
-            }
-            .update-box .sub {
-                font-size: 0.75rem;
+            .message .bubble {
+                font-size: 0.7rem;
+                padding: 4px 8px;
             }
             .quick-replies button {
                 font-size: 0.5rem;
@@ -348,13 +559,23 @@
                 height: 32px;
                 font-size: 0.75rem;
             }
+            .notification {
+                padding: 10px 12px;
+                max-width: 96%;
+            }
+            .notification .notif-header h3 {
+                font-size: 0.85rem;
+            }
+            .notification .notif-body {
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="chat-container">
-        <!-- هدر دقیقاً مثل قبل -->
+
         <div class="chat-header">
             <div class="chat-avatar">M</div>
             <div class="chat-title">
@@ -362,54 +583,420 @@
                 <small><i class="fas fa-robot"></i> دستیار شخصی</small>
             </div>
             <div class="chat-status">
-                <i class="fas fa-circle"></i> به‌روزرسانی
+                <i class="fas fa-circle"></i> آنلاین
             </div>
         </div>
 
-        <!-- پیام‌ها: فقط باکس اطلاع‌رسانی -->
         <div class="messages" id="messagesBox">
-            <div class="update-box">
-                <span class="icon-big"><i class="fas fa-brain"></i></span>
-                <h2>در حال ارتقا به هوش مصنوعی</h2>
-                <div class="sub">
-                    <i class="fas fa-cogs"></i> ربات در حال آپدیت است<br>
-                    به‌زودی با <strong>بهترین</strong> هوش مصنوعی <br>
-                    <span style="color:#f5b042;">برمی‌گردیم</span> <i class="fas fa-rocket"></i>
-                </div>
-                <div class="highlight-text">
-                    <i class="fas fa-clock"></i> ۲۰۲۶ · نسخه جدید
-                </div>
-                <div class="loader-dots">
-                    <span></span><span></span><span></span>
+            <div class="message bot">
+                <div class="avatar"><i class="fas fa-robot"></i></div>
+                <div class="bubble">
+                    <i class="fas fa-hand-peace"></i> سلام! من <strong>MH Assistant</strong> هستم.<br>
+                    <span style="color:#f5b042;">دستیار شخصی</span> شما<br><br>
+                    اینجا می‌تونی هر سوالی داری بپرسی:<br>
+                    • <strong>کی هستی؟</strong> — معرفی من<br>
+                    • <strong>سایت‌ها</strong> — لیست سایت‌های طراحی شده<br>
+                    • <strong>طراحی‌ها</strong> — نمونه کارهای هنری<br>
+                    • <strong>مهارت‌ها</strong> — تخصص‌های من<br>
+                    • <strong>اینستاگرام</strong> — لینک پیج<br>
+                    • <strong>تلگرام</strong> — لینک کانال<br>
+                    • <strong>سازنده</strong> — اطلاعات سازنده<br>
+                    • <strong>خرید</strong> — وضعیت فروش<br><br>
+                    <span style="color:#b0a99b;font-size:0.7rem;">👇 هر چیزی بپرس، جواب میدم!</span>
                 </div>
             </div>
         </div>
 
-        <!-- دکمه‌های سریع (غیرفعال) -->
         <div class="quick-replies">
-            <button><i class="fas fa-question"></i> کی هستی؟</button>
-            <button><i class="fas fa-laptop-code"></i> سایت‌ها</button>
-            <button><i class="fas fa-palette"></i> طراحی‌ها</button>
-            <button><i class="fas fa-code"></i> مهارت‌ها</button>
-            <button><i class="fab fa-instagram"></i> اینستا</button>
-            <button><i class="fab fa-telegram-plane"></i> تلگرام</button>
-            <button><i class="fas fa-user-cog"></i> سازنده</button>
-            <button><i class="fas fa-shopping-cart"></i> خرید</button>
+            <button onclick="askQuestion('کی هستی؟')"><i class="fas fa-question"></i> کی هستی؟</button>
+            <button onclick="askQuestion('سایت‌ها')"><i class="fas fa-laptop-code"></i> سایت‌ها</button>
+            <button onclick="askQuestion('طراحی‌ها')"><i class="fas fa-palette"></i> طراحی‌ها</button>
+            <button onclick="askQuestion('مهارت‌ها')"><i class="fas fa-code"></i> مهارت‌ها</button>
+            <button onclick="askQuestion('لینک اینستاگرام')"><i class="fab fa-instagram"></i> اینستا</button>
+            <button onclick="askQuestion('لینک تلگرام')"><i class="fab fa-telegram-plane"></i> تلگرام</button>
+            <button onclick="askQuestion('سازنده تو کیه؟')"><i class="fas fa-user-cog"></i> سازنده</button>
+            <button onclick="askQuestion('امکان خرید هست؟')"><i class="fas fa-shopping-cart"></i> خرید</button>
+            <button onclick="askQuestion('بهترین فیلم')"><i class="fas fa-film"></i> فیلم</button>
+            <button onclick="askQuestion('رنگ مورد علاقت')"><i class="fas fa-palette"></i> رنگ</button>
         </div>
 
-        <!-- ورودی غیرفعال -->
         <div class="input-area">
-            <input type="text" id="userInput" placeholder="در حال به‌روزرسانی ..." autocomplete="off" disabled>
-            <button>
+            <input type="text" id="userInput" placeholder="هر چیزی بپرس..." autocomplete="off">
+            <button onclick="sendMessage()">
                 <i class="fas fa-paper-plane"></i>
             </button>
+        </div>
+
+    </div>
+
+    <!-- ===== نوتیفیکیشن یک‌باره ===== -->
+    <div class="notification" id="updateNotif">
+        <button class="notif-close" onclick="closeNotification()"><i class="fas fa-times"></i></button>
+        <div class="notif-header">
+            <i class="fas fa-gem"></i>
+            <h3>🎉 آپدیت جدید!</h3>
+        </div>
+        <div class="notif-body">
+            <span style="color:#f5b042;font-weight:600;">نسخه ۲.۰</span>
+            <ul>
+                <li><i class="fas fa-check-circle"></i> پاسخ‌دهی هوشمند به همه سوالات</li>
+                <li><i class="fas fa-check-circle"></i> تشخیص اشتباهات املایی</li>
+                <li><i class="fas fa-check-circle"></i> اضافه شدن پاسخ‌های ثابت (سازنده، شماره، خرید)</li>
+                <li><i class="fas fa-check-circle"></i> دیکشنری ۵۰+ سوال تصادفی</li>
+                <li><i class="fas fa-check-circle"></i> طراحی جدید و ریسپانسیو</li>
+                <li><i class="fas fa-check-circle"></i> نمایش سایت‌ها با عکس و لینک</li>
+            </ul>
         </div>
     </div>
 
     <script>
-        // (اختیاری) فقط برای نمایش پیام خوش‌آمد در کنسول
-        console.log('MH Assistant | در حال به‌روزرسانی به هوش مصنوعی پیشرفته');
-        // همه چیز غیرفعال است، فقط نمایش اطلاع‌رسانی
+        // ============================================================
+        //  نوتیفیکیشن یک‌باره
+        // ============================================================
+        const APP_VERSION = '2.0';
+        const notif = document.getElementById('updateNotif');
+
+        function closeNotification() {
+            notif.classList.add('hide');
+            setTimeout(() => {
+                notif.style.display = 'none';
+            }, 500);
+        }
+
+        // بررسی نسخه
+        const hasSeen = localStorage.getItem('mhs_notification_version');
+        if (hasSeen !== APP_VERSION) {
+            notif.style.display = 'block';
+            // بعد از ۱۰ ثانیه خودش بسته بشه
+            setTimeout(() => {
+                closeNotification();
+            }, 10000);
+            localStorage.setItem('mhs_notification_version', APP_VERSION);
+        } else {
+            notif.style.display = 'none';
+        }
+
+        // ============================================================
+        //  دیتابیس اصلی
+        // ============================================================
+        const data = {
+            name: 'mohamad hossein snti',
+            job: 'توسعه‌دهنده وب و طراح گرافیک',
+            startYear: '۱۴۰۳',
+            skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js'],
+
+            sites: [{
+                name: 'ZEROX',
+                desc: 'پلتفرم تخصصی گیم و اخبار',
+                link: 'https://zeroxgame74-afk.github.io/zeroxgamee/',
+                img: 'https://uploadkon.ir/uploads/511301_26Zerox-۱۲۱۲.jpg'
+            }, {
+                name: 'کالفود',
+                desc: 'پلتفرم سفارش غذای لذیذ',
+                link: 'https://zeroxgame74-afk.github.io/call-food.ir/',
+                img: 'https://uploadkon.ir/uploads/481d01_26call-food-۱۲۱۲۳.jpg'
+            }, {
+                name: 'کوروش گیم',
+                desc: 'فروشگاه اکانت گیم',
+                link: 'https://zeroxgame74-afk.github.io/Kourosh-Game.ir/',
+                img: 'https://uploadkon.ir/uploads/d66b01_26Kourosh-Gameir۱۲.jpg'
+            }],
+
+            designs: [
+                { name: 'گفتند زلف یار...', desc: 'ادای احترام به نام علی (ع)' },
+                { name: 'اهواز... خاک غسل‌شده', desc: 'یاد شهدای جنوب ایران' }
+            ],
+
+            apps: 'در حال توسعه',
+
+            social: {
+                telegram: 'https://t.me/@mohamad_hossein_ev18',
+                instagram: 'https://www.instagram.com/mohamad_hossein_ev18'
+            }
+        };
+
+        // ============================================================
+        //  دیکشنری کامل
+        // ============================================================
+        const allReplies = {
+
+            // ===== پاسخ‌های ثابت =====
+            'سازنده': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
+            'سازندش': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
+            'سازندت': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
+            'شماره': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
+            'شمارش': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
+            'خرید': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
+            'فروش': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
+
+            // ===== کی هستی =====
+            'کی هستی': 'من <strong>MH Assistant</strong> هستم! دستیار شخصی شما، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
+            'هستی': 'من <strong>MH Assistant</strong> هستم! دستیار شخصی شما 🤖',
+
+            // ===== اینستاگرام =====
+            'اینستا': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
+            'اینستاگرام': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
+
+            // ===== تلگرام =====
+            'تلگرام': 'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
+
+            // ===== سایت‌ها =====
+            'سایت': 'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+            'پروژه': 'پروژه‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+
+            // ===== طراحی‌ها =====
+            'طراحی': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
+
+            // ===== مهارت‌ها =====
+            'مهارت': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js 💻',
+
+            // ===== برنامه‌ها =====
+            'برنامه': 'برنامه‌ها: در حال توسعه 📱',
+
+            // ===== ارتباط =====
+            'ارتباط': 'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
+
+            // ===== همه چیز =====
+            'همه چیز': 'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
+
+            // ===== سوالات تصادفی =====
+            'رنگ': 'رنگ مورد علاقه‌ام طلاییه، چون نماد انرژی و موفقیت 🌟',
+            'غذا': 'پیتزا و کباب! ولی پیتزا مخصوصاً با پپرونی 🍕',
+            'فیلم': 'فیلم‌های کریستوفر نولان مثل «تلقین» و «میان‌ستاره‌ای» 🎬',
+            'کتاب': '«هزار توی خورشید» و «شازده کوچولو» 📚',
+            'موسیقی': 'موسیقی سنتی ایرانی و پاپ خوب 🎵',
+            'ورزش': 'والیبال و فوتبال رو دوست دارم 🏐⚽',
+            'سریال': '«بازی تاج و تخت» و «بریکینگ بد» 📺',
+            'بازی': 'بازی‌های استراتژی و ماجراجویی 🎮',
+            'هوا': 'آب و هوا رو نمیدونم! ولی اگه بارونه چایی داغ عالیه ☕',
+            'بارون': 'بارون که میاد، دلم برای خونه تنگ میشه 🌧️',
+            'برف': 'برف بازی و آدم برفی یادت نره ❄️',
+            'بهار': 'بهار فصل زیباییه! گلها میشکفن 🌸',
+            'تابستان': 'تابستون گرمه، برو دریا یا استخر 🏖️',
+            'پاییز': 'پاییز فصل رنگارنگه! برگای زرد و نارنجی 🍂',
+            'زمستان': 'زمستون سرده، ولی چایی داغ حال میده ☕',
+            'برنامه نویسی': 'برنامه‌نویسی دنیای بی‌نهایته! هر روز یه چالش جدید 💻',
+            'هوش مصنوعی': 'هوش مصنوعی آینده‌ست! من خودم یه نمونه‌اش هستم 🤖',
+            'کامپیوتر': 'کامپیوتر بهترین دوست یه برنامه‌نویس 💻',
+            'گوشی': 'گوشی ابزار پرکاربرد امروز. ولی زندگی واقعی مهمتره 📱',
+            'اینترنت': 'اینترنت دنیای بی‌نهایت اطلاعات. ولی مواظب وقتت باش 🌐',
+            'زندگی': 'زندگی کوتاه و قشنگه! از لحظاتت لذت ببر ❤️',
+            'عشق': 'عشق قشنگترین احساسه! به خودت و دیگران عشق بورز ❤️',
+            'دوستی': 'دوستی یه گنج ارزشمنده. قدر دوستات رو بدون 🤗',
+            'خانواده': 'خانواده مهمترین چیز زندگیه! همیشه کنارشون باش 👨‍👩‍👧‍👦',
+            'موفقیت': 'موفقیت با تلاش و پشتکار به دست میاد 🏆',
+            'شادی': 'شادی در چیزهای کوچیکه! لبخند بزن 😊',
+            'آرامش': 'آرامش درون خودته. مدیتیشن کن 🧘',
+            'امید': 'امید همیشه هست! هیچوقت ناامید نشو 🌈',
+
+            // ===== سلام و احوالپرسی =====
+            'سلام': 'سلام! <strong>MH Assistant</strong> هستم. چطور می‌تونم کمک کنم؟ 👋',
+            'درود': 'درود! <strong>MH Assistant</strong> هستم. چطور می‌تونم کمک کنم؟ 👋',
+            'چطوری': 'ممنون! عالی‌ام. تو چطوری؟ 😊',
+            'حالت': 'ممنون! عالی‌ام. تو چطوری؟ 😊',
+            'ممنون': 'خواهش می‌کنم! خوشحالم که کمک کردم ❤️',
+            'مرسی': 'خواهش می‌کنم! خوشحالم که کمک کردم ❤️'
+        };
+
+        // ============================================================
+        //  تابع پیدا کردن نزدیک‌ترین کلمه
+        // ============================================================
+        function findClosestMatch(input, keys) {
+            const words = input.split(/\s+/);
+            let bestMatch = null;
+            let bestScore = 0;
+
+            for (const word of words) {
+                for (const key of keys) {
+                    if (word.includes(key) || key.includes(word)) {
+                        const score = Math.min(word.length, key.length);
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestMatch = key;
+                        }
+                    }
+                    const distance = levenshteinDistance(word, key);
+                    const maxLen = Math.max(word.length, key.length);
+                    const similarity = 1 - (distance / maxLen);
+                    if (similarity > 0.6 && similarity > bestScore) {
+                        bestScore = similarity;
+                        bestMatch = key;
+                    }
+                }
+            }
+            return bestMatch;
+        }
+
+        function levenshteinDistance(a, b) {
+            const matrix = [];
+            for (let i = 0; i <= b.length; i++) {
+                matrix[i] = [i];
+            }
+            for (let j = 0; j <= a.length; j++) {
+                matrix[0][j] = j;
+            }
+            for (let i = 1; i <= b.length; i++) {
+                for (let j = 1; j <= a.length; j++) {
+                    if (b[i - 1] === a[j - 1]) {
+                        matrix[i][j] = matrix[i - 1][j - 1];
+                    } else {
+                        matrix[i][j] = Math.min(
+                            matrix[i - 1][j - 1] + 1,
+                            matrix[i][j - 1] + 1,
+                            matrix[i - 1][j] + 1
+                        );
+                    }
+                }
+            }
+            return matrix[b.length][a.length];
+        }
+
+        // ============================================================
+        //  موتور پاسخگویی
+        // ============================================================
+        function getReply(input) {
+            const text = input.trim();
+            const lower = text.toLowerCase();
+
+            if (!text) {
+                return `چیزی ننوشتی! یه سوال بپرس.`;
+            }
+
+            const allKeys = Object.keys(allReplies);
+            const matchedKey = findClosestMatch(lower, allKeys);
+
+            if (matchedKey && allReplies[matchedKey]) {
+                if (matchedKey === 'سایت' || matchedKey === 'پروژه') {
+                    let reply = `<i class="fas fa-laptop-code"></i> <strong>سایت‌ها:</strong><br>`;
+                    data.sites.forEach(s => {
+                        reply += `
+                    <div class="site-card">
+                      <img class="site-img" src="${s.img}" onerror="this.style.display='none'">
+                      <div class="site-info">
+                        <div class="site-name">${s.name}</div>
+                        <div class="site-desc">${s.desc}</div>
+                      </div>
+                      <a href="${s.link}" target="_blank" class="site-link">
+                        <i class="fas fa-external-link-alt"></i> مشاهده
+                      </a>
+                    </div>
+                  `;
+                    });
+                    return reply;
+                }
+
+                if (matchedKey === 'طراحی') {
+                    let reply = `<i class="fas fa-palette"></i> <strong>طراحی‌ها:</strong><br>`;
+                    data.designs.forEach(d => {
+                        reply += `
+                    <div class="design-mini">
+                      <div class="d-icon"><i class="fas fa-paint-brush"></i></div>
+                      <div>
+                        <div class="d-name">${d.name}</div>
+                        <div class="d-desc">${d.desc}</div>
+                      </div>
+                    </div>
+                  `;
+                    });
+                    return reply;
+                }
+
+                if (matchedKey === 'مهارت') {
+                    let reply = `<i class="fas fa-code"></i> <strong>مهارت‌ها:</strong><br>`;
+                    data.skills.forEach(s => {
+                        reply += `🔹 ${s}<br>`;
+                    });
+                    return reply;
+                }
+
+                return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${allReplies[matchedKey]}`;
+            }
+
+            return `
+            <i class="fas fa-robot"></i> <strong>MH Assistant</strong> - دستیار شخصی<br><br>
+            سوال "<strong>${text}</strong>" رو دریافت کردم.<br><br>
+            می‌تونی از اینا بپرسی:<br>
+            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">سازنده</span>
+          `;
+        }
+
+        // ============================================================
+        //  توابع اصلی
+        // ============================================================
+        const messagesBox = document.getElementById('messagesBox');
+        const userInput = document.getElementById('userInput');
+        let isTyping = false;
+
+        function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text || isTyping) return;
+
+            addMessage('user', text);
+            userInput.value = '';
+            userInput.focus();
+
+            isTyping = true;
+            showTyping();
+
+            setTimeout(() => {
+                hideTyping();
+                const reply = getReply(text);
+                addMessage('bot', reply);
+                isTyping = false;
+            }, 400);
+        }
+
+        function askQuestion(text) {
+            userInput.value = text;
+            sendMessage();
+        }
+
+        function addMessage(type, content) {
+            const div = document.createElement('div');
+            div.className = `message ${type}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar';
+            avatar.innerHTML = type === 'bot' ? '<i class="fas fa-robot"></i>' : '<i class="fas fa-user"></i>';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.innerHTML = content;
+
+            div.appendChild(avatar);
+            div.appendChild(bubble);
+            messagesBox.appendChild(div);
+            messagesBox.scrollTop = messagesBox.scrollHeight;
+        }
+
+        function showTyping() {
+            let typing = document.querySelector('.typing-indicator');
+            if (!typing) {
+                typing = document.createElement('div');
+                typing.className = 'typing-indicator';
+                typing.innerHTML = '<i class="fas fa-robot"></i> در حال پردازش...';
+                messagesBox.appendChild(typing);
+            }
+            typing.classList.add('show');
+            messagesBox.scrollTop = messagesBox.scrollHeight;
+        }
+
+        function hideTyping() {
+            const typing = document.querySelector('.typing-indicator');
+            if (typing) typing.classList.remove('show');
+        }
+
+        userInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        window.addEventListener('load', function() {
+            messagesBox.scrollTop = messagesBox.scrollHeight;
+        });
     </script>
+
 </body>
-</html>
+    </html>
