@@ -174,7 +174,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۲۴.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۲۴.۱.۰</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -208,6 +208,8 @@
             <button onclick="askQuestion('بهترین غذا؟')"><i class="fas fa-utensils"></i> غذا</button>
             <button onclick="askQuestion('بهترین رنگ؟')"><i class="fas fa-palette"></i> رنگ</button>
             <button onclick="askQuestion('بهترین موسیقی؟')"><i class="fas fa-music"></i> موسیقی</button>
+            <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
+            <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
         </div>
 
         <div class="input-area">
@@ -230,16 +232,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۲۴.۰</span>
+                <span class="version">نسخه ۲۴.۱.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> دیکشنری ۲۰۰۰+ کلمه</li>
-                <li><i class="fas fa-check-circle"></i> ۵۰+ موضوع جدید</li>
-                <li><i class="fas fa-check-circle"></i> پاسخ‌های متنوع‌تر</li>
-                <li><i class="fas fa-check-circle"></i> موتور تشخیص قوی‌تر</li>
-                <li><i class="fas fa-check-circle"></i> پوشش کامل سوالات</li>
+                <li><i class="fas fa-check-circle"></i> رفع باگ پاسخگویی</li>
+                <li><i class="fas fa-check-circle"></i> تقویت موتور تشخیص</li>
+                <li><i class="fas fa-check-circle"></i> اضافه شدن ۲۰+ کلمه جدید</li>
+                <li><i class="fas fa-check-circle"></i> بهبود دقت پاسخ‌ها</li>
+                <li><i class="fas fa-check-circle"></i> نسخه‌بندی جدید (۲۴.۱.۰)</li>
             </ul>
         </div>
     </div>
@@ -248,7 +250,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '24.0';
+        const APP_VERSION = '24.1.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -433,8 +435,8 @@
             'دوست': 'دوستای خوب مثل گنج هستن، ازشون مراقبت کن 💎',
             'پول': 'پول مهمه ولی مهم‌تر از اون، سلامتی و آرامشه 💰',
             'آینده': 'آینده مال کساییه که امروز برایش تلاش میکنن 🌟',
-            'هدف': 'هدف یعنی مسیر، مسیر یعنی زندگی 🎯',
-            'انگیزه': 'انگیزه مثل آتشه، باید همیشه روشن نگهش داشت 🔥',
+            'هدف': 'هدف من اینه که بهت کمک کنم و بهترین پاسخ رو بدم 🎯',
+            'انگیزه': 'انگیزه من کمک به تو و یادگیری چیزای جدید هست 🔥',
             'امتحان': 'امتحان یعنی فرصت، پس بهترین خودتو نشون بده 📝',
             'مدرسه': 'مدرسه جای یادگیری و رشد کردن 🏫',
             'دانشگاه': 'دانشگاه شروع یه مسیر جدید و هیجان‌انگیزه 🎓',
@@ -444,6 +446,22 @@
             'هنرمند': 'هنرمند یعنی زیبایی، یعنی خلق کردن 🎨',
             'نویسنده': 'نویسنده یعنی کلمه، یعنی داستان، یعنی زندگی 📝',
             'شاعر': 'شاعر یعنی احساس، یعنی عشق، یعنی واژه‌ها 📜',
+
+            // ====== کلمات جدید (۲۴.۱.۰) ======
+            'هدف': 'هدف من اینه که بهترین دستیار برای تو باشم و همیشه کمکت کنم 🎯',
+            'انگیزه': 'انگیزه‌ام اینه که هر روز بهتر از دیروز بشم و بهت کمک کنم 🔥',
+            'چشم': 'چشم داداش! هر چی بگی انجام میدم 😉',
+            'باشه': 'باشه داداش! به حرفت گوش میدم 🙏',
+            'خوبه': 'خوبه! خوشحالم که راضی هستی 😊',
+            'عالی': 'عالی! این حس خوب رو حفظ کن 🌟',
+            'باحال': 'باحال! ممنون که这么好的 نظری داری 😎',
+            'خفن': 'خفن! این تعریف رو ازت قبول دارم 🔥',
+            'قشنگ': 'قشنگ! مثل خودت 😄',
+            'زیبا': 'زیبا! ممنون که اینو گفتی 🌸',
+            'ممنونم': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
+            'مرسیی': 'خواهش می‌کنم داداش! ❤️',
+            'تشکر': 'خواهش می‌کنم! 🙏',
+            'سپاس': 'سپاسگزارم! خوشحالم که راضی هستی 🌹',
 
             // ====== سلام و احوالپرسی ======
             'سلام': 'سلام داداش! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟ 👋',
@@ -602,12 +620,14 @@
             for (const word of words) {
                 if (word.length < 2) continue;
 
+                // تطابق کامل
                 if (allReplies[word]) {
                     foundKey = word;
                     foundScore = 10;
                     break;
                 }
 
+                // تطابق جزئی
                 for (const key of Object.keys(allReplies)) {
                     if (word.includes(key) || key.includes(word)) {
                         const score = Math.min(word.length, key.length);
@@ -620,6 +640,7 @@
                 if (foundScore > 5) break;
             }
 
+            // پیدا کردن نزدیک‌ترین کلمه
             if (!foundKey) {
                 const allKeys = Object.keys(allReplies);
                 for (const word of words) {
@@ -632,6 +653,7 @@
                 }
             }
 
+            // بررسی کل جمله
             if (!foundKey) {
                 for (const key of Object.keys(allReplies)) {
                     if (lower.includes(key)) {
@@ -644,6 +666,7 @@
             if (foundKey && allReplies[foundKey]) {
                 let reply = allReplies[foundKey];
 
+                // ===== سایت‌ها =====
                 if (foundKey === 'سایت' || foundKey === 'سایتا' || foundKey === 'پروژه' || foundKey === 'وب') {
                     let siteReply =
                         `<i class="fas fa-laptop-code"></i> <strong>سایت‌های طراحی شده توسط ${data.name}:</strong><br>`;
@@ -664,6 +687,7 @@
                     return siteReply;
                 }
 
+                // ===== طراحی‌ها =====
                 if (foundKey === 'طراحی' || foundKey === 'طراح' || foundKey === 'گرافیک') {
                     let designReply = `<i class="fas fa-palette"></i> <strong>نمونه طراحی‌های هنری:</strong><br>`;
                     data.designs.forEach(d => {
@@ -680,6 +704,7 @@
                     return designReply;
                 }
 
+                // ===== مهارت‌ها =====
                 if (foundKey === 'مهارت' || foundKey === 'تخصص' || foundKey === 'چی بلدی') {
                     let skillReply = `<i class="fas fa-code"></i> <strong>مهارت‌های ${data.name}:</strong><br>`;
                     data.skills.forEach(s => {
@@ -688,6 +713,7 @@
                     return skillReply;
                 }
 
+                // ===== اینستاگرام =====
                 if (foundKey === 'اینستا' || foundKey === 'اینستاگرام') {
                     return `
                 <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
@@ -695,6 +721,7 @@
               `;
                 }
 
+                // ===== تلگرام =====
                 if (foundKey === 'تلگرام' || foundKey === 'تلگر') {
                     return `
                 <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
@@ -702,6 +729,7 @@
               `;
                 }
 
+                // ===== کی هستی =====
                 if (foundKey === 'کی هستی' || foundKey === 'هستی' || foundKey === 'چیستی' ||
                     foundKey === 'تو کی' || foundKey === 'کیایی' || foundKey === 'معرفی') {
                     return `
@@ -712,6 +740,7 @@
               `;
                 }
 
+                // ===== همه چیز =====
                 if (foundKey === 'همه چیز' || foundKey === 'کامل') {
                     return `
                 <i class="fas fa-robot"></i> <strong>همه چیز درباره من:</strong><br>
@@ -725,10 +754,11 @@
                 return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${reply}`;
             }
 
+            // ===== پاسخ پیش‌فرض =====
             return `
             🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             راستی داداش، من اینا رو بلدم:<br>
-            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">فتوشاپ</span> • <span style="color:#f5b042;">بلندر</span> • <span style="color:#f5b042;">فیلم</span> • <span style="color:#f5b042;">کتاب</span> • <span style="color:#f5b042;">غذا</span>
+            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">فتوشاپ</span> • <span style="color:#f5b042;">بلندر</span> • <span style="color:#f5b042;">فیلم</span> • <span style="color:#f5b042;">کتاب</span> • <span style="color:#f5b042;">غذا</span> • <span style="color:#f5b042;">هدف</span> • <span style="color:#f5b042;">انگیزه</span>
           `;
         }
 
@@ -849,4 +879,4 @@
     </script>
 
 </body>
-    </html>
+</html>
