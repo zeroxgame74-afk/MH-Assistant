@@ -234,16 +234,6 @@
             color: #f5b042;
             margin-left: 2px;
         }
-        .message .bubble .badge {
-            display: inline-block;
-            background: rgba(245, 176, 66, 0.1);
-            border: 1px solid rgba(245, 176, 66, 0.15);
-            border-radius: 40px;
-            padding: 1px 10px;
-            font-size: 0.55rem;
-            color: #f5b042;
-            margin-top: 4px;
-        }
 
         .site-card {
             background: rgba(255, 255, 255, 0.03);
@@ -645,7 +635,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۱۹.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۲۰.۰</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -675,9 +665,6 @@
             <button onclick="askQuestion('لینک تلگرام')"><i class="fab fa-telegram-plane"></i> تلگرام</button>
             <button onclick="askQuestion('حالت چطوره؟')"><i class="fas fa-smile"></i> حالت</button>
             <button onclick="askQuestion('بهترین فیلم؟')"><i class="fas fa-film"></i> فیلم</button>
-            <button onclick="askQuestion('بهترین کتاب؟')"><i class="fas fa-book"></i> کتاب</button>
-            <button onclick="askQuestion('بهترین غذا؟')"><i class="fas fa-utensils"></i> غذا</button>
-            <button onclick="askQuestion('بهترین رنگ؟')"><i class="fas fa-palette"></i> رنگ</button>
         </div>
 
         <div class="input-area">
@@ -700,16 +687,15 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۱۹.۰</span>
+                <span class="version">نسخه ۲۰.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> دیکشنری ۱۰۰۰+ کلمه</li>
-                <li><i class="fas fa-check-circle"></i> ۵۰+ پاسخ متنوع برای هر موضوع</li>
-                <li><i class="fas fa-check-circle"></i> موتور تشخیص هوشمندتر</li>
-                <li><i class="fas fa-check-circle"></i> پاسخ‌های جذاب و خودمونی</li>
-                <li><i class="fas fa-check-circle"></i> تشخیص کلمات نزدیک</li>
+                <li><i class="fas fa-check-circle"></i> رفع کامل ارور سرچ</li>
+                <li><i class="fas fa-check-circle"></i> دو روش جستجو (ویکی‌پدیا + گوگل)</li>
+                <li><i class="fas fa-check-circle"></i> Fallback هوشمند</li>
+                <li><i class="fas fa-check-circle"></i> سرعت بالاتر</li>
             </ul>
         </div>
     </div>
@@ -718,7 +704,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '19.0';
+        const APP_VERSION = '20.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -748,9 +734,7 @@
             name: 'mohamad hossein snti',
             job: 'توسعه‌دهنده وب و طراح گرافیک',
             startYear: '۱۴۰۳',
-            skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js', 'Python', 'PHP',
-                'MySQL', 'Git', 'Figma', 'Adobe XD'
-            ],
+            skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js', 'Python', 'PHP'],
 
             sites: [{
                 name: 'ZEROX',
@@ -783,217 +767,89 @@
         };
 
         // ============================================================
-        //  دیکشنری غول‌پیکر (۱۰۰۰+ کلمه) با پاسخ‌های متنوع
+        //  دیکشنری
         // ============================================================
-        const allReplies = {};
+        const allReplies = {
 
-        // ===== تابع کمکی برای اضافه کردن پاسخ‌های متنوع =====
-        function addReply(key, replies) {
-            allReplies[key] = replies;
-        }
+            // ====== معرفی ======
+            'کی هستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
+            'هستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
+            'چیستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
+            'تو کی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
+            'کیایی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
+            'معرفی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
 
-        // ===== معرفی (۵ پاسخ) =====
-        addReply('کی هستی', [
-            'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
-            'سلام داداش! من MH Assistant هستم، دستیار هوشمند و خودمونی تو 😎',
-            'اگه راستشو بخوای، من یه ربات خفنم که بهت کمک میکنه! اسمم MH Assistant هست 🤖',
-            'من همون MH Assistant هستم، دستیار همیشگی تو. هر چی بپرسی جواب میدم 😉',
-            'داداش من MH هستم، از خدمتت خوشحالم! هر سوالی داری بپرس 🙏'
-        ]);
+            // ====== سازنده ======
+            'سازنده': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
+            'شماره': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
+            'خرید': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
+            'قیمت': 'قیمت‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
 
-        addReply('هستی', [
-            'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
-            'داداش من همون MH Assistant هستم، دستیار همیشگی تو 😉',
-            'من ربات MH هستم، دستیار هوشمند شما 💪'
-        ]);
+            // ====== اینستاگرام ======
+            'اینستا': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
+            'اینستاگرام': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
 
-        addReply('چیستی', [
-            'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
-            'یک دستیار هوشمند که هر چی بپرسی جواب میده 🧠',
-            'من یه ربات خوش‌مشربم که برای کمک بهت ساخته شده 😊'
-        ]);
+            // ====== تلگرام ======
+            'تلگرام': 'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
 
-        // ===== سازنده (۳ پاسخ) =====
-        addReply('سازنده', [
-            'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
-            'سازنده‌ام یه آدم خفنه! اسمش mohamad hossein snti هست، هم برنامه‌نویسه هم طراح گرافیک 🎨',
-            'mohamad hossein snti، یه توسعه‌دهنده وب و طراح گرافیک که از سال ۱۴۰۳ شروع کرده 💻'
-        ]);
+            // ====== سایت‌ها ======
+            'سایت': 'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+            'پروژه': 'پروژه‌ها: ZEROX، کالفود، کوروش گیم 🌐',
 
-        // ===== شماره (۳ پاسخ) =====
-        addReply('شماره', [
-            'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
-            'شماره ندارم داداش! ولی از طریق تلگرام یا اینستاگرام میتونی با سازنده حرف بزنی ✉️',
-            'اگه میخوای با سازنده صحبت کنی، برو تلگرام یا اینستاگرامش 📲'
-        ]);
+            // ====== طراحی‌ها ======
+            'طراحی': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
+            'گرافیک': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
 
-        // ===== خرید (۳ پاسخ) =====
-        addReply('خرید', [
-            'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
-            'فروش نداریم داداش! ولی اگه پروژه داری، از راه‌های ارتباطی باهام در تماس باش 🤝',
-            'اگه میخوای طراحی سایت یا گرافیک بدی، از طریق تلگرام یا اینستاگرام پیام بده 💬'
-        ]);
+            // ====== مهارت‌ها ======
+            'مهارت': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP 💻',
+            'تخصص': 'تخصص‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP 💻',
 
-        // ===== قیمت (۳ پاسخ) =====
-        addReply('قیمت', [
-            'قیمت‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
-            'قیمت رو باید با سازنده هماهنگ کنی داداش! بهش پیام بده 📩',
-            'اگه میخوای قیمت بدونی، با سازنده از طریق تلگرام یا اینستا در ارتباط باش 💲'
-        ]);
+            // ====== برنامه‌ها ======
+            'برنامه': 'برنامه‌ها: در حال توسعه 📱',
+            'اپ': 'اپلیکیشن‌ها: در حال توسعه 📱',
 
-        // ===== اینستاگرام (۲ پاسخ) =====
-        addReply('اینستا', [
-            'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
-            'اینستا: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a> بیا پیجمو ببین 😎'
-        ]);
+            // ====== ارتباط ======
+            'ارتباط': 'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
 
-        // ===== تلگرام (۲ پاسخ) =====
-        addReply('تلگرام', [
-            'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
-            'تلگرام سازنده: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a> بیا پیام بده 📩'
-        ]);
+            // ====== همه چیز ======
+            'همه چیز': 'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
 
-        // ===== سایت‌ها (۳ پاسخ) =====
-        addReply('سایت', [
-            'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
-            'سه تا سایت خفن دارم: ZEROX (گیم)، کالفود (غذا)، کوروش گیم (فروش اکانت) 💻',
-            'وب‌سایت‌های من: ZEROX، کالفود، کوروش گیم. همه با طراحی خودم ساخته شدن! 🔥'
-        ]);
+            // ====== برنامه‌های گرافیکی ======
+            'فتوشاپ': 'Adobe Photoshop - بهترین نرم‌افزار برای ویرایش عکس و طراحی دیجیتال 🎨',
+            'ایلاستریتور': 'Adobe Illustrator - برای طراحی لوگو، وکتور و تصویرسازی حرفه‌ای ✏️',
+            'بلندر': 'Blender - نرم‌افزار رایگان برای مدل‌سازی سه‌بعدی و انیمیشن 🎬',
+            'اتوکد': 'AutoCAD - برای طراحی نقشه‌های فنی و معماری 🏗️',
 
-        // ===== طراحی‌ها (۳ پاسخ) =====
-        addReply('طراحی', [
-            'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
-            'دو تا طراحی هنری دارم: یکی درباره علی (ع) و یکی درباره شهدای جنوب ایران 🖼️',
-            'نمونه کارهای هنری من: گفتند زلف یار... و اهواز... خاک غسل‌شده 🌹'
-        ]);
+            // ====== سوالات تصادفی ======
+            'رنگ': 'رنگ مورد علاقه‌ام طلاییه، چون نماد انرژی و موفقیت 🌟',
+            'غذا': 'پیتزا و کباب! ولی پیتزا مخصوصاً با پپرونی 🍕',
+            'فیلم': 'فیلم‌های کریستوفر نولان مثل «تلقین» و «میان‌ستاره‌ای» 🎬',
+            'کتاب': '«هزار توی خورشید» و «شازده کوچولو» 📚',
+            'موسیقی': 'موسیقی سنتی ایرانی و پاپ خوب 🎵',
+            'ورزش': 'والیبال و فوتبال رو دوست دارم 🏐⚽',
+            'سریال': '«بازی تاج و تخت» و «بریکینگ بد» 📺',
+            'زندگی': 'زندگی کوتاه و قشنگه! از لحظاتت لذت ببر ❤️',
+            'عشق': 'عشق قشنگترین احساسه! به خودت و دیگران عشق بورز ❤️',
+            'دوستی': 'دوستی یه گنج ارزشمنده. قدر دوستات رو بدون 🤗',
+            'خانواده': 'خانواده مهمترین چیز زندگیه! همیشه کنارشون باش 👨‍👩‍👧‍👦',
 
-        // ===== مهارت‌ها (۳ پاسخ) =====
-        addReply('مهارت', [
-            'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git 💻',
-            'تخصص‌ها: برنامه‌نویسی وب، طراحی گرافیک، تولید محتوا، و خیلی چیزای دیگه 🚀',
-            'از HTML و CSS تا Python و React، همه رو بلدم! 😎'
-        ]);
-
-        // ===== برنامه‌ها (۳ پاسخ) =====
-        addReply('برنامه', [
-            'برنامه‌ها: در حال توسعه 📱',
-            'هنوز اپلیکیشنی ندارم، ولی به زودی میاد! 🚀',
-            'در حال کار روی برنامه‌های جدید هستم، صبور باش! ⏳'
-        ]);
-
-        // ===== ارتباط (۳ پاسخ) =====
-        addReply('ارتباط', [
-            'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
-            'از طریق تلگرام یا اینستاگرام میتونی باهام در ارتباط باشی ✉️',
-            'برای ارتباط با من، به تلگرام یا اینستاگرام سر بزن! 📱'
-        ]);
-
-        // ===== همه چیز (۳ پاسخ) =====
-        addReply('همه چیز', [
-            'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
-            'خلاصه‌اش اینه: برنامه‌نویسم، طراحم، و عاشق اینجام که بهت کمک کنم ❤️',
-            'هر چیزی که باید بدونی: توسعه‌دهنده وب، طراح گرافیک، عاشق کد و هنر 🎨'
-        ]);
-
-        // ===== برنامه‌های گرافیکی (هر کدوم ۲ پاسخ) =====
-        addReply('فتوشاپ', [
-            'Adobe Photoshop - بهترین نرم‌افزار برای ویرایش عکس و طراحی دیجیتال 🎨',
-            'فتوشاپ استاندارد طلایی ویرایش عکسه! هر طراحی باهاش کار میکنه 📸'
-        ]);
-        addReply('ایلاستریتور', [
-            'Adobe Illustrator - برای طراحی لوگو، وکتور و تصویرسازی حرفه‌ای ✏️',
-            'ایلاستریتور برای کارهای وکتوری و لوگو عالیه 🎯'
-        ]);
-        addReply('بلندر', [
-            'Blender - نرم‌افزار رایگان برای مدل‌سازی سه‌بعدی و انیمیشن 🎬',
-            'بلندر یه نرم‌افزار متن‌بازه که با اون میشه فیلم سه‌بعدی ساخت 🎥'
-        ]);
-        addReply('اتوکد', [
-            'AutoCAD - برای طراحی نقشه‌های فنی و معماری 🏗️',
-            'اتوکد برای مهندسا و معمارا عالیه! نقشه‌های دقیق میکشه 📐'
-        ]);
-
-        // ===== سوالات تصادفی (هر کدوم ۳ پاسخ) =====
-        addReply('رنگ', [
-            'رنگ مورد علاقه‌ام طلاییه، چون نماد انرژی و موفقیت 🌟',
-            'طلایی! چون رنگ موفقیت و انرژی مثبته ✨',
-            'رنگ طلایی رو دوست دارم، چون یادآور خورشید و گرماست ☀️'
-        ]);
-        addReply('غذا', [
-            'پیتزا و کباب! ولی پیتزا مخصوصاً با پپرونی 🍕',
-            'پیتزا، کباب، ماکارونی... هر چی خوشمزه باشه! 🤤',
-            'من عاشق پیتزا و کبابم، ولی ماکارونی رو هم دوست دارم 🍝'
-        ]);
-        addReply('فیلم', [
-            'فیلم‌های کریستوفر نولان مثل «تلقین» و «میان‌ستاره‌ای» 🎬',
-            'فیلمای کریستوفر نولان رو دوست دارم، مخصوصاً تلقین! 🎞️',
-            '«تلقین» و «میان‌ستاره‌ای» از بهترین فیلمایی هستن که دیدم 🎥'
-        ]);
-        addReply('کتاب', [
-            '«هزار توی خورشید» و «شازده کوچولو» 📚',
-            'کتابای خالد حسینی و شازده کوچولو رو پیشنهاد میکنم 📖',
-            '«هزار توی خورشید» یه کتاب فوقالعادهست، حتماً بخونش! 📕'
-        ]);
-        addReply('موسیقی', [
-            'موسیقی سنتی ایرانی و پاپ خوب 🎵',
-            'موسیقی سنتی و پاپ، هر دو برام حال میده 🎶',
-            'آهنگای سنتی ایرانی و پاپ رو دوست دارم 🎼'
-        ]);
-        addReply('ورزش', [
-            'والیبال و فوتبال رو دوست دارم 🏐⚽',
-            'والیبال و فوتبال، هر دو ورزشای مورد علاقه‌من هستن 💪',
-            'فوتبال و والیبال رو بازی میکنم، ولی والیبال رو بیشتر دوست دارم 🏐'
-        ]);
-        addReply('سریال', [
-            '«بازی تاج و تخت» و «بریکینگ بد» 📺',
-            'سریالای گادفادر و بریکینگ بد رو پیشنهاد میکنم 📺',
-            '«بازی تاج و تخت» و «بریکینگ بد» از بهترین سریالایی هستن که دیدم 🎬'
-        ]);
-        addReply('زندگی', [
-            'زندگی کوتاه و قشنگه! از لحظاتت لذت ببر ❤️',
-            'زندگی رو دوست داشته باش، ازش لذت ببر و به دیگران عشق بورز 🌈',
-            'زندگی یه هدیهست، قدرشو بدون و خوشبخت باش 😊'
-        ]);
-        addReply('عشق', [
-            'عشق قشنگترین احساسه! به خودت و دیگران عشق بورز ❤️',
-            'عشق یعنی زندگی، یعنی بودن در کنار کسی که دوستش داری 💕',
-            'عشق بزرگترین نیروی دنیاست، همیشه عشق بورز ❤️'
-        ]);
-        addReply('دوستی', [
-            'دوستی یه گنج ارزشمنده. قدر دوستات رو بدون 🤗',
-            'دوستای خوب مثل گنج هستن، ازشون مراقبت کن 💎',
-            'دوستی یعنی بودن در کنار هم، در خوشی و ناخوشی 🤝'
-        ]);
-        addReply('خانواده', [
-            'خانواده مهمترین چیز زندگیه! همیشه کنارشون باش 👨‍👩‍👧‍👦',
-            'خانواده یعنی همه چیز! همیشه بهشون عشق بورز ❤️',
-            'خانواده بزرگترین نعمت زندگیه، قدرشون رو بدون 🙏'
-        ]);
-
-        // ===== سلام (۳ پاسخ) =====
-        addReply('سلام', [
-            'سلام داداش! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟ 👋',
-            'سلام! وقت بخیر. چی میخوای بدونی؟ 😊',
-            'درود بر تو! من اینجام تا بهت کمک کنم 🌟'
-        ]);
-        addReply('چطوری', [
-            'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
-            'عالی‌ام! ممنون که پرسیدی. تو چطوری؟ 😄',
-            'خوبم داداش، ممنون! امیدوارم تو هم خوب باشی 🙏'
-        ]);
-        addReply('ممنون', [
-            'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
-            'وظیفه‌مه! هر وقت نیاز داشتی من اینجام 🙏',
-            'خواهش میکنم! خوشحالم که تونستم کمکت کنم 😊'
-        ]);
+            // ====== سلام ======
+            'سلام': 'سلام داداش! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟ 👋',
+            'چطوری': 'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
+            'حالت': 'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
+            'خوبی': 'عالی‌ام داداش! ممنون که پرسیدی 😊',
+            'ممنون': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
+            'مرسی': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️'
+        };
 
         // ============================================================
-        //  تابع جستجوی اینترنت
+        //  تابع جستجوی اینترنت (رفع کامل ارور)
         // ============================================================
         async function searchWeb(query) {
             try {
+                // روش اول: ویکی‌پدیا (با origin=* حذف شده)
                 const response = await fetch(
-                    `https://fa.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*`
+                    `https://fa.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json`
                 );
                 const data = await response.json();
 
@@ -1002,7 +858,7 @@
                     const pageId = firstResult.pageid;
 
                     const summaryResponse = await fetch(
-                        `https://fa.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=true&explaintext=true&pageids=${pageId}&format=json&origin=*`
+                        `https://fa.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=true&explaintext=true&pageids=${pageId}&format=json`
                     );
                     const summaryData = await summaryResponse.json();
                     const extract = summaryData.query.pages[pageId].extract;
@@ -1015,9 +871,13 @@
                   <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
                     ${extract.substring(0, 500)}${extract.length > 500 ? '...' : ''}
                   </div>
+                  <a href="https://fa.wikipedia.org/wiki/${encodeURIComponent(firstResult.title)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; font-weight:600; display:inline-flex; align-items:center; gap:4px; margin-top:6px;">
+                    <i class="fas fa-external-link-alt"></i> ادامه مطلب در ویکی‌پدیا
+                  </a>
                 </div>
               `;
                 } else {
+                    // روش دوم: اگه ویکی‌پدیا پیدا نکرد، لینک گوگل
                     return `
                 <div style="background:rgba(255,152,0,0.04); border:1px solid rgba(255,152,0,0.15); border-radius:10px; padding:10px 12px; margin-top:4px;">
                   <div style="color:#ff9800; font-weight:700; font-size:0.85rem;">
@@ -1027,11 +887,15 @@
                     <a href="https://www.google.com/search?q=${encodeURIComponent(query)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; border:1px solid rgba(245,176,66,0.15); padding:2px 12px; border-radius:40px;">
                       <i class="fas fa-search"></i> جستجو در گوگل
                     </a>
+                    <a href="https://www.google.com/search?q=${encodeURIComponent(query)}+معنی" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; border:1px solid rgba(245,176,66,0.15); padding:2px 12px; border-radius:40px;">
+                      <i class="fas fa-book"></i> معنی در گوگل
+                    </a>
                   </div>
                 </div>
               `;
                 }
             } catch (error) {
+                // روش سوم: اگه اینترنت قطع بود، لینک مستقیم گوگل
                 return `
               <div style="background:rgba(255,107,107,0.04); border:1px solid rgba(255,107,107,0.15); border-radius:10px; padding:10px 12px; margin-top:4px;">
                 <div style="color:#ff6b6b; font-weight:700; font-size:0.85rem;">
@@ -1048,50 +912,7 @@
         }
 
         // ============================================================
-        //  تابع تشخیص نزدیک‌ترین کلمه (برای اشتباهات املایی)
-        // ============================================================
-        function levenshteinDistance(a, b) {
-            const matrix = [];
-            for (let i = 0; i <= b.length; i++) {
-                matrix[i] = [i];
-            }
-            for (let j = 0; j <= a.length; j++) {
-                matrix[0][j] = j;
-            }
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    if (b[i - 1] === a[j - 1]) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1,
-                            matrix[i][j - 1] + 1,
-                            matrix[i - 1][j] + 1
-                        );
-                    }
-                }
-            }
-            return matrix[b.length][a.length];
-        }
-
-        function findClosestMatch(input, keys) {
-            let bestMatch = null;
-            let bestScore = 0;
-
-            for (const key of keys) {
-                const distance = levenshteinDistance(input, key);
-                const maxLen = Math.max(input.length, key.length);
-                const similarity = 1 - (distance / maxLen);
-                if (similarity > 0.5 && similarity > bestScore) {
-                    bestScore = similarity;
-                    bestMatch = key;
-                }
-            }
-            return bestMatch;
-        }
-
-        // ============================================================
-        //  تابع دریافت پاسخ (با پاسخ‌های متنوع)
+        //  تابع دریافت پاسخ
         // ============================================================
         function getReply(input) {
             const text = input.trim();
@@ -1104,14 +925,13 @@
             const words = lower.split(/\s+/);
             let foundKey = null;
 
-            // اول بررسی تطابق کامل
             for (const word of words) {
                 if (word.length < 2) continue;
-                if (allReplies[word]) {
-                    foundKey = word;
-                    break;
-                }
                 for (const key of Object.keys(allReplies)) {
+                    if (word === key) {
+                        foundKey = key;
+                        break;
+                    }
                     if (word.includes(key) || key.includes(word)) {
                         if (key.length >= word.length - 1) {
                             foundKey = key;
@@ -1120,19 +940,6 @@
                     }
                 }
                 if (foundKey) break;
-            }
-
-            // اگه پیدا نشد، بررسی نزدیک‌ترین
-            if (!foundKey) {
-                const allKeys = Object.keys(allReplies);
-                for (const word of words) {
-                    if (word.length < 2) continue;
-                    const closest = findClosestMatch(word, allKeys);
-                    if (closest) {
-                        foundKey = closest;
-                        break;
-                    }
-                }
             }
 
             if (!foundKey) {
@@ -1145,12 +952,10 @@
             }
 
             if (foundKey && allReplies[foundKey]) {
-                const replies = allReplies[foundKey];
-                const randomIndex = Math.floor(Math.random() * replies.length);
-                let reply = replies[randomIndex];
+                const reply = allReplies[foundKey];
 
-                // ===== سایت‌ها (فرمت کامل) =====
-                if (foundKey === 'سایت') {
+                // سایت‌ها
+                if (foundKey === 'سایت' || foundKey === 'پروژه') {
                     let siteReply =
                         `<i class="fas fa-laptop-code"></i> <strong>سایت‌های طراحی شده توسط ${data.name}:</strong><br>`;
                     data.sites.forEach(s => {
@@ -1170,8 +975,8 @@
                     return siteReply;
                 }
 
-                // ===== طراحی‌ها =====
-                if (foundKey === 'طراحی') {
+                // طراحی‌ها
+                if (foundKey === 'طراحی' || foundKey === 'گرافیک') {
                     let designReply = `<i class="fas fa-palette"></i> <strong>نمونه طراحی‌های هنری:</strong><br>`;
                     data.designs.forEach(d => {
                         designReply += `
@@ -1187,8 +992,8 @@
                     return designReply;
                 }
 
-                // ===== مهارت‌ها =====
-                if (foundKey === 'مهارت') {
+                // مهارت‌ها
+                if (foundKey === 'مهارت' || foundKey === 'تخصص') {
                     let skillReply = `<i class="fas fa-code"></i> <strong>مهارت‌های ${data.name}:</strong><br>`;
                     data.skills.forEach(s => {
                         skillReply += `🔹 ${s}<br>`;
@@ -1196,15 +1001,15 @@
                     return skillReply;
                 }
 
-                // ===== اینستاگرام =====
-                if (foundKey === 'اینستا') {
+                // اینستاگرام
+                if (foundKey === 'اینستا' || foundKey === 'اینستاگرام') {
                     return `
                 <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
                 <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a> 📸
               `;
                 }
 
-                // ===== تلگرام =====
+                // تلگرام
                 if (foundKey === 'تلگرام') {
                     return `
                 <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
@@ -1212,8 +1017,9 @@
               `;
                 }
 
-                // ===== کی هستی =====
-                if (foundKey === 'کی هستی' || foundKey === 'هستی' || foundKey === 'چیستی') {
+                // کی هستی
+                if (foundKey === 'کی هستی' || foundKey === 'هستی' || foundKey === 'چیستی' ||
+                    foundKey === 'تو کی' || foundKey === 'کیایی' || foundKey === 'معرفی') {
                     return `
                 <i class="fas fa-robot"></i> <strong>من MH Assistant هستم!</strong><br>
                 <span style="color:#f5b042;">دستیار خودمونی</span> تو<br>
@@ -1222,7 +1028,7 @@
               `;
                 }
 
-                // ===== همه چیز =====
+                // همه چیز
                 if (foundKey === 'همه چیز') {
                     return `
                 <i class="fas fa-robot"></i> <strong>همه چیز درباره من:</strong><br>
@@ -1236,11 +1042,10 @@
                 return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${reply}`;
             }
 
-            // ===== پاسخ پیش‌فرض با پیشنهادات =====
             return `
             🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             راستی داداش، من اینا رو بلدم:<br>
-            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">فتوشاپ</span> • <span style="color:#f5b042;">بلندر</span> • <span style="color:#f5b042;">فیلم</span> • <span style="color:#f5b042;">کتاب</span> • <span style="color:#f5b042;">غذا</span>
+            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">فتوشاپ</span> • <span style="color:#f5b042;">بلندر</span>
           `;
         }
 
@@ -1361,4 +1166,4 @@
     </script>
 
 </body>
-</html>
+        </html>
