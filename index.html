@@ -440,7 +440,6 @@
             gap: 4px;
         }
 
-        /* ===== نوتیفیکیشن شیشه‌ای ===== */
         .notification {
             position: fixed;
             bottom: 20px;
@@ -448,7 +447,6 @@
             transform: translateX(-50%);
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 215, 100, 0.12);
             border-radius: 20px;
             padding: 16px 20px;
@@ -615,7 +613,7 @@
                 <div class="bubble">
                     <i class="fas fa-hand-peace"></i> سلام! من <strong>MH Assistant</strong> هستم.<br>
                     <span style="color:#f5b042;">دستیار شخصی</span> شما<br><br>
-                    <span style="color:#b0a99b;font-size:0.7rem;">👇 هر چیزی بپرس، جواب میدم!</span>
+                    <span style="color:#b0a99b;font-size:0.7rem;">👇 هر چیزی بپرس، کلمه به کلمه میخونم و جواب میدم!</span>
                 </div>
             </div>
         </div>
@@ -627,9 +625,8 @@
             <button onclick="askQuestion('مهارت‌ها')"><i class="fas fa-code"></i> مهارت‌ها</button>
             <button onclick="askQuestion('لینک اینستاگرام')"><i class="fab fa-instagram"></i> اینستا</button>
             <button onclick="askQuestion('لینک تلگرام')"><i class="fab fa-telegram-plane"></i> تلگرام</button>
-            <button onclick="askQuestion('سازنده')"><i class="fas fa-user-cog"></i> سازنده</button>
-            <button onclick="askQuestion('خرید')"><i class="fas fa-shopping-cart"></i> خرید</button>
-            <button onclick="askQuestion('هدف')"><i class="fas fa-bullseye"></i> هدف</button>
+            <button onclick="askQuestion('بهترین فیلم')"><i class="fas fa-film"></i> فیلم</button>
+            <button onclick="askQuestion('رنگ مورد علاقت')"><i class="fas fa-palette"></i> رنگ</button>
         </div>
 
         <div class="input-area">
@@ -641,7 +638,7 @@
 
     </div>
 
-    <!-- ===== نوتیفیکیشن شیشه‌ای ===== -->
+    <!-- ===== نوتیفیکیشن ===== -->
     <div class="notification" id="updateNotif">
         <button class="notif-close" onclick="closeNotification()"><i class="fas fa-times"></i></button>
         <div class="notif-header">
@@ -650,24 +647,24 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۰</span>
+                <span class="version">نسخه ۴.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> پاسخ‌دهی بر اساس کلمات مهم</li>
-                <li><i class="fas fa-check-circle"></i> بدون دیکشنری از قبل آماده</li>
-                <li><i class="fas fa-check-circle"></i> هر کلمه‌ای رو پردازش میکنه</li>
-                <li><i class="fas fa-check-circle"></i> تشخیص هوشمند کلمات کلیدی</li>
+                <li><i class="fas fa-check-circle"></i> پردازش کلمه به کلمه</li>
+                <li><i class="fas fa-check-circle"></i> حذف شباهت سنجی</li>
+                <li><i class="fas fa-check-circle"></i> پاسخ به هر سوالی</li>
+                <li><i class="fas fa-check-circle"></i> دیکشنری کامل</li>
             </ul>
         </div>
     </div>
 
     <script>
         // ============================================================
-        //  نوتیفیکیشن (۱۰ ثانیه)
+        //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.0';
+        const APP_VERSION = '4.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -691,14 +688,13 @@
         }
 
         // ============================================================
-        //  دیتابیس (فقط اطلاعات)
+        //  دیتابیس اصلی
         // ============================================================
         const data = {
             name: 'mohamad hossein snti',
             job: 'توسعه‌دهنده وب و طراح گرافیک',
             startYear: '۱۴۰۳',
             skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js'],
-            goal: 'ترکیب هنر و تکنولوژی برای خلق فضاهای دیجیتال خاص',
 
             sites: [{
                 name: 'ZEROX',
@@ -731,72 +727,135 @@
         };
 
         // ============================================================
-        //  کلمات مهم (کلیدواژه‌ها) - فقط اینا مهمن
+        //  دیکشنری کامل (بدون شباهت سنجی)
         // ============================================================
-        const keywords = {
-            'سازنده': `سازنده من <strong>${data.name}</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ${data.startYear} 🧑‍💻`,
+        const allReplies = {
+
+            // ====== پاسخ‌های ثابت ======
+            'سازنده': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
             'شماره': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
             'خرید': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
             'قیمت': 'قیمت‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
-            'هدف': `هدف من: <strong>${data.goal}</strong> 🎯`,
-            'اینستا': `لینک اینستاگرام: <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;">${data.social.instagram}</a> 📸`,
-            'اینستاگرام': `لینک اینستاگرام: <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;">${data.social.instagram}</a> 📸`,
-            'تلگرام': `لینک تلگرام: <a href="${data.social.telegram}" target="_blank" style="color:#f5b042;">${data.social.telegram}</a> ✈️`,
+
+            // ====== کی هستی ======
+            'کی هستی': 'من <strong>MH Assistant</strong> هستم! دستیار شخصی شما، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
+
+            // ====== اینستاگرام ======
+            'اینستاگرام': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
+
+            // ====== تلگرام ======
+            'تلگرام': 'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
+
+            // ====== سایت‌ها ======
             'سایت': 'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
-            'پروژه': 'پروژه‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+
+            // ====== طراحی‌ها ======
             'طراحی': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
-            'مهارت': `مهارت‌ها: ${data.skills.join('، ')} 💻`,
+
+            // ====== مهارت‌ها ======
+            'مهارت': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js 💻',
+
+            // ====== برنامه‌ها ======
             'برنامه': 'برنامه‌ها: در حال توسعه 📱',
+
+            // ====== ارتباط ======
             'ارتباط': 'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
-            'کی هستی': `من <strong>MH Assistant</strong> هستم! دستیار شخصی شما، ساخته‌شده توسط <strong>${data.name}</strong> 🤖`,
+
+            // ====== همه چیز ======
+            'همه چیز': 'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
+
+            // ====== سوالات تصادفی ======
+            'رنگ': 'رنگ مورد علاقه‌ام طلاییه، چون نماد انرژی و موفقیت 🌟',
+            'غذا': 'پیتزا و کباب! ولی پیتزا مخصوصاً با پپرونی 🍕',
+            'فیلم': 'فیلم‌های کریستوفر نولان مثل «تلقین» و «میان‌ستاره‌ای» 🎬',
+            'کتاب': '«هزار توی خورشید» و «شازده کوچولو» 📚',
+            'موسیقی': 'موسیقی سنتی ایرانی و پاپ خوب 🎵',
+            'ورزش': 'والیبال و فوتبال رو دوست دارم 🏐⚽',
+            'سریال': '«بازی تاج و تخت» و «بریکینگ بد» 📺',
+            'بازی': 'بازی‌های استراتژی و ماجراجویی 🎮',
+            'هوا': 'آب و هوا رو نمیدونم! ولی اگه بارونه چایی داغ عالیه ☕',
+            'بارون': 'بارون که میاد، دلم برای خونه تنگ میشه 🌧️',
+            'برف': 'برف بازی و آدم برفی یادت نره ❄️',
+            'بهار': 'بهار فصل زیباییه! گلها میشکفن 🌸',
+            'تابستان': 'تابستون گرمه، برو دریا یا استخر 🏖️',
+            'پاییز': 'پاییز فصل رنگارنگه! برگای زرد و نارنجی 🍂',
+            'زمستان': 'زمستون سرده، ولی چایی داغ حال میده ☕',
+            'برنامه نویسی': 'برنامه‌نویسی دنیای بی‌نهایته! هر روز یه چالش جدید 💻',
+            'هوش مصنوعی': 'هوش مصنوعی آینده‌ست! من خودم یه نمونه‌اش هستم 🤖',
+            'کامپیوتر': 'کامپیوتر بهترین دوست یه برنامه‌نویس 💻',
+            'گوشی': 'گوشی ابزار پرکاربرد امروز. ولی زندگی واقعی مهمتره 📱',
+            'اینترنت': 'اینترنت دنیای بی‌نهایت اطلاعات. ولی مواظب وقتت باش 🌐',
+            'زندگی': 'زندگی کوتاه و قشنگه! از لحظاتت لذت ببر ❤️',
+            'عشق': 'عشق قشنگترین احساسه! به خودت و دیگران عشق بورز ❤️',
+            'دوستی': 'دوستی یه گنج ارزشمنده. قدر دوستات رو بدون 🤗',
+            'خانواده': 'خانواده مهمترین چیز زندگیه! همیشه کنارشون باش 👨‍👩‍👧‍👦',
+            'موفقیت': 'موفقیت با تلاش و پشتکار به دست میاد 🏆',
+            'شادی': 'شادی در چیزهای کوچیکه! لبخند بزن 😊',
+            'آرامش': 'آرامش درون خودته. مدیتیشن کن 🧘',
+            'امید': 'امید همیشه هست! هیچوقت ناامید نشو 🌈',
+
+            // ====== سلام و احوالپرسی ======
             'سلام': 'سلام! <strong>MH Assistant</strong> هستم. چطور می‌تونم کمک کنم؟ 👋',
             'چطوری': 'ممنون! عالی‌ام. تو چطوری؟ 😊',
-            'ممنون': 'خواهش می‌کنم! خوشحالم که کمک کردم ❤️'
+            'ممنون': 'خواهش می‌کنم! خوشحالم که کمک کردم ❤️',
+            'مرسی': 'خواهش می‌کنم! خوشحالم که کمک کردم ❤️'
         };
 
         // ============================================================
-        //  تابع پیدا کردن کلمه مهم در جمله
-        // ============================================================
-        function findImportantWord(input) {
-            const words = input.split(/\s+/);
-            const keywordList = Object.keys(keywords);
-
-            // اول بررسی کامل (کلمات ترکیبی مثل "کی هستی")
-            for (const key of keywordList) {
-                if (input.includes(key)) {
-                    return key;
-                }
-            }
-
-            // بعد بررسی کلمه به کلمه
-            for (const word of words) {
-                for (const key of keywordList) {
-                    if (word.includes(key) || key.includes(word)) {
-                        return key;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        // ============================================================
-        //  موتور پاسخگویی (فقط بر اساس کلمات مهم)
+        //  موتور پردازش کلمه به کلمه (بدون شباهت سنجی)
         // ============================================================
         function getReply(input) {
             const text = input.trim();
+            const lower = text.toLowerCase();
 
             if (!text) {
                 return `چیزی ننوشتی! یه سوال بپرس.`;
             }
 
-            // پیدا کردن کلمه مهم
-            const importantWord = findImportantWord(text);
+            // ===== مرحله 1: شکستن به کلمات =====
+            const words = lower.split(/\s+/);
+            let foundKey = null;
 
-            if (importantWord && keywords[importantWord]) {
-                // ===== سایت‌ها (با فرمت کامل) =====
-                if (importantWord === 'سایت' || importantWord === 'پروژه') {
-                    let reply = `<i class="fas fa-laptop-code"></i> <strong>سایت‌های طراحی شده توسط ${data.name}:</strong><br>`;
+            // ===== مرحله 2: بررسی هر کلمه با دیکشنری =====
+            for (const word of words) {
+                // اگه کلمه خیلی کوتاهه (کمتر از ۲ حرف) نادیده بگیر
+                if (word.length < 2) continue;
+
+                for (const key of Object.keys(allReplies)) {
+                    // بررسی تطابق کامل کلمه با کلید
+                    if (word === key) {
+                        foundKey = key;
+                        break;
+                    }
+                    // بررسی اینکه کلمه شامل کلید باشه یا کلید شامل کلمه
+                    if (word.includes(key) || key.includes(word)) {
+                        // اگه کلید طولانی‌تر از کلمه نباشه (برای جلوگیری از تشخیص اشتباه)
+                        if (key.length >= word.length - 1) {
+                            foundKey = key;
+                            break;
+                        }
+                    }
+                }
+                if (foundKey) break;
+            }
+
+            // ===== مرحله 3: اگه کلمه‌ای پیدا نشد، کل جمله رو بررسی کن =====
+            if (!foundKey) {
+                for (const key of Object.keys(allReplies)) {
+                    if (lower.includes(key)) {
+                        foundKey = key;
+                        break;
+                    }
+                }
+            }
+
+            // ===== مرحله 4: پاسخ دادن =====
+            if (foundKey && allReplies[foundKey]) {
+
+                // ===== سایت‌ها (فرمت کامل) =====
+                if (foundKey === 'سایت') {
+                    let reply =
+                    `<i class="fas fa-laptop-code"></i> <strong>سایت‌های طراحی شده توسط ${data.name}:</strong><br>`;
                     data.sites.forEach(s => {
                         reply += `
                     <div class="site-card">
@@ -815,7 +874,7 @@
                 }
 
                 // ===== طراحی‌ها =====
-                if (importantWord === 'طراحی') {
+                if (foundKey === 'طراحی') {
                     let reply = `<i class="fas fa-palette"></i> <strong>نمونه طراحی‌های هنری:</strong><br>`;
                     data.designs.forEach(d => {
                         reply += `
@@ -832,7 +891,7 @@
                 }
 
                 // ===== مهارت‌ها =====
-                if (importantWord === 'مهارت') {
+                if (foundKey === 'مهارت') {
                     let reply = `<i class="fas fa-code"></i> <strong>مهارت‌های ${data.name}:</strong><br>`;
                     data.skills.forEach(s => {
                         reply += `🔹 ${s}<br>`;
@@ -840,15 +899,53 @@
                     return reply;
                 }
 
-                return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${keywords[importantWord]}`;
+                // ===== اینستاگرام =====
+                if (foundKey === 'اینستاگرام') {
+                    return `
+                <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
+                <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a> 📸
+              `;
+                }
+
+                // ===== تلگرام =====
+                if (foundKey === 'تلگرام') {
+                    return `
+                <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
+                <a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a> ✈️
+              `;
+                }
+
+                // ===== کی هستی =====
+                if (foundKey === 'کی هستی') {
+                    return `
+                <i class="fas fa-robot"></i> <strong>من MH Assistant هستم!</strong><br>
+                <span style="color:#f5b042;">دستیار شخصی</span> شما<br>
+                ساخته‌شده توسط <strong>${data.name}</strong><br>
+                ${data.job} از سال ${data.startYear}
+              `;
+                }
+
+                // ===== همه چیز =====
+                if (foundKey === 'همه چیز') {
+                    return `
+                <i class="fas fa-robot"></i> <strong>همه چیز درباره من:</strong><br>
+                <i class="fas fa-user-astronaut"></i> ${data.job} از سال ${data.startYear}<br>
+                <i class="fas fa-laptop-code"></i> سایت‌ها: ${data.sites.map(s => s.name).join('، ')}<br>
+                <i class="fas fa-palette"></i> طراحی‌ها: ${data.designs.map(d => d.name).join('، ')}<br>
+                <i class="fas fa-code"></i> مهارت‌ها: ${data.skills.join('، ')}
+              `;
+                }
+
+                // ===== پاسخ ساده =====
+                return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${allReplies[foundKey]}`;
             }
 
-            // ===== اگر کلمه مهمی پیدا نشد =====
+            // ===== مرحله 5: پاسخ پیش‌فرض =====
             return `
             <i class="fas fa-robot"></i> <strong>MH Assistant</strong> - دستیار شخصی<br><br>
-            کلمه "<strong>${text}</strong>" رو دریافت کردم.<br><br>
-            کلمات مهمی که میتونم تشخیص بدم:<br>
-            <span style="color:#f5b042;">سازنده</span> • <span style="color:#f5b042;">شماره</span> • <span style="color:#f5b042;">خرید</span> • <span style="color:#f5b042;">هدف</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">سایت</span> • <span style="color:#f5b042;">طراحی</span> • <span style="color:#f5b042;">مهارت</span> • <span style="color:#f5b042;">کی هستی</span>
+            <span style="color:#f5b042;">📖 کلماتی که تشخیص دادم:</span> ${words.join('، ')}<br><br>
+            می‌تونی از اینا بپرسی:<br>
+            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span>
           `;
         }
 
@@ -906,7 +1003,7 @@
             if (!typing) {
                 typing = document.createElement('div');
                 typing.className = 'typing-indicator';
-                typing.innerHTML = '<i class="fas fa-robot"></i> در حال پردازش...';
+                typing.innerHTML = '<i class="fas fa-robot"></i> در حال پردازش کلمات...';
                 messagesBox.appendChild(typing);
             }
             typing.classList.add('show');
