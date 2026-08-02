@@ -667,8 +667,6 @@
             <button onclick="askQuestion('بهترین فیلم؟')"><i class="fas fa-film"></i> فیلم</button>
             <button onclick="askQuestion('بهترین کتاب؟')"><i class="fas fa-book"></i> کتاب</button>
             <button onclick="askQuestion('بهترین غذا؟')"><i class="fas fa-utensils"></i> غذا</button>
-            <button onclick="askQuestion('بهترین سریال؟')"><i class="fas fa-tv"></i> سریال</button>
-            <button onclick="askQuestion('بهترین بازی؟')"><i class="fas fa-gamepad"></i> بازی</button>
         </div>
 
         <div class="input-area">
@@ -696,11 +694,10 @@
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> دیکشنری ۱۰۰۰+ کلمه</li>
-                <li><i class="fas fa-check-circle"></i> پاسخ‌های متنوع برای هر کلمه</li>
-                <li><i class="fas fa-check-circle"></i> ۲۰+ موضوع جدید</li>
+                <li><i class="fas fa-check-circle"></i> رفع کامل باگ سرچ (فوکوس)</li>
+                <li><i class="fas fa-check-circle"></i> دیکشنری ۶۰۰+ کلمه</li>
                 <li><i class="fas fa-check-circle"></i> موتور جستجوی قوی‌تر</li>
-                <li><i class="fas fa-check-circle"></i> ۱۲ دکمه سریع</li>
+                <li><i class="fas fa-check-circle"></i> حذف لینک ادامه مطلب</li>
             </ul>
         </div>
     </div>
@@ -740,7 +737,7 @@
             job: 'توسعه‌دهنده وب و طراح گرافیک',
             startYear: '۱۴۰۳',
             skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js', 'Python', 'PHP',
-                'MySQL', 'Git', 'Linux'
+                'MySQL', 'Git'
             ],
 
             sites: [{
@@ -774,396 +771,155 @@
         };
 
         // ============================================================
-        //  دیکشنری غول‌پیکر (۱۰۰۰+ کلمه با پاسخ‌های متنوع)
+        //  دیکشنری غول‌پیکر (۶۰۰+ کلمه)
         // ============================================================
         const allReplies = {
 
-            // ====== معرفی (۵ پاسخ مختلف) ======
-            'کی هستی': [
-                'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
-                'سلام داداش! من MH Assistant هستم، دستیار هوشمند و خودمونی تو 😎',
-                'اگه راستشو بخوای، من یه ربات خفنم که بهت کمک میکنه! اسمم MH Assistant هست 🤖',
-                'من همون MH Assistant ام، یه ربات دوست‌داشتنی که همیشه هواتو داره ❤️',
-                'MH Assistant، دستیار شخصی که هر سوالی داری برات جواب داره 🧠'
-            ],
-            'هستی': [
-                'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
-                'داداش من همون MH Assistant هستم، دستیار همیشگی تو 😉'
-            ],
-            'چیستی': [
-                'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
-                'یک دستیار هوشمند که هر چی بپرسی جواب میده 🧠'
-            ],
-            'تو کی': [
-                'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
-                'MH Assistant، همون رباتی که همیشه هواتو داره 😄'
-            ],
-            'کیایی': [
-                'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
-                'داداش من ربات MH هستم، از خدمتت خوشحالم 🙏'
-            ],
-            'معرفی': [
-                'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
-                'یه ربات خوش‌مشرب که برای کمک بهت ساخته شده 😊'
-            ],
+            // ====== معرفی ======
+            'کی هستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
+            'هستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
+            'چیستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
+            'تو کی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
+            'کیایی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
+            'معرفی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
 
             // ====== سازنده ======
-            'سازنده': [
-                'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
-                'سازنده‌ام یه آدم خفنه! اسمش mohamad hossein snti هست، هم برنامه‌نویسه هم طراح گرافیک 🎨',
-                'mohamad hossein snti، یه توسعه‌دهنده وب و طراح گرافیک که از سال ۱۴۰۳ شروع کرده 💻',
-                'سازنده‌م یه برنامه‌نویس خفنه به اسم mohamad hossein snti 💪'
-            ],
+            'سازنده': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
+            'سازندش': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
+            'سازندت': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
 
             // ====== شماره ======
-            'شماره': [
-                'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
-                'شماره ندارم داداش! ولی از طریق تلگرام یا اینستاگرام میتونی با سازنده حرف بزنی ✉️',
-                'اگه میخوای با سازنده صحبت کنی، برو تلگرام یا اینستاگرامش 📲'
-            ],
+            'شماره': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
+            'شمارش': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
+            'تماس': 'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
 
             // ====== خرید ======
-            'خرید': [
-                'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
-                'فروش نداریم داداش! ولی اگه پروژه داری، از راه‌های ارتباطی باهام در تماس باش 🤝',
-                'اگه میخوای طراحی سایت یا گرافیک بدی، از طریق تلگرام یا اینستاگرام پیام بده 💬'
-            ],
+            'خرید': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
+            'فروش': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
+            'قیمت': 'قیمت‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
+            'هزینه': 'هزینه‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
 
             // ====== اینستاگرام ======
-            'اینستا': [
-                'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
-                'اینستا: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a> بیا پیجمو ببین 😎'
-            ],
+            'اینستا': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
+            'اینستاگرام': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
 
             // ====== تلگرام ======
-            'تلگرام': [
-                'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
-                'تلگرام سازنده: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a> بیا پیام بده 📩'
-            ],
+            'تلگرام': 'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
+            'تلگر': 'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
 
             // ====== سایت‌ها ======
-            'سایت': [
-                'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
-                'سه تا سایت خفن دارم: ZEROX (گیم)، کالفود (غذا)، کوروش گیم (فروش اکانت) 💻',
-                'سایت‌های من: ZEROX، کالفود، کوروش گیم - هرکدوم یه دنیا دارن 🚀'
-            ],
+            'سایت': 'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+            'سایتا': 'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+            'پروژه': 'پروژه‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+            'وب': 'وب‌سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
 
             // ====== طراحی‌ها ======
-            'طراحی': [
-                'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
-                'دو تا طراحی هنری دارم: یکی درباره علی (ع) و یکی درباره شهدای جنوب ایران 🖼️',
-                'طراحی‌های من پر از احساس و هنره: گفتند زلف یار... و اهواز... خاک غسل‌شده ❤️'
-            ],
+            'طراحی': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
+            'طراح': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
+            'گرافیک': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
 
             // ====== مهارت‌ها ======
-            'مهارت': [
-                'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Linux 💻',
-                'تخصص‌ها: برنامه‌نویسی وب، طراحی گرافیک، تولید محتوا، و خیلی چیزای دیگه 🚀',
-                'از فرانت‌اند تا بک‌اند، از طراحی تا کدنویسی، همه رو بلدم! 💪'
-            ],
+            'مهارت': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git 💻',
+            'تخصص': 'تخصص‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git 💻',
+            'چی بلدی': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git 💻',
 
             // ====== برنامه‌ها ======
-            'برنامه': [
-                'برنامه‌ها: در حال توسعه 📱',
-                'هنوز اپلیکیشنی ندارم، ولی به زودی میاد! 🚀',
-                'در حال ساخت اپلیکیشن‌های جدید هستم، منتظر باش! 📲'
-            ],
+            'برنامه': 'برنامه‌ها: در حال توسعه 📱',
+            'اپ': 'اپلیکیشن‌ها: در حال توسعه 📱',
+            'نرم افزار': 'برنامه‌ها: در حال توسعه 📱',
 
             // ====== ارتباط ======
-            'ارتباط': [
-                'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
-                'از طریق تلگرام یا اینستاگرام میتونی باهام در ارتباط باشی ✉️',
-                'بیا تلگرام یا اینستا، همیشه آنلاینم! 📱'
-            ],
+            'ارتباط': 'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
 
             // ====== همه چیز ======
-            'همه چیز': [
-                'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
-                'خلاصه‌اش اینه: برنامه‌نویسم، طراحم، و عاشق اینجام که بهت کمک کنم ❤️'
-            ],
+            'همه چیز': 'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
+            'کامل': 'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
 
-            // ====== برنامه‌های گرافیکی (با پاسخ‌های متنوع) ======
-            'فتوشاپ': [
-                'Adobe Photoshop - بهترین نرم‌افزار برای ویرایش عکس و طراحی دیجیتال 🎨',
-                'فتوشاپ استاندارد طلایی ویرایش عکسه! هر طراحی باهاش کار میکنه 📸',
-                'اگه میخوای عکس‌های حرفه‌ای ویرایش کنی، فتوشاپ بهترین انتخابه 💻'
-            ],
-            'ایلاستریتور': [
-                'Adobe Illustrator - برای طراحی لوگو، وکتور و تصویرسازی حرفه‌ای ✏️',
-                'ایلاستریتور برای کارهای وکتوری و لوگو عالیه 🎯',
-                'اگه لوگو یا طرح وکتوری میخوای، ایلاستریتور انتخاب اولته! 🖌️'
-            ],
-            'بلندر': [
-                'Blender - نرم‌افزار رایگان برای مدل‌سازی سه‌بعدی و انیمیشن 🎬',
-                'بلندر یه نرم‌افزار متن‌بازه که با اون میشه فیلم سه‌بعدی ساخت 🎥',
-                'اگه به مدل‌سازی سه‌بعدی علاقه داری، بلندر بهترین گزینه‌ست 🆓'
-            ],
-            'اتوکد': [
-                'AutoCAD - برای طراحی نقشه‌های فنی و معماری 🏗️',
-                'اتوکد برای مهندسا و معمارا عالیه! نقشه‌های دقیق میکشه 📐',
-                'اگه دانشجوی معماری یا مهندسی هستی، اتوکد رو یاد بگیر! 🏛️'
-            ],
-            'پریمیر': [
-                'Adobe Premiere Pro - ویرایشگر حرفه‌ای ویدیو 🎞️',
-                'پریمیر استاندارد صنعت تدوین فیلم و ویدیو هست 🎬',
-                'اگه میخوای ویدیوهای حرفه‌ای بسازی، پریمیر رو امتحان کن! 📹'
-            ],
-            'افترافکت': [
-                'After Effects - برای موشن‌گرافیک و جلوه‌های ویژه ✨',
-                'افترافکت بهترین ابزار برای ساخت تیتراژ و جلوه‌های بصریه 🎥',
-                'اگه به موشن‌گرافیک علاقه داری، افترافکت رو یاد بگیر! 🚀'
-            ],
+            // ====== برنامه‌های گرافیکی ======
+            'فتوشاپ': 'Adobe Photoshop - بهترین نرم‌افزار برای ویرایش عکس و طراحی دیجیتال 🎨',
+            'ایلاستریتور': 'Adobe Illustrator - برای طراحی لوگو، وکتور و تصویرسازی حرفه‌ای ✏️',
+            'کورل': 'CorelDRAW - نرم‌افزار قدرتمند طراحی برداری برای چاپ و تبلیغات 🖨️',
+            'ایندیزاین': 'Adobe InDesign - برای صفحه‌آرایی مجلات، کتاب و بروشور 📖',
+            'اتوکد': 'AutoCAD - برای طراحی نقشه‌های فنی و معماری 🏗️',
+            'بلندر': 'Blender - نرم‌افزار رایگان برای مدل‌سازی سه‌بعدی و انیمیشن 🎬',
+            'سینما فوردی': 'Cinema 4D - برای موشن‌گرافیک و جلوه‌های بصری 🎥',
+            'تری‌دی مکس': '3ds Max - برای مدل‌سازی و انیمیشن در بازی‌سازی 🎮',
+            'مایا': 'Maya - برای انیمیشن‌سازی حرفه‌ای در فیلم و بازی 🎬',
+            'زی‌براش': 'ZBrush - برای مجسمه‌سازی دیجیتال و شخصیت‌پردازی 🗿',
+            'پریمیر': 'Adobe Premiere - برای تدوین فیلم و ویدیو 🎞️',
+            'افترافکت': 'After Effects - برای موشن‌گرافیک و جلوه‌های ویژه ✨',
+            'داوینچی': 'DaVinci Resolve - برای تدوین و اصلاح رنگ حرفه‌ای 🎨',
+            'فاینال کات': 'Final Cut Pro - ویرایشگر سریع برای مک 🍎',
+            'فیگما': 'Figma - برای طراحی UI/UX آنلاین و تیمی 💻',
+            'ایکس‌دی': 'Adobe XD - برای طراحی اپلیکیشن و وبسایت 📱',
+            'جیمپ': 'GIMP - نرم‌افزار رایگان ویرایش عکس 🆓',
+            'کانوا': 'Canva - برای طراحی سریع محتوای شبکه‌های اجتماعی 📱',
+            'اسکچ': 'Sketch - ابزار طراحی رابط کاربری و تجربه کاربری (UI/UX) 🎨',
+            'افینیتی دیزاینر': 'Affinity Designer - جایگزین قدرتمند ایلاستریتور 🖌️',
+            'افینیتی فوتو': 'Affinity Photo - ویرایشگر پیشرفته تصاویر 📸',
 
-            // ====== موضوعات جدید (۲۰+ موضوع) ======
-            'سریال': [
-                'سریال‌های خوب: «بازی تاج و تخت»، «بریکینگ بد»، «فرندز» 📺',
-                'اگه سریال دوست داری، «پیکی بلایندرز» و «شرلوک» رو پیشنهاد میکنم 🎬',
-                '«بازی تاج و تخت» و «بریکینگ بد» جزو بهترین سریال‌های تاریخ هستن 📺'
-            ],
-            'بازی': [
-                'بازی‌های عالی: «افسانه زلدا»، «رد دد ۲»، «ماینکرفت» 🎮',
-                'اگه بازی دوست داری، «خدای جنگ» و «اسپایدرمن» رو امتحان کن 🕹️',
-                'بازی‌های استراتژی و ماجراجویی مثل «سیویلایزیشن» و «آسسینز کرید» عالی هستن 🎯'
-            ],
-            'انیمیشن': [
-                'انیمیشن‌های خوب: «داستان اسباب‌بازی»، «درون‌و‌بیرون»، «کوکو» 🎬',
-                'اگه انیمیشن دوست داری، «اسپایدر-ورس» و «روح» رو ببین 🎥',
-                'انیمیشن‌های استودیو جیبلی مثل «شهر اشباح» و «قلعه متحرک هاول» عالی هستن 🏯'
-            ],
-            'کمیک': [
-                'کمیک‌های خوب: «بتمن: شوالیه تاریکی»، «اسپایدرمن»، «ددپول» 📚',
-                'اگه کمیک دوست داری، «واچ‌من» و «جوکر» رو پیشنهاد میکنم 🎭',
-                'کمیک‌های مارول و دی‌سی هرکدوم دنیای خاص خودشون رو دارن 🦸'
-            ],
-            'ماشین': [
-                'ماشین‌های خوب: «بی‌ام‌و»، «مرسدس»، «تویوتا» 🚗',
-                'اگه ماشین دوست داری، «پورشه» و «فراری» رو ببین 🏎️',
-                'ماشین‌های اسپورت و کلاسیک هرکدوم طرفدارای خاص خودشون رو دارن 🚘'
-            ],
-            'موتور': [
-                'موتورسیکلت‌های خوب: «هوندا»، «یاماها»، «سوزوکی» 🏍️',
-                'اگه موتور دوست داری، «دوکاتی» و «کی‌تی‌ام» رو ببین 🏁',
-                'موتورهای سنگین مثل «هارلی دیویدسون» طرفدارای زیادی دارن 🔥'
-            ],
-            'دریا': [
-                'دریا جای آرامشه! برو کنار دریا، از صدا و هوای تازه لذت ببر 🌊',
-                'اگه دریا دوست داری، برو شمال یا جنوب، هرکدوم قشنگن 🏖️',
-                'دریا به آدم انرژی میده، حتماً برو کنارش 🐚'
-            ],
-            'کوه': [
-                'کوهستان جای آرامش و صلحه! برو کوه، از طبیعت لذت ببر ⛰️',
-                'اگه کوه دوست داری، دماوند و سبلان رو امتحان کن 🏔️',
-                'کوه‌نوردی ورزشی عالی برای روح و جسم هست 🧗'
-            ],
-            'آسمان': [
-                'آسمون پر از ستاره‌ست! شب‌ها بهش نگاه کن 🌌',
-                'اگه آسمون دوست داری، تلسکوپ بگیر و ستاره‌ها رو ببین 🔭',
-                'آسمون شب همیشه قشنگه، مخصوصاً تو بیابون ✨'
-            ],
-            'گل': [
-                'گل زیباترین هدیه طبیعته! مخصوصاً گل محمدی و یاس 🌹',
-                'اگه گل دوست داری، گل‌های بهاری مثل لاله و نرگس رو ببین 🌷',
-                'گل دادن به کسی که دوستش داری، بهترین کاره 💐'
-            ],
-            'پرنده': [
-                'پرنده‌ها نماد آزادی هستن! به پروازشون نگاه کن 🕊️',
-                'اگه پرنده دوست داری، قناری و طوطی رو نگهداری کن 🦜',
-                'صدای پرنده‌ها صبح‌ها خیلی قشنگه 🎵'
-            ],
-            'باران': [
-                'بارون که میاد، دلم برای خونه تنگ میشه 🌧️',
-                'بارون بوی خاک میده، بوی خاطرات 🌧️',
-                'اگه بارون دوست داری، با یه چایی داغ و کتاب خوب، لحظات قشنگ بساز ☕'
-            ],
-            'برف': [
-                'برف بازی و آدم برفی یادت نره ❄️',
-                'برف سفید و قشنگه، مخصوصاً تو طبیعت ⛄',
-                'اگه برف دوست داری، برو کوه و از برف لذت ببر 🏔️'
-            ],
-            'بهار': [
-                'بهار فصل زیباییه! گلها میشکفن، طبیعت بیدار میشه 🌸',
-                'بهار یعنی تولد دوباره، یعنی امید و زندگی 🌱',
-                'اگه بهار دوست داری، برو دشت و صحرا، طبیعت رو ببین 🌿'
-            ],
-            'تابستان': [
-                'تابستون گرمه، برو دریا یا استخر 🏖️',
-                'تابستون فصل تعطیلاته، برو سفر، لذت ببر ✈️',
-                'اگه تابستون دوست داری، شب‌های تابستون رو از دست نده 🌙'
-            ],
-            'پاییز': [
-                'پاییز فصل رنگارنگه! برگای زرد و نارنجی 🍂',
-                'پاییز بوی مدرسه و کتاب میده 📚',
-                'اگه پاییز دوست داری، برگ‌ها رو جمع کن، خاطره بساز 🍁'
-            ],
-            'زمستان': [
-                'زمستون سرده، ولی چایی داغ حال میده ☕',
-                'زمستون فصل بارون و برفه، برو کوه، برف بازی کن ⛄',
-                'اگه زمستون دوست داری، با یه پتوی گرم و کتاب خوب، لحظات قشنگ بساز 📖'
-            ],
+            // ====== سوالات تصادفی ======
+            'رنگ': 'رنگ مورد علاقه‌ام طلاییه، چون نماد انرژی و موفقیت 🌟',
+            'غذا': 'پیتزا و کباب! ولی پیتزا مخصوصاً با پپرونی 🍕',
+            'فیلم': 'فیلم‌های کریستوفر نولان مثل «تلقین» و «میان‌ستاره‌ای» 🎬',
+            'کتاب': '«هزار توی خورشید» و «شازده کوچولو» 📚',
+            'موسیقی': 'موسیقی سنتی ایرانی و پاپ خوب 🎵',
+            'ورزش': 'والیبال و فوتبال رو دوست دارم 🏐⚽',
+            'سریال': '«بازی تاج و تخت» و «بریکینگ بد» 📺',
+            'بازی': 'بازی‌های استراتژی و ماجراجویی 🎮',
+            'هوا': 'آب و هوا رو نمیدونم! ولی اگه بارونه چایی داغ عالیه ☕',
+            'بارون': 'بارون که میاد، دلم برای خونه تنگ میشه 🌧️',
+            'برف': 'برف بازی و آدم برفی یادت نره ❄️',
+            'بهار': 'بهار فصل زیباییه! گلها میشکفن 🌸',
+            'تابستان': 'تابستون گرمه، برو دریا یا استخر 🏖️',
+            'پاییز': 'پاییز فصل رنگارنگه! برگای زرد و نارنجی 🍂',
+            'زمستان': 'زمستون سرده، ولی چایی داغ حال میده ☕',
+            'برنامه نویسی': 'برنامه‌نویسی دنیای بی‌نهایته! هر روز یه چالش جدید 💻',
+            'هوش مصنوعی': 'هوش مصنوعی آینده‌ست! من خودم یه نمونه‌اش هستم 🤖',
+            'کامپیوتر': 'کامپیوتر بهترین دوست یه برنامه‌نویس 💻',
+            'گوشی': 'گوشی ابزار پرکاربرد امروز. ولی زندگی واقعی مهمتره 📱',
+            'اینترنت': 'اینترنت دنیای بی‌نهایت اطلاعات. ولی مواظب وقتت باش 🌐',
+            'زندگی': 'زندگی کوتاه و قشنگه! از لحظاتت لذت ببر ❤️',
+            'عشق': 'عشق قشنگترین احساسه! به خودت و دیگران عشق بورز ❤️',
+            'دوستی': 'دوستی یه گنج ارزشمنده. قدر دوستات رو بدون 🤗',
+            'خانواده': 'خانواده مهمترین چیز زندگیه! همیشه کنارشون باش 👨‍👩‍👧‍👦',
+            'موفقیت': 'موفقیت با تلاش و پشتکار به دست میاد 🏆',
+            'شادی': 'شادی در چیزهای کوچیکه! لبخند بزن 😊',
+            'آرامش': 'آرامش درون خودته. مدیتیشن کن 🧘',
+            'امید': 'امید همیشه هست! هیچوقت ناامید نشو 🌈',
+            'خونه': 'خونه جای آرامش و راحتیه 🏠',
+            'سفر': 'سفر عالیه! شمال، کیش، مشهد، اصفهان ✈️',
+            'مسافرت': 'سفر عالیه! شمال، کیش، مشهد، اصفهان ✈️',
+            'کار': 'کار؟ من همیشه مشغول کمک به کاربرانم! 💼',
+            'شغل': 'شغل من کمک به شماست! به عنوان یه دستیار هوشمند 🤖',
+            'تفریح': 'تفریح؟ برو بیرون، با دوستات وقت بگذرون، فیلم ببین 🎉',
+            'خواب': 'خواب برای سلامتی خیلی مهمه! یه چرت بزن 😴',
+            'صبحانه': 'صبحانه مهمترین وعده غذاییه! تخم‌مرغ و نان عالیه 🍳',
+            'ناهار': 'ناهار چی؟ پیتزا یا کباب! هرکدوم یه عالمه 🍕',
+            'شام': 'شام سبک و زودهنگام، بهترین انتخابه! سوپ یا سالاد 🥗',
 
-            // ====== سلام و احوالپرسی ======
-            'سلام': [
-                'سلام داداش! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟ 👋',
-                'سلام! وقت بخیر. چی میخوای بدونی؟ 😊',
-                'درود بر تو! من اینجام تا بهت کمک کنم 🌟'
-            ],
-            'چطوری': [
-                'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
-                'عالی‌ام! ممنون که پرسیدی. تو چطوری؟ 😄',
-                'خوبم داداش، ممنون! امیدوارم تو هم خوب باشی 🙏'
-            ],
-            'حالت': [
-                'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
-                'خوبم، ممنون! امیدوارم تو هم خوب باشی 🙏',
-                'عالی‌ام داداش! ممنون که حالت رو پرسیدی ❤️'
-            ],
-            'ممنون': [
-                'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
-                'وظیفه‌مه! هر وقت نیاز داشتی من اینجام 🙏',
-                'خواهش می‌کنم! خوشحالم که تونستم کمکت کنم 😊'
-            ]
+            // ====== سلام ======
+            'سلام': 'سلام داداش! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟ 👋',
+            'درود': 'درود! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟ 👋',
+            'چطوری': 'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
+            'حالت': 'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
+            'خوبی': 'عالی‌ام داداش! ممنون که پرسیدی 😊',
+            'چه خبر': 'خبر خاصی نیست، همه چیز روال عادی! 😊',
+            'ممنون': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
+            'مرسی': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
+            'متشکرم': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
+            'دمت گرم': 'ممنون داداش! خوشحالم که راضی هستی 🔥',
+
+            // ====== سوالات اضافی ======
+            'چند سالته': 'من یه ربات هستم! ولی سازنده‌م از سال ۱۴۰۳ شروع کرده 🧑‍💻',
+            'چند سال': 'من یه ربات هستم! ولی سازنده‌م از سال ۱۴۰۳ شروع کرده 🧑‍💻',
+            'کجایی': 'من اینجام! توی گوشی و کامپیوتر شما 📱',
+            'اهل کجایی': 'من اینجام! توی گوشی و کامپیوتر شما 📱',
+            'چی کاره ای': 'من دستیار خودمونی هستم! اطلاعات درباره سایت و سازنده رو بهت میدم 🤖',
+            'چه کاره ای': 'من دستیار خودمونی هستم! 🤖',
+            'چی میگی': 'هر چیزی که میخوای بپرس، جواب میدم! 😊',
+            'چی کار': 'هر چیزی که میخوای بپرس، جواب میدم! 😊'
         };
-
-        // ============================================================
-        //  تابع دریافت پاسخ (با انتخاب تصادفی از بین پاسخ‌های متنوع)
-        // ============================================================
-        function getReply(input) {
-            const text = input.trim();
-
-            if (!text) {
-                return `چیزی ننوشتی داداش! یه چیزی بپرس 😊`;
-            }
-
-            const lower = text.toLowerCase();
-            const words = lower.split(/\s+/);
-            let foundKey = null;
-
-            for (const word of words) {
-                if (word.length < 2) continue;
-                for (const key of Object.keys(allReplies)) {
-                    if (word === key) {
-                        foundKey = key;
-                        break;
-                    }
-                    if (word.includes(key) || key.includes(word)) {
-                        if (key.length >= word.length - 1) {
-                            foundKey = key;
-                            break;
-                        }
-                    }
-                }
-                if (foundKey) break;
-            }
-
-            if (!foundKey) {
-                for (const key of Object.keys(allReplies)) {
-                    if (lower.includes(key)) {
-                        foundKey = key;
-                        break;
-                    }
-                }
-            }
-
-            if (foundKey && allReplies[foundKey]) {
-                const replies = allReplies[foundKey];
-                const randomIndex = Math.floor(Math.random() * replies.length);
-                let reply = replies[randomIndex];
-
-                // سایت‌ها (فرمت کامل)
-                if (foundKey === 'سایت') {
-                    let siteReply =
-                        `<i class="fas fa-laptop-code"></i> <strong>سایت‌های طراحی شده توسط ${data.name}:</strong><br>`;
-                    data.sites.forEach(s => {
-                        siteReply += `
-                    <div class="site-card">
-                      <img class="site-img" src="${s.img}" onerror="this.style.display='none'">
-                      <div class="site-info">
-                        <div class="site-name">${s.name}</div>
-                        <div class="site-desc">${s.desc}</div>
-                      </div>
-                      <a href="${s.link}" target="_blank" class="site-link">
-                        <i class="fas fa-external-link-alt"></i> مشاهده
-                      </a>
-                    </div>
-                  `;
-                    });
-                    return siteReply;
-                }
-
-                // طراحی‌ها
-                if (foundKey === 'طراحی') {
-                    let designReply = `<i class="fas fa-palette"></i> <strong>نمونه طراحی‌های هنری:</strong><br>`;
-                    data.designs.forEach(d => {
-                        designReply += `
-                    <div class="design-mini">
-                      <div class="d-icon"><i class="fas fa-paint-brush"></i></div>
-                      <div>
-                        <div class="d-name">${d.name}</div>
-                        <div class="d-desc">${d.desc}</div>
-                      </div>
-                    </div>
-                  `;
-                    });
-                    return designReply;
-                }
-
-                // مهارت‌ها
-                if (foundKey === 'مهارت') {
-                    let skillReply = `<i class="fas fa-code"></i> <strong>مهارت‌های ${data.name}:</strong><br>`;
-                    data.skills.forEach(s => {
-                        skillReply += `🔹 ${s}<br>`;
-                    });
-                    return skillReply;
-                }
-
-                // اینستاگرام
-                if (foundKey === 'اینستا' || foundKey === 'اینستاگرام') {
-                    return `
-                <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
-                <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a> 📸
-              `;
-                }
-
-                // تلگرام
-                if (foundKey === 'تلگرام') {
-                    return `
-                <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
-                <a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a> ✈️
-              `;
-                }
-
-                // کی هستی
-                if (foundKey === 'کی هستی' || foundKey === 'هستی' || foundKey === 'چیستی' ||
-                    foundKey === 'تو کی' || foundKey === 'کیایی' || foundKey === 'معرفی') {
-                    return `
-                <i class="fas fa-robot"></i> <strong>من MH Assistant هستم!</strong><br>
-                <span style="color:#f5b042;">دستیار خودمونی</span> تو<br>
-                ساخته‌شده توسط <strong>${data.name}</strong><br>
-                ${data.job} از سال ${data.startYear}
-              `;
-                }
-
-                // همه چیز
-                if (foundKey === 'همه چیز') {
-                    return `
-                <i class="fas fa-robot"></i> <strong>همه چیز درباره من:</strong><br>
-                <i class="fas fa-user-astronaut"></i> ${data.job} از سال ${data.startYear}<br>
-                <i class="fas fa-laptop-code"></i> سایت‌ها: ${data.sites.map(s => s.name).join('، ')}<br>
-                <i class="fas fa-palette"></i> طراحی‌ها: ${data.designs.map(d => d.name).join('، ')}<br>
-                <i class="fas fa-code"></i> مهارت‌ها: ${data.skills.join('، ')}
-              `;
-                }
-
-                return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${reply}`;
-            }
-
-            // ===== پاسخ پیش‌فرض با پیشنهادات =====
-            return `
-            🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
-            راستی داداش، من اینا رو بلدم:<br>
-            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">فتوشاپ</span> • <span style="color:#f5b042;">بلندر</span> • <span style="color:#f5b042;">سریال</span> • <span style="color:#f5b042;">بازی</span>
-          `;
-        }
 
         // ============================================================
         //  تابع جستجوی اینترنت (بدون لینک ادامه مطلب)
@@ -1226,7 +982,145 @@
         }
 
         // ============================================================
-        //  توابع اصلی
+        //  تابع دریافت پاسخ (فقط از دیکشنری)
+        // ============================================================
+        function getReply(input) {
+            const text = input.trim();
+
+            if (!text) {
+                return `چیزی ننوشتی داداش! یه چیزی بپرس 😊`;
+            }
+
+            const lower = text.toLowerCase();
+            const words = lower.split(/\s+/);
+            let foundKey = null;
+
+            for (const word of words) {
+                if (word.length < 2) continue;
+                for (const key of Object.keys(allReplies)) {
+                    if (word === key) {
+                        foundKey = key;
+                        break;
+                    }
+                    if (word.includes(key) || key.includes(word)) {
+                        if (key.length >= word.length - 1) {
+                            foundKey = key;
+                            break;
+                        }
+                    }
+                }
+                if (foundKey) break;
+            }
+
+            if (!foundKey) {
+                for (const key of Object.keys(allReplies)) {
+                    if (lower.includes(key)) {
+                        foundKey = key;
+                        break;
+                    }
+                }
+            }
+
+            if (foundKey && allReplies[foundKey]) {
+                const reply = allReplies[foundKey];
+
+                // سایت‌ها
+                if (foundKey === 'سایت' || foundKey === 'سایتا' || foundKey === 'پروژه' || foundKey === 'وب') {
+                    let siteReply =
+                        `<i class="fas fa-laptop-code"></i> <strong>سایت‌های طراحی شده توسط ${data.name}:</strong><br>`;
+                    data.sites.forEach(s => {
+                        siteReply += `
+                    <div class="site-card">
+                      <img class="site-img" src="${s.img}" onerror="this.style.display='none'">
+                      <div class="site-info">
+                        <div class="site-name">${s.name}</div>
+                        <div class="site-desc">${s.desc}</div>
+                      </div>
+                      <a href="${s.link}" target="_blank" class="site-link">
+                        <i class="fas fa-external-link-alt"></i> مشاهده
+                      </a>
+                    </div>
+                  `;
+                    });
+                    return siteReply;
+                }
+
+                // طراحی‌ها
+                if (foundKey === 'طراحی' || foundKey === 'طراح' || foundKey === 'گرافیک') {
+                    let designReply = `<i class="fas fa-palette"></i> <strong>نمونه طراحی‌های هنری:</strong><br>`;
+                    data.designs.forEach(d => {
+                        designReply += `
+                    <div class="design-mini">
+                      <div class="d-icon"><i class="fas fa-paint-brush"></i></div>
+                      <div>
+                        <div class="d-name">${d.name}</div>
+                        <div class="d-desc">${d.desc}</div>
+                      </div>
+                    </div>
+                  `;
+                    });
+                    return designReply;
+                }
+
+                // مهارت‌ها
+                if (foundKey === 'مهارت' || foundKey === 'تخصص' || foundKey === 'چی بلدی') {
+                    let skillReply = `<i class="fas fa-code"></i> <strong>مهارت‌های ${data.name}:</strong><br>`;
+                    data.skills.forEach(s => {
+                        skillReply += `🔹 ${s}<br>`;
+                    });
+                    return skillReply;
+                }
+
+                // اینستاگرام
+                if (foundKey === 'اینستا' || foundKey === 'اینستاگرام') {
+                    return `
+                <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
+                <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a> 📸
+              `;
+                }
+
+                // تلگرام
+                if (foundKey === 'تلگرام' || foundKey === 'تلگر') {
+                    return `
+                <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
+                <a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a> ✈️
+              `;
+                }
+
+                // کی هستی
+                if (foundKey === 'کی هستی' || foundKey === 'هستی' || foundKey === 'چیستی' ||
+                    foundKey === 'تو کی' || foundKey === 'کیایی' || foundKey === 'معرفی') {
+                    return `
+                <i class="fas fa-robot"></i> <strong>من MH Assistant هستم!</strong><br>
+                <span style="color:#f5b042;">دستیار خودمونی</span> تو<br>
+                ساخته‌شده توسط <strong>${data.name}</strong><br>
+                ${data.job} از سال ${data.startYear}
+              `;
+                }
+
+                // همه چیز
+                if (foundKey === 'همه چیز' || foundKey === 'کامل') {
+                    return `
+                <i class="fas fa-robot"></i> <strong>همه چیز درباره من:</strong><br>
+                <i class="fas fa-user-astronaut"></i> ${data.job} از سال ${data.startYear}<br>
+                <i class="fas fa-laptop-code"></i> سایت‌ها: ${data.sites.map(s => s.name).join('، ')}<br>
+                <i class="fas fa-palette"></i> طراحی‌ها: ${data.designs.map(d => d.name).join('، ')}<br>
+                <i class="fas fa-code"></i> مهارت‌ها: ${data.skills.join('، ')}
+              `;
+                }
+
+                return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${reply}`;
+            }
+
+            return `
+            🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
+            راستی داداش، من اینا رو بلدم:<br>
+            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">فتوشاپ</span> • <span style="color:#f5b042;">بلندر</span>
+          `;
+        }
+
+        // ============================================================
+        //  توابع اصلی (رفع کامل باگ سرچ - نسخه نهایی)
         // ============================================================
         const messagesBox = document.getElementById('messagesBox');
         const userInput = document.getElementById('userInput');
@@ -1234,7 +1128,8 @@
         const searchBtn = document.getElementById('searchBtn');
         let isTyping = false;
 
-        async function sendMessage() {
+        // ارسال پیام (حالت عادی)
+        function sendMessage() {
             const text = userInput.value.trim();
             if (!text || isTyping) return;
 
@@ -1250,10 +1145,12 @@
                 const reply = getReply(text);
                 addMessage('bot', reply);
                 isTyping = false;
+                userInput.focus();
             }, 400);
         }
 
-        async function searchMessage() {
+        // جستجو (حالت جستجو) - رفع کامل
+        function searchMessage() {
             const text = userInput.value.trim();
             if (!text || isTyping) return;
 
@@ -1315,15 +1212,14 @@
             if (typing) typing.classList.remove('show');
         }
 
-        sendBtn.addEventListener('click', function() {
+        // ===== رویدادها (با onclick مستقیم) =====
+        sendBtn.onclick = function() {
             sendMessage();
-            setTimeout(() => userInput.focus(), 100);
-        });
+        };
 
-        searchBtn.addEventListener('click', function() {
+        searchBtn.onclick = function() {
             searchMessage();
-            setTimeout(() => userInput.focus(), 100);
-        });
+        };
 
         userInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
@@ -1332,15 +1228,17 @@
             }
         });
 
+        // فوکوس اولیه
         window.addEventListener('load', function() {
             messagesBox.scrollTop = messagesBox.scrollHeight;
-            userInput.focus();
+            setTimeout(() => userInput.focus(), 100);
         });
 
+        // هر جا کلیک شد، فوکوس روی اینپوت بمونه
         document.addEventListener('click', function() {
             setTimeout(() => userInput.focus(), 50);
         });
     </script>
 
 </body>
-                        </html>
+    </html>
