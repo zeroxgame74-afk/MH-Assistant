@@ -33,7 +33,6 @@
             padding: 8px;
         }
 
-        /* ===== کانتینر اصلی ===== */
         .chat-container {
             width: 100%;
             max-width: 420px;
@@ -68,7 +67,6 @@
             }
         }
 
-        /* ===== هدر ===== */
         .chat-header {
             display: flex;
             align-items: center;
@@ -151,7 +149,6 @@
             }
         }
 
-        /* ===== پیام‌ها ===== */
         .messages {
             flex: 1;
             overflow-y: auto;
@@ -227,7 +224,7 @@
         }
 
         .message .bubble {
-            max-width: 80%;
+            max-width: 85%;
             padding: 6px 12px;
             border-radius: 14px;
             font-size: 0.8rem;
@@ -258,8 +255,11 @@
             color: #f5b042;
             margin-left: 2px;
         }
+        .message .bubble .highlight-text {
+            color: #f5b042;
+            font-weight: 700;
+        }
 
-        /* کارت سایت */
         .message .bubble .site-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 215, 100, 0.08);
@@ -318,7 +318,6 @@
             border-color: #f5b042;
         }
 
-        /* طراحی مینی */
         .message .bubble .design-mini {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 215, 100, 0.06);
@@ -347,7 +346,30 @@
             color: #b0a99b;
         }
 
-        /* ===== دکمه‌های سریع ===== */
+        .social-links {
+            display: flex;
+            gap: 4px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            color: #f5b042;
+            text-decoration: none;
+            background: rgba(255, 215, 100, 0.05);
+            padding: 2px 10px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 215, 100, 0.1);
+            font-size: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .social-links a:hover {
+            background: rgba(245, 176, 66, 0.1);
+        }
+
         .quick-replies {
             display: flex;
             flex-wrap: wrap;
@@ -385,7 +407,6 @@
             transform: translateY(-2px);
         }
 
-        /* ===== ورودی ===== */
         .input-area {
             display: flex;
             align-items: center;
@@ -443,7 +464,6 @@
             transform: scale(0.93);
         }
 
-        /* ===== تایپینگ ===== */
         .typing-indicator {
             display: none;
             padding: 3px 10px;
@@ -478,30 +498,6 @@
             gap: 4px;
         }
 
-        .social-links {
-            display: flex;
-            gap: 4px;
-            margin-top: 4px;
-            flex-wrap: wrap;
-        }
-
-        .social-links a {
-            color: #f5b042;
-            text-decoration: none;
-            background: rgba(255, 215, 100, 0.05);
-            padding: 2px 10px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 215, 100, 0.1);
-            font-size: 0.6rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-        }
-
-        .social-links a:hover {
-            background: rgba(245, 176, 66, 0.1);
-        }
-
         @media (max-width: 380px) {
             .chat-container {
                 padding: 6px 6px 8px;
@@ -532,14 +528,6 @@
                 height: 32px;
                 font-size: 0.75rem;
             }
-            .chat-status {
-                font-size: 0.4rem;
-                padding: 1px 6px;
-            }
-            .message .bubble .site-card .site-img {
-                width: 28px;
-                height: 28px;
-            }
         }
     </style>
 </head>
@@ -547,41 +535,37 @@
 
     <div class="chat-container">
 
-        <!-- ===== هدر ===== -->
         <div class="chat-header">
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> دستیار هوشمند</small>
+                <small><i class="fas fa-robot"></i> پردازش کامل کلمات</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
             </div>
         </div>
 
-        <!-- ===== پیام‌ها ===== -->
         <div class="messages" id="messagesBox">
             <div class="message bot">
                 <div class="avatar"><i class="fas fa-robot"></i></div>
                 <div class="bubble">
                     <i class="fas fa-hand-peace"></i> سلام! من <strong>MH Assistant</strong> هستم.<br>
-                    هر سوالی داری بپرس!
+                    <strong>هر چیزی</strong> بپرسی، کلمه به کلمه پردازش میکنم.<br>
+                    <span style="color:#f5b042;font-size:0.7rem;">👇 هر جمله‌ای بنویس، میفهمم!</span>
                 </div>
             </div>
         </div>
 
-        <!-- ===== دکمه‌های سریع ===== -->
         <div class="quick-replies">
-            <button onclick="askQuestion('کی هستی؟')"><i class="fas fa-question"></i> کی هستی؟</button>
-            <button onclick="askQuestion('سایت‌ها')"><i class="fas fa-laptop-code"></i> سایت‌ها</button>
-            <button onclick="askQuestion('طراحی‌ها')"><i class="fas fa-palette"></i> طراحی‌ها</button>
-            <button onclick="askQuestion('مهارت‌ها')"><i class="fas fa-code"></i> مهارت‌ها</button>
-            <button onclick="askQuestion('ارتباط')"><i class="fas fa-share-alt"></i> ارتباط</button>
+            <button onclick="askQuestion('لطفا بگو لینک اینستاگرام سازنده')"><i class="fab fa-instagram"></i> لینک اینستا</button>
+            <button onclick="askQuestion('سلام چه سایت هایی ساختی؟')"><i class="fas fa-laptop-code"></i> سایت‌ها</button>
+            <button onclick="askQuestion('کی هستی و چه کاره ای؟')"><i class="fas fa-question"></i> کی هستی؟</button>
+            <button onclick="askQuestion('راه ارتباطی با تو چیه؟')"><i class="fas fa-share-alt"></i> ارتباط</button>
         </div>
 
-        <!-- ===== ورودی ===== -->
         <div class="input-area">
-            <input type="text" id="userInput" placeholder="چیزی بپرس..." autocomplete="off">
+            <input type="text" id="userInput" placeholder="هر چیزی بپرس..." autocomplete="off">
             <button onclick="sendMessage()">
                 <i class="fas fa-paper-plane"></i>
             </button>
@@ -599,6 +583,7 @@
             startYear: '۱۴۰۳',
             skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js'],
             goal: 'ترکیب هنر و تکنولوژی برای خلق فضاهای دیجیتال خاص',
+            bio: 'توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳',
 
             sites: [{
                 name: 'ZEROX',
@@ -631,37 +616,118 @@
         };
 
         // ============================================================
-        //  پاسخ‌دهی
+        //  موتور پردازش کامل کلمات (هوشمند)
         // ============================================================
         function getReply(input) {
-            const text = input.trim().toLowerCase();
+            const text = input.trim();
+            const lower = text.toLowerCase();
 
             if (!text) {
                 return `چیزی ننوشتی! یه سوال بپرس.`;
             }
 
-            // کی هستی؟
-            if (text.includes('کی هستی') || text === 'کی' || text === 'هستی') {
+            // ===== مرحله 1: شکستن به کلمات =====
+            const words = lower.split(/\s+/);
+
+            // ===== مرحله 2: تشخیص کلمات کلیدی =====
+            let found = {
+                identity: false,
+                site: false,
+                design: false,
+                skill: false,
+                social: false,
+                app: false,
+                greeting: false,
+                feeling: false,
+                thank: false,
+                link: false,
+                instagram: false,
+                telegram: false,
+                creator: false,
+                all: false,
+                help: false
+            };
+
+            const keywords = {
+                identity: ['کی', 'هستی', 'کیا', 'چه کسی', 'تو کی', 'هستید', 'کیایی'],
+                site: ['سایت', 'وب', 'پروژه', 'لینک', 'zerox', 'کالفود', 'کوروش', 'گیم', 'نمونه کار', 'آدرس', 'ساختی', 'چی ساختی',
+                    'کارها'
+                ],
+                design: ['طراحی', 'گرافیک', 'هنری', 'عکس', 'تصویر', 'یا علی', 'اهواز', 'شهید', 'پالت', 'نقاشی', 'اثر', 'هنر'],
+                skill: ['مهارت', 'توانایی', 'بلد', 'تخصص', 'چه چیزایی', 'یاد', 'چه کارهایی', 'چی بلدی'],
+                social: ['تلگرام', 'اینستاگرام', 'شبکه', 'اجتماعی', 'تماس', 'ارتباط', 'پیام', 'آیدی', 'کانال', 'راه', 'سوشال'],
+                app: ['برنامه', 'اپ', 'نرم', 'افزار', 'ابزار', 'اپلیکیشن', 'موبایل', 'اندروید'],
+                greeting: ['سلام', 'درود', 'هی', 'الو', 'هلو', 'صبح', 'عصر', 'شب', 'بخیر'],
+                feeling: ['خوب', 'چطوری', 'حالت', 'اوضاع', 'خبر', 'چی می‌کنی', 'خوشی', 'چه خبر'],
+                thank: ['ممنون', 'مرسی', 'متشکرم', 'دمت گرم', 'دستت', 'تشکر', 'سپاس'],
+                link: ['لینک', 'آدرس', 'url', 'لینکش'],
+                instagram: ['اینستا', 'اینستاگرام', 'insta', 'instagram'],
+                telegram: ['تلگرام', 'telegram', 'تلگر'],
+                creator: ['سازنده', 'صاحب', 'مالک', 'ساخت', 'ساخته', 'سازندش'],
+                all: ['همه', 'تمام', 'لیست', 'همش'],
+                help: ['راهنمایی', 'کمک', 'لطفا', 'میشه', 'بگو', 'بگید']
+            };
+
+            words.forEach(word => {
+                for (const [topic, kws] of Object.entries(keywords)) {
+                    if (kws.some(kw => word.includes(kw) || kw.includes(word))) {
+                        found[topic] = true;
+                    }
+                }
+            });
+
+            // ===== مرحله 3: ساخت پاسخ بر اساس کلمات تشخیص داده شده =====
+
+            // ---- اگر اینستاگرام و لینک و سازنده رو گفت ----
+            if (found.instagram && found.link && found.creator) {
                 return `
-              <i class="fas fa-robot"></i> <strong>من ربات دستیار MH Assistant هستم!</strong><br>
-              ساخته‌شده توسط <strong>${data.name}</strong><br>
-              وظیفه‌ام: پاسخ به سوالات شما
+              <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام سازنده:</strong><br>
+              <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a><br>
+              <span style="color:#b0a99b;font-size:0.7rem;">👤 سازنده: <strong>${data.name}</strong></span>
             `;
             }
 
-            // معرفی
-            if (text.includes('معرفی') || text.includes('خودت') || text.includes('درباره من')) {
-                return `
-              <i class="fas fa-user-astronaut"></i> <strong>${data.name}</strong><br>
-              ${data.job} از سال ${data.startYear}<br>
-              هدف: ${data.goal}
-            `;
+            // ---- اگر اینستاگرام رو گفت ----
+            if (found.instagram || found.social) {
+                let reply = `<i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>اینستاگرام:</strong><br>`;
+                reply += `<a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a>`;
+                if (found.creator || text.includes('سازنده')) {
+                    reply += `<br><span style="color:#b0a99b;font-size:0.7rem;">👤 سازنده: <strong>${data.name}</strong></span>`;
+                }
+                return reply;
             }
 
-            // سایت‌ها
-            if (text.includes('سایت') || text.includes('پروژه') || text.includes('zerox') || text.includes('کالفود') || text
-                .includes('کوروش')) {
-                let reply = `<i class="fas fa-laptop-code"></i> <strong>سایت‌ها:</strong><br>`;
+            // ---- اگر تلگرام رو گفت ----
+            if (found.telegram) {
+                let reply = `<i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>تلگرام:</strong><br>`;
+                reply += `<a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a>`;
+                if (found.creator || text.includes('سازنده')) {
+                    reply += `<br><span style="color:#b0a99b;font-size:0.7rem;">👤 سازنده: <strong>${data.name}</strong></span>`;
+                }
+                return reply;
+            }
+
+            // ---- اگر کی هستی + هر چیز دیگه ----
+            if (found.identity) {
+                let reply = `<i class="fas fa-robot"></i> <strong>من ربات دستیار MH Assistant هستم!</strong><br>`;
+                reply += `ساخته‌شده توسط <strong>${data.name}</strong><br>`;
+                reply += `${data.job} از سال ${data.startYear}`;
+
+                if (found.site) {
+                    reply += `<br><br><i class="fas fa-laptop-code"></i> سایت‌ها: ${data.sites.map(s => s.name).join('، ')}`;
+                }
+                if (found.skill) {
+                    reply += `<br><br><i class="fas fa-code"></i> مهارت‌ها: ${data.skills.join('، ')}`;
+                }
+                if (found.social) {
+                    reply += `<br><br><i class="fas fa-share-alt"></i> اینستاگرام: ${data.social.instagram}`;
+                }
+                return reply;
+            }
+
+            // ---- اگر سایت‌ها ----
+            if (found.site) {
+                let reply = `<i class="fas fa-laptop-code"></i> <strong>سایت‌های ${data.name}:</strong><br>`;
                 data.sites.forEach(s => {
                     reply += `
                 <div class="site-card">
@@ -676,12 +742,15 @@
                 </div>
               `;
                 });
+                if (found.creator || text.includes('سازنده')) {
+                    reply += `<br><span style="color:#b0a99b;font-size:0.7rem;">👤 سازنده: <strong>${data.name}</strong></span>`;
+                }
                 return reply;
             }
 
-            // طراحی‌ها
-            if (text.includes('طراحی') || text.includes('گرافیک') || text.includes('عکس')) {
-                let reply = `<i class="fas fa-palette"></i> <strong>طراحی‌ها:</strong><br>`;
+            // ---- اگر طراحی‌ها ----
+            if (found.design) {
+                let reply = `<i class="fas fa-palette"></i> <strong>طراحی‌های ${data.name}:</strong><br>`;
                 data.designs.forEach(d => {
                     reply += `
                 <div class="design-mini">
@@ -696,47 +765,71 @@
                 return reply;
             }
 
-            // مهارت‌ها
-            if (text.includes('مهارت') || text.includes('تخصص') || text.includes('چی بلدی')) {
-                return `<i class="fas fa-code"></i> <strong>مهارت‌ها:</strong><br>${data.skills.map(s => `🔹 ${s}`).join('<br>')}`;
+            // ---- اگر مهارت‌ها ----
+            if (found.skill) {
+                let reply = `<i class="fas fa-code"></i> <strong>مهارت‌های ${data.name}:</strong><br>`;
+                data.skills.forEach(s => {
+                    reply += `🔹 ${s}<br>`;
+                });
+                return reply;
             }
 
-            // ارتباط
-            if (text.includes('تلگرام') || text.includes('اینستاگرام') || text.includes('ارتباط') || text.includes('تماس')) {
-                return `
-              <i class="fas fa-share-alt"></i> <strong>ارتباط:</strong>
-              <div class="social-links">
-                <a href="${data.social.telegram}" target="_blank"><i class="fab fa-telegram-plane"></i> تلگرام</a>
-                <a href="${data.social.instagram}" target="_blank"><i class="fab fa-instagram"></i> اینستاگرام</a>
-              </div>
-            `;
-            }
-
-            // برنامه‌ها
-            if (text.includes('برنامه') || text.includes('اپ')) {
+            // ---- اگر برنامه‌ها ----
+            if (found.app) {
                 return `<i class="fas fa-puzzle-piece"></i> برنامه‌ها: ${data.apps}`;
             }
 
-            // سلام
-            if (text.includes('سلام') || text.includes('درود') || text.includes('الو')) {
-                return `<i class="fas fa-hand-peace"></i> سلام! خوش اومدی! هر چیزی بپرس.`;
+            // ---- اگر همه رو خواست ----
+            if (found.all || text.includes('همه چیز') || text.includes('کامل')) {
+                return `
+              <i class="fas fa-robot"></i> <strong>همه چیز درباره ${data.name}:</strong><br><br>
+              <i class="fas fa-user-astronaut"></i> <strong>معرفی:</strong> ${data.job} از سال ${data.startYear}<br>
+              <i class="fas fa-heart" style="color:#f5b042;"></i> <strong>هدف:</strong> ${data.goal}<br><br>
+              <i class="fas fa-laptop-code"></i> <strong>سایت‌ها:</strong> ${data.sites.map(s => s.name).join('، ')}<br>
+              <i class="fas fa-palette"></i> <strong>طراحی‌ها:</strong> ${data.designs.map(d => d.name).join('، ')}<br>
+              <i class="fas fa-code"></i> <strong>مهارت‌ها:</strong> ${data.skills.join('، ')}<br>
+              <i class="fab fa-instagram"></i> <strong>اینستاگرام:</strong> ${data.social.instagram}
+            `;
             }
 
-            // احوال
-            if (text.includes('خوب') || text.includes('چطوری') || text.includes('حالت')) {
-                return `<i class="fas fa-smile"></i> ممنون! من MH Assistant هستم و عالی‌ام.`;
+            // ---- اگر سلام ----
+            if (found.greeting) {
+                let reply = `<i class="fas fa-hand-peace"></i> سلام! خوش اومدی به <strong>MH Assistant</strong>.`;
+                if (found.help) {
+                    reply += `<br><span style="color:#b0a99b;font-size:0.7rem;">هر چیزی بپرس، پردازش میکنم!</span>`;
+                }
+                return reply;
             }
 
-            // تشکر
-            if (text.includes('ممنون') || text.includes('مرسی') || text.includes('متشکرم')) {
+            // ---- اگر احوالپرسی ----
+            if (found.feeling) {
+                return `<i class="fas fa-smile"></i> ممنون! من <strong>MH Assistant</strong> هستم و عالی‌ام.`;
+            }
+
+            // ---- اگر تشکر ----
+            if (found.thank) {
                 return `<i class="fas fa-heart" style="color:#f5b042;"></i> خواهش می‌کنم! خوشحالم که کمک کردم.`;
             }
 
-            // پیش‌فرض
+            // ---- اگر درخواست کمک ----
+            if (found.help) {
+                return `
+              <i class="fas fa-robot"></i> <strong>چطور می‌تونم کمک کنم؟</strong><br>
+              می‌تونی از اینا بپرسی:<br>
+              <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span>
+            `;
+            }
+
+            // ===== پاسخ پیش‌فرض (هر چیزی که تشخیص نداد) =====
             return `
             <i class="fas fa-robot"></i> <strong>من MH Assistant هستم!</strong><br>
-            می‌تونی بپرسی:<br>
-            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span>
+            جمله "<strong>${text}</strong>" رو کلمه به کلمه پردازش کردم.<br><br>
+            کلماتی که تشخیص دادم:<br>
+            <span style="color:#f5b042;font-size:0.7rem;">
+              ${words.map(w => `"${w}"`).join(' • ')}
+            </span><br><br>
+            می‌تونی از اینا بپرسی:<br>
+            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span>
           `;
         }
 
@@ -763,7 +856,7 @@
                 const reply = getReply(text);
                 addMessage('bot', reply);
                 isTyping = false;
-            }, 400);
+            }, 500);
         }
 
         function askQuestion(text) {
@@ -794,7 +887,7 @@
             if (!typing) {
                 typing = document.createElement('div');
                 typing.className = 'typing-indicator';
-                typing.innerHTML = '<i class="fas fa-robot"></i> در حال پردازش...';
+                typing.innerHTML = '<i class="fas fa-robot"></i> در حال پردازش کلمات...';
                 messagesBox.appendChild(typing);
             }
             typing.classList.add('show');
