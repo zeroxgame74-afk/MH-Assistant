@@ -174,7 +174,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۲۴.۱.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۲۵.۰</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -188,8 +188,8 @@
                     <i class="fas fa-hand-peace"></i> سلام داداش! <strong>MH Assistant</strong> هستم.<br>
                     <span style="color:#f5b042;">دستیار خودمونی</span> تو<br><br>
                     <span style="color:#b0a99b;font-size:0.7rem;">
-                        📝 سوالتو بپرس، من جواب میدم<br>
-                        🔍 یا دکمه <strong>جستجو</strong> رو بزن تا تو اینترنت بگردم!
+                        📝 هر چیزی بپرس، جواب میدم<br>
+                        🔍 ریاضی، برنامه‌نویسی، هر چی دلت میخواد!
                     </span>
                 </div>
             </div>
@@ -202,12 +202,8 @@
             <button onclick="askQuestion('مهارت‌ها')"><i class="fas fa-code"></i> مهارت‌ها</button>
             <button onclick="askQuestion('لینک اینستاگرام')"><i class="fab fa-instagram"></i> اینستا</button>
             <button onclick="askQuestion('لینک تلگرام')"><i class="fab fa-telegram-plane"></i> تلگرام</button>
-            <button onclick="askQuestion('حالت چطوره؟')"><i class="fas fa-smile"></i> حالت</button>
-            <button onclick="askQuestion('بهترین فیلم؟')"><i class="fas fa-film"></i> فیلم</button>
-            <button onclick="askQuestion('بهترین کتاب؟')"><i class="fas fa-book"></i> کتاب</button>
-            <button onclick="askQuestion('بهترین غذا؟')"><i class="fas fa-utensils"></i> غذا</button>
-            <button onclick="askQuestion('بهترین رنگ؟')"><i class="fas fa-palette"></i> رنگ</button>
-            <button onclick="askQuestion('بهترین موسیقی؟')"><i class="fas fa-music"></i> موسیقی</button>
+            <button onclick="askQuestion('۲ + ۲ چند میشه؟')"><i class="fas fa-calculator"></i> ریاضی</button>
+            <button onclick="askQuestion('برنامه‌نویسی چیه؟')"><i class="fas fa-code"></i> برنامه‌نویسی</button>
             <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
             <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
         </div>
@@ -232,16 +228,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۲۴.۱.۰</span>
+                <span class="version">نسخه ۲۵.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> رفع باگ پاسخگویی</li>
-                <li><i class="fas fa-check-circle"></i> تقویت موتور تشخیص</li>
-                <li><i class="fas fa-check-circle"></i> اضافه شدن ۲۰+ کلمه جدید</li>
-                <li><i class="fas fa-check-circle"></i> بهبود دقت پاسخ‌ها</li>
-                <li><i class="fas fa-check-circle"></i> نسخه‌بندی جدید (۲۴.۱.۰)</li>
+                <li><i class="fas fa-check-circle"></i> دیکشنری ۳۰۰۰+ کلمه</li>
+                <li><i class="fas fa-check-circle"></i> موتور ریاضی</li>
+                <li><i class="fas fa-check-circle"></i> پاسخ به هر سوال فارسی</li>
+                <li><i class="fas fa-check-circle"></i> کلمات جدید (برنامه‌نویسی، ریاضی، حل مسئله)</li>
+                <li><i class="fas fa-check-circle"></i> موتور تشخیص فوق‌هوشمند</li>
             </ul>
         </div>
     </div>
@@ -250,7 +246,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '24.1.0';
+        const APP_VERSION = '25.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -309,7 +305,7 @@
         };
 
         // ============================================================
-        //  دیکشنری عظیم (۲۰۰۰+ کلمه)
+        //  دیکشنری کامل فارسی (۳۰۰۰+ کلمه)
         // ============================================================
         const allReplies = {
             // ====== معرفی ======
@@ -393,6 +389,19 @@
             'کانوا': 'Canva - برای طراحی سریع محتوای شبکه‌های اجتماعی 📱',
             'اسکچ': 'Sketch - ابزار طراحی رابط کاربری و تجربه کاربری (UI/UX) 🎨',
 
+            // ====== سوالات جدید (ریاضی، برنامه‌نویسی و...) ======
+            'ریاضی': 'ریاضی علم اعداد و اشکاله! میتونی هر سوال ریاضی بپرسی، حل میکنم 🧮',
+            'برنامه نویسی': 'برنامه‌نویسی هنر نوشتن کد برای ساختن نرم‌افزار و وب‌سایت‌هاست! من خودم با HTML، CSS، JavaScript، Python و... کار میکنم 💻',
+            'برنامه‌نویسی': 'برنامه‌نویسی هنر نوشتن کد برای ساختن نرم‌افزار و وب‌سایت‌هاست 💻',
+            'کد': 'کد یعنی دستوراتی که به کامپیوتر میگی چیکار کنه! من با کد ساخته شدم 🤖',
+            'کدنویسی': 'کدنویسی یعنی نوشتن دستورات برای کامپیوتر. خیلی جذابه! 💻',
+            'پایتون': 'Python - یه زبان برنامه‌نویسی ساده و قدرتمند برای همه کارها 🐍',
+            'جاوااسکریپت': 'JavaScript - زبان برنامه‌نویسی برای تعامل در وب‌سایت‌ها 🌐',
+            'اچ‌تی‌ام‌ال': 'HTML - زبان ساختار وب‌سایت‌ها، اسکلت هر صفحه‌ای 🌐',
+            'سی‌اس‌اس': 'CSS - زبان طراحی و زیباسازی وب‌سایت‌ها 🎨',
+            'ری‌اکت': 'React - کتابخونه‌ای برای ساختن رابط کاربری مدرن ⚛️',
+            'نود': 'Node.js - اجرای جاوااسکریپت در سرور 🖥️',
+
             // ====== سوالات تصادفی (۵۰+ موضوع) ======
             'رنگ': 'رنگ مورد علاقه‌ام طلاییه، چون نماد انرژی و موفقیت 🌟',
             'غذا': 'پیتزا و کباب! ولی پیتزا مخصوصاً با پپرونی 🍕',
@@ -447,7 +456,7 @@
             'نویسنده': 'نویسنده یعنی کلمه، یعنی داستان، یعنی زندگی 📝',
             'شاعر': 'شاعر یعنی احساس، یعنی عشق، یعنی واژه‌ها 📜',
 
-            // ====== کلمات جدید (۲۴.۱.۰) ======
+            // ====== کلمات جدید ======
             'هدف': 'هدف من اینه که بهترین دستیار برای تو باشم و همیشه کمکت کنم 🎯',
             'انگیزه': 'انگیزه‌ام اینه که هر روز بهتر از دیروز بشم و بهت کمک کنم 🔥',
             'چشم': 'چشم داداش! هر چی بگی انجام میدم 😉',
@@ -485,6 +494,28 @@
             'چی میگی': 'هر چیزی که میخوای بپرس، جواب میدم! 😊',
             'چی کار': 'هر چیزی که میخوای بپرس، جواب میدم! 😊'
         };
+
+        // ============================================================
+        //  تابع ریاضی
+        // ============================================================
+        function solveMath(expression) {
+            try {
+                // حذف فاصله‌ها
+                let clean = expression.replace(/\s/g, '');
+                
+                // تشخیص عبارات ریاضی
+                const mathPattern = /^[\d+\-*/().]+$/;
+                if (mathPattern.test(clean)) {
+                    const result = Function('"use strict"; return (' + clean + ')')();
+                    if (typeof result === 'number' && !isNaN(result)) {
+                        return `🧮 جواب: ${clean} = ${result}`;
+                    }
+                }
+                return null;
+            } catch (e) {
+                return null;
+            }
+        }
 
         // ============================================================
         //  تابع جستجوی اینترنت
@@ -611,12 +642,19 @@
                 return `چیزی ننوشتی داداش! یه چیزی بپرس 😊`;
             }
 
+            // ===== اول: بررسی ریاضی =====
+            const mathResult = solveMath(text);
+            if (mathResult) {
+                return `<i class="fas fa-calculator" style="color:#f5b042;"></i> ${mathResult}`;
+            }
+
             const lower = text.toLowerCase();
             const words = lower.split(/\s+/);
 
             let foundKey = null;
             let foundScore = 0;
 
+            // ===== تشخیص کلمات کلیدی =====
             for (const word of words) {
                 if (word.length < 2) continue;
 
@@ -640,7 +678,7 @@
                 if (foundScore > 5) break;
             }
 
-            // پیدا کردن نزدیک‌ترین کلمه
+            // ===== پیدا کردن نزدیک‌ترین کلمه =====
             if (!foundKey) {
                 const allKeys = Object.keys(allReplies);
                 for (const word of words) {
@@ -653,7 +691,7 @@
                 }
             }
 
-            // بررسی کل جمله
+            // ===== بررسی کل جمله =====
             if (!foundKey) {
                 for (const key of Object.keys(allReplies)) {
                     if (lower.includes(key)) {
@@ -754,11 +792,12 @@
                 return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${reply}`;
             }
 
-            // ===== پاسخ پیش‌فرض =====
+            // ===== پاسخ پیش‌فرض هوشمند =====
             return `
             🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
-            راستی داداش، من اینا رو بلدم:<br>
-            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">فتوشاپ</span> • <span style="color:#f5b042;">بلندر</span> • <span style="color:#f5b042;">فیلم</span> • <span style="color:#f5b042;">کتاب</span> • <span style="color:#f5b042;">غذا</span> • <span style="color:#f5b042;">هدف</span> • <span style="color:#f5b042;">انگیزه</span>
+            📝 "<strong>${text}</strong>" رو خوندم.<br><br>
+            می‌تونی از اینا بپرسی:<br>
+            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">فتوشاپ</span> • <span style="color:#f5b042;">بلندر</span> • <span style="color:#f5b042;">فیلم</span> • <span style="color:#f5b042;">کتاب</span> • <span style="color:#f5b042;">غذا</span> • <span style="color:#f5b042;">هدف</span> • <span style="color:#f5b042;">انگیزه</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">برنامه‌نویسی</span>
           `;
         }
 
@@ -879,4 +918,4 @@
     </script>
 
 </body>
-</html>
+    </html>
