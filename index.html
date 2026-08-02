@@ -440,33 +440,34 @@
             gap: 4px;
         }
 
-        /* ===== نوتیفیکیشن ===== */
+        /* ===== نوتیفیکیشن شیشه‌ای ===== */
         .notification {
             position: fixed;
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(11, 11, 14, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 215, 100, 0.15);
-            border-radius: 16px;
-            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 215, 100, 0.12);
+            border-radius: 20px;
+            padding: 16px 20px;
             max-width: 400px;
             width: 92%;
-            box-shadow: 0 16px 48px -12px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 24px 64px -16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
             z-index: 9999;
-            animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-            transition: 0.5s ease;
+            animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .notification.hide {
             opacity: 0;
-            transform: translateX(-50%) translateY(30px) scale(0.95);
+            transform: translateX(-50%) translateY(40px) scale(0.92);
             pointer-events: none;
         }
         @keyframes slideUp {
             0% {
                 opacity: 0;
-                transform: translateX(-50%) translateY(30px) scale(0.95);
+                transform: translateX(-50%) translateY(40px) scale(0.92);
             }
             100% {
                 opacity: 1;
@@ -476,25 +477,44 @@
         .notification .notif-header {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 6px;
+            gap: 10px;
+            margin-bottom: 8px;
         }
-        .notification .notif-header i {
-            font-size: 1.4rem;
+        .notification .notif-header .icon-box {
+            width: 40px;
+            height: 40px;
+            background: rgba(245, 176, 66, 0.12);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(245, 176, 66, 0.08);
+        }
+        .notification .notif-header .icon-box i {
+            font-size: 1.3rem;
             color: #f5b042;
         }
-        .notification .notif-header h3 {
+        .notification .notif-header .title-group h3 {
             font-family: 'Vazirmatn', sans-serif;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: #f5efe6;
             margin: 0;
         }
+        .notification .notif-header .title-group .version {
+            font-size: 0.55rem;
+            color: #f5b042;
+            background: rgba(245, 176, 66, 0.08);
+            padding: 0px 8px;
+            border-radius: 40px;
+            display: inline-block;
+        }
         .notification .notif-body {
             font-family: 'Noto Sans Arabic', sans-serif;
-            font-size: 0.8rem;
-            color: #b0a99b;
-            line-height: 1.8;
+            font-size: 0.75rem;
+            color: #c0b9ad;
+            line-height: 1.9;
+            padding-right: 4px;
         }
         .notification .notif-body ul {
             list-style: none;
@@ -504,28 +524,35 @@
         .notification .notif-body ul li {
             padding-right: 18px;
             position: relative;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
         }
         .notification .notif-body ul li i {
             position: absolute;
             right: 0;
-            top: 3px;
+            top: 4px;
             color: #f5b042;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
         }
         .notification .notif-close {
             position: absolute;
-            top: 8px;
-            left: 12px;
-            background: none;
-            border: none;
-            color: #5f5a50;
-            font-size: 1.1rem;
+            top: 10px;
+            left: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: #6f6a60;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .notification .notif-close:hover {
             color: #f5efe6;
+            background: rgba(255, 255, 255, 0.06);
             transform: rotate(90deg);
         }
 
@@ -560,14 +587,18 @@
                 font-size: 0.75rem;
             }
             .notification {
-                padding: 10px 12px;
+                padding: 12px 14px;
                 max-width: 96%;
+                bottom: 14px;
             }
-            .notification .notif-header h3 {
-                font-size: 0.85rem;
+            .notification .notif-header .title-group h3 {
+                font-size: 0.8rem;
             }
             .notification .notif-body {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
+            }
+            .notification .notif-body ul li {
+                font-size: 0.6rem;
             }
         }
     </style>
@@ -629,21 +660,25 @@
 
     </div>
 
-    <!-- ===== نوتیفیکیشن یک‌باره ===== -->
+    <!-- ===== نوتیفیکیشن شیشه‌ای ===== -->
     <div class="notification" id="updateNotif">
         <button class="notif-close" onclick="closeNotification()"><i class="fas fa-times"></i></button>
         <div class="notif-header">
-            <i class="fas fa-gem"></i>
-            <h3>🎉 آپدیت جدید!</h3>
+            <div class="icon-box">
+                <i class="fas fa-gem"></i>
+            </div>
+            <div class="title-group">
+                <h3>🎉 آپدیت جدید</h3>
+                <span class="version">نسخه ۲.۰</span>
+            </div>
         </div>
         <div class="notif-body">
-            <span style="color:#f5b042;font-weight:600;">نسخه ۲.۰</span>
             <ul>
                 <li><i class="fas fa-check-circle"></i> پاسخ‌دهی هوشمند به همه سوالات</li>
                 <li><i class="fas fa-check-circle"></i> تشخیص اشتباهات املایی</li>
                 <li><i class="fas fa-check-circle"></i> اضافه شدن پاسخ‌های ثابت (سازنده، شماره، خرید)</li>
                 <li><i class="fas fa-check-circle"></i> دیکشنری ۵۰+ سوال تصادفی</li>
-                <li><i class="fas fa-check-circle"></i> طراحی جدید و ریسپانسیو</li>
+                <li><i class="fas fa-check-circle"></i> طراحی شیشه‌ای و ریسپانسیو</li>
                 <li><i class="fas fa-check-circle"></i> نمایش سایت‌ها با عکس و لینک</li>
             </ul>
         </div>
@@ -651,24 +686,25 @@
 
     <script>
         // ============================================================
-        //  نوتیفیکیشن یک‌باره
+        //  نوتیفیکیشن شیشه‌ای (۱۰ ثانیه)
         // ============================================================
         const APP_VERSION = '2.0';
         const notif = document.getElementById('updateNotif');
+        let notifTimer;
 
         function closeNotification() {
             notif.classList.add('hide');
+            clearTimeout(notifTimer);
             setTimeout(() => {
                 notif.style.display = 'none';
             }, 500);
         }
 
-        // بررسی نسخه
         const hasSeen = localStorage.getItem('mhs_notification_version');
         if (hasSeen !== APP_VERSION) {
             notif.style.display = 'block';
             // بعد از ۱۰ ثانیه خودش بسته بشه
-            setTimeout(() => {
+            notifTimer = setTimeout(() => {
                 closeNotification();
             }, 10000);
             localStorage.setItem('mhs_notification_version', APP_VERSION);
@@ -716,7 +752,7 @@
         };
 
         // ============================================================
-        //  دیکشنری کامل
+        //  دیکشنری کامل (توسعه‌یافته)
         // ============================================================
         const allReplies = {
 
@@ -728,10 +764,14 @@
             'شمارش': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
             'خرید': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
             'فروش': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
+            'قیمت': 'قیمت‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
+            'هزینه': 'هزینه‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
 
             // ===== کی هستی =====
             'کی هستی': 'من <strong>MH Assistant</strong> هستم! دستیار شخصی شما، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
             'هستی': 'من <strong>MH Assistant</strong> هستم! دستیار شخصی شما 🤖',
+            'چیستی': 'من <strong>MH Assistant</strong> هستم! دستیار شخصی شما 🤖',
+            'تو کی': 'من <strong>MH Assistant</strong> هستم! دستیار شخصی شما 🤖',
 
             // ===== اینستاگرام =====
             'اینستا': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
@@ -743,15 +783,18 @@
             // ===== سایت‌ها =====
             'سایت': 'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
             'پروژه': 'پروژه‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+            'وب': 'وب‌سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
 
             // ===== طراحی‌ها =====
             'طراحی': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
 
             // ===== مهارت‌ها =====
             'مهارت': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js 💻',
+            'تخصص': 'تخصص‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js 💻',
 
             // ===== برنامه‌ها =====
             'برنامه': 'برنامه‌ها: در حال توسعه 📱',
+            'اپ': 'اپلیکیشن‌ها: در حال توسعه 📱',
 
             // ===== ارتباط =====
             'ارتباط': 'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
@@ -795,7 +838,8 @@
             'چطوری': 'ممنون! عالی‌ام. تو چطوری؟ 😊',
             'حالت': 'ممنون! عالی‌ام. تو چطوری؟ 😊',
             'ممنون': 'خواهش می‌کنم! خوشحالم که کمک کردم ❤️',
-            'مرسی': 'خواهش می‌کنم! خوشحالم که کمک کردم ❤️'
+            'مرسی': 'خواهش می‌کنم! خوشحالم که کمک کردم ❤️',
+            'خوبی': 'عالی‌ام! ممنون که پرسیدی 😊'
         };
 
         // ============================================================
@@ -818,7 +862,7 @@
                     const distance = levenshteinDistance(word, key);
                     const maxLen = Math.max(word.length, key.length);
                     const similarity = 1 - (distance / maxLen);
-                    if (similarity > 0.6 && similarity > bestScore) {
+                    if (similarity > 0.55 && similarity > bestScore) {
                         bestScore = similarity;
                         bestMatch = key;
                     }
@@ -852,7 +896,7 @@
         }
 
         // ============================================================
-        //  موتور پاسخگویی
+        //  موتور پاسخگویی قوی
         // ============================================================
         function getReply(input) {
             const text = input.trim();
@@ -866,8 +910,9 @@
             const matchedKey = findClosestMatch(lower, allKeys);
 
             if (matchedKey && allReplies[matchedKey]) {
-                if (matchedKey === 'سایت' || matchedKey === 'پروژه') {
-                    let reply = `<i class="fas fa-laptop-code"></i> <strong>سایت‌ها:</strong><br>`;
+                // ===== سایت‌ها (با فرمت کامل) =====
+                if (matchedKey === 'سایت' || matchedKey === 'پروژه' || matchedKey === 'وب') {
+                    let reply = `<i class="fas fa-laptop-code"></i> <strong>سایت‌های طراحی شده توسط ${data.name}:</strong><br>`;
                     data.sites.forEach(s => {
                         reply += `
                     <div class="site-card">
@@ -885,8 +930,9 @@
                     return reply;
                 }
 
+                // ===== طراحی‌ها =====
                 if (matchedKey === 'طراحی') {
-                    let reply = `<i class="fas fa-palette"></i> <strong>طراحی‌ها:</strong><br>`;
+                    let reply = `<i class="fas fa-palette"></i> <strong>نمونه طراحی‌های هنری:</strong><br>`;
                     data.designs.forEach(d => {
                         reply += `
                     <div class="design-mini">
@@ -901,8 +947,9 @@
                     return reply;
                 }
 
-                if (matchedKey === 'مهارت') {
-                    let reply = `<i class="fas fa-code"></i> <strong>مهارت‌ها:</strong><br>`;
+                // ===== مهارت‌ها =====
+                if (matchedKey === 'مهارت' || matchedKey === 'تخصص') {
+                    let reply = `<i class="fas fa-code"></i> <strong>مهارت‌های ${data.name}:</strong><br>`;
                     data.skills.forEach(s => {
                         reply += `🔹 ${s}<br>`;
                     });
@@ -916,7 +963,7 @@
             <i class="fas fa-robot"></i> <strong>MH Assistant</strong> - دستیار شخصی<br><br>
             سوال "<strong>${text}</strong>" رو دریافت کردم.<br><br>
             می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">سازنده</span>
+            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">سازنده</span> • <span style="color:#f5b042;">خرید</span>
           `;
         }
 
@@ -999,4 +1046,4 @@
     </script>
 
 </body>
-    </html>
+</html>
