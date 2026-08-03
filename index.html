@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.9.2</title>
+    <title>MH Assistant | v3.9.3</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -148,15 +148,13 @@
             border-radius:10px;
             padding:10px 12px;
             margin:6px 0;
-            direction:ltr;
-            text-align:left;
             color:#f5efe6;
             font-size:0.8rem;
             font-weight:400;
             word-break:break-word;
+            font-family:'Vazirmatn',sans-serif;
         }
         .translation-box .trans-text {
-            font-family:'Vazirmatn',sans-serif;
             direction:rtl;
             text-align:right;
             line-height:2;
@@ -243,7 +241,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۹.۲</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۹.۳</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -260,7 +258,7 @@
                     📚 ۶۵۰۰+ سوال و جواب<br>
                     🧮 ریاضی پیشرفته (درجه‌ای)<br>
                     ☀️ آب و هوا (فارسی)<br>
-                    🌍 ترجمه (Beta)<br><br>
+                    🌍 ترجمه (Beta - جدید)<br><br>
                     هر چی بپرسی، جواب میدم! 😊
                 </div>
             </div>
@@ -301,15 +299,15 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۹.۲</span>
+                <span class="version">نسخه ۳.۹.۳</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
+                <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با موتور جدید (LibreTranslate)</li>
                 <li><i class="fas fa-check-circle"></i> 🧮 ریاضی با پشتیبانی از درجه (sin, cos, tan)</li>
-                <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با قابلیت کپی</li>
-                <li><i class="fas fa-check-circle"></i> 🚀 موتور پاسخگویی تقویت شد</li>
                 <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۶۵۰۰+ سوال و جواب</li>
+                <li><i class="fas fa-check-circle"></i> 🚀 موتور پاسخگویی تقویت شد</li>
                 <li><i class="fas fa-check-circle"></i> ☀️ آب و هوا با پشتیبانی از فارسی</li>
                 <li><i class="fas fa-check-circle"></i> 💪 پاسخ‌های ۸-۱۵ تایی برای هر سوال</li>
             </ul>
@@ -320,7 +318,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.9.2';
+        const APP_VERSION = '3.9.3';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -381,13 +379,14 @@
         }
 
         // ============================================================
-        //  ترجمه با API (اصلاح‌شده)
+        //  ترجمه با API جدید (LibreTranslate)
         // ============================================================
         async function translateText(text, targetLang) {
             try {
                 const langMap = { fa: 'fa', en: 'en', ar: 'ar', tr: 'tr' };
                 const toLang = langMap[targetLang] || 'en';
 
+                // تشخیص زبان مبدأ
                 let fromLang = 'auto';
                 const persianRegex = /[\u0600-\u06FF]/;
                 if (persianRegex.test(text)) {
@@ -396,11 +395,6 @@
                     const englishRegex = /[a-zA-Z]/;
                     if (englishRegex.test(text)) {
                         fromLang = 'en';
-                    } else {
-                        const arabicRegex = /[\u0600-\u06FF]/;
-                        if (arabicRegex.test(text)) {
-                            fromLang = 'ar';
-                        }
                     }
                 }
 
@@ -411,33 +405,44 @@
                     };
                 }
 
-                const url =
-                    `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang}|${toLang}`;
-                const response = await fetch(url);
+                // استفاده از LibreTranslate (رایگان و سریع)
+                const url = 'https://libretranslate.de/translate';
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        q: text,
+                        source: fromLang,
+                        target: toLang,
+                        format: 'text'
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('خطا در ارتباط با سرور ترجمه');
+                }
+
                 const data = await response.json();
 
-                if (data.responseData && data.responseData.translatedText) {
+                if (data && data.translatedText) {
                     return {
                         success: true,
-                        text: data.responseData.translatedText,
+                        text: data.translatedText,
                         fromLang: fromLang,
                         toLang: toLang
-                    };
-                } else if (data.responseDetails) {
-                    return {
-                        success: false,
-                        error: data.responseDetails
                     };
                 } else {
                     return {
                         success: false,
-                        error: 'خطا در ترجمه!'
+                        error: 'ترجمه انجام نشد!'
                     };
                 }
             } catch (e) {
                 return {
                     success: false,
-                    error: 'خطا در اتصال به اینترنت!'
+                    error: 'خطا در اتصال به اینترنت یا سرور ترجمه!'
                 };
             }
         }
@@ -481,12 +486,12 @@
             for (const pattern of patterns) {
                 const match = text.match(pattern);
                 if (match) {
-                    cleanText = match[1].trim();
+                    content = match[1].trim();
                     break;
                 }
             }
 
-            return { targetLang, content: cleanText };
+            return { targetLang, content: content };
         }
 
         // ============================================================
@@ -516,7 +521,7 @@
         }
 
         // ============================================================
-        //  دیتابیس اصلی
+        //  دیتابیس اصلی (همه‌ی دیتاهای قبلی کامل)
         // ============================================================
         const data = {
             name: 'mohamad hossein snti',
@@ -1652,4 +1657,4 @@
     </script>
 
 </body>
-</html>
+    </html>
