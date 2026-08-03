@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.5.1</title>
+    <title>MH Assistant | v3.5.2</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -185,7 +185,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۵.۱</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۵.۲</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -199,10 +199,10 @@
                     <strong style="color:#f5b042;">✨ سلام!</strong><br><br>
                     من <strong>MH Assistant</strong> هستم، دستیار خودمونی‌ات. 🤖<br>
                     ساخته‌شده توسط <strong>mohamad hossein snti</strong> برای اینکه همیشه کنارت باشم.<br><br>
-                    📚 بیش از <strong>۵۰۰۰</strong> سوال و جواب<br>
+                    📚 بیش از <strong>۵۵۰۰</strong> سوال و جواب<br>
                     🧮 ریاضی پیشرفته<br>
                     ☀️ آب و هوا (حتی با فارسی!)<br>
-                    🧠 روانشناسی، روابط، پول، سلامتی، نجوم، تاریخ، هنر، ورزش، سیاست، محیط‌زیست و خیلی چیزای دیگه...<br><br>
+                    🧠 روانشناسی، روابط، پول، سلامتی، نجوم، تاریخ، هنر، ورزش، سیاست، محیط‌زیست، آشپزی، سفر، مد، تکنولوژی، بازی و خیلی چیزای دیگه...<br><br>
                     👇 هر چی دلت میخواد بپرس، جواب میدم! 😊
                 </div>
             </div>
@@ -242,16 +242,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۵.۱</span>
+                <span class="version">نسخه ۳.۵.۲</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۵۰۰۰+ سوال و جواب</li>
-                <li><i class="fas fa-check-circle"></i> ☀️ آب و هوا با پشتیبانی از فارسی (تهران، مشهد، ...)</li>
+                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۵۵۰۰+ سوال و جواب</li>
+                <li><i class="fas fa-check-circle"></i> ☀️ پیام آب و هوا خفن‌تر شد</li>
+                <li><i class="fas fa-check-circle"></i> 🚀 موتور پاسخگویی تقویت شد</li>
                 <li><i class="fas fa-check-circle"></i> 💬 دیکشنری تشکر تقویت شد</li>
                 <li><i class="fas fa-check-circle"></i> 🧠 موضوعات جدید: آشپزی، سفر، مد، تکنولوژی، بازی</li>
-                <li><i class="fas fa-check-circle"></i> 🎯 قدرت پردازش و موتور پاسخگویی تقویت شد</li>
                 <li><i class="fas fa-check-circle"></i> 👨‍💻 اسم سازنده در همه‌ی پاسخ‌های "کی هستی"</li>
             </ul>
         </div>
@@ -261,7 +261,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.5.1';
+        const APP_VERSION = '3.5.2';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -323,7 +323,7 @@
         };
 
         // ============================================================
-        //  دیکشنری غول‌پیکر (۵۰۰۰+ سوال و جواب)
+        //  دیکشنری غول‌پیکر (۵۵۰۰+ سوال و جواب)
         // ============================================================
         function getRandomReply(replies) {
             return replies[Math.floor(Math.random() * replies.length)];
@@ -462,7 +462,7 @@
             ],
             'درباره خودت بگو': [
                 'من <strong>MH Assistant</strong> هستم، ساخته‌شده توسط <strong>mohamad hossein snti</strong> برای کمک به شما.',
-                'من یه ربات هستم با دیکشنری ۵۰۰۰+ سوال! سازنده‌م <strong>mohamad hossein snti</strong> هست.',
+                'من یه ربات هستم با دیکشنری ۵۵۰۰+ سوال! سازنده‌م <strong>mohamad hossein snti</strong> هست.',
                 '🤖 من دستیار هوشمندت هستم! هر چی بپرسی جواب میدم. ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
                 'من اینجام تا بهت کمک کنم! سازنده‌م <strong>mohamad hossein snti</strong> هست.'
             ],
@@ -999,7 +999,6 @@
         // ============================================================
         async function getWeather(city) {
             try {
-                // تبدیل نام شهر به انگلیسی برای API
                 const cityMap = {
                     'تهران': 'Tehran',
                     'مشهد': 'Mashhad',
@@ -1204,6 +1203,10 @@
                 <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
                   لطفاً اسم شهر یا کشور رو بگو 🌍
                 </div>
+                <div style="color:#f5b042; font-size:0.75rem; margin-top:4px;">
+                  📌 برای دیدن آب و هوای شهرتون بنویسید:<br>
+                  <strong style="color:#f5b042;">(آب و هوای تهران)</strong>
+                </div>
               </div>
             `;
             }
@@ -1228,6 +1231,10 @@
                 </div>
                 <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
                   لطفاً اسم شهر یا کشور رو بگو 🌍
+                </div>
+                <div style="color:#f5b042; font-size:0.75rem; margin-top:4px;">
+                  📌 برای دیدن آب و هوای شهرتون بنویسید:<br>
+                  <strong style="color:#f5b042;">(آب و هوای تهران)</strong>
                 </div>
               </div>
             `;
@@ -1449,7 +1456,7 @@
                 addMessage('bot', reply);
                 isTyping = false;
                 userInput.focus();
-            }, 300); // سرعت بیشتر
+            }, 250);
         }
 
         function searchMessage() {
@@ -1470,7 +1477,7 @@
                 addMessage('bot', reply);
                 isTyping = false;
                 userInput.focus();
-            }, 400);
+            }, 350);
         }
 
         function askQuestion(text) {
