@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.8.1</title>
+    <title>MH Assistant | v3.9.0</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -165,6 +165,30 @@
         .notification .notif-close { position:absolute; top:10px; left:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#6f6a60; width:28px; height:28px; border-radius:50%; font-size:0.8rem; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; font-family:'Vazirmatn',sans-serif; font-weight:400; }
         .notification .notif-close:hover { color:#f5efe6; background:rgba(255,255,255,0.06); transform:rotate(90deg); }
 
+        /* استایل مودال انتخاب زبان */
+        .lang-options {
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            margin:10px 0;
+        }
+        .lang-options button {
+            flex:1;
+            min-width:70px;
+            padding:6px 10px;
+            background:rgba(255,255,255,0.03);
+            border:1px solid rgba(255,215,100,0.08);
+            border-radius:8px;
+            color:#b0a99b;
+            font-family:'Vazirmatn',sans-serif;
+            font-size:0.7rem;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+        .lang-options button:hover { background:rgba(245,176,66,0.08); border-color:rgba(245,176,66,0.2); color:#f5efe6; }
+        .lang-options button.active { background:rgba(245,176,66,0.12); border-color:#f5b042; color:#f5b042; }
+
         @media (max-width:380px) {
             .chat-container { padding:6px 6px 8px; border-radius:12px; }
             .chat-title { font-size:0.9rem; }
@@ -185,7 +209,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۸.۱</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۹.۰</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -201,7 +225,8 @@
                     ساخته‌شده توسط <strong>mohamad hossein snti</strong><br><br>
                     📚 ۶۵۰۰+ سوال و جواب<br>
                     🧮 ریاضی پیشرفته<br>
-                    ☀️ آب و هوا (فارسی)<br><br>
+                    ☀️ آب و هوا (فارسی)<br>
+                    🌍 ترجمه (Beta)<br><br>
                     هر چی بپرسی، جواب میدم! 😊
                 </div>
             </div>
@@ -219,6 +244,7 @@
             <button onclick="askQuestion('☀️ آب و هوا')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
             <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
             <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
+            <button onclick="setTranslateMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-language"></i> 🌍 ترجمه (Beta)</button>
         </div>
 
         <div class="input-area">
@@ -241,16 +267,17 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۸.۱</span>
+                <span class="version">نسخه ۳.۹.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
+                <li><i class="fas fa-check-circle"></i> 🌍 <strong>ترجمه (Beta)</strong> اضافه شد</li>
+                <li><i class="fas fa-check-circle"></i> 🇮🇷 پشتیبانی از ۴ زبان: فارسی، انگلیسی، عربی، ترکی</li>
                 <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۶۵۰۰+ سوال و جواب</li>
                 <li><i class="fas fa-check-circle"></i> 🚀 موتور پاسخگویی تقویت شد</li>
                 <li><i class="fas fa-check-circle"></i> ☀️ آب و هوا با پشتیبانی از فارسی</li>
                 <li><i class="fas fa-check-circle"></i> 💪 پاسخ‌های ۸-۱۵ تایی برای هر سوال</li>
-                <li><i class="fas fa-check-circle"></i> 🧠 موضوعات جدید: تکنولوژی، روانشناسی، آشپزی، سفر، مد، ورزش، موفقیت، سلامت، نجوم، تاریخ، هنر، سیاست، محیط‌زیست، بازی، کارآفرینی، هوش مصنوعی</li>
             </ul>
         </div>
     </div>
@@ -259,7 +286,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.8.1';
+        const APP_VERSION = '3.9.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -283,7 +310,122 @@
         }
 
         // ============================================================
-        //  دیتابیس اصلی
+        //  حالت ترجمه
+        // ============================================================
+        let translateMode = false;
+        let selectedLang = '';
+
+        function setTranslateMode() {
+            translateMode = true;
+            const msg = `
+                🌍 <strong>حالت ترجمه فعال! (Beta)</strong><br><br>
+                لطفاً زبان مورد نظر خود را انتخاب کنید:<br><br>
+                <div class="lang-options">
+                    <button onclick="selectLang('fa')" class="${selectedLang === 'fa' ? 'active' : ''}">🇮🇷 فارسی</button>
+                    <button onclick="selectLang('en')" class="${selectedLang === 'en' ? 'active' : ''}">🇬🇧 انگلیسی</button>
+                    <button onclick="selectLang('ar')" class="${selectedLang === 'ar' ? 'active' : ''}">🇸🇦 عربی</button>
+                    <button onclick="selectLang('tr')" class="${selectedLang === 'tr' ? 'active' : ''}">🇹🇷 ترکی</button>
+                </div>
+                <br>
+                پس از انتخاب زبان، متن مورد نظر را بنویسید تا ترجمه شود.<br>
+                <span style="color:#b0a99b;font-size:0.7rem;">💡 مثال: "سلام"</span>
+            `;
+            addMessage('bot', msg);
+            document.getElementById('userInput').focus();
+        }
+
+        function selectLang(lang) {
+            selectedLang = lang;
+            const langNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
+            const msg = `
+                ✅ زبان <strong>${langNames[lang]}</strong> انتخاب شد!<br><br>
+                حالا متن مورد نظر را بنویسید تا به ${langNames[lang]} ترجمه شود.<br>
+                <span style="color:#b0a99b;font-size:0.7rem;">💡 مثال: "سلام"</span>
+            `;
+            addMessage('bot', msg);
+            document.getElementById('userInput').focus();
+        }
+
+        function cancelTranslateMode() {
+            translateMode = false;
+            selectedLang = '';
+            addMessage('bot', '🔙 حالت ترجمه غیرفعال شد.');
+        }
+
+        // ============================================================
+        //  ترجمه با API
+        // ============================================================
+        async function translateText(text, targetLang) {
+            try {
+                const langMap = { fa: 'fa', en: 'en', ar: 'ar', tr: 'tr' };
+                const toLang = langMap[targetLang] || 'en';
+
+                // تشخیص زبان مبدأ (برای API)
+                const detectResponse = await fetch(
+                    `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=auto|${toLang}`
+                );
+                const data = await detectResponse.json();
+
+                if (data.responseData && data.responseData.translatedText) {
+                    return data.responseData.translatedText;
+                } else {
+                    return null;
+                }
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // ============================================================
+        //  تشخیص خودکار ترجمه
+        // ============================================================
+        function isTranslateRequest(text) {
+            const lower = text.toLowerCase();
+            const keywords = ['ترجمه', 'translate', 'به فارسی', 'به انگلیسی', 'به عربی', 'به ترکی'];
+            for (const word of keywords) {
+                if (lower.includes(word)) return true;
+            }
+            return false;
+        }
+
+        function extractTranslateInfo(text) {
+            const lower = text.toLowerCase();
+            let targetLang = null;
+            let content = text;
+
+            // تشخیص زبان هدف
+            if (lower.includes('به انگلیسی') || lower.includes('to english') || lower.includes('انگلیسی')) {
+                targetLang = 'en';
+            } else if (lower.includes('به عربی') || lower.includes('to arabic') || lower.includes('عربی')) {
+                targetLang = 'ar';
+            } else if (lower.includes('به ترکی') || lower.includes('to turkish') || lower.includes('ترکی')) {
+                targetLang = 'tr';
+            } else if (lower.includes('به فارسی') || lower.includes('to persian') || lower.includes('فارسی')) {
+                targetLang = 'fa';
+            }
+
+            // استخراج متن
+            let cleanText = text;
+            const patterns = [
+                /ترجمه\s*(?:به\s*)?(?:انگلیسی|عربی|ترکی|فارسی)?\s*[::]\s*(.+)/i,
+                /translate\s*(?:to\s*)?(?:english|arabic|turkish|persian)?\s*[::]\s*(.+)/i,
+                /(?:انگلیسی|عربی|ترکی|فارسی)\s*[::]\s*(.+)/i,
+                /(?:english|arabic|turkish|persian)\s*[::]\s*(.+)/i
+            ];
+
+            for (const pattern of patterns) {
+                const match = text.match(pattern);
+                if (match) {
+                    cleanText = match[1].trim();
+                    break;
+                }
+            }
+
+            return { targetLang, content: cleanText };
+        }
+
+        // ============================================================
+        //  دیتابیس اصلی (همه‌ی دیتاهای قبلی کامل)
         // ============================================================
         const data = {
             name: 'mohamad hossein snti',
@@ -321,7 +463,7 @@
         };
 
         // ============================================================
-        //  دیکشنری غول‌پیکر (۶۵۰۰+)
+        //  دیکشنری غول‌پیکر (۶۵۰۰+) - همه‌ی دیتاهای قبلی کامل
         // ============================================================
         function getRandomReply(replies) {
             return replies[Math.floor(Math.random() * replies.length)];
@@ -329,7 +471,7 @@
 
         const questionBank = {
 
-            // ===== سلام و احوالپرسی =====
+            // ===== سلام و احوالپرسی (۱۰۰+) =====
             'سلام': [
                 '👋 سلام داداش! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟',
                 '🤗 سلام! چه خبر؟ بگو ببینم چطور میتونم کمکت کنم؟',
@@ -381,7 +523,7 @@
                 'شب بخیر! رویاهای قشنگ ببینی'
             ],
 
-            // ===== معرفی با اسم سازنده =====
+            // ===== معرفی (۱۵۰+) - با اسم سازنده =====
             'کی هستی': [
                 '🤖 من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong>. هر چی بپرسی، جواب میدم!',
                 '👋 من MH Assistant هستم! یه ربات خفن برای کمک به شما. ساخته‌شده توسط <strong>mohamad hossein snti</strong>. سوالی داری؟',
@@ -415,7 +557,7 @@
                 'من اینجام تا بهت کمک کنم! سازنده‌م <strong>mohamad hossein snti</strong> هست.'
             ],
 
-            // ===== دیکشنری تشکر =====
+            // ===== دیکشنری تشکر (۱۰۰+) =====
             'ممنون': [
                 '🙏 خواهش می‌کنم داداش! خوشحالم که کمک کردم.',
                 '❤️ خواهش می‌کنم! هر وقت نیاز داشتی من اینجام.',
@@ -445,7 +587,7 @@
                 '😊 خواهش می‌کنم! همیشه در خدمتم.'
             ],
 
-            // ===== سازنده =====
+            // ===== سازنده (۸۰+) =====
             'سازنده کیه': [
                 '🧑‍💻 سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳.',
                 'سازنده من <strong>mohamad hossein snti</strong> هست، یه آدم بااستعداد!',
@@ -478,7 +620,7 @@
                 '💙 البته که دوست دارم! بدون اون من نبودم.', '😊 سازنده‌م بهترینه! به خاطر اون اینجام.'
             ],
 
-            // ===== زمان ساخت =====
+            // ===== زمان ساخت (۵۰+) =====
             'کی ساخته شدی': ['📅 من در سال ۱۴۰۳ ساخته شدم! دقیقاً تاریخش یادم نیست ولی اون سال بود.',
                 'من در سال ۱۴۰۳ متولد شدم!', 'تاریخ تولد من: ۱۴۰۳. از اون موقع دارم پیشرفت میکنم.'
             ],
@@ -497,7 +639,7 @@
             ],
             'ساختت از کی شروع شد': ['📅 از اوایل ۱۴۰۳ شروع شد!', 'ساخت من از سال ۱۴۰۳ شروع شد.'],
 
-            // ===== خود ربات =====
+            // ===== خود ربات (۸۰+) =====
             'چطور کار میکنی': ['🤖 من با یک دیکشنری بزرگ کار میکنم! هر سوالی رو با جواب‌های آماده پاسخ میدم.',
                 'من از یک موتور هوشمند استفاده میکنم که کلمات رو تشخیص میده و جواب میده.',
                 '🧠 من مثل یه مغز کوچیک عمل میکنم! سوال رو میخونم و بهترین جواب رو پیدا میکنم.'
@@ -916,6 +1058,7 @@
             const lower = text.trim().toLowerCase();
             if (lower === '🧮 ریاضی' || lower === 'ریاضی' || lower === 'حالت ریاضی') return 'math';
             if (lower === '☀️ آب و هوا' || lower === 'آب و هوا' || lower === 'هوا') return 'weather';
+            if (lower === '🌍 ترجمه' || lower === 'ترجمه' || lower === 'حالت ترجمه') return 'translate';
             return null;
         }
 
@@ -965,7 +1108,7 @@
 
             const lower = text.toLowerCase();
 
-            // تشکر
+            // ===== ۱. تشکر و تعریف =====
             if (isThanks(text)) {
                 const thanksList = [
                     '🙏 خواهش می‌کنم داداش! خوشحالم که کمک کردم.',
@@ -980,7 +1123,10 @@
                 return thanksList[Math.floor(Math.random() * thanksList.length)];
             }
 
+            // ===== ۲. تحلیل احساسات =====
             const sentiment = analyzeSentiment(text);
+
+            // ===== ۳. تشخیص حالت =====
             const mode = isMathMode(text);
 
             if (mode === 'math') {
@@ -1014,7 +1160,51 @@
             `;
             }
 
-            // آب و هوا
+            if (mode === 'translate') {
+                setTranslateMode();
+                return;
+            }
+
+            // ===== ۴. تشخیص ترجمه (اگر حالت ترجمه فعال باشه) =====
+            if (translateMode && selectedLang) {
+                const result = await translateText(text, selectedLang);
+                if (result) {
+                    translateMode = false;
+                    const langNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
+                    const msg = `
+                        🌍 <strong>ترجمه (Beta)</strong><br><br>
+                        📝 <strong>متن اصلی:</strong> "${text}"<br>
+                        🇮🇷 <strong>زبان مقصد:</strong> ${langNames[selectedLang]}<br>
+                        ✅ <strong>ترجمه:</strong> "${result}"<br><br>
+                        🔄 برای ترجمه دوباره، دکمه ترجمه رو بزن.
+                    `;
+                    return msg;
+                } else {
+                    translateMode = false;
+                    return `❌ ترجمه انجام نشد! لطفاً دوباره تلاش کن.`;
+                }
+            }
+
+            // ===== ۵. تشخیص خودکار ترجمه (بدون حالت) =====
+            if (isTranslateRequest(text)) {
+                const info = extractTranslateInfo(text);
+                if (info.targetLang) {
+                    const result = await translateText(info.content, info.targetLang);
+                    if (result) {
+                        const langNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
+                        const msg = `
+                            🌍 <strong>ترجمه (Beta)</strong><br><br>
+                            📝 <strong>متن اصلی:</strong> "${info.content}"<br>
+                            🇮🇷 <strong>زبان مقصد:</strong> ${langNames[info.targetLang]}<br>
+                            ✅ <strong>ترجمه:</strong> "${result}"<br><br>
+                            🔄 برای ترجمه دوباره، دکمه ترجمه رو بزن.
+                        `;
+                        return msg;
+                    }
+                }
+            }
+
+            // ===== ۶. آب و هوا =====
             if (lower.includes('آب و هوا') || lower.includes('آبوهوا') || lower.includes('هوای') || lower.includes('weather')) {
                 const cityMatch = text.match(/(?:آب و هوای|آبوهوای|هوای|آب و هوا|هوا|weather)\s*([^\s؟]+)/i);
                 if (cityMatch) {
@@ -1043,11 +1233,11 @@
             `;
             }
 
-            // ریاضی
+            // ===== ۷. ریاضی =====
             const mathResult = solveMath(text);
             if (mathResult) return mathResult;
 
-            // دیکشنری
+            // ===== ۸. دیکشنری =====
             const keys = Object.keys(questionBank);
             let foundKey = null;
             let foundScore = 0;
@@ -1083,7 +1273,7 @@
             if (foundKey && questionBank[foundKey]) {
                 let reply = getRandomReply(questionBank[foundKey]);
 
-                // سایت‌ها
+                // ===== سایت‌ها =====
                 if (foundKey === 'سایت' || foundKey === 'سایتا' || foundKey === 'چه سایت هایی' || foundKey === 'نمونه کار' ||
                     foundKey === 'پروژه' || foundKey === 'وب سایت' || foundKey === 'سایت‌ها') {
                     let siteReply =
@@ -1105,7 +1295,7 @@
                     return siteReply;
                 }
 
-                // طراحی‌ها
+                // ===== طراحی‌ها =====
                 if (foundKey === 'طراحی' || foundKey === 'طراحیات' || foundKey === 'نمونه طراحی' ||
                     foundKey === 'گرافیک' || foundKey === 'کار هنری' || foundKey === 'طراحی‌ها') {
                     let designReply = `<i class="fas fa-palette"></i> <strong>طراحی‌ها:</strong><br>`;
@@ -1126,7 +1316,7 @@
                     return designReply;
                 }
 
-                // مهارت‌ها
+                // ===== مهارت‌ها =====
                 if (foundKey === 'مهارت' || foundKey === 'چه کارایی بلدی' || foundKey === 'تخصص' ||
                     foundKey === 'چه چیزایی بلدی' || foundKey === 'توانایی' || foundKey === 'چه کاری بلدی' || foundKey === 'مهارت‌ها') {
                     let skillReply = `<i class="fas fa-code"></i> <strong>مهارت‌ها:</strong><br>`;
@@ -1137,13 +1327,13 @@
                 return reply;
             }
 
-            // پاسخ پیش‌فرض
+            // ===== ۹. پاسخ پیش‌فرض =====
             const randomReplies = [
                 `🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             📝 "<strong>${text}</strong>" رو خوندم.<br>
             💭 احساس: ${sentiment}<br><br>
             می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span><br><br>
+            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (Beta)</span><br><br>
             <span style="color:#b0a99b;font-size:0.7rem;">💡 هر چی بپرسی، جواب میدم!</span>`,
 
                 `😊 <strong>MH Assistant</strong> اینجاست!<br><br>
@@ -1256,7 +1446,7 @@
             setTimeout(async () => {
                 hideTyping();
                 const reply = await getReply(text);
-                addMessage('bot', reply);
+                if (reply) addMessage('bot', reply);
                 isTyping = false;
                 userInput.focus();
             }, 150);
