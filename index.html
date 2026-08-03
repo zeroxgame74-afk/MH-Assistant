@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.10.0</title>
+    <title>MH Assistant | v3.10.2</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -187,11 +187,19 @@
             max-width:350px;
             border-radius:8px;
             border:1px solid rgba(255,215,100,0.06);
+            background:#0b0b0e;
+            min-height:100px;
         }
         .image-card .img-label {
             font-size:0.6rem;
             color:#b0a99b;
             margin-top:4px;
+        }
+        .image-card .img-brand {
+            font-size:0.55rem;
+            color:#f5b042;
+            margin-top:2px;
+            font-weight:600;
         }
 
         .notification {
@@ -262,7 +270,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۲</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -280,7 +288,7 @@
                     🧮 ریاضی پیشرفته (درجه‌ای)<br>
                     ☀️ آب و هوا (فارسی)<br>
                     🌍 ترجمه (آزمایشی)<br>
-                    🎨 ساخت تصویر با AI (رایگان)<br>
+                    🎨 <strong>mh picture (آزمایشی)</strong><br>
                     💡 ایده‌ساز و کمک‌رسان<br><br>
                     👇 هر چی دلت میخواد بپرس! 😊
                 </div>
@@ -299,7 +307,7 @@
             <button onclick="askQuestion('☀️ آب و هوا')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
             <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
             <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
-            <button onclick="setImageMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-image"></i> 🎨 تصویر</button>
+            <button onclick="setImageMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-image"></i> 🎨 mh picture</button>
             <button onclick="setTranslateMode()" style="border-color:rgba(245,176,66,0.2);"><i class="fas fa-language"></i> ترجمه (آزمایشی)</button>
         </div>
 
@@ -323,17 +331,17 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۱۰.۰</span>
+                <span class="version">نسخه ۳.۱۰.۲</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🎨 <strong>ساخت تصویر با AI</strong> (رایگان)</li>
-                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی با پشتیبانی از درجه (sin, cos, tan)</li>
+                <li><i class="fas fa-check-circle"></i> 🎨 <strong>mh picture با Lexica.art</strong> (کیفیت بالا)</li>
+                <li><i class="fas fa-check-circle"></i> 🔄 Fallback به Pollinations</li>
+                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی با پشتیبانی از درجه</li>
                 <li><i class="fas fa-check-circle"></i> 🧠 موتور دیکشنری تقویت شد</li>
                 <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با Google Translate API</li>
                 <li><i class="fas fa-check-circle"></i> 💡 تشخیص حالت روحی و ایده‌سازی</li>
-                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۶۵۰۰+ سوال و جواب</li>
             </ul>
         </div>
     </div>
@@ -342,7 +350,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.10.0';
+        const APP_VERSION = '3.10.2';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -366,17 +374,17 @@
         }
 
         // ============================================================
-        //  حالت تصویر
+        //  حالت تصویر (mh picture)
         // ============================================================
         let imageMode = false;
 
         function setImageMode() {
             imageMode = true;
             const msg = `
-                🎨 <strong>حالت ساخت تصویر فعال!</strong><br><br>
+                🎨 <strong>mh picture (آزمایشی)</strong><br><br>
                 📌 برای ساخت تصویر، توضیحاتش رو بنویس:<br>
                 مثلاً: <strong style="color:#f5b042;">"یک گربه نارنجی با کلاه لبه‌دار"</strong><br><br>
-                ⚠️ کیفیت تصویر ممکنه ۱۰۰٪ نباشه.<br>
+                ⚠️ ممکنه چند ثانیه طول بکشه.<br>
                 ✅ تصویر ساخته شده رو میتونی ذخیره کنی (کلیک راست یا لمس طولانی).<br>
                 🔄 برای خروج از حالت تصویر، دکمه تصویر رو دوباره بزن.
             `;
@@ -386,17 +394,52 @@
 
         function cancelImageMode() {
             imageMode = false;
-            addMessage('bot', '🔙 حالت تصویر غیرفعال شد.');
+            addMessage('bot', '🔙 حالت mh picture غیرفعال شد.');
         }
 
         // ============================================================
-        //  ساخت تصویر با Pollinations.ai
+        //  ساخت تصویر با Lexica.art (کیفیت بالا)
         // ============================================================
-        function generateImage(prompt) {
-            const cleanPrompt = prompt.replace(/\s+/g, '+').trim();
-            const imageUrl =
-                `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=512&height=512&nologo=true`;
-            return imageUrl;
+        async function generateImage(prompt) {
+            try {
+                const searchUrl = `https://lexica.art/api/v1/search?q=${encodeURIComponent(prompt)}`;
+                const response = await fetch(searchUrl);
+                const data = await response.json();
+
+                if (data && data.images && data.images.length > 0) {
+                    // گرفتن بهترین عکس (اولی)
+                    const image = data.images[0];
+                    const imgUrl = image.src || image.url || image.img;
+                    if (imgUrl) {
+                        return {
+                            success: true,
+                            url: imgUrl,
+                            prompt: prompt,
+                            source: 'Lexica.art'
+                        };
+                    }
+                }
+
+                // Fallback به Pollinations
+                const fallbackUrl =
+                    `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true`;
+                return {
+                    success: true,
+                    url: fallbackUrl,
+                    prompt: prompt,
+                    source: 'Pollinations (Fallback)'
+                };
+            } catch (e) {
+                // Fallback به Pollinations
+                const fallbackUrl =
+                    `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true`;
+                return {
+                    success: true,
+                    url: fallbackUrl,
+                    prompt: prompt,
+                    source: 'Pollinations (Fallback)'
+                };
+            }
         }
 
         // ============================================================
@@ -1315,7 +1358,7 @@
             if (lower === '🧮 ریاضی' || lower === 'ریاضی' || lower === 'حالت ریاضی') return 'math';
             if (lower === '☀️ آب و هوا' || lower === 'آب و هوا' || lower === 'هوا') return 'weather';
             if (lower === 'ترجمه' || lower === 'حالت ترجمه') return 'translate';
-            if (lower === '🎨 تصویر' || lower === 'تصویر' || lower === 'ساخت تصویر') return 'image';
+            if (lower === 'mh picture' || lower === 'تصویر' || lower === 'ساخت تصویر') return 'image';
             return null;
         }
 
@@ -1383,15 +1426,16 @@
             // ===== ۲. تشخیص حالت تصویر =====
             if (imageMode) {
                 imageMode = false;
-                const imgUrl = generateImage(text);
+                const result = await generateImage(text);
                 const msg = `
-                    🎨 <strong>تصویر ساخته شد!</strong><br><br>
+                    🎨 <strong>mh picture (آزمایشی)</strong><br><br>
                     <div class="image-card">
-                        <img src="${imgUrl}" alt="${text}" loading="lazy">
+                        <img src="${result.url}" alt="${text}" loading="lazy" onerror="this.src='https://image.pollinations.ai/prompt/${encodeURIComponent(text)}?width=512&height=512&nologo=true'">
                         <div class="img-label">📌 توضیحات: "${text}"</div>
+                        <div class="img-brand">⚡ ساخته شده با ${result.source || 'mh picture'}</div>
                     </div>
                     💡 می‌تونی تصویر رو با کلیک راست یا لمس طولانی ذخیره کنی.<br>
-                    🔄 برای ساخت تصویر جدید، دکمه تصویر رو بزن.
+                    🔄 برای ساخت تصویر جدید، دکمه mh picture رو بزن.
                 `;
                 return msg;
             }
@@ -1644,7 +1688,7 @@
             📝 "<strong>${text}</strong>" رو خوندم.<br>
             💭 احساس: ${sentiment}<br><br>
             می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (آزمایشی)</span> • <span style="color:#f5b042;">🎨 تصویر</span><br><br>
+            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (آزمایشی)</span> • <span style="color:#f5b042;">🎨 mh picture</span><br><br>
             <span style="color:#b0a99b;font-size:0.7rem;">💡 هر چی بپرسی، جواب میدم!</span>`,
 
                 `😊 <strong>MH Assistant</strong> اینجاست!<br><br>
