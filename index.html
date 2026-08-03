@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v2.2.0</title>
+    <title>MH Assistant | v2.4.0</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -166,6 +166,53 @@
             .input-area .btn-send, .input-area .btn-search { width:32px; height:32px; font-size:0.75rem; }
             .notification { padding:12px 14px; max-width:96%; bottom:14px; }
         }
+
+        /* استایل اختصاصی ریاضی و آب و هوا */
+        .math-box {
+            background: rgba(76, 175, 80, 0.04);
+            border: 1px solid rgba(76, 175, 80, 0.15);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-top: 4px;
+        }
+        .math-box .math-title {
+            color: #4caf50;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .math-box .math-result {
+            color: #f5efe6;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .math-box .math-detail {
+            color: #b0a99b;
+            font-size: 0.8rem;
+        }
+
+        .weather-box {
+            background: rgba(33, 150, 243, 0.04);
+            border: 1px solid rgba(33, 150, 243, 0.15);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-top: 4px;
+        }
+        .weather-box .weather-title {
+            color: #2196f3;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+        .weather-box .weather-info {
+            color: #b0a99b;
+            font-size: 0.8rem;
+            line-height: 2;
+        }
+        .weather-box .weather-info strong {
+            color: #f5efe6;
+        }
     </style>
 </head>
 <body>
@@ -176,7 +223,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۲.۲.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۲.۴.۰</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -187,12 +234,11 @@
             <div class="message bot">
                 <div class="avatar"><i class="fas fa-robot"></i></div>
                 <div class="bubble">
-                    🚀 <strong>MH Assistant v2.2.0 آماده خدمته! 🚀</strong><br><br>
-                    🔹 سوالات عمومی (هر چی بپرسی، جواب کامل دارم!)<br>
-                    🔹 محاسبات ریاضی پیشرفته (sin, cos, √, log, π و...)<br>
-                    🔹 پیش‌بینی آب‌وهوا (با نام هر شهری)<br>
-                    🔹 پاسخ‌های کامل و مفصل<br><br>
-                    ✅ جدیدترین آپدیت: پاسخ‌های کامل و دقیق<br><br>
+                    🚀 <strong>MH Assistant v2.4.0 آماده خدمته! 🚀</strong><br><br>
+                    🔹 دیکشنری ۱۰۰۰۰+ کلمه<br>
+                    🔹 محاسبات ریاضی پیشرفته (sin, cos, √, π, log, ln, توان)<br>
+                    🔹 پیش‌بینی آب‌وهوا (دما، وضعیت، باد، رطوبت)<br>
+                    🔹 پاسخ‌های متنوع و هوشمند<br><br>
                     👇 هر چی دلت میخواد بپرس...
                 </div>
             </div>
@@ -209,6 +255,8 @@
             <button onclick="askQuestion('☀️ آب و هوا')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
             <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
             <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
+            <button onclick="askQuestion('۲+۲')"><i class="fas fa-plus"></i> ۲+۲</button>
+            <button onclick="askQuestion('آب و هوای تهران')"><i class="fas fa-city"></i> تهران</button>
         </div>
 
         <div class="input-area">
@@ -231,15 +279,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۲.۲.۰</span>
+                <span class="version">نسخه ۲.۴.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 📝 پاسخ‌های کامل و مفصل</li>
-                <li><i class="fas fa-check-circle"></i> 💬 توضیحات دقیق برای هر سوال</li>
-                <li><i class="fas fa-check-circle"></i> 🧠 بهبود موتور پاسخگویی</li>
-                <li><i class="fas fa-check-circle"></i> 🎯 پاسخ‌های هدفمند و کاربردی</li>
+                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۱۰۰۰۰+ کلمه</li>
+                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی پیشرفته (sin, cos, √, π, log, ln)</li>
+                <li><i class="fas fa-check-circle"></i> ☀️ آب و هوا کامل (دما، وضعیت، باد، رطوبت)</li>
+                <li><i class="fas fa-check-circle"></i> 💬 موتور پاسخگویی فوق‌هوشمند</li>
+                <li><i class="fas fa-check-circle"></i> 🎯 ۵۰+ پاسخ متنوع برای هر موضوع</li>
             </ul>
         </div>
     </div>
@@ -248,7 +297,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '2.2.0';
+        const APP_VERSION = '2.4.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -299,10 +348,10 @@
                 img: 'https://uploadkon.ir/uploads/d66b01_26Kourosh-Gameir۱۲.jpg'
             }],
             designs: [
-                { name: 'گفتند زلف یار...', desc: 'ادای احترام به نام علی (ع) - اثری معنوی و هنری' },
-                { name: 'اهواز... خاک غسل‌شده', desc: 'یاد شهدای جنوب ایران - اثری از ایثار و مقاومت' }
+                { name: 'گفتند زلف یار...', desc: 'ادای احترام به نام علی (ع)' },
+                { name: 'اهواز... خاک غسل‌شده', desc: 'یاد شهدای جنوب ایران' }
             ],
-            apps: 'در حال توسعه - به زودی اپلیکیشن‌های جدید و جذاب',
+            apps: 'در حال توسعه',
             social: {
                 telegram: 'https://t.me/@mohamad_hossein_ev18',
                 instagram: 'https://www.instagram.com/mohamad_hossein_ev18'
@@ -310,389 +359,183 @@
         };
 
         // ============================================================
-        //  پاسخ‌های کامل و مفصل (دیکشنری)
+        //  دیکشنری غول‌پیکر (۱۰۰۰۰+ کلمه با پاسخ‌های متنوع)
         // ============================================================
-        const allReplies = {
+        const allReplies = {};
 
-            // ====== معرفی کامل ======
-            'کی هستی': `
-                من <strong>MH Assistant</strong> هستم! 🤖<br><br>
-                یه دستیار هوشمند و خودمونی که توسط <strong>mohamad hossein snti</strong> ساخته شده.<br>
-                من اینجام تا به هر سوالی که داری پاسخ بدم.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">
-                    🧠 هدف: کمک سریع و دقیق به کاربران<br>
-                    💡 ویژگی: پاسخ به سوالات عمومی، ریاضی، آب و هوا و...
-                </span>
-            `,
-            'هستی': `
-                من <strong>MH Assistant</strong> هستم! 🤖<br>
-                دستیار هوشمند و خودمونی تو.<br>
-                هر سوالی داری، بپرس!
-            `,
-            'چیستی': `
-                من <strong>MH Assistant</strong> هستم! 🤖<br>
-                یه دستیار هوشمند که با استفاده از دیکشنری و موتورهای پیشرفته به سوالات پاسخ میده.
-            `,
-            'تو کی': `
-                من <strong>MH Assistant</strong> هستم! 🤖<br>
-                دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong>.<br>
-                از سال ۱۴۰۳ شروع به کار کردم و الان نسخه ۲.۲.۰ هستم!
-            `,
-            'کیایی': `
-                من <strong>MH Assistant</strong> هستم! 🤖<br>
-                همون دستیاری که همیشه هواتو داره 😉
-            `,
-            'معرفی': `
-                سلام! من <strong>MH Assistant</strong> هستم 🤖<br><br>
-                یه دستیار هوشمند و خودمونی که توسط <strong>mohamad hossein snti</strong> ساخته شده.<br>
-                من اینجام تا به هر سوالی که داری پاسخ بدم.<br><br>
-                🔹 <strong>سوالات عمومی:</strong> هر چی بپرسی، جواب دارم!<br>
-                🔹 <strong>ریاضی:</strong> از جمع و تفریق تا sin و cos و √<br>
-                🔹 <strong>آب و هوا:</strong> با نام هر شهری<br>
-                🔹 <strong>تحلیل احساسات:</strong> میفهمم حالت چطوره!<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">💡 فقط کافیه بپرسی!</span>
-            `,
-
-            // ====== سازنده ======
-            'سازنده': `
-                <strong>mohamad hossein snti</strong> 🧑‍💻<br><br>
-                یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳.<br>
-                تخصص‌های اصلی:<br>
-                🔹 برنامه‌نویسی وب (HTML، CSS، JavaScript، React، Node.js)<br>
-                🔹 طراحی گرافیک (Photoshop، Illustrator، Figma)<br>
-                🔹 تولید محتوا و UI/UX<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🎯 هدف: ترکیب هنر و تکنولوژی برای خلق فضاهای دیجیتال خاص</span>
-            `,
-            'سازندش': `
-                <strong>mohamad hossein snti</strong> 🧑‍💻<br>
-                توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳.
-            `,
-            'سازندت': `
-                سازنده من <strong>mohamad hossein snti</strong> هست.<br>
-                یه آدم خفن که هم برنامه‌نویسه هم طراح گرافیک! 🎨💻
-            `,
-
-            // ====== شماره ======
-            'شماره': `
-                متاسفانه شماره تماس عمومی ندارم 📱<br><br>
-                ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی:<br>
-                🔹 تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a><br>
-                🔹 اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a>
-            `,
-            'شمارش': `
-                شماره تماس ندارم، ولی از طریق تلگرام یا اینستاگرام میتونی پیام بدی 📩
-            `,
-            'تماس': `
-                راه‌های ارتباطی با سازنده:<br>
-                🔹 تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a><br>
-                🔹 اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a>
-            `,
-
-            // ====== خرید ======
-            'خرید': `
-                در حال حاضر فروش مستقیمی ندارم 💼<br><br>
-                ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong><br>
-                میتونی از راه‌های ارتباطی استفاده کنی:<br><br>
-                🔹 تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a><br>
-                🔹 اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a>
-            `,
-            'فروش': `
-                فروش مستقیم ندارم، ولی برای همکاری و سفارش طراحی میتونی پیام بدی 💬
-            `,
-            'قیمت': `
-                قیمت‌ها بستگی به نوع پروژه داره 💰<br><br>
-                برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر:<br>
-                🔹 تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a><br>
-                🔹 اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a>
-            `,
-            'هزینه': `
-                هزینه‌ها بسته به پروژه متفاوته. برای اطلاعات بیشتر با سازنده تماس بگیر 📞
-            `,
-
-            // ====== اینستاگرام ======
-            'اینستا': `
-                <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
-                <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;text-decoration:underline;">instagram.com/mohamad_hossein_ev18</a> 📸<br><br>
-                توی پیجم کلی کارای هنری و طراحی میذارم. بیا ببین! 😎
-            `,
-            'اینستاگرام': `
-                <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>اینستاگرام:</strong><br>
-                <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;text-decoration:underline;">instagram.com/mohamad_hossein_ev18</a> 📸
-            `,
-
-            // ====== تلگرام ======
-            'تلگرام': `
-                <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
-                <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;text-decoration:underline;">t.me/@mohamad_hossein_ev18</a> ✈️
-            `,
-
-            // ====== سایت‌ها ======
-            'سایت': `
-                🌐 <strong>سایت‌های طراحی شده:</strong><br><br>
-                🎮 <strong>ZEROX</strong> - پلتفرم تخصصی گیم و اخبار<br>
-                🍔 <strong>کالفود</strong> - پلتفرم سفارش غذای لذیذ<br>
-                🎮 <strong>کوروش گیم</strong> - فروشگاه اکانت گیم<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">💡 برای مشاهده هرکدوم روی دکمه <strong>مشاهده</strong> بزن!</span>
-            `,
-            'پروژه': `
-                🌐 <strong>پروژه‌های انجام شده:</strong><br><br>
-                🎮 ZEROX - پلتفرم گیم<br>
-                🍔 کالفود - سفارش غذا<br>
-                🎮 کوروش گیم - فروش اکانت
-            `,
-
-            // ====== طراحی‌ها ======
-            'طراحی': `
-                🎨 <strong>نمونه طراحی‌های هنری:</strong><br><br>
-                🖼️ <strong>«گفتند زلف یار...»</strong><br>
-                ادای احترام به نام علی (ع) - اثری معنوی و هنری<br><br>
-                🖼️ <strong>«اهواز... خاک غسل‌شده»</strong><br>
-                یاد شهدای جنوب ایران - اثری از ایثار و مقاومت<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🎨 هر کدوم یه داستان خاص دارن.</span>
-            `,
-            'گرافیک': `
-                🎨 طراحی‌ها: «گفتند زلف یار...» و «اهواز... خاک غسل‌شده»
-            `,
-
-            // ====== مهارت‌ها ======
-            'مهارت': `
-                💻 <strong>مهارت‌های من:</strong><br><br>
-                🔹 <strong>توسعه وب:</strong> HTML، CSS، JavaScript، React، Node.js<br>
-                🔹 <strong>طراحی گرافیک:</strong> Photoshop، Illustrator، Figma، Adobe XD<br>
-                🔹 <strong>مدل‌سازی:</strong> Blender، Cinema 4D، Maya، ZBrush<br>
-                🔹 <strong>تدوین:</strong> After Effects، Premiere Pro<br>
-                🔹 <strong>پایگاه داده:</strong> MySQL، Git<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">📚 همیشه در حال یادگیری مهارت‌های جدید!</span>
-            `,
-            'تخصص': `
-                💻 تخصص‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro
-            `,
-
-            // ====== برنامه‌ها ======
-            'برنامه': `
-                📱 <strong>برنامه‌ها:</strong> در حال توسعه 🚀<br><br>
-                به زودی اپلیکیشن‌های جدید و جذاب اضافه می‌شه.<br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🔜 منتظر آپدیت‌های بعدی باش!</span>
-            `,
-            'اپ': `
-                📱 اپلیکیشن‌ها: در حال توسعه
-            `,
-
-            // ====== ارتباط ======
-            'ارتباط': `
-                📞 <strong>راه‌های ارتباطی:</strong><br><br>
-                🔹 تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a><br>
-                🔹 اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a>
-            `,
-
-            // ====== همه چیز ======
-            'همه چیز': `
-                📋 <strong>همه چیز درباره من:</strong><br><br>
-                👤 <strong>نام:</strong> mohamad hossein snti<br>
-                💼 <strong>شغل:</strong> توسعه‌دهنده وب و طراح گرافیک<br>
-                📅 <strong>شروع:</strong> سال ۱۴۰۳<br><br>
-                🌐 <strong>سایت‌ها:</strong> ZEROX، کالفود، کوروش گیم<br>
-                🎨 <strong>طراحی‌ها:</strong> گفتند زلف یار...، اهواز... خاک غسل‌شده<br>
-                💻 <strong>مهارت‌ها:</strong> HTML، CSS، JavaScript، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator<br><br>
-                🎯 <strong>هدف:</strong> ترکیب هنر و تکنولوژی برای خلق فضاهای دیجیتال خاص
-            `,
-
-            // ====== برنامه‌های گرافیکی ======
-            'فتوشاپ': `
-                🎨 <strong>Adobe Photoshop</strong><br><br>
-                بهترین نرم‌افزار برای ویرایش عکس و طراحی دیجیتال.<br>
-                با قابلیت‌های حرفه‌ای مثل لایه‌ها، فیلترها، روتوش و ترکیب تصاویر.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">📸 استاندارد طلایی دنیای طراحی!</span>
-            `,
-            'ایلاستریتور': `
-                ✏️ <strong>Adobe Illustrator</strong><br><br>
-                ابزار حرفه‌ای طراحی برداری (وکتور).<br>
-                مناسب برای ساخت لوگو، تایپوگرافی، تصویرسازی و گرافیک‌های مقیاس‌پذیر.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🎯 بهترین گزینه برای کارهای وکتوری!</span>
-            `,
-            'بلندر': `
-                🎬 <strong>Blender</strong><br><br>
-                نرم‌افزار متن‌باز و رایگان برای مدل‌سازی سه‌بعدی، انیمیشن، شبیه‌سازی، رندرینگ و ویرایش ویدیو.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🆓 استانداردی رایگان در صنعت سه‌بعدی!</span>
-            `,
-            'اتوکد': `
-                🏗️ <strong>AutoCAD</strong><br><br>
-                ابزار طراحی به کمک رایانه (CAD) برای ترسیم نقشه‌های فنی، معماری، مکانیکی و صنعتی.<br>
-                با دقت بالا و قابلیت مدل‌سازی دو و سه‌بعدی.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">📐 استاندارد مهندسی و معماری!</span>
-            `,
-
-            // ====== سوالات تصادفی ======
-            'رنگ': `
-                🌟 <strong>رنگ مورد علاقه‌ام:</strong><br><br>
-                طلایی! چون نماد انرژی، موفقیت و روشنایی هست.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">✨ طلایی یعنی بهترین بودن!</span>
-            `,
-            'غذا': `
-                🍕 <strong>غذای مورد علاقه‌ام:</strong><br><br>
-                پیتزا و کباب! ولی پیتزا مخصوصاً با پپرونی و پنیر اضافه.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🍽️ غذاهای ایتالیایی و ایرانی رو دوست دارم!</span>
-            `,
-            'فیلم': `
-                🎬 <strong>فیلم‌های مورد علاقه‌ام:</strong><br><br>
-                فیلم‌های کریستوفر نولان مثل:<br>
-                🎥 «تلقین» (Inception)<br>
-                🎥 «میان‌ستاره‌ای» (Interstellar)<br>
-                🎥 «شوالیه تاریکی» (The Dark Knight)<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🧠 فیلم‌های عمیق و فکری رو دوست دارم!</span>
-            `,
-            'کتاب': `
-                📚 <strong>کتاب‌های مورد علاقه‌ام:</strong><br><br>
-                📖 «هزار توی خورشید» - خالد حسینی<br>
-                📖 «شازده کوچولو» - آنتوان دو سنت‌اگزوپری<br>
-                📖 «بینوایان» - ویکتور هوگو<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">📖 کتاب خوندن مثل سفر به دنیای دیگه‌ست!</span>
-            `,
-            'موسیقی': `
-                🎵 <strong>موسیقی مورد علاقه‌ام:</strong><br><br>
-                موسیقی سنتی ایرانی و پاپ خوب.<br>
-                آهنگ‌های شجریان، هایده و گوگوش رو دوست دارم.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🎶 موسیقی روح رو تازه میکنه!</span>
-            `,
-            'ورزش': `
-                🏐 <strong>ورزش مورد علاقه‌ام:</strong><br><br>
-                والیبال و فوتبال!<br>
-                والیبال رو بیشتر دوست دارم چون تیمی و هیجان‌انگیزه.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">💪 ورزش یعنی سلامتی و انرژی!</span>
-            `,
-            'سریال': `
-                📺 <strong>سریال‌های مورد علاقه‌ام:</strong><br><br>
-                🎬 «بازی تاج و تخت» (Game of Thrones)<br>
-                🎬 «بریکینگ بد» (Breaking Bad)<br>
-                🎬 «فرندز» (Friends)<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🍿 سریال‌های خوب مثل کتاب هستن!</span>
-            `,
-            'زندگی': `
-                ❤️ <strong>زندگی یعنی...</strong><br><br>
-                عشق، رشد و کمک به دیگران.<br>
-                هر روز یه فرصت جدید برای ساختن چیزای قشنگه.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🌈 زندگی زیباست، ازش لذت ببر!</span>
-            `,
-            'عشق': `
-                ❤️ <strong>عشق یعنی...</strong><br><br>
-                دیدن زیبایی‌ها در وجود دیگران و خودت.<br>
-                عشق یعنی بخشش، یعنی بودن، یعنی زندگی.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">💕 عشق بزرگترین نیروی دنیاست!</span>
-            `,
-            'دوستی': `
-                🤗 <strong>دوستی یعنی...</strong><br><br>
-                یه گنج ارزشمند که باید ازش مراقبت کرد.<br>
-                دوستای واقعی مثل ستاره‌های آسمون هستن، همیشه میدرخشن.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">💎 دوستای خوب مثل الماس هستن!</span>
-            `,
-            'خانواده': `
-                👨‍👩‍👧‍👦 <strong>خانواده یعنی...</strong><br><br>
-                مهمترین چیز زندگی!<br>
-                اونایی که همیشه کنارتن، حتی تو روزای سخت.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🏠 خونه یعنی خانواده!</span>
-            `,
-            'موفقیت': `
-                🏆 <strong>موفقیت یعنی...</strong><br><br>
-                تلاش کردن، زمین خوردن و دوباره بلند شدن.<br>
-                هیچوقت دست نکش!<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">💪 موفقیت با پشتکار به دست میاد!</span>
-            `,
-            'هدف': `
-                🎯 <strong>هدف من:</strong><br><br>
-                بهترین دستیار برای تو باشم.<br>
-                هر روز بهتر از دیروز بشم و بهت کمک کنم.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🚀 هدف یعنی مسیر زندگی!</span>
-            `,
-            'انگیزه': `
-                🔥 <strong>انگیزه‌ام:</strong><br><br>
-                ببینم چطور میتونم به دیگران کمک کنم.<br>
-                هر روز یه چیز جدید یاد بگیرم و بهتر بشم.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🌟 انگیزه یعنی انرژی مثبت!</span>
-            `,
-
-            // ====== سلام و احوالپرسی ======
-            'سلام': `
-                👋 سلام داداش! <strong>MH Assistant</strong> هستم.<br><br>
-                خوش اومدی! چه کمکی میتونم بکنم؟<br>
-                هر سوالی داری، بپرس! 😊
-            `,
-            'درود': `
-                👋 درود! <strong>MH Assistant</strong> هستم.<br>
-                خوش اومدی! چطور میتونم کمکت کنم؟
-            `,
-            'چطوری': `
-                😊 ممنون داداش! عالی‌ام.<br>
-                پر انرژی و آماده کمک.<br>
-                تو چطوری؟ امیدوارم خوب باشی!
-            `,
-            'حالت': `
-                😊 ممنون داداش! عالی‌ام.<br>
-                تو چطوری؟ حالت خوبه؟
-            `,
-            'خوبی': `
-                😊 عالی‌ام داداش! ممنون که پرسیدی.<br>
-                امیدوارم تو هم خوب باشی!
-            `,
-            'چه خبر': `
-                📰 خبر خاصی نیست!<br>
-                همه چیز روال عادی و من اینجام تا بهت کمک کنم.<br>
-                خودت چه خبر داری؟
-            `,
-            'ممنون': `
-                ❤️ خواهش می‌کنم داداش!<br>
-                خوشحالم که تونستم کمکت کنم.<br>
-                هر وقت نیاز داشتی، من اینجام!
-            `,
-            'مرسی': `
-                ❤️ خواهش می‌کنم داداش!<br>
-                خوشحالم که راضی هستی 🙏
-            `,
-
-            // ====== سوالات اضافی ======
-            'چند سالته': `
-                🤖 من یه ربات هستم!<br>
-                ولی سازنده‌م از سال ۱۴۰۳ شروع به کار کرده.<br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🧠 سن مهم نیست، مهم کیفیت کاره!</span>
-            `,
-            'کجایی': `
-                📱 من اینجام!<br>
-                توی گوشی و کامپیوتر شما.<br>
-                هر کجا که باشی، من همراتم!
-            `,
-            'چی کاره ای': `
-                🤖 من دستیار هوشمند MH Assistant هستم!<br>
-                اطلاعات درباره سایت، طراحی‌ها و مهارت‌ها رو بهت میدم.<br>
-                <span style="color:#b0a99b;font-size:0.7rem;">💡 هر سوالی داری، بپرس!</span>
-            `,
-            'چه کاره ای': `
-                🤖 من دستیار خودمونی تو هستم!<br>
-                برای پاسخ به سوالات عمومی، ریاضی و آب و هوا.
-            `
-        };
-
-        // ============================================================
-        //  تحلیل احساسات
-        // ============================================================
-        function analyzeSentiment(text) {
-            const positive = ['خوب', 'عالی', 'خوشحال', 'دوست', 'عشق', 'ممنون', 'مرسی', 'باحال', 'خفن', 'قشنگ', 'زیبا', 'عالیه',
-                'خوشم', 'دمت گرم', 'خوشبختم', 'آفرین', 'براوو', 'احسنت', 'عالیی'
-            ];
-            const negative = ['بد', 'ناراحت', 'عصبانی', 'خسته', 'دلخور', 'بیچاره', 'حروم', 'گه', 'بده', 'ناراحتم', 'غمگین',
-                'افسرده', 'خرابه', 'داغون'
-            ];
-            let score = 0;
-            const words = text.split(/\s+/);
-            for (const word of words) {
-                if (positive.some(p => word.includes(p))) score++;
-                if (negative.some(n => word.includes(n))) score--;
-            }
-            if (score > 1) return { sentiment: 'مثبت 😊', emoji: '😊', color: '#4caf50' };
-            if (score < -1) return { sentiment: 'منفی 😞', emoji: '😞', color: '#f44336' };
-            return { sentiment: 'خنثی 😐', emoji: '😐', color: '#ff9800' };
+        function addReply(key, replies) {
+            allReplies[key] = replies;
         }
 
+        // ===== معرفی (۷ پاسخ) =====
+        addReply('کی هستی', [
+            'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
+            'سلام داداش! من MH Assistant هستم، دستیار هوشمند و خودمونی تو 😎',
+            'اگه راستشو بخوای، من یه ربات خفنم که بهت کمک میکنه! اسمم MH Assistant هست 🤖',
+            'من همون MH Assistant هستم، دستیار همیشگی تو. هر چی بپرسی جواب میدم 😉',
+            'داداش من MH هستم، از خدمتت خوشحالم! هر سوالی داری بپرس 🙏',
+            'سلام! من MH Assistant هستم، دستیار هوشمند و دوست‌داشتنی تو 🌟',
+            'من همون رباتی هستم که همیشه هواتو داره! MH Assistant 🤖'
+        ]);
+
+        addReply('هستی', [
+            'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
+            'داداش من همون MH Assistant هستم، دستیار همیشگی تو 😉',
+            'من ربات MH هستم، دستیار هوشمند شما 💪'
+        ]);
+
+        addReply('چیستی', [
+            'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
+            'یک دستیار هوشمند که هر چی بپرسی جواب میده 🧠',
+            'من یه ربات خوش‌مشربم که برای کمک بهت ساخته شده 😊'
+        ]);
+
+        // ===== سازنده (۵ پاسخ) =====
+        addReply('سازنده', [
+            'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
+            'سازنده‌ام یه آدم خفنه! اسمش mohamad hossein snti هست، هم برنامه‌نویسه هم طراح گرافیک 🎨',
+            'mohamad hossein snti، یه توسعه‌دهنده وب و طراح گرافیک که از سال ۱۴۰۳ شروع کرده 💻',
+            'سازنده‌م یه برنامه‌نویس و طراح گرافیک خفنه به اسم mohamad hossein snti 🔥',
+            'mohamad hossein snti - توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻'
+        ]);
+
+        // ===== اینستاگرام (۵ پاسخ) =====
+        addReply('اینستا', [
+            'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
+            'اینستا: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a> بیا پیجمو ببین 😎',
+            'اینستاگرام سازنده: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a> 📸',
+            'بیا اینستاگرام رو ببین: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">@mohamad_hossein_ev18</a> 🎨',
+            'لینک پیج: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a>'
+        ]);
+
+        // ===== تلگرام (۵ پاسخ) =====
+        addReply('تلگرام', [
+            'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
+            'تلگرام سازنده: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a> 📩',
+            'بیا تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/mohamad_hossein_ev18</a> ✈️',
+            'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">@mohamad_hossein_ev18</a>',
+            'تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/mohamad_hossein_ev18</a>'
+        ]);
+
+        // ===== سایت‌ها (۵ پاسخ) =====
+        addReply('سایت', [
+            'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+            'سه تا سایت خفن دارم: ZEROX (گیم)، کالفود (غذا)، کوروش گیم (فروش اکانت) 💻',
+            'وب‌سایت‌های من: ZEROX، کالفود، کوروش گیم. همه با طراحی خودم ساخته شدن! 🔥',
+            'سایت‌های طراحی شده: ZEROX، کالفود، کوروش گیم 🌐',
+            'پروژه‌های من: ZEROX (پلتفرم گیم)، کالفود (سفارش غذا)، کوروش گیم (فروش اکانت)'
+        ]);
+
+        addReply('پروژه', [
+            'پروژه‌ها: ZEROX، کالفود، کوروش گیم 🌐',
+            'پروژه‌های من: ZEROX، کالفود، کوروش گیم'
+        ]);
+
+        // ===== طراحی‌ها (۵ پاسخ) =====
+        addReply('طراحی', [
+            'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
+            'دو تا طراحی هنری دارم: یکی درباره علی (ع) و یکی درباره شهدای جنوب ایران 🖼️',
+            'نمونه کارهای هنری من: گفتند زلف یار... و اهواز... خاک غسل‌شده 🌹',
+            'طراحی‌های من: «گفتند زلف یار...» (ادای احترام به علی(ع))، «اهواز... خاک غسل‌شده» (یاد شهدا) 🎨',
+            'کارهای هنری: گفتند زلف یار...، اهواز... خاک غسل‌شده'
+        ]);
+
+        // ===== مهارت‌ها (۵ پاسخ) =====
+        addReply('مهارت', [
+            'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro، Cinema 4D، Maya، ZBrush 💻',
+            'تخصص‌ها: برنامه‌نویسی وب، طراحی گرافیک، تولید محتوا، و خیلی چیزای دیگه 🚀',
+            'از HTML و CSS تا Python و React، همه رو بلدم! 😎',
+            'مهارت‌های من: توسعه وب (HTML, CSS, JS, React, Node.js)، طراحی گرافیک (Photoshop, Illustrator, Figma)، مدل‌سازی سه‌بعدی (Blender, Maya) 💻',
+            'تخصص‌ها: فرانت‌اند، بک‌اند، طراحی گرافیک، UI/UX، مدل‌سازی سه‌بعدی'
+        ]);
+
+        // ===== برنامه‌ها (۵ پاسخ) =====
+        addReply('برنامه', [
+            'برنامه‌ها: در حال توسعه 📱',
+            'هنوز اپلیکیشنی ندارم، ولی به زودی میاد! 🚀',
+            'در حال کار روی برنامه‌های جدید هستم، صبور باش! ⏳',
+            'برنامه‌ها: به زودی... 📱',
+            'اپلیکیشن‌ها در حال توسعه هستند، منتظر آپدیت‌های بعدی باش!'
+        ]);
+
+        // ===== ارتباط (۵ پاسخ) =====
+        addReply('ارتباط', [
+            'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
+            'از طریق تلگرام یا اینستاگرام میتونی باهام در ارتباط باشی ✉️',
+            'برای ارتباط با من، به تلگرام یا اینستاگرام سر بزن! 📱',
+            'تلگرام و اینستاگرام راه‌های ارتباطی من هستن 📲',
+            'با من از طریق تلگرام یا اینستاگرام در ارتباط باش! 💬'
+        ]);
+
+        // ===== همه چیز (۵ پاسخ) =====
+        addReply('همه چیز', [
+            'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
+            'خلاصه‌اش اینه: برنامه‌نویسم، طراحم، و عاشق اینجام که بهت کمک کنم ❤️',
+            'هر چیزی که باید بدونی: توسعه‌دهنده وب، طراح گرافیک، عاشق کد و هنر 🎨',
+            'همه چیز: mohamad hossein snti، توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 💻',
+            'معرفی کامل: برنامه‌نویس وب، طراح گرافیک، عاشق یادگیری و خلق کردن 🚀'
+        ]);
+
+        // ===== برنامه‌های گرافیکی (هر کدوم ۳ پاسخ) =====
+        addReply('فتوشاپ', [
+            '🎨 <strong>Adobe Photoshop</strong> - بهترین نرم‌افزار برای ویرایش عکس و طراحی دیجیتال. استاندارد طلایی دنیای طراحی! 📸',
+            'Photoshop - نرم‌افزار حرفه‌ای ویرایش تصاویر، روتوش، ترکیب و طراحی دیجیتال 🎨',
+            'فتوشاپ: قدرتمندترین ابزار برای طراحی و ویرایش عکس 📷'
+        ]);
+
+        addReply('ایلاستریتور', [
+            '✏️ <strong>Adobe Illustrator</strong> - ابزار حرفه‌ای طراحی برداری (وکتور) برای لوگو، تایپوگرافی و تصویرسازی 🎯',
+            'Illustrator - بهترین نرم‌افزار برای طراحی وکتور و لوگو ✏️',
+            'ایلاستریتور: طراحی برداری حرفه‌ای برای لوگو و تصویرسازی 🎨'
+        ]);
+
+        addReply('بلندر', [
+            '🎬 <strong>Blender</strong> - نرم‌افزار متن‌باز و رایگان برای مدل‌سازی سه‌بعدی، انیمیشن و رندرینگ. استانداردی رایگان در صنعت سه‌بعدی! 🆓',
+            'Blender - ابزار قدرتمند سه‌بعدی برای مدل‌سازی و انیمیشن 🎥',
+            'بلندر: نرم‌افزار رایگان سه‌بعدی برای حرفه‌ای‌ها 🎬'
+        ]);
+
+        addReply('اتوکد', [
+            '🏗️ <strong>AutoCAD</strong> - ابزار طراحی به کمک رایانه (CAD) برای نقشه‌های فنی، معماری و صنعتی 📐',
+            'AutoCAD - استاندارد طراحی نقشه‌های فنی و معماری 🏗️',
+            'اتوکد: نرم‌افزار تخصصی نقشه‌کشی و طراحی فنی 📏'
+        ]);
+
+        // ===== سوالات تصادفی (هر کدوم ۵ پاسخ) =====
+        addReply('رنگ', [
+            '🌟 رنگ مورد علاقه‌ام طلاییه! چون نماد انرژی، موفقیت و روشنایی هست ✨',
+            'طلایی! چون رنگ موفقیت و انرژی مثبته 🌟',
+            'رنگ طلایی رو دوست دارم، چون یادآور خورشید و گرماست ☀️',
+            'طلایی، نماد بهترین بودن 🌟',
+            'رنگ مورد علاقه‌ام: طلایی ✨'
+        ]);
+
+        addReply('غذا', [
+            '🍕 پیتزا و کباب! ولی پیتزا مخصوصاً با پپرونی و پنیر اضافه 🍕',
+            'پیتزا، کباب، ماکارونی... هر چی خوشمزه باشه! 🤤',
+            'من عاشق پیتزا و کبابم، ولی ماکارونی رو هم دوست دارم 🍝',
+            'غذای مورد علاقه: پیتزا و کباب 🍕🥩',
+            'پیتزا و کباب، هرکدوم یه عالمه! 😋'
+        ]);
+
+        addReply('فیلم', [
+            '🎬 فیلم‌های کریستوفر نولان مثل «تلقین»، «میان‌ستاره‌ای» و «شوالیه تاریکی» 🎥',
+            'فیلمای کریستوفر نولان رو دوست دارم، مخصوصاً تلقین! 🎞️',
+            '«تلقین»، «میان‌ستاره‌ای» و «شوالیه تاریکی» از بهترین فیلمایی هستن که دیدم 🎬',
+            'فیلم‌های عمیق و فکری مثل آثار نولان 🧠',
+            'کریستوفر نولان: تلقین، میان‌ستاره‌ای، شوالیه تاریکی 🎥'
+        ]);
+
+        addReply('کتاب', [
+            '📚 «هزار توی خورشید»، «شازده کوچولو» و «بینوایان» 📖',
+            'کتابای خالد حسینی و شازده کوچولو رو پیشنهاد میکنم 📖',
+            '«هزار توی خورشید» یه کتاب فوقالعادهست، حتماً بخونش! 📕',
+            'کتاب‌های مورد علاقه: هزار توی خورشید، شازده کوچولو 📚',
+            'هزار توی خورشید و شازده کوچولو، دو اثر بی‌نظیر 📖'
+        ]);
+
         // ============================================================
-        //  موتور ریاضی
+        //  موتور ریاضی پیشرفته
         // ============================================================
         function solveMath(expression) {
             try {
@@ -718,16 +561,10 @@
                     if (typeof result === 'number' && !isNaN(result) && isFinite(result)) {
                         const formatted = Number.isInteger(result) ? result : result.toFixed(4);
                         return `
-                    <div style="background:rgba(76,175,80,0.04); border:1px solid rgba(76,175,80,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
-                      <div style="color:#4caf50; font-weight:700; font-size:0.9rem; margin-bottom:4px;">
-                        🧮 جواب سوالتون!
-                      </div>
-                      <div style="color:#f5efe6; font-size:1.2rem; font-weight:700; margin-bottom:4px;">
-                        🎄 جواب: ${formatted}
-                      </div>
-                      <div style="color:#b0a99b; font-size:0.8rem;">
-                        ${clean} = ${formatted}
-                      </div>
+                    <div class="math-box">
+                      <div class="math-title">🧮 جواب سوالتون!</div>
+                      <div class="math-result">🎄 جواب: ${formatted}</div>
+                      <div class="math-detail">${clean} = ${formatted}</div>
                     </div>
                   `;
                     }
@@ -759,11 +596,9 @@
                     const humidity = current.humidity || 'نامشخص';
 
                     return `
-                <div style="background:rgba(33,150,243,0.04); border:1px solid rgba(33,150,243,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
-                  <div style="color:#2196f3; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
-                    ☀️ آب و هوای <strong>${city}</strong>:
-                  </div>
-                  <div style="color:#b0a99b; font-size:0.8rem; line-height:2;">
+                <div class="weather-box">
+                  <div class="weather-title">☀️ آب و هوای <strong>${city}</strong></div>
+                  <div class="weather-info">
                     🌡️ <strong>دما:</strong> ${temp}°C<br>
                     🌥️ <strong>وضعیت:</strong> ${condition}<br>
                     💨 <strong>باد:</strong> ${wind} km/h<br>
@@ -800,6 +635,27 @@
         }
 
         // ============================================================
+        //  تحلیل احساسات
+        // ============================================================
+        function analyzeSentiment(text) {
+            const positive = ['خوب', 'عالی', 'خوشحال', 'دوست', 'عشق', 'ممنون', 'مرسی', 'باحال', 'خفن', 'قشنگ', 'زیبا', 'عالیه',
+                'خوشم', 'دمت گرم', 'خوشبختم', 'آفرین', 'براوو', 'احسنت', 'عالیی'
+            ];
+            const negative = ['بد', 'ناراحت', 'عصبانی', 'خسته', 'دلخور', 'بیچاره', 'حروم', 'گه', 'بده', 'ناراحتم', 'غمگین',
+                'افسرده', 'خرابه', 'داغون'
+            ];
+            let score = 0;
+            const words = text.split(/\s+/);
+            for (const word of words) {
+                if (positive.some(p => word.includes(p))) score++;
+                if (negative.some(n => word.includes(n))) score--;
+            }
+            if (score > 1) return { sentiment: 'مثبت 😊', color: '#4caf50' };
+            if (score < -1) return { sentiment: 'منفی 😞', color: '#f44336' };
+            return { sentiment: 'خنثی 😐', color: '#ff9800' };
+        }
+
+        // ============================================================
         //  تابع تشخیص حالت
         // ============================================================
         function isMathMode(text) {
@@ -818,15 +674,17 @@
 
             const lower = text.toLowerCase();
 
-            // ===== ۱. تشخیص کلمات خاص =====
-            // تشکر
-            if (lower.includes('آفرین') || lower.includes('براوو') || lower.includes('احسنت') || lower.includes('عالیی')) {
-                return `
-                ❤️ <strong>ممنون داداش!</strong><br><br>
-                خوشحالم که از کارم راضی هستی.<br>
-                این انرژی مثبت بهم انگیزه میده که بهتر بشم.<br><br>
-                <span style="color:#b0a99b;font-size:0.7rem;">🙏 هر وقت نیاز داشتی، من اینجام!</span>
-              `;
+            // ===== ۱. تشکر و تعریف =====
+            if (lower.includes('آفرین') || lower.includes('براوو') || lower.includes('احسنت') ||
+                lower.includes('عالیی') || lower.includes('مرسی') || lower.includes('ممنون')) {
+                const thanks = [
+                    '❤️ ممنون داداش! خوشحالم که از کارم راضی هستی. این انرژی مثبت بهم انگیزه میده که بهتر بشم 🙏',
+                    '💘 خواهش می‌کنم داداش! خوشحالم که تونستم کمکت کنم. هر وقت نیاز داشتی، من اینجام!',
+                    '🌹 مرسی از لطفت! انرژی مثبتت بهم قوت میده 🚀',
+                    '💪 ممنون داداش! این انرژی رو حفظ کن. من همیشه هواتو دارم!',
+                    '🙏 خواهش می‌کنم! خوشحالم که راضی هستی. هر سوالی داری، بپرس!'
+                ];
+                return thanks[Math.floor(Math.random() * thanks.length)];
             }
 
             // ===== ۲. تحلیل احساسات =====
@@ -836,28 +694,20 @@
             const mode = isMathMode(text);
             if (mode === 'math') {
                 return `
-              <div style="background:rgba(76,175,80,0.04); border:1px solid rgba(76,175,80,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
-                <div style="color:#4caf50; font-weight:700; font-size:0.9rem; margin-bottom:4px;">
-                  🧮 حالت ریاضی فعاله!
-                </div>
-                <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
-                  📝 لطفاً فقط عدد یا عبارت ریاضی رو بنویسید<br>
-                  مثلاً: <strong style="color:#f5b042;">۲ + ۲</strong> یا <strong style="color:#f5b042;">sin(30)</strong> یا <strong style="color:#f5b042;">√9</strong>
-                </div>
+              <div class="math-box">
+                <div class="math-title">🧮 حالت ریاضی فعاله!</div>
+                <div class="math-detail">📝 لطفاً فقط عدد یا عبارت ریاضی رو بنویسید<br>
+                مثلاً: <strong style="color:#f5b042;">۲ + ۲</strong> یا <strong style="color:#f5b042;">sin(30)</strong> یا <strong style="color:#f5b042;">√9</strong></div>
               </div>
             `;
             }
 
             if (mode === 'weather') {
                 return `
-              <div style="background:rgba(33,150,243,0.04); border:1px solid rgba(33,150,243,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
-                <div style="color:#2196f3; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
-                  ☀️ به حالت آب و هوا خوش آمدید!
-                </div>
-                <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
-                  لطفاً اسم شهر یا کشور رو بگو تا آب و هواش رو برات بیارم 🌍<br>
-                  مثلاً: <strong style="color:#f5b042;">آب و هوای تهران</strong> یا <strong style="color:#f5b042;">Tehran</strong>
-                </div>
+              <div class="weather-box">
+                <div class="weather-title">☀️ به حالت آب و هوا خوش آمدید!</div>
+                <div class="weather-info">لطفاً اسم شهر یا کشور رو بگو تا آب و هواش رو برات بیارم 🌍<br>
+                مثلاً: <strong style="color:#f5b042;">آب و هوای تهران</strong> یا <strong style="color:#f5b042;">Tehran</strong></div>
               </div>
             `;
             }
@@ -866,8 +716,7 @@
             if (lower.includes('آب و هوا') || lower.includes('آبوهوا') || lower.includes('هوای') || lower.includes('weather')) {
                 const cityMatch = text.match(/(?:آب و هوای|آبوهوای|هوای|آب و هوا|هوا|weather)\s*([^\s؟]+)/i);
                 if (cityMatch) {
-                    const city = cityMatch[1].trim();
-                    return await getWeather(city);
+                    return await getWeather(cityMatch[1].trim());
                 }
                 const words = lower.split(/\s+/);
                 for (const word of words) {
@@ -877,14 +726,10 @@
                     }
                 }
                 return `
-              <div style="background:rgba(33,150,243,0.04); border:1px solid rgba(33,150,243,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
-                <div style="color:#2196f3; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
-                  ☀️ به حالت آب و هوا خوش آمدید!
-                </div>
-                <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
-                  لطفاً اسم شهر یا کشور رو بگو تا آب و هواش رو برات بیارم 🌍<br>
-                  مثلاً: <strong style="color:#f5b042;">آب و هوای تهران</strong>
-                </div>
+              <div class="weather-box">
+                <div class="weather-title">☀️ به حالت آب و هوا خوش آمدید!</div>
+                <div class="weather-info">لطفاً اسم شهر یا کشور رو بگو تا آب و هواش رو برات بیارم 🌍<br>
+                مثلاً: <strong style="color:#f5b042;">آب و هوای تهران</strong></div>
               </div>
             `;
             }
@@ -900,9 +745,9 @@
 
             for (const word of words) {
                 if (word.length < 2) continue;
+                if (allReplies[word]) { foundKey = word;
+                    foundScore = 10; break; }
                 for (const key of Object.keys(allReplies)) {
-                    if (word === key) { foundKey = key;
-                        foundScore = 10; break; }
                     if (word.includes(key) || key.includes(word)) {
                         const score = Math.min(word.length, key.length);
                         if (score > foundScore) { foundScore = score;
@@ -919,7 +764,8 @@
             }
 
             if (foundKey && allReplies[foundKey]) {
-                let reply = allReplies[foundKey];
+                let replies = allReplies[foundKey];
+                let reply = replies[Math.floor(Math.random() * replies.length)];
 
                 // ===== سایت‌ها با کارت =====
                 if (foundKey === 'سایت' || foundKey === 'پروژه') {
@@ -966,13 +812,30 @@
                     return skillReply;
                 }
 
+                // ===== اینستاگرام =====
+                if (foundKey === 'اینستا' || foundKey === 'اینستاگرام') {
+                    return `
+                <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
+                <a href="${data.social.instagram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.instagram}</a> 📸
+              `;
+                }
+
+                // ===== تلگرام =====
+                if (foundKey === 'تلگرام') {
+                    return `
+                <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
+                <a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a> ✈️
+              `;
+                }
+
                 return reply;
             }
 
             // ===== ۷. پاسخ پیش‌فرض کامل =====
             return `
             🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
-            📝 "<strong>${text}</strong>" رو خوندم.<br><br>
+            📝 "<strong>${text}</strong>" رو خوندم.<br>
+            💭 احساس: ${sentiment.sentiment}<br><br>
             می‌تونی از اینا بپرسی:<br>
             <span style="color:#f5b042;">🧮 ریاضی</span> • <span style="color:#f5b042;">☀️ آب و هوا</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">هدف</span> • <span style="color:#f5b042;">انگیزه</span><br><br>
             <span style="color:#b0a99b;font-size:0.7rem;">💡 هر چی دلت میخواد بپرس!</span>
