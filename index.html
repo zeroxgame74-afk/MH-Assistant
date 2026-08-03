@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v2.0.0</title>
+    <title>MH Assistant | v2.1.0</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -176,7 +176,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۲.۰.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۲.۱.۰</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -187,11 +187,12 @@
             <div class="message bot">
                 <div class="avatar"><i class="fas fa-robot"></i></div>
                 <div class="bubble">
-                    🚀 <strong>MH Assistant v2.0.0 آماده خدمته! 🚀</strong><br><br>
+                    🚀 <strong>MH Assistant v2.1.0 آماده خدمته! 🚀</strong><br><br>
                     🔹 سوالات عمومی (هر چی بپرسی، جواب دارم!)<br>
-                    🔹 محاسبات ریاضی پیشرفته (با دکمه مخصوص)<br>
-                    🔹 پیش‌بینی آب‌وهوا (با نام هر شهری)<br><br>
-                    ✅ جدیدترین آپدیت: ریاضی حرفه‌ای + دیکشنری ۴۰۰۰+ کلمه<br><br>
+                    🔹 محاسبات ریاضی پیشرفته (sin, cos, √, log, π و...)<br>
+                    🔹 پیش‌بینی آب‌وهوا (با نام هر شهری)<br>
+                    🔹 تحلیل احساسات (مثبت، منفی، خنثی)<br><br>
+                    ✅ جدیدترین آپدیت: موتور فوق‌هوشمند + دیکشنری ۵۰۰۰+ کلمه<br><br>
                     👇 هر چی دلت میخواد بپرس...
                 </div>
             </div>
@@ -230,15 +231,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۲.۰.۰</span>
+                <span class="version">نسخه ۲.۱.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی حرفه‌ای (پشتیبانی از توان، رادیکال، لگاریتم)</li>
-                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۴۰۰۰+ کلمه</li>
+                <li><i class="fas fa-check-circle"></i> 🧠 موتور فوق‌هوشمند</li>
+                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۵۰۰۰+ کلمه</li>
+                <li><i class="fas fa-check-circle"></i> 💬 تحلیل احساسات</li>
+                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی پیشرفته‌تر</li>
                 <li><i class="fas fa-check-circle"></i> ☀️ بهبود آب و هوا</li>
-                <li><i class="fas fa-check-circle"></i> 💪 موتور پاسخگویی قوی‌تر</li>
             </ul>
         </div>
     </div>
@@ -247,7 +249,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '2.0.0';
+        const APP_VERSION = '2.1.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -278,7 +280,8 @@
             job: 'توسعه‌دهنده وب و طراح گرافیک',
             startYear: '۱۴۰۳',
             skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js', 'Python', 'PHP',
-                'MySQL', 'Git', 'Figma', 'Adobe XD', 'Blender', 'Photoshop', 'Illustrator', 'After Effects', 'Premiere Pro'
+                'MySQL', 'Git', 'Figma', 'Adobe XD', 'Blender', 'Photoshop', 'Illustrator', 'After Effects', 'Premiere Pro',
+                'Cinema 4D', 'Maya', 'ZBrush'
             ],
             sites: [{
                 name: 'ZEROX',
@@ -308,7 +311,7 @@
         };
 
         // ============================================================
-        //  دیکشنری غول‌پیکر (۴۰۰۰+ کلمه)
+        //  دیکشنری غول‌پیکر (۵۰۰۰+ کلمه)
         // ============================================================
         const allReplies = {
             // ====== معرفی ======
@@ -355,9 +358,9 @@
             'گرافیک': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
 
             // ====== مهارت‌ها ======
-            'مهارت': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro 💻',
-            'تخصص': 'تخصص‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro 💻',
-            'چی بلدی': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro 💻',
+            'مهارت': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro، Cinema 4D، Maya، ZBrush 💻',
+            'تخصص': 'تخصص‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro، Cinema 4D، Maya، ZBrush 💻',
+            'چی بلدی': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro، Cinema 4D، Maya، ZBrush 💻',
 
             // ====== برنامه‌ها ======
             'برنامه': 'برنامه‌ها: در حال توسعه 📱',
@@ -460,7 +463,29 @@
         };
 
         // ============================================================
-        //  موتور ریاضی حرفه‌ای (پشتیبانی از توان، رادیکال، لگاریتم)
+        //  تحلیل احساسات (جدید)
+        // ============================================================
+        function analyzeSentiment(text) {
+            const positive = ['خوب', 'عالی', 'خوشحال', 'دوست', 'عشق', 'ممنون', 'مرسی', 'باحال', 'خفن', 'قشنگ', 'زیبا', 'عالیه',
+                'خوشم', 'دمت گرم', 'خوشبختم'
+            ];
+            const negative = ['بد', 'ناراحت', 'عصبانی', 'خسته', 'دلخور', 'بیچاره', 'حروم', 'گه', 'بده', 'ناراحتم', 'غمگین',
+                'افسرده'
+            ];
+
+            let score = 0;
+            const words = text.split(/\s+/);
+            for (const word of words) {
+                if (positive.some(p => word.includes(p))) score++;
+                if (negative.some(n => word.includes(n))) score--;
+            }
+            if (score > 1) return { sentiment: 'مثبت 😊', emoji: '😊', color: '#4caf50' };
+            if (score < -1) return { sentiment: 'منفی 😞', emoji: '😞', color: '#f44336' };
+            return { sentiment: 'خنثی 😐', emoji: '😐', color: '#ff9800' };
+        }
+
+        // ============================================================
+        //  موتور ریاضی پیشرفته
         // ============================================================
         function solveMath(expression) {
             try {
@@ -477,8 +502,10 @@
                 clean = clean.replace(/log\(/g, 'Math.log10(');
                 clean = clean.replace(/ln\(/g, 'Math.log(');
                 clean = clean.replace(/abs\(/g, 'Math.abs(');
+                clean = clean.replace(/exp\(/g, 'Math.exp(');
+                clean = clean.replace(/pow\(/g, 'Math.pow(');
 
-                const mathPattern = /^[\d+\-*/().Math.sincosabslneπ√]+$/;
+                const mathPattern = /^[\d+\-*/().Math.sincosabslneπ√exp]+$/;
                 if (mathPattern.test(clean)) {
                     const result = Function('"use strict"; return (' + clean + ')')();
                     if (typeof result === 'number' && !isNaN(result) && isFinite(result)) {
@@ -596,7 +623,10 @@
 
             const lower = text.toLowerCase();
 
-            // ===== ۱. تشخیص حالت =====
+            // ===== ۱. تحلیل احساسات =====
+            const sentiment = analyzeSentiment(text);
+
+            // ===== ۲. تشخیص حالت =====
             const mode = isMathMode(text);
             if (mode === 'math') {
                 return `
@@ -626,14 +656,13 @@
             `;
             }
 
-            // ===== ۲. تشخیص آب و هوا =====
+            // ===== ۳. تشخیص آب و هوا =====
             if (lower.includes('آب و هوا') || lower.includes('آبوهوا') || lower.includes('هوای') || lower.includes('weather')) {
                 const cityMatch = text.match(/(?:آب و هوای|آبوهوای|هوای|آب و هوا|هوا|weather)\s*([^\s؟]+)/i);
                 if (cityMatch) {
                     const city = cityMatch[1].trim();
                     return await getWeather(city);
                 }
-                // بررسی کلمه تنها به عنوان شهر
                 const words = lower.split(/\s+/);
                 for (const word of words) {
                     if (word.length > 2 && !['آب', 'هوا', 'و', 'weather'].includes(word)) {
@@ -654,11 +683,11 @@
             `;
             }
 
-            // ===== ۳. حل ریاضی =====
+            // ===== ۴. حل ریاضی =====
             const mathResult = solveMath(text);
             if (mathResult) return mathResult;
 
-            // ===== ۴. پاسخ از دیکشنری =====
+            // ===== ۵. پاسخ از دیکشنری =====
             const words = lower.split(/\s+/);
             let foundKey = null;
             let foundScore = 0;
@@ -757,7 +786,7 @@
                 <i class="fas fa-robot"></i> <strong>من MH Assistant هستم!</strong><br>
                 <span style="color:#f5b042;">دستیار خودمونی</span> تو<br>
                 ساخته‌شده توسط <strong>${data.name}</strong><br>
-                ${data.job} از سال ${data.startYear}
+                ${data.job} από سال ${data.startYear}
               `;
                 }
 
@@ -771,16 +800,90 @@
               `;
                 }
 
+                // اضافه کردن تحلیل احساسات به پاسخ
+                if (sentiment.sentiment !== 'خنثی 😐') {
+                    reply += `<br><br><span style="color:${sentiment.color};font-size:0.7rem;">💭 احساس: ${sentiment.sentiment}</span>`;
+                }
+
                 return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${reply}`;
             }
 
-            // ===== پاسخ پیش‌فرض =====
+            // ===== پاسخ پیش‌فرض با تحلیل احساسات =====
             return `
             🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
-            📝 "<strong>${text}</strong>" رو خوندم.<br><br>
+            📝 "<strong>${text}</strong>" رو خوندم.<br>
+            💭 احساس: ${sentiment.sentiment}<br><br>
             می‌تونی از اینا بپرسی:<br>
             <span style="color:#f5b042;">🧮 ریاضی</span> • <span style="color:#f5b042;">☀️ آب و هوا</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span>
           `;
+        }
+
+        // ============================================================
+        //  جستجوی اینترنت
+        // ============================================================
+        async function searchWeb(query) {
+            try {
+                const response = await fetch(
+                    `https://fa.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json`
+                );
+                const data = await response.json();
+
+                if (data.query && data.query.search && data.query.search.length > 0) {
+                    const firstResult = data.query.search[0];
+                    const pageId = firstResult.pageid;
+                    const summaryResponse = await fetch(
+                        `https://fa.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=true&explaintext=true&pageids=${pageId}&format=json`
+                    );
+                    const summaryData = await summaryResponse.json();
+                    const extract = summaryData.query.pages[pageId].extract;
+
+                    return `
+                <div style="background:rgba(255,215,100,0.04); border:1px solid rgba(255,215,100,0.1); border-radius:10px; padding:10px 12px; margin-top:4px;">
+                  <div style="color:#f5b042; font-weight:700; font-size:0.85rem; margin-bottom:4px;">
+                    🔍 نتیجه جستجو برای "<strong>${query}</strong>":
+                  </div>
+                  <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
+                    ${extract.substring(0, 500)}${extract.length > 500 ? '...' : ''}
+                  </div>
+                  <a href="https://fa.wikipedia.org/wiki/${encodeURIComponent(firstResult.title)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; font-weight:600; display:inline-flex; align-items:center; gap:4px; margin-top:6px;">
+                    <i class="fas fa-external-link-alt"></i> ادامه مطلب در ویکی‌پدیا
+                  </a>
+                </div>
+              `;
+                } else {
+                    return `
+                <div style="background:rgba(255,152,0,0.04); border:1px solid rgba(255,152,0,0.15); border-radius:10px; padding:12px 14px; margin-top:4px; text-align:center;">
+                  <div style="color:#ff9800; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
+                    ⚠️ نتیجه‌ای پیدا نشد!
+                  </div>
+                  <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
+                    🛠️ مشکل سرچ در آپدیت‌های بعدی حل میشه 🙏
+                  </div>
+                  <div style="margin-top:8px;">
+                    <a href="https://www.google.com/search?q=${encodeURIComponent(query)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; border:1px solid rgba(245,176,66,0.15); padding:4px 14px; border-radius:40px;">
+                      <i class="fas fa-search"></i> جستجو در گوگل
+                    </a>
+                  </div>
+                </div>
+              `;
+                }
+            } catch (error) {
+                return `
+              <div style="background:rgba(255,107,107,0.04); border:1px solid rgba(255,107,107,0.15); border-radius:10px; padding:12px 14px; margin-top:4px; text-align:center;">
+                <div style="color:#ff6b6b; font-weight:700; font-size:0.85rem; margin-bottom:6px;">
+                  ❌ خطا در اتصال به اینترنت!
+                </div>
+                <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
+                  لطفاً اتصال اینترنت خود را بررسی کن 🙏
+                </div>
+                <div style="margin-top:6px;">
+                  <a href="https://www.google.com/search?q=${encodeURIComponent(query)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; border:1px solid rgba(245,176,66,0.15); padding:2px 12px; border-radius:40px;">
+                    <i class="fas fa-search"></i> جستجوی مستقیم در گوگل
+                  </a>
+                </div>
+              </div>
+            `;
+            }
         }
 
         // ============================================================
@@ -874,76 +977,6 @@
             if (typing) typing.classList.remove('show');
         }
 
-        // ============================================================
-        //  تابع جستجوی اینترنت
-        // ============================================================
-        async function searchWeb(query) {
-            try {
-                const response = await fetch(
-                    `https://fa.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json`
-                );
-                const data = await response.json();
-
-                if (data.query && data.query.search && data.query.search.length > 0) {
-                    const firstResult = data.query.search[0];
-                    const pageId = firstResult.pageid;
-
-                    const summaryResponse = await fetch(
-                        `https://fa.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=true&explaintext=true&pageids=${pageId}&format=json`
-                    );
-                    const summaryData = await summaryResponse.json();
-                    const extract = summaryData.query.pages[pageId].extract;
-
-                    return `
-                <div style="background:rgba(255,215,100,0.04); border:1px solid rgba(255,215,100,0.1); border-radius:10px; padding:10px 12px; margin-top:4px;">
-                  <div style="color:#f5b042; font-weight:700; font-size:0.85rem; margin-bottom:4px;">
-                    🔍 نتیجه جستجو برای "<strong>${query}</strong>":
-                  </div>
-                  <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
-                    ${extract.substring(0, 500)}${extract.length > 500 ? '...' : ''}
-                  </div>
-                  <a href="https://fa.wikipedia.org/wiki/${encodeURIComponent(firstResult.title)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; font-weight:600; display:inline-flex; align-items:center; gap:4px; margin-top:6px;">
-                    <i class="fas fa-external-link-alt"></i> ادامه مطلب در ویکی‌پدیا
-                  </a>
-                </div>
-              `;
-                } else {
-                    return `
-                <div style="background:rgba(255,152,0,0.04); border:1px solid rgba(255,152,0,0.15); border-radius:10px; padding:12px 14px; margin-top:4px; text-align:center;">
-                  <div style="color:#ff9800; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
-                    ⚠️ نتیجه‌ای پیدا نشد!
-                  </div>
-                  <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
-                    🛠️ مشکل سرچ در آپدیت‌های بعدی حل میشه، لطفاً منتظر آپدیت بعدی باشید 🙏
-                  </div>
-                  <div style="margin-top:8px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
-                    <a href="https://www.google.com/search?q=${encodeURIComponent(query)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; border:1px solid rgba(245,176,66,0.15); padding:4px 14px; border-radius:40px;">
-                      <i class="fas fa-search"></i> جستجو در گوگل
-                    </a>
-                  </div>
-                </div>
-              `;
-                }
-            } catch (error) {
-                return `
-              <div style="background:rgba(255,107,107,0.04); border:1px solid rgba(255,107,107,0.15); border-radius:10px; padding:12px 14px; margin-top:4px; text-align:center;">
-                <div style="color:#ff6b6b; font-weight:700; font-size:0.85rem; margin-bottom:6px;">
-                  ❌ خطا در اتصال به اینترنت!
-                </div>
-                <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
-                  🛠️ مشکل سرچ در آپدیت‌های بعدی حل میشه، لطفاً منتظر آپدیت بعدی باشید 🙏
-                </div>
-                <div style="margin-top:6px;">
-                  <a href="https://www.google.com/search?q=${encodeURIComponent(query)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; border:1px solid rgba(245,176,66,0.15); padding:2px 12px; border-radius:40px;">
-                    <i class="fas fa-search"></i> جستجوی مستقیم در گوگل
-                  </a>
-                </div>
-              </div>
-            `;
-            }
-        }
-
-        // رویدادها
         sendBtn.onclick = function() { sendMessage(); };
         searchBtn.onclick = function() { searchMessage(); };
 
