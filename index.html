@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.9.0</title>
+    <title>MH Assistant | v3.9.1</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -142,6 +142,41 @@
         @keyframes pulseIcon { 0%,100% { transform:scale(1); } 50% { transform:scale(1.2); } }
         .typing-indicator.show { display:inline-flex; align-items:center; gap:4px; }
 
+        /* کادر ترجمه */
+        .translation-box {
+            background:rgba(255,215,100,0.04);
+            border:1px solid rgba(255,215,100,0.1);
+            border-radius:10px;
+            padding:10px 12px;
+            margin:6px 0;
+            direction:ltr;
+            text-align:left;
+            color:#f5efe6;
+            font-size:0.8rem;
+            font-weight:400;
+            word-break:break-word;
+        }
+        .translation-box .trans-text {
+            font-family:'Vazirmatn',sans-serif;
+            direction:rtl;
+            text-align:right;
+            line-height:2;
+        }
+        .copy-trans-btn {
+            background:rgba(245,176,66,0.1);
+            border:1px solid rgba(245,176,66,0.15);
+            color:#f5b042;
+            padding:2px 12px;
+            border-radius:40px;
+            font-size:0.55rem;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+            font-family:'Vazirmatn',sans-serif;
+            margin-top:6px;
+        }
+        .copy-trans-btn:hover { background:rgba(245,176,66,0.2); }
+
         .notification {
             position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
             background:rgba(255,255,255,0.05); backdrop-filter:blur(24px);
@@ -165,7 +200,6 @@
         .notification .notif-close { position:absolute; top:10px; left:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#6f6a60; width:28px; height:28px; border-radius:50%; font-size:0.8rem; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; font-family:'Vazirmatn',sans-serif; font-weight:400; }
         .notification .notif-close:hover { color:#f5efe6; background:rgba(255,255,255,0.06); transform:rotate(90deg); }
 
-        /* استایل مودال انتخاب زبان */
         .lang-options {
             display:flex;
             flex-wrap:wrap;
@@ -198,6 +232,7 @@
             .input-area input { font-size:0.7rem; padding:6px 0; }
             .input-area .btn-send, .input-area .btn-search { width:32px; height:32px; font-size:0.75rem; }
             .notification { padding:12px 14px; max-width:96%; bottom:14px; }
+            .translation-box { font-size:0.7rem; padding:8px 10px; }
         }
     </style>
 </head>
@@ -209,7 +244,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۹.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۹.۱</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -244,7 +279,7 @@
             <button onclick="askQuestion('☀️ آب و هوا')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
             <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
             <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
-            <button onclick="setTranslateMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-language"></i> 🌍 ترجمه (Beta)</button>
+            <button onclick="setTranslateMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-language"></i> ترجمه (Beta)</button>
         </div>
 
         <div class="input-area">
@@ -267,13 +302,13 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۹.۰</span>
+                <span class="version">نسخه ۳.۹.۱</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🌍 <strong>ترجمه (Beta)</strong> اضافه شد</li>
-                <li><i class="fas fa-check-circle"></i> 🇮🇷 پشتیبانی از ۴ زبان: فارسی، انگلیسی، عربی، ترکی</li>
+                <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با قابلیت کپی</li>
+                <li><i class="fas fa-check-circle"></i> 🔧 رفع خطای auto در ترجمه</li>
                 <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۶۵۰۰+ سوال و جواب</li>
                 <li><i class="fas fa-check-circle"></i> 🚀 موتور پاسخگویی تقویت شد</li>
                 <li><i class="fas fa-check-circle"></i> ☀️ آب و هوا با پشتیبانی از فارسی</li>
@@ -286,7 +321,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.9.0';
+        const APP_VERSION = '3.9.1';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -353,26 +388,69 @@
         }
 
         // ============================================================
-        //  ترجمه با API
+        //  ترجمه با API (اصلاح‌شده)
         // ============================================================
         async function translateText(text, targetLang) {
             try {
                 const langMap = { fa: 'fa', en: 'en', ar: 'ar', tr: 'tr' };
                 const toLang = langMap[targetLang] || 'en';
 
-                // تشخیص زبان مبدأ (برای API)
-                const detectResponse = await fetch(
-                    `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=auto|${toLang}`
-                );
-                const data = await detectResponse.json();
+                // تشخیص زبان مبدأ با یک روش ساده
+                let fromLang = 'auto';
+                // اگر متن شامل حروف فارسی بود، زبان مبدأ فارسی است
+                const persianRegex = /[\u0600-\u06FF]/;
+                if (persianRegex.test(text)) {
+                    fromLang = 'fa';
+                } else {
+                    // بررسی برای انگلیسی
+                    const englishRegex = /[a-zA-Z]/;
+                    if (englishRegex.test(text)) {
+                        fromLang = 'en';
+                    } else {
+                        // بررسی برای عربی
+                        const arabicRegex = /[\u0600-\u06FF]/;
+                        if (arabicRegex.test(text)) {
+                            fromLang = 'ar';
+                        }
+                    }
+                }
+
+                // اگر زبان مبدأ و مقصد یکی بود، خطا نده
+                if (fromLang === toLang) {
+                    return {
+                        success: false,
+                        error: 'زبان مبدأ و مقصد یکی است!'
+                    };
+                }
+
+                const url =
+                    `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${fromLang}|${toLang}`;
+                const response = await fetch(url);
+                const data = await response.json();
 
                 if (data.responseData && data.responseData.translatedText) {
-                    return data.responseData.translatedText;
+                    return {
+                        success: true,
+                        text: data.responseData.translatedText,
+                        fromLang: fromLang,
+                        toLang: toLang
+                    };
+                } else if (data.responseDetails) {
+                    return {
+                        success: false,
+                        error: data.responseDetails
+                    };
                 } else {
-                    return null;
+                    return {
+                        success: false,
+                        error: 'خطا در ترجمه!'
+                    };
                 }
             } catch (e) {
-                return null;
+                return {
+                    success: false,
+                    error: 'خطا در اتصال به اینترنت!'
+                };
             }
         }
 
@@ -381,7 +459,9 @@
         // ============================================================
         function isTranslateRequest(text) {
             const lower = text.toLowerCase();
-            const keywords = ['ترجمه', 'translate', 'به فارسی', 'به انگلیسی', 'به عربی', 'به ترکی'];
+            const keywords = ['ترجمه', 'translate', 'به فارسی', 'به انگلیسی', 'به عربی', 'به ترکی', 'انگلیسی:', 'عربی:', 'ترکی:',
+                'فارسی:'
+            ];
             for (const word of keywords) {
                 if (lower.includes(word)) return true;
             }
@@ -394,13 +474,13 @@
             let content = text;
 
             // تشخیص زبان هدف
-            if (lower.includes('به انگلیسی') || lower.includes('to english') || lower.includes('انگلیسی')) {
+            if (lower.includes('به انگلیسی') || lower.includes('to english') || lower.includes('انگلیسی:')) {
                 targetLang = 'en';
-            } else if (lower.includes('به عربی') || lower.includes('to arabic') || lower.includes('عربی')) {
+            } else if (lower.includes('به عربی') || lower.includes('to arabic') || lower.includes('عربی:')) {
                 targetLang = 'ar';
-            } else if (lower.includes('به ترکی') || lower.includes('to turkish') || lower.includes('ترکی')) {
+            } else if (lower.includes('به ترکی') || lower.includes('to turkish') || lower.includes('ترکی:')) {
                 targetLang = 'tr';
-            } else if (lower.includes('به فارسی') || lower.includes('to persian') || lower.includes('فارسی')) {
+            } else if (lower.includes('به فارسی') || lower.includes('to persian') || lower.includes('فارسی:')) {
                 targetLang = 'fa';
             }
 
@@ -422,6 +502,32 @@
             }
 
             return { targetLang, content: cleanText };
+        }
+
+        // ============================================================
+        //  تابع کپی متن ترجمه
+        // ============================================================
+        function copyTranslation(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+                    background:rgba(76,175,80,0.15);border:1px solid rgba(76,175,80,0.2);
+                    color:#4caf50;padding:8px 20px;border-radius:40px;
+                    font-family:'Vazirmatn',sans-serif;font-size:0.7rem;
+                    z-index:9999;animation:slideUp 0.3s ease;
+                    backdrop-filter:blur(12px);
+                `;
+                toast.innerHTML = '✅ متن ترجمه کپی شد!';
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transition = '0.5s';
+                    setTimeout(() => toast.remove(), 500);
+                }, 2000);
+            }).catch(() => {
+                alert('❌ کپی نشد! لطفاً دستی کپی کن.');
+            });
         }
 
         // ============================================================
@@ -1058,7 +1164,7 @@
             const lower = text.trim().toLowerCase();
             if (lower === '🧮 ریاضی' || lower === 'ریاضی' || lower === 'حالت ریاضی') return 'math';
             if (lower === '☀️ آب و هوا' || lower === 'آب و هوا' || lower === 'هوا') return 'weather';
-            if (lower === '🌍 ترجمه' || lower === 'ترجمه' || lower === 'حالت ترجمه') return 'translate';
+            if (lower === 'ترجمه' || lower === 'حالت ترجمه') return 'translate';
             return null;
         }
 
@@ -1168,20 +1274,27 @@
             // ===== ۴. تشخیص ترجمه (اگر حالت ترجمه فعال باشه) =====
             if (translateMode && selectedLang) {
                 const result = await translateText(text, selectedLang);
-                if (result) {
+                if (result.success) {
                     translateMode = false;
                     const langNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
+                    const fromLangNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
                     const msg = `
                         🌍 <strong>ترجمه (Beta)</strong><br><br>
                         📝 <strong>متن اصلی:</strong> "${text}"<br>
-                        🇮🇷 <strong>زبان مقصد:</strong> ${langNames[selectedLang]}<br>
-                        ✅ <strong>ترجمه:</strong> "${result}"<br><br>
+                        🇮🇷 <strong>زبان مقصد:</strong> ${langNames[selectedLang]}<br><br>
+                        <div class="translation-box">
+                            <div class="trans-text">${result.text}</div>
+                        </div>
+                        <button class="copy-trans-btn" onclick="copyTranslation('${result.text.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-copy"></i> کپی متن ترجمه
+                        </button>
+                        <br><br>
                         🔄 برای ترجمه دوباره، دکمه ترجمه رو بزن.
                     `;
                     return msg;
                 } else {
                     translateMode = false;
-                    return `❌ ترجمه انجام نشد! لطفاً دوباره تلاش کن.`;
+                    return `❌ ${result.error || 'ترجمه انجام نشد! لطفاً دوباره تلاش کن.'}`;
                 }
             }
 
@@ -1190,16 +1303,24 @@
                 const info = extractTranslateInfo(text);
                 if (info.targetLang) {
                     const result = await translateText(info.content, info.targetLang);
-                    if (result) {
+                    if (result.success) {
                         const langNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
                         const msg = `
                             🌍 <strong>ترجمه (Beta)</strong><br><br>
                             📝 <strong>متن اصلی:</strong> "${info.content}"<br>
-                            🇮🇷 <strong>زبان مقصد:</strong> ${langNames[info.targetLang]}<br>
-                            ✅ <strong>ترجمه:</strong> "${result}"<br><br>
+                            🇮🇷 <strong>زبان مقصد:</strong> ${langNames[info.targetLang]}<br><br>
+                            <div class="translation-box">
+                                <div class="trans-text">${result.text}</div>
+                            </div>
+                            <button class="copy-trans-btn" onclick="copyTranslation('${result.text.replace(/'/g, "\\'")}')">
+                                <i class="fas fa-copy"></i> کپی متن ترجمه
+                            </button>
+                            <br><br>
                             🔄 برای ترجمه دوباره، دکمه ترجمه رو بزن.
                         `;
                         return msg;
+                    } else {
+                        return `❌ ${result.error || 'ترجمه انجام نشد! لطفاً دوباره تلاش کن.'}`;
                     }
                 }
             }
@@ -1533,4 +1654,4 @@
     </script>
 
 </body>
-    </html>
+</html>
