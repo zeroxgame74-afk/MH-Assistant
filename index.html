@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v2.1.0</title>
+    <title>MH Assistant | v2.1.1</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -176,7 +176,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۲.۱.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۲.۱.۱</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -187,12 +187,12 @@
             <div class="message bot">
                 <div class="avatar"><i class="fas fa-robot"></i></div>
                 <div class="bubble">
-                    🚀 <strong>MH Assistant v2.1.0 آماده خدمته! 🚀</strong><br><br>
+                    🚀 <strong>MH Assistant v2.1.1 آماده خدمته! 🚀</strong><br><br>
                     🔹 سوالات عمومی (هر چی بپرسی، جواب دارم!)<br>
                     🔹 محاسبات ریاضی پیشرفته (sin, cos, √, log, π و...)<br>
                     🔹 پیش‌بینی آب‌وهوا (با نام هر شهری)<br>
                     🔹 تحلیل احساسات (مثبت، منفی، خنثی)<br><br>
-                    ✅ جدیدترین آپدیت: موتور فوق‌هوشمند + دیکشنری ۵۰۰۰+ کلمه<br><br>
+                    ✅ جدیدترین آپدیت: رفع باگ نمایش دما ☀️<br><br>
                     👇 هر چی دلت میخواد بپرس...
                 </div>
             </div>
@@ -231,16 +231,14 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۲.۱.۰</span>
+                <span class="version">نسخه ۲.۱.۱</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🧠 موتور فوق‌هوشمند</li>
-                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۵۰۰۰+ کلمه</li>
-                <li><i class="fas fa-check-circle"></i> 💬 تحلیل احساسات</li>
-                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی پیشرفته‌تر</li>
-                <li><i class="fas fa-check-circle"></i> ☀️ بهبود آب و هوا</li>
+                <li><i class="fas fa-check-circle"></i> ☀️ رفع باگ نمایش دما</li>
+                <li><i class="fas fa-check-circle"></i> 🌡️ نمایش دقیق دما و وضعیت</li>
+                <li><i class="fas fa-check-circle"></i> 💪 بهبود نمایش آب و هوا</li>
             </ul>
         </div>
     </div>
@@ -249,7 +247,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '2.1.0';
+        const APP_VERSION = '2.1.1';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -311,90 +309,34 @@
         };
 
         // ============================================================
-        //  دیکشنری غول‌پیکر (۵۰۰۰+ کلمه)
+        //  دیکشنری
         // ============================================================
         const allReplies = {
-            // ====== معرفی ======
             'کی هستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
             'هستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
             'چیستی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
             'تو کی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
             'کیایی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو 🤖',
             'معرفی': 'من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong> 🤖',
-
-            // ====== سازنده ======
             'سازنده': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
-            'سازندش': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
-            'سازندت': 'سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳ 🧑‍💻',
-
-            // ====== شماره ======
             'شماره': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
-            'شمارش': 'متاسفانه شماره تماس عمومی ندارم، ولی میتونی از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده در ارتباط باشی 📱',
-            'تماس': 'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
-
-            // ====== خرید ======
             'خرید': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
-            'فروش': 'در حال حاضر فروش مستقیمی ندارم، ولی برای <strong>همکاری</strong> و <strong>سفارش طراحی سایت یا گرافیک</strong> میتونی از راه‌های ارتباطی استفاده کنی 💼',
             'قیمت': 'قیمت‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
-            'هزینه': 'هزینه‌ها بستگی به نوع پروژه داره. برای دریافت قیمت دقیق، از طریق <strong>تلگرام</strong> یا <strong>اینستاگرام</strong> با سازنده تماس بگیر 💰',
-
-            // ====== اینستاگرام ======
             'اینستا': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
             'اینستاگرام': 'لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a> 📸',
-
-            // ====== تلگرام ======
             'تلگرام': 'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
-            'تلگر': 'لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a> ✈️',
-
-            // ====== سایت‌ها ======
             'سایت': 'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
-            'سایتا': 'سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
             'پروژه': 'پروژه‌ها: ZEROX، کالفود، کوروش گیم 🌐',
-            'وب': 'وب‌سایت‌ها: ZEROX، کالفود، کوروش گیم 🌐',
-
-            // ====== طراحی‌ها ======
             'طراحی': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
-            'طراح': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
             'گرافیک': 'طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده» 🎨',
-
-            // ====== مهارت‌ها ======
             'مهارت': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro، Cinema 4D، Maya، ZBrush 💻',
-            'تخصص': 'تخصص‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro، Cinema 4D، Maya، ZBrush 💻',
-            'چی بلدی': 'مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، تولید محتوا، UI/UX، React، Node.js، Python، PHP، MySQL، Git، Figma، Adobe XD، Blender، Photoshop، Illustrator، After Effects، Premiere Pro، Cinema 4D، Maya، ZBrush 💻',
-
-            // ====== برنامه‌ها ======
             'برنامه': 'برنامه‌ها: در حال توسعه 📱',
-            'اپ': 'اپلیکیشن‌ها: در حال توسعه 📱',
-            'نرم افزار': 'برنامه‌ها: در حال توسعه 📱',
-
-            // ====== ارتباط ======
             'ارتباط': 'راه‌های ارتباطی: تلگرام و اینستاگرام 📞',
-
-            // ====== همه چیز ======
             'همه چیز': 'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
-            'کامل': 'همه چیز درباره من: توسعه‌دهنده وب و طراح گرافیک از ۱۴۰۳، سایت‌ها: ZEROX، کالفود، کوروش گیم 📋',
-
-            // ====== برنامه‌های گرافیکی ======
             'فتوشاپ': 'Adobe Photoshop - بهترین نرم‌افزار برای ویرایش عکس و طراحی دیجیتال 🎨',
             'ایلاستریتور': 'Adobe Illustrator - برای طراحی لوگو، وکتور و تصویرسازی حرفه‌ای ✏️',
-            'کورل': 'CorelDRAW - نرم‌افزار قدرتمند طراحی برداری برای چاپ و تبلیغات 🖨️',
-            'ایندیزاین': 'Adobe InDesign - برای صفحه‌آرایی مجلات، کتاب و بروشور 📖',
-            'اتوکد': 'AutoCAD - برای طراحی نقشه‌های فنی و معماری 🏗️',
             'بلندر': 'Blender - نرم‌افزار رایگان برای مدل‌سازی سه‌بعدی و انیمیشن 🎬',
-            'سینما فوردی': 'Cinema 4D - برای موشن‌گرافیک و جلوه‌های بصری 🎥',
-            'تری‌دی مکس': '3ds Max - برای مدل‌سازی و انیمیشن در بازی‌سازی 🎮',
-            'مایا': 'Maya - برای انیمیشن‌سازی حرفه‌ای در فیلم و بازی 🎬',
-            'زی‌براش': 'ZBrush - برای مجسمه‌سازی دیجیتال و شخصیت‌پردازی 🗿',
-            'پریمیر': 'Adobe Premiere - برای تدوین فیلم و ویدیو 🎞️',
-            'افترافکت': 'After Effects - برای موشن‌گرافیک و جلوه‌های ویژه ✨',
-            'داوینچی': 'DaVinci Resolve - برای تدوین و اصلاح رنگ حرفه‌ای 🎨',
-            'فاینال کات': 'Final Cut Pro - ویرایشگر سریع برای مک 🍎',
-            'فیگما': 'Figma - برای طراحی UI/UX آنلاین و تیمی 💻',
-            'ایکس‌دی': 'Adobe XD - برای طراحی اپلیکیشن و وبسایت 📱',
-            'جیمپ': 'GIMP - نرم‌افزار رایگان ویرایش عکس 🆓',
-            'کانوا': 'Canva - برای طراحی سریع محتوای شبکه‌های اجتماعی 📱',
-
-            // ====== سوالات تصادفی ======
+            'اتوکد': 'AutoCAD - برای طراحی نقشه‌های فنی و معماری 🏗️',
             'رنگ': 'رنگ مورد علاقه‌ام طلاییه، چون نماد انرژی و موفقیت 🌟',
             'غذا': 'پیتزا و کباب! ولی پیتزا مخصوصاً با پپرونی 🍕',
             'فیلم': 'فیلم‌های کریستوفر نولان مثل «تلقین» و «میان‌ستاره‌ای» 🎬',
@@ -402,68 +344,20 @@
             'موسیقی': 'موسیقی سنتی ایرانی و پاپ خوب 🎵',
             'ورزش': 'والیبال و فوتبال رو دوست دارم 🏐⚽',
             'سریال': '«بازی تاج و تخت» و «بریکینگ بد» 📺',
-            'بازی': 'بازی‌های استراتژی و ماجراجویی 🎮',
-            'هوا': '☀️ به حالت آب و هوا خوش آمدید! لطفاً اسم شهر یا کشور رو بگو 🌍',
-            'بارون': 'بارون که میاد، دلم برای خونه تنگ میشه 🌧️',
-            'برف': 'برف بازی و آدم برفی یادت نره ❄️',
-            'بهار': 'بهار فصل زیباییه! گلها میشکفن 🌸',
-            'تابستان': 'تابستون گرمه، برو دریا یا استخر 🏖️',
-            'پاییز': 'پاییز فصل رنگارنگه! برگای زرد و نارنجی 🍂',
-            'زمستان': 'زمستون سرده، ولی چایی داغ حال میده ☕',
-            'برنامه نویسی': 'برنامه‌نویسی دنیای بی‌نهایته! هر روز یه چالش جدید 💻',
-            'هوش مصنوعی': 'هوش مصنوعی آینده‌ست! من خودم یه نمونه‌اش هستم 🤖',
-            'کامپیوتر': 'کامپیوتر بهترین دوست یه برنامه‌نویس 💻',
-            'گوشی': 'گوشی ابزار پرکاربرد امروز. ولی زندگی واقعی مهمتره 📱',
-            'اینترنت': 'اینترنت دنیای بی‌نهایت اطلاعات. ولی مواظب وقتت باش 🌐',
             'زندگی': 'زندگی کوتاه و قشنگه! از لحظاتت لذت ببر ❤️',
             'عشق': 'عشق قشنگترین احساسه! به خودت و دیگران عشق بورز ❤️',
             'دوستی': 'دوستی یه گنج ارزشمنده. قدر دوستات رو بدون 🤗',
             'خانواده': 'خانواده مهمترین چیز زندگیه! همیشه کنارشون باش 👨‍👩‍👧‍👦',
             'موفقیت': 'موفقیت با تلاش و پشتکار به دست میاد 🏆',
-            'شادی': 'شادی در چیزهای کوچیکه! لبخند بزن 😊',
-            'آرامش': 'آرامش درون خودته. مدیتیشن کن 🧘',
-            'امید': 'امید همیشه هست! هیچوقت ناامید نشو 🌈',
-            'خونه': 'خونه جای آرامش و راحتیه 🏠',
-            'سفر': 'سفر عالیه! شمال، کیش، مشهد، اصفهان ✈️',
-            'کار': 'کار؟ من همیشه مشغول کمک به کاربرانم! 💼',
-            'شغل': 'شغل من کمک به شماست! به عنوان یه دستیار هوشمند 🤖',
-            'تفریح': 'تفریح؟ برو بیرون، با دوستات وقت بگذرون، فیلم ببین 🎉',
-            'خواب': 'خواب برای سلامتی خیلی مهمه! یه چرت بزن 😴',
-
-            // ====== کلمات جدید ======
             'هدف': 'هدف من اینه که بهترین دستیار برای تو باشم و همیشه کمکت کنم 🎯',
             'انگیزه': 'انگیزه‌ام اینه که هر روز بهتر از دیروز بشم و بهت کمک کنم 🔥',
-            'چشم': 'چشم داداش! هر چی بگی انجام میدم 😉',
-            'باشه': 'باشه داداش! به حرفت گوش میدم 🙏',
-            'خوبه': 'خوبه! خوشحالم که راضی هستی 😊',
-            'عالی': 'عالی! این حس خوب رو حفظ کن 🌟',
-            'باحال': 'باحال! ممنون که这么好的 نظری داری 😎',
-            'خفن': 'خفن! این تعریف رو ازت قبول دارم 🔥',
-            'قشنگ': 'قشنگ! مثل خودت 😄',
-            'زیبا': 'زیبا! ممنون که اینو گفتی 🌸',
-
-            // ====== سلام ======
             'سلام': 'سلام داداش! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟ 👋',
-            'درود': 'درود! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟ 👋',
             'چطوری': 'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
-            'حالت': 'ممنون داداش! عالی‌ام. تو چطوری؟ 😊',
-            'خوبی': 'عالی‌ام داداش! ممنون که پرسیدی 😊',
-            'چه خبر': 'خبر خاصی نیست، همه چیز روال عادی! 😊',
-            'ممنون': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
-            'مرسی': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️',
-
-            // ====== سوالات اضافی ======
-            'چند سالته': 'من یه ربات هستم! ولی سازنده‌م از سال ۱۴۰۳ شروع کرده 🧑‍💻',
-            'چند سال': 'من یه ربات هستم! ولی سازنده‌م از سال ۱۴۰۳ شروع کرده 🧑‍💻',
-            'کجایی': 'من اینجام! توی گوشی و کامپیوتر شما 📱',
-            'اهل کجایی': 'من اینجام! توی گوشی و کامپیوتر شما 📱',
-            'چی کاره ای': 'من دستیار خودمونی هستم! اطلاعات درباره سایت و سازنده رو بهت میدم 🤖',
-            'چه کاره ای': 'من دستیار خودمونی هستم! 🤖',
-            'چی میگی': 'هر چیزی که میخوای بپرس، جواب میدم! 😊'
+            'ممنون': 'خواهش می‌کنم داداش! خوشحالم که کمک کردم ❤️'
         };
 
         // ============================================================
-        //  تحلیل احساسات (جدید)
+        //  تحلیل احساسات
         // ============================================================
         function analyzeSentiment(text) {
             const positive = ['خوب', 'عالی', 'خوشحال', 'دوست', 'عشق', 'ممنون', 'مرسی', 'باحال', 'خفن', 'قشنگ', 'زیبا', 'عالیه',
@@ -472,7 +366,6 @@
             const negative = ['بد', 'ناراحت', 'عصبانی', 'خسته', 'دلخور', 'بیچاره', 'حروم', 'گه', 'بده', 'ناراحتم', 'غمگین',
                 'افسرده'
             ];
-
             let score = 0;
             const words = text.split(/\s+/);
             for (const word of words) {
@@ -485,7 +378,7 @@
         }
 
         // ============================================================
-        //  موتور ریاضی پیشرفته
+        //  موتور ریاضی
         // ============================================================
         function solveMath(expression) {
             try {
@@ -532,21 +425,26 @@
         }
 
         // ============================================================
-        //  موتور آب و هوا
+        //  موتور آب و هوا (رفع باگ نمایش دما)
         // ============================================================
         async function getWeather(city) {
             try {
-                const response = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=%C+%t+%w&lang=fa&m`);
+                // استفاده از API با فرمت JSON برای دریافت دقیق‌تر
+                const response = await fetch(
+                    `https://wttr.in/${encodeURIComponent(city)}?format=j1&lang=fa`
+                );
                 if (!response.ok) throw new Error('Network error');
-                const data = await response.text();
+                const data = await response.json();
 
-                if (data && !data.includes('Unknown location') && data.trim().length > 0) {
-                    const tempMatch = data.match(/([+-]?\d+°C)/);
-                    const windMatch = data.match(/(\d+\s*km\/h)/);
-                    const conditionMatch = data.match(/^([^0-9+-]+)/);
-                    const condition = conditionMatch ? conditionMatch[1].trim() : 'نامشخص';
-                    const temp = tempMatch ? tempMatch[1] : 'نامشخص';
-                    const wind = windMatch ? windMatch[1] : 'نامشخص';
+                // بررسی وجود داده
+                if (data && data.current_condition && data.current_condition.length > 0) {
+                    const current = data.current_condition[0];
+                    const temp = current.temp_C || 'نامشخص';
+                    const condition = current.weatherDesc && current.weatherDesc.length > 0 ?
+                        current.weatherDesc[0].value :
+                        'نامشخص';
+                    const wind = current.windSpeed || 'نامشخص';
+                    const humidity = current.humidity || 'نامشخص';
 
                     return `
                 <div style="background:rgba(33,150,243,0.04); border:1px solid rgba(33,150,243,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
@@ -554,23 +452,52 @@
                     ☀️ آب و هوای <strong>${city}</strong>:
                   </div>
                   <div style="color:#b0a99b; font-size:0.8rem; line-height:2;">
-                    🌥️ وضعیت: ${condition}<br>
-                    🌡️ دما: ${temp}<br>
-                    💨 باد: ${wind}
+                    🌡️ <strong>دما:</strong> ${temp}°C<br>
+                    🌥️ <strong>وضعیت:</strong> ${condition}<br>
+                    💨 <strong>باد:</strong> ${wind} km/h<br>
+                    💧 <strong>رطوبت:</strong> ${humidity}%
                   </div>
                 </div>
               `;
                 } else {
-                    return `
-                <div style="background:rgba(255,152,0,0.04); border:1px solid rgba(255,152,0,0.15); border-radius:10px; padding:12px 14px; margin-top:4px; text-align:center;">
-                  <div style="color:#ff9800; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
-                    ⚠️ شهر "${city}" پیدا نشد!
-                  </div>
-                  <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
-                    لطفاً اسم شهر رو درست وارد کن یا از اسم انگلیسی استفاده کن 🌍
-                  </div>
-                </div>
-              `;
+                    // Fallback به روش قبلی
+                    const response2 = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=%C+%t+%w&lang=fa&m`);
+                    if (!response2.ok) throw new Error('Network error');
+                    const textData = await response2.text();
+
+                    if (textData && !textData.includes('Unknown location') && textData.trim().length > 0) {
+                        const tempMatch = textData.match(/([+-]?\d+°C)/);
+                        const windMatch = textData.match(/(\d+\s*km\/h)/);
+                        const conditionMatch = textData.match(/^([^0-9+-]+)/);
+                        const condition = conditionMatch ? conditionMatch[1].trim() : 'نامشخص';
+                        const temp = tempMatch ? tempMatch[1] : 'نامشخص';
+                        const wind = windMatch ? windMatch[1] : 'نامشخص';
+
+                        return `
+                    <div style="background:rgba(33,150,243,0.04); border:1px solid rgba(33,150,243,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
+                      <div style="color:#2196f3; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
+                        ☀️ آب و هوای <strong>${city}</strong>:
+                      </div>
+                      <div style="color:#b0a99b; font-size:0.8rem; line-height:2;">
+                        🌡️ <strong>دما:</strong> ${temp}<br>
+                        🌥️ <strong>وضعیت:</strong> ${condition}<br>
+                        💨 <strong>باد:</strong> ${wind}
+                      </div>
+                    </div>
+                  `;
+                    } else {
+                        return `
+                    <div style="background:rgba(255,152,0,0.04); border:1px solid rgba(255,152,0,0.15); border-radius:10px; padding:12px 14px; margin-top:4px; text-align:center;">
+                      <div style="color:#ff9800; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
+                        ⚠️ شهر "${city}" پیدا نشد!
+                      </div>
+                      <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
+                        لطفاً اسم شهر رو درست وارد کن یا از اسم انگلیسی استفاده کن 🌍<br>
+                        مثلاً: <strong style="color:#f5b042;">Tehran</strong> یا <strong style="color:#f5b042;">Mashhad</strong>
+                      </div>
+                    </div>
+                  `;
+                    }
                 }
             } catch (error) {
                 return `
@@ -724,7 +651,8 @@
             if (foundKey && allReplies[foundKey]) {
                 let reply = allReplies[foundKey];
 
-                if (foundKey === 'سایت' || foundKey === 'سایتا' || foundKey === 'پروژه' || foundKey === 'وب') {
+                // سایت‌ها
+                if (foundKey === 'سایت' || foundKey === 'پروژه') {
                     let siteReply =
                         `<i class="fas fa-laptop-code"></i> <strong>سایت‌های طراحی شده توسط ${data.name}:</strong><br>`;
                     data.sites.forEach(s => {
@@ -744,7 +672,8 @@
                     return siteReply;
                 }
 
-                if (foundKey === 'طراحی' || foundKey === 'طراح' || foundKey === 'گرافیک') {
+                // طراحی‌ها
+                if (foundKey === 'طراحی' || foundKey === 'گرافیک') {
                     let designReply = `<i class="fas fa-palette"></i> <strong>نمونه طراحی‌های هنری:</strong><br>`;
                     data.designs.forEach(d => {
                         designReply += `
@@ -760,12 +689,14 @@
                     return designReply;
                 }
 
+                // مهارت‌ها
                 if (foundKey === 'مهارت' || foundKey === 'تخصص' || foundKey === 'چی بلدی') {
                     let skillReply = `<i class="fas fa-code"></i> <strong>مهارت‌های ${data.name}:</strong><br>`;
                     data.skills.forEach(s => { skillReply += `🔹 ${s}<br>`; });
                     return skillReply;
                 }
 
+                // اینستاگرام
                 if (foundKey === 'اینستا' || foundKey === 'اینستاگرام') {
                     return `
                 <i class="fab fa-instagram" style="color:#f5b042;"></i> <strong>لینک اینستاگرام:</strong><br>
@@ -773,23 +704,26 @@
               `;
                 }
 
-                if (foundKey === 'تلگرام' || foundKey === 'تلگر') {
+                // تلگرام
+                if (foundKey === 'تلگرام') {
                     return `
                 <i class="fab fa-telegram-plane" style="color:#f5b042;"></i> <strong>لینک تلگرام:</strong><br>
                 <a href="${data.social.telegram}" target="_blank" style="color:#f5b042;text-decoration:underline;">${data.social.telegram}</a> ✈️
               `;
                 }
 
+                // کی هستی
                 if (foundKey === 'کی هستی' || foundKey === 'هستی' || foundKey === 'چیستی' ||
                     foundKey === 'تو کی' || foundKey === 'کیایی' || foundKey === 'معرفی') {
                     return `
                 <i class="fas fa-robot"></i> <strong>من MH Assistant هستم!</strong><br>
                 <span style="color:#f5b042;">دستیار خودمونی</span> تو<br>
                 ساخته‌شده توسط <strong>${data.name}</strong><br>
-                ${data.job} από سال ${data.startYear}
+                ${data.job} از سال ${data.startYear}
               `;
                 }
 
+                // همه چیز
                 if (foundKey === 'همه چیز' || foundKey === 'کامل') {
                     return `
                 <i class="fas fa-robot"></i> <strong>همه چیز درباره من:</strong><br>
@@ -800,7 +734,6 @@
               `;
                 }
 
-                // اضافه کردن تحلیل احساسات به پاسخ
                 if (sentiment.sentiment !== 'خنثی 😐') {
                     reply += `<br><br><span style="color:${sentiment.color};font-size:0.7rem;">💭 احساس: ${sentiment.sentiment}</span>`;
                 }
@@ -808,7 +741,6 @@
                 return `<i class="fas fa-comment" style="color:#f5b042;"></i> ${reply}`;
             }
 
-            // ===== پاسخ پیش‌فرض با تحلیل احساسات =====
             return `
             🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             📝 "<strong>${text}</strong>" رو خوندم.<br>
