@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v1.4.1</title>
+    <title>MH Assistant | v1.4.2</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -166,27 +166,6 @@
             .input-area .btn-send, .input-area .btn-search { width:32px; height:32px; font-size:0.75rem; }
             .notification { padding:12px 14px; max-width:96%; bottom:14px; }
         }
-
-        /* ===== استایل حالت ریاضی ===== */
-        .math-mode-badge {
-            display: inline-block;
-            background: rgba(76, 175, 80, 0.15);
-            border: 1px solid rgba(76, 175, 80, 0.2);
-            border-radius: 40px;
-            padding: 2px 12px;
-            font-size: 0.55rem;
-            color: #4caf50;
-            margin-top: 4px;
-            font-weight: 600;
-        }
-        .math-bubble {
-            background: rgba(76, 175, 80, 0.04) !important;
-            border-color: rgba(76, 175, 80, 0.15) !important;
-        }
-        .math-bubble .bubble {
-            background: rgba(76, 175, 80, 0.04) !important;
-            border-color: rgba(76, 175, 80, 0.15) !important;
-        }
     </style>
 </head>
 <body>
@@ -197,7 +176,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۱.۴.۱</small>
+                <small><i class="fas fa-robot"></i> نسخه ۱.۴.۲</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -208,12 +187,12 @@
             <div class="message bot">
                 <div class="avatar"><i class="fas fa-robot"></i></div>
                 <div class="bubble">
-                    <i class="fas fa-hand-peace"></i> سلام داداش! <strong>MH Assistant v1.4.1</strong><br>
-                    <span style="color:#f5b042;">رفع دکمه ریاضی + حالت اختصاصی 🧮</span><br><br>
+                    <i class="fas fa-hand-peace"></i> سلام داداش! <strong>MH Assistant v1.4.2</strong><br>
+                    <span style="color:#f5b042;">ریاضی حرفه‌ای + آب و هوا ☀️</span><br><br>
                     <span style="color:#b0a99b;font-size:0.7rem;">
                         📝 هر چیزی بپرس، جواب میدم<br>
-                        ☀️ آب و هوا با اسم شهر<br>
-                        🧮 ریاضی با دکمه مخصوص
+                        🧮 دکمه ریاضی رو بزن<br>
+                        ☀️ آب و هوا با اسم شهر
                     </span>
                 </div>
             </div>
@@ -251,15 +230,15 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۱.۴.۱</span>
+                <span class="version">نسخه ۱.۴.۲</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🧮 رفع دکمه ریاضی</li>
-                <li><i class="fas fa-check-circle"></i> 💬 حالت اختصاصی ریاضی</li>
+                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی حرفه‌ای</li>
+                <li><i class="fas fa-check-circle"></i> 📝 پیام اولیه ریاضی</li>
+                <li><i class="fas fa-check-circle"></i> 🎄 جواب ریاضی با فرمت جدید</li>
                 <li><i class="fas fa-check-circle"></i> ☀️ بهبود آب و هوا</li>
-                <li><i class="fas fa-check-circle"></i> 🚀 موتور قوی‌تر</li>
             </ul>
         </div>
     </div>
@@ -268,7 +247,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '1.4.1';
+        const APP_VERSION = '1.4.2';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -471,7 +450,7 @@
         }
 
         // ============================================================
-        //  تابع حل ریاضی (پیشرفته)
+        //  تابع حل ریاضی (پیشرفته با فرمت جدید)
         // ============================================================
         function solveMath(expression) {
             try {
@@ -488,16 +467,16 @@
                         return `
                     <div style="background:rgba(76,175,80,0.04); border:1px solid rgba(76,175,80,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
                       <div style="color:#4caf50; font-weight:700; font-size:0.9rem; margin-bottom:4px;">
-                        🧮 حالت ریاضی فعاله!
+                        🧮 جواب سوالتون!
                       </div>
-                      <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8; margin-bottom:6px;">
-                        📝 لطفاً فقط عبارت ریاضی رو بنویسید
+                      <div style="color:#f5efe6; font-size:1.2rem; font-weight:700; margin-bottom:4px;">
+                        🎄 جواب: ${formatted}
                       </div>
-                      <div style="color:#f5efe6; font-size:1rem; font-weight:600;">
-                        ${clean} = ${formatted}
+                      <div style="color:#b0a99b; font-size:0.8rem;">
+                        🛍 سوالت همین بود؟ واقعا راحت بود! 😎
                       </div>
                       <div style="color:#b0a99b; font-size:0.65rem; margin-top:6px;">
-                        ✅ عدد رو وارد کن تا جواب بدم
+                        ${clean} = ${formatted}
                       </div>
                     </div>
                   `;
@@ -534,11 +513,9 @@
         // ============================================================
         function isMathMode(text) {
             const lower = text.trim().toLowerCase();
-            // دکمه ریاضی
             if (lower === '🧮 ریاضی' || lower === 'ریاضی' || lower === 'حالت ریاضی') {
                 return 'math';
             }
-            // دکمه آب و هوا
             if (lower === '☀️ آب و هوا' || lower === 'آب و هوا' || lower === 'هوا') {
                 return 'weather';
             }
@@ -949,4 +926,4 @@
     </script>
 
 </body>
-    </html>
+</html>
