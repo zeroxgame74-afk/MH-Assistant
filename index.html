@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.9.5</title>
+    <title>MH Assistant | v3.10.0</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -174,6 +174,26 @@
         }
         .copy-trans-btn:hover { background:rgba(245,176,66,0.2); }
 
+        .image-card {
+            background:rgba(255,255,255,0.02);
+            border:1px solid rgba(255,215,100,0.08);
+            border-radius:12px;
+            padding:10px;
+            margin:6px 0;
+            text-align:center;
+        }
+        .image-card img {
+            width:100%;
+            max-width:350px;
+            border-radius:8px;
+            border:1px solid rgba(255,215,100,0.06);
+        }
+        .image-card .img-label {
+            font-size:0.6rem;
+            color:#b0a99b;
+            margin-top:4px;
+        }
+
         .notification {
             position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
             background:rgba(255,255,255,0.05); backdrop-filter:blur(24px);
@@ -230,6 +250,7 @@
             .input-area .btn-send, .input-area .btn-search { width:32px; height:32px; font-size:0.75rem; }
             .notification { padding:12px 14px; max-width:96%; bottom:14px; }
             .translation-box { font-size:0.7rem; padding:8px 10px; }
+            .image-card img { max-width:100%; }
         }
     </style>
 </head>
@@ -241,7 +262,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۹.۵</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۰</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -259,8 +280,9 @@
                     🧮 ریاضی پیشرفته (درجه‌ای)<br>
                     ☀️ آب و هوا (فارسی)<br>
                     🌍 ترجمه (آزمایشی)<br>
+                    🎨 ساخت تصویر با AI (رایگان)<br>
                     💡 ایده‌ساز و کمک‌رسان<br><br>
-                    هر چی بپرسی، جواب میدم! 😊
+                    👇 هر چی دلت میخواد بپرس! 😊
                 </div>
             </div>
         </div>
@@ -277,7 +299,8 @@
             <button onclick="askQuestion('☀️ آب و هوا')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
             <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
             <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
-            <button onclick="setTranslateMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-language"></i> ترجمه (آزمایشی)</button>
+            <button onclick="setImageMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-image"></i> 🎨 تصویر</button>
+            <button onclick="setTranslateMode()" style="border-color:rgba(245,176,66,0.2);"><i class="fas fa-language"></i> ترجمه (آزمایشی)</button>
         </div>
 
         <div class="input-area">
@@ -300,15 +323,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۹.۵</span>
+                <span class="version">نسخه ۳.۱۰.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با موتور جدید (Google Translate API)</li>
+                <li><i class="fas fa-check-circle"></i> 🎨 <strong>ساخت تصویر با AI</strong> (رایگان)</li>
+                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی با پشتیبانی از درجه (sin, cos, tan)</li>
                 <li><i class="fas fa-check-circle"></i> 🧠 موتور دیکشنری تقویت شد</li>
+                <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با Google Translate API</li>
                 <li><i class="fas fa-check-circle"></i> 💡 تشخیص حالت روحی و ایده‌سازی</li>
-                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی با پشتیبانی از درجه</li>
                 <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۶۵۰۰+ سوال و جواب</li>
             </ul>
         </div>
@@ -318,7 +342,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.9.5';
+        const APP_VERSION = '3.10.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -339,6 +363,40 @@
             localStorage.setItem('mhs_notification_version', APP_VERSION);
         } else {
             notif.style.display = 'none';
+        }
+
+        // ============================================================
+        //  حالت تصویر
+        // ============================================================
+        let imageMode = false;
+
+        function setImageMode() {
+            imageMode = true;
+            const msg = `
+                🎨 <strong>حالت ساخت تصویر فعال!</strong><br><br>
+                📌 برای ساخت تصویر، توضیحاتش رو بنویس:<br>
+                مثلاً: <strong style="color:#f5b042;">"یک گربه نارنجی با کلاه لبه‌دار"</strong><br><br>
+                ⚠️ کیفیت تصویر ممکنه ۱۰۰٪ نباشه.<br>
+                ✅ تصویر ساخته شده رو میتونی ذخیره کنی (کلیک راست یا لمس طولانی).<br>
+                🔄 برای خروج از حالت تصویر، دکمه تصویر رو دوباره بزن.
+            `;
+            addMessage('bot', msg);
+            document.getElementById('userInput').focus();
+        }
+
+        function cancelImageMode() {
+            imageMode = false;
+            addMessage('bot', '🔙 حالت تصویر غیرفعال شد.');
+        }
+
+        // ============================================================
+        //  ساخت تصویر با Pollinations.ai
+        // ============================================================
+        function generateImage(prompt) {
+            const cleanPrompt = prompt.replace(/\s+/g, '+').trim();
+            const imageUrl =
+                `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=512&height=512&nologo=true`;
+            return imageUrl;
         }
 
         // ============================================================
@@ -379,7 +437,7 @@
         }
 
         // ============================================================
-        //  ترجمه با Google Translate API (غیررسمی ولی کارآمد)
+        //  ترجمه با Google Translate API
         // ============================================================
         async function translateText(text, targetLang) {
             try {
@@ -404,7 +462,6 @@
                     };
                 }
 
-                // استفاده از Google Translate (غیررسمی ولی همیشه کار میکنه)
                 const url =
                     `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${fromLang}&tl=${toLang}&dt=t&q=${encodeURIComponent(text)}`;
                 const response = await fetch(url);
@@ -619,7 +676,7 @@
         };
 
         // ============================================================
-        //  دیکشنری (همه‌ی دیتاهای قبلی کامل + جدید)
+        //  دیکشنری (همه‌ی دیتاهای قبلی کامل)
         // ============================================================
         function getRandomReply(replies) {
             return replies[Math.floor(Math.random() * replies.length)];
@@ -1037,7 +1094,7 @@
                 '🔐 رمزهای قوی استفاده کن تا هک نشی.'
             ],
 
-            // ===== حالت روحی و ایده (جدید) =====
+            // ===== حالت روحی و ایده =====
             'ناراحتم': [
                 '😔 متأسفم که ناراحتی. اگر دوست داری حرف بزن، من اینجام تا کمکت کنم.',
                 '💙 ناراحت نباش! همیشه روزای بهتر پیش میاد. من کنارتم.',
@@ -1258,6 +1315,7 @@
             if (lower === '🧮 ریاضی' || lower === 'ریاضی' || lower === 'حالت ریاضی') return 'math';
             if (lower === '☀️ آب و هوا' || lower === 'آب و هوا' || lower === 'هوا') return 'weather';
             if (lower === 'ترجمه' || lower === 'حالت ترجمه') return 'translate';
+            if (lower === '🎨 تصویر' || lower === 'تصویر' || lower === 'ساخت تصویر') return 'image';
             return null;
         }
 
@@ -1322,12 +1380,27 @@
                 return thanksList[Math.floor(Math.random() * thanksList.length)];
             }
 
-            // ===== ۲. تشخیص حالت روحی =====
+            // ===== ۲. تشخیص حالت تصویر =====
+            if (imageMode) {
+                imageMode = false;
+                const imgUrl = generateImage(text);
+                const msg = `
+                    🎨 <strong>تصویر ساخته شد!</strong><br><br>
+                    <div class="image-card">
+                        <img src="${imgUrl}" alt="${text}" loading="lazy">
+                        <div class="img-label">📌 توضیحات: "${text}"</div>
+                    </div>
+                    💡 می‌تونی تصویر رو با کلیک راست یا لمس طولانی ذخیره کنی.<br>
+                    🔄 برای ساخت تصویر جدید، دکمه تصویر رو بزن.
+                `;
+                return msg;
+            }
+
+            // ===== ۳. تشخیص حالت روحی =====
             const mood = detectMood(text);
             if (mood !== 'neutral') {
                 const moodReply = getMoodResponse(mood);
                 if (moodReply) {
-                    // اگر کاربر ناراحت یا عصبانی بود، پیشنهاد ایده هم بده
                     if (mood === 'sad' || mood === 'angry') {
                         const idea = generateIdea(text);
                         return `${moodReply}\n\n💡 یه پیشنهاد برات دارم:\n${idea}`;
@@ -1336,7 +1409,7 @@
                 }
             }
 
-            // ===== ۳. تشخیص ایده (اگر کاربر درباره‌ی چیزی صحبت کرد) =====
+            // ===== ۴. تشخیص ایده =====
             const ideaKeywords = ['ایده', 'نظر', 'پیشنهاد', 'چیکار', 'کار', 'پروژه', 'طرح', 'بسازم', 'شروع'];
             for (const word of ideaKeywords) {
                 if (lower.includes(word)) {
@@ -1384,7 +1457,12 @@
                 return;
             }
 
-            // ===== ۴. ترجمه فعال =====
+            if (mode === 'image') {
+                setImageMode();
+                return;
+            }
+
+            // ===== ۵. ترجمه فعال =====
             if (translateMode && selectedLang) {
                 const result = await translateText(text, selectedLang);
                 if (result.success) {
@@ -1410,7 +1488,7 @@
                 }
             }
 
-            // ===== ۵. تشخیص خودکار ترجمه =====
+            // ===== ۶. تشخیص خودکار ترجمه =====
             if (isTranslateRequest(text)) {
                 const info = extractTranslateInfo(text);
                 if (info.targetLang) {
@@ -1437,7 +1515,7 @@
                 }
             }
 
-            // ===== ۶. آب و هوا =====
+            // ===== ۷. آب و هوا =====
             if (lower.includes('آب و هوا') || lower.includes('آبوهوا') || lower.includes('هوای') || lower.includes('weather')) {
                 const cityMatch = text.match(/(?:آب و هوای|آبوهوای|هوای|آب و هوا|هوا|weather)\s*([^\s؟]+)/i);
                 if (cityMatch) {
@@ -1466,11 +1544,11 @@
             `;
             }
 
-            // ===== ۷. ریاضی =====
+            // ===== ۸. ریاضی =====
             const mathResult = solveMath(text);
             if (mathResult) return mathResult;
 
-            // ===== ۸. دیکشنری =====
+            // ===== ۹. دیکشنری =====
             const keys = Object.keys(questionBank);
             let foundKey = null;
             let foundScore = 0;
@@ -1560,13 +1638,13 @@
                 return reply;
             }
 
-            // ===== ۹. پاسخ پیش‌فرض (با ایده) =====
+            // ===== ۱۰. پاسخ پیش‌فرض =====
             const randomReplies = [
                 `🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             📝 "<strong>${text}</strong>" رو خوندم.<br>
             💭 احساس: ${sentiment}<br><br>
             می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (آزمایشی)</span><br><br>
+            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (آزمایشی)</span> • <span style="color:#f5b042;">🎨 تصویر</span><br><br>
             <span style="color:#b0a99b;font-size:0.7rem;">💡 هر چی بپرسی، جواب میدم!</span>`,
 
                 `😊 <strong>MH Assistant</strong> اینجاست!<br><br>
@@ -1587,7 +1665,6 @@
 
             let reply = randomReplies[Math.floor(Math.random() * randomReplies.length)];
 
-            // اگه کاربر درباره‌ی ایده حرف زد، یه ایده هم اضافه کن
             if (lower.includes('ایده') || lower.includes('نظر') || lower.includes('پیشنهاد')) {
                 reply += `\n\n💡 یه ایده برات دارم:\n${generateIdea(text)}`;
             }
@@ -1773,4 +1850,4 @@
     </script>
 
 </body>
-</html>
+    </html>
