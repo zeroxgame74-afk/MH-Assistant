@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.5.2</title>
+    <title>MH Assistant | v3.6.0</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -142,6 +142,41 @@
         @keyframes pulseIcon { 0%,100% { transform:scale(1); } 50% { transform:scale(1.2); } }
         .typing-indicator.show { display:inline-flex; align-items:center; gap:4px; }
 
+        /* استایل کد */
+        .code-block {
+            background:rgba(0,0,0,0.4);
+            border:1px solid rgba(255,215,100,0.1);
+            border-radius:8px;
+            padding:10px 12px;
+            margin:6px 0;
+            font-family:'Courier New',monospace;
+            font-size:0.7rem;
+            color:#d6d0c4;
+            white-space:pre-wrap;
+            word-break:break-word;
+            direction:ltr;
+            text-align:left;
+            max-height:300px;
+            overflow-y:auto;
+        }
+        .code-block::-webkit-scrollbar { width:3px; }
+        .code-block::-webkit-scrollbar-track { background:transparent; }
+        .code-block::-webkit-scrollbar-thumb { background:rgba(255,215,100,0.2); border-radius:10px; }
+        .copy-btn {
+            background:rgba(245,176,66,0.1);
+            border:1px solid rgba(245,176,66,0.15);
+            color:#f5b042;
+            padding:2px 12px;
+            border-radius:40px;
+            font-size:0.6rem;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+            font-family:'Vazirmatn',sans-serif;
+            margin-top:4px;
+        }
+        .copy-btn:hover { background:rgba(245,176,66,0.2); }
+
         .notification {
             position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
             background:rgba(255,255,255,0.05); backdrop-filter:blur(24px);
@@ -174,6 +209,7 @@
             .input-area input { font-size:0.7rem; padding:6px 0; }
             .input-area .btn-send, .input-area .btn-search { width:32px; height:32px; font-size:0.75rem; }
             .notification { padding:12px 14px; max-width:96%; bottom:14px; }
+            .code-block { font-size:0.6rem; max-height:200px; }
         }
     </style>
 </head>
@@ -185,7 +221,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۵.۲</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۶.۰</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -202,6 +238,7 @@
                     📚 بیش از <strong>۵۵۰۰</strong> سوال و جواب<br>
                     🧮 ریاضی پیشرفته<br>
                     ☀️ آب و هوا (حتی با فارسی!)<br>
+                    💻 <strong>ساخت کد HTML/CSS/JS</strong> (نسخه Beta)<br>
                     🧠 روانشناسی، روابط، پول، سلامتی، نجوم، تاریخ، هنر، ورزش، سیاست، محیط‌زیست، آشپزی، سفر، مد، تکنولوژی، بازی و خیلی چیزای دیگه...<br><br>
                     👇 هر چی دلت میخواد بپرس، جواب میدم! 😊
                 </div>
@@ -220,6 +257,7 @@
             <button onclick="askQuestion('☀️ آب و هوا')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
             <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
             <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
+            <button onclick="askQuestion('💻 کد')" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-code"></i> کد (Beta)</button>
         </div>
 
         <div class="input-area">
@@ -242,17 +280,17 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۵.۲</span>
+                <span class="version">نسخه ۳.۶.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
+                <li><i class="fas fa-check-circle"></i> 💻 دکمه جدید <strong>کد (Beta)</strong></li>
+                <li><i class="fas fa-check-circle"></i> 📝 ساخت کد HTML/CSS/JS با مشخصات کاربر</li>
+                <li><i class="fas fa-check-circle"></i> 📋 قابلیت کپی کردن کد</li>
                 <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۵۵۰۰+ سوال و جواب</li>
-                <li><i class="fas fa-check-circle"></i> ☀️ پیام آب و هوا خفن‌تر شد</li>
+                <li><i class="fas fa-check-circle"></i> ☀️ آب و هوا با پشتیبانی از فارسی</li>
                 <li><i class="fas fa-check-circle"></i> 🚀 موتور پاسخگویی تقویت شد</li>
-                <li><i class="fas fa-check-circle"></i> 💬 دیکشنری تشکر تقویت شد</li>
-                <li><i class="fas fa-check-circle"></i> 🧠 موضوعات جدید: آشپزی، سفر، مد، تکنولوژی، بازی</li>
-                <li><i class="fas fa-check-circle"></i> 👨‍💻 اسم سازنده در همه‌ی پاسخ‌های "کی هستی"</li>
             </ul>
         </div>
     </div>
@@ -261,7 +299,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.5.2';
+        const APP_VERSION = '3.6.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -323,12 +361,13 @@
         };
 
         // ============================================================
-        //  دیکشنری غول‌پیکر (۵۵۰۰+ سوال و جواب)
+        //  دیکشنری غول‌پیکر (همه‌ی دیتاهای قبلی + جدید)
         // ============================================================
         function getRandomReply(replies) {
             return replies[Math.floor(Math.random() * replies.length)];
         }
 
+        // دیکشنری کامل (همه‌ی دیتاهای قبلی)
         const questionBank = {
 
             // ===== سلام و احوالپرسی (۱۵۰+) =====
@@ -932,6 +971,28 @@
                 '🎮 گیم یعنی دنیای هیجان و ماجراجویی!',
                 '🕹️ گیم رو با دوستات بازی کن تا لذت ببری.',
                 '🎯 گیم یعنی چالش و سرگرمی!'
+            ],
+
+            // ===== کد (Beta) =====
+            '💻 کد': [
+                `💻 <strong>ساخت کد سایت (نسخه Beta)</strong><br><br>
+            📌 برای ساخت کد، مشخصات سایت رو برام بنویس:<br>
+            • <strong>نوع سایت</strong> (فروشگاهی، شخصی، شرکتی، آموزشی، و...)<br>
+            • <strong>رنگ‌بندی</strong> (مثلاً آبی، طلایی، مشکی، و...)<br>
+            • <strong>بخش‌های مورد نیاز</strong> (سربرگ، درباره ما، تماس با ما، و...)<br>
+            • <strong>ویژگی‌های خاص</strong> (اگر چیزی خاص مدنظرت هست)<br><br>
+            ⚠️ <strong>توجه:</strong> این نسخه Beta هست و ممکنه کد کامل نباشه!<br>
+            ✅ کد رو میتونی کپی کنی و استفاده کنی.`
+            ],
+            'کد': [
+                `💻 <strong>ساخت کد سایت (نسخه Beta)</strong><br><br>
+            📌 برای ساخت کد، مشخصات سایت رو برام بنویس:<br>
+            • <strong>نوع سایت</strong> (فروشگاهی، شخصی، شرکتی، آموزشی، و...)<br>
+            • <strong>رنگ‌بندی</strong> (مثلاً آبی، طلایی، مشکی، و...)<br>
+            • <strong>بخش‌های مورد نیاز</strong> (سربرگ، درباره ما، تماس با ما، و...)<br>
+            • <strong>ویژگی‌های خاص</strong> (اگر چیزی خاص مدنظرت هست)<br><br>
+            ⚠️ <strong>توجه:</strong> این نسخه Beta هست و ممکنه کد کامل نباشه!<br>
+            ✅ کد رو میتونی کپی کنی و استفاده کنی.`
             ]
         };
 
@@ -1111,6 +1172,7 @@
             const lower = text.trim().toLowerCase();
             if (lower === '🧮 ریاضی' || lower === 'ریاضی' || lower === 'حالت ریاضی') return 'math';
             if (lower === '☀️ آب و هوا' || lower === 'آب و هوا' || lower === 'هوا') return 'weather';
+            if (lower === '💻 کد' || lower === 'کد' || lower === 'ساخت کد') return 'code';
             return null;
         }
 
@@ -1149,6 +1211,201 @@
                 }
             }
             return matrix[b.length][a.length];
+        }
+
+        // ============================================================
+        //  تابع کپی کردن کد
+        // ============================================================
+        function copyCode(code) {
+            navigator.clipboard.writeText(code).then(() => {
+                const toast = document.createElement('div');
+                toast.style.cssText = `
+                    position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
+                    background:rgba(76,175,80,0.15);border:1px solid rgba(76,175,80,0.2);
+                    color:#4caf50;padding:8px 20px;border-radius:40px;
+                    font-family:'Vazirmatn',sans-serif;font-size:0.7rem;
+                    z-index:9999;animation:slideUp 0.3s ease;
+                    backdrop-filter:blur(12px);
+                `;
+                toast.innerHTML = '✅ کد با موفقیت کپی شد!';
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transition = '0.5s';
+                    setTimeout(() => toast.remove(), 500);
+                }, 2000);
+            }).catch(() => {
+                alert('❌ کپی نشد! لطفاً دستی کپی کن.');
+            });
+        }
+
+        // ============================================================
+        //  تابع ساخت کد
+        // ============================================================
+        function generateCode(specs) {
+            // تشخیص رنگ
+            let color1 = '#f5b042';
+            let color2 = '#d48f2b';
+            let bgColor = '#0b0b0e';
+            let textColor = '#f5efe6';
+
+            if (specs.includes('آبی') || specs.includes('blue')) {
+                color1 = '#2196f3';
+                color2 = '#1565c0';
+            } else if (specs.includes('سبز') || specs.includes('green')) {
+                color1 = '#4caf50';
+                color2 = '#2e7d32';
+            } else if (specs.includes('قرمز') || specs.includes('red')) {
+                color1 = '#f44336';
+                color2 = '#c62828';
+            } else if (specs.includes('مشکی') || specs.includes('black')) {
+                color1 = '#333';
+                color2 = '#111';
+            } else if (specs.includes('طلایی') || specs.includes('gold')) {
+                color1 = '#f5b042';
+                color2 = '#d48f2b';
+            }
+
+            // تشخیص نوع سایت
+            let siteType = 'سایت';
+            let siteDesc = 'سایت شما';
+            if (specs.includes('فروشگاه') || specs.includes('فروش') || specs.includes('shop')) {
+                siteType = 'فروشگاهی';
+                siteDesc = 'فروشگاه آنلاین';
+            } else if (specs.includes('شخصی') || specs.includes('personal')) {
+                siteType = 'شخصی';
+                siteDesc = 'سایت شخصی';
+            } else if (specs.includes('شرکتی') || specs.includes('company')) {
+                siteType = 'شرکتی';
+                siteDesc = 'سایت شرکت';
+            } else if (specs.includes('آموزشی') || specs.includes('education')) {
+                siteType = 'آموزشی';
+                siteDesc = 'سایت آموزشی';
+            } else if (specs.includes('خبری') || specs.includes('news')) {
+                siteType = 'خبری';
+                siteDesc = 'سایت خبری';
+            } else if (specs.includes('رستوران') || specs.includes('غذا')) {
+                siteType = 'رستوران';
+                siteDesc = 'سایت رستوران';
+            } else if (specs.includes('ورزشی') || specs.includes('sport')) {
+                siteType = 'ورزشی';
+                siteDesc = 'سایت ورزشی';
+            }
+
+            // تشخیص بخش‌ها
+            let sections = '';
+            if (specs.includes('سربرگ') || specs.includes('header')) {
+                sections += '    <header>سربرگ</header>\n';
+            }
+            if (specs.includes('درباره ما') || specs.includes('about')) {
+                sections += '    <section id="about">درباره ما</section>\n';
+            }
+            if (specs.includes('تماس با ما') || specs.includes('contact')) {
+                sections += '    <section id="contact">تماس با ما</section>\n';
+            }
+            if (specs.includes('محصولات') || specs.includes('products') || specs.includes('خدمات') || specs.includes('services')) {
+                sections += '    <section id="products">محصولات / خدمات</section>\n';
+            }
+            if (specs.includes('گالری') || specs.includes('gallery')) {
+                sections += '    <section id="gallery">گالری</section>\n';
+            }
+            if (specs.includes('نظرات') || specs.includes('testimonial')) {
+                sections += '    <section id="testimonials">نظرات</section>\n';
+            }
+            if (sections === '') {
+                sections = '    <section id="main">محتوا</section>\n';
+            }
+
+            const code = `<!DOCTYPE html>
+        <html lang="fa" dir="rtl">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>${siteDesc} | ${siteType}</title>
+            <style>
+                * { margin:0; padding:0; box-sizing:border-box; }
+                body {
+                    font-family: 'Vazirmatn', 'Segoe UI', sans-serif;
+                    background: ${bgColor};
+                    color: ${textColor};
+                    padding:20px;
+                    direction:rtl;
+                }
+                header {
+                    background: linear-gradient(145deg, ${color1}, ${color2});
+                    padding:20px;
+                    border-radius:16px;
+                    text-align:center;
+                    color:#0b0b0e;
+                    font-weight:800;
+                    font-size:1.5rem;
+                    margin-bottom:20px;
+                }
+                section {
+                    background:rgba(255,255,255,0.03);
+                    border:1px solid rgba(255,215,100,0.08);
+                    border-radius:12px;
+                    padding:20px;
+                    margin-bottom:16px;
+                }
+                section h2 {
+                    color:${color1};
+                    margin-bottom:10px;
+                    font-weight:700;
+                }
+                footer {
+                    text-align:center;
+                    padding:16px;
+                    color:#b0a99b;
+                    font-size:0.8rem;
+                    border-top:1px solid rgba(255,215,100,0.06);
+                    margin-top:12px;
+                }
+                .btn {
+                    background:linear-gradient(145deg, ${color1}, ${color2});
+                    color:#0b0b0e;
+                    border:none;
+                    padding:10px 24px;
+                    border-radius:40px;
+                    font-weight:600;
+                    font-size:0.9rem;
+                    cursor:pointer;
+                    transition:0.3s;
+                }
+                .btn:hover { transform:scale(1.05); }
+                a { color:${color1}; text-decoration:none; }
+                a:hover { text-decoration:underline; }
+                .container { max-width:900px; margin:0 auto; }
+                @media (max-width:480px) {
+                    body { padding:12px; }
+                    header { font-size:1.2rem; padding:16px; }
+                    section { padding:14px; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <header>${siteDesc} 🚀</header>
+        ${sections}
+                <footer>${siteDesc} | ساخته شده با ❤️</footer>
+            </div>
+        </body>
+        </html>`;
+
+            return code;
+        }
+
+        // ============================================================
+        //  تشخیص ساخت کد از پیام کاربر
+        // ============================================================
+        function isCodeRequest(text) {
+            const keywords = ['کد بساز', 'ساخت کد', 'کد سایت', 'سایت بساز', 'کد html', 'کد برام بنویس', 'کد میخوام', 'ساخت سایت',
+                'کد بده', 'یه سایت', 'یک سایت', 'کد تحویل'
+            ];
+            for (const word of keywords) {
+                if (text.includes(word)) return true;
+            }
+            return false;
         }
 
         // ============================================================
@@ -1211,7 +1468,31 @@
             `;
             }
 
-            // ===== ۴. تشخیص آب و هوا (پشتیبانی از فارسی) =====
+            if (mode === 'code') {
+                return questionBank['💻 کد'][0];
+            }
+
+            // ===== ۴. تشخیص ساخت کد =====
+            if (isCodeRequest(text)) {
+                const code = generateCode(text);
+                const codeHtml = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return `
+              <div style="background:rgba(245,176,66,0.04); border:1px solid rgba(245,176,66,0.1); border-radius:10px; padding:10px 12px; margin-top:4px;">
+                <div style="color:#f5b042; font-weight:700; font-size:0.85rem; margin-bottom:6px;">
+                  💻 کد سایت شما (نسخه Beta)
+                </div>
+                <div style="color:#b0a99b; font-size:0.7rem; margin-bottom:6px;">
+                  ⚠️ این کد بر اساس مشخصات شما ساخته شده. ممکنه کامل نباشه و نیاز به ویرایش داشته باشه.
+                </div>
+                <div class="code-block">${codeHtml}</div>
+                <button class="copy-btn" onclick="copyCode(\`${code.replace(/`/g, '\\`')}\`)">
+                  <i class="fas fa-copy"></i> کپی کد
+                </button>
+              </div>
+            `;
+            }
+
+            // ===== ۵. تشخیص آب و هوا (پشتیبانی از فارسی) =====
             if (lower.includes('آب و هوا') || lower.includes('آبوهوا') || lower.includes('هوای') || lower.includes('weather')) {
                 const cityMatch = text.match(/(?:آب و هوای|آبوهوای|هوای|آب و هوا|هوا|weather)\s*([^\s؟]+)/i);
                 if (cityMatch) {
@@ -1240,11 +1521,11 @@
             `;
             }
 
-            // ===== ۵. حل ریاضی =====
+            // ===== ۶. حل ریاضی =====
             const mathResult = solveMath(text);
             if (mathResult) return mathResult;
 
-            // ===== ۶. پاسخ از دیکشنری =====
+            // ===== ۷. پاسخ از دیکشنری =====
             const keys = Object.keys(questionBank);
             let foundKey = null;
             let foundScore = 0;
@@ -1334,13 +1615,13 @@
                 return reply;
             }
 
-            // ===== ۷. پاسخ پیش‌فرض =====
+            // ===== ۸. پاسخ پیش‌فرض =====
             const randomReplies = [
                 `🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             📝 "<strong>${text}</strong>" رو خوندم.<br>
             💭 احساس: ${sentiment}<br><br>
             می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span><br><br>
+            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">کد (Beta)</span><br><br>
             <span style="color:#b0a99b;font-size:0.7rem;">💡 هر چی بپرسی، جواب میدم!</span>`,
 
                 `😊 <strong>MH Assistant</strong> اینجاست!<br><br>
