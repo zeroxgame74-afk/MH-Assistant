@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v1.4.0</title>
+    <title>MH Assistant | v1.4.1</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,639 +11,181 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html,
-        body {
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-            background: #0b0b0e;
-        }
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Noto Sans Arabic', 'Segoe UI', sans-serif;
-            padding: 8px;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; width: 100%; overflow: hidden; background: #0b0b0e; }
+        body { display: flex; align-items: center; justify-content: center; font-family: 'Noto Sans Arabic', 'Segoe UI', sans-serif; padding: 8px; }
         .chat-container {
-            width: 100%;
-            max-width: 420px;
-            height: 100%;
-            max-height: 750px;
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 215, 100, 0.08);
-            border-radius: 24px;
-            display: flex;
-            flex-direction: column;
-            padding: 12px 14px 12px;
-            box-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.6);
-            overflow: hidden;
+            width: 100%; max-width: 420px; height: 100%; max-height: 750px;
+            background: rgba(255,255,255,0.03); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,215,100,0.08); border-radius: 24px;
+            display: flex; flex-direction: column; padding: 12px 14px 12px;
+            box-shadow: 0 20px 60px -12px rgba(0,0,0,0.6); overflow: hidden;
         }
-        @media (max-width: 480px) {
-            .chat-container {
-                max-height: 100vh;
-                border-radius: 16px;
-                padding: 10px 10px 10px;
-            }
-            body {
-                padding: 4px;
-            }
-        }
+        @media (max-width:480px){ .chat-container { max-height:100vh; border-radius:16px; padding:10px 10px 10px; } body { padding:4px; } }
         .chat-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 215, 100, 0.06);
-            margin-bottom: 8px;
-            flex-shrink: 0;
+            display: flex; align-items: center; gap: 10px; padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,215,100,0.06); margin-bottom: 8px; flex-shrink:0;
         }
         .chat-avatar {
-            width: 44px;
-            height: 44px;
-            background: linear-gradient(145deg, #f5b042, #d48f2b);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 900;
-            font-size: 1.3rem;
-            color: #0b0b0e;
-            flex-shrink: 0;
-            animation: floatLogo 3s ease-in-out infinite;
+            width:44px; height:44px; background:linear-gradient(145deg,#f5b042,#d48f2b);
+            border-radius:14px; display:flex; align-items:center; justify-content:center;
+            font-family:'Vazirmatn',sans-serif; font-weight:900; font-size:1.3rem; color:#0b0b0e;
+            flex-shrink:0; animation:floatLogo 3s ease-in-out infinite;
         }
-        @keyframes floatLogo {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-4px);
-            }
-        }
-        .chat-title {
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #f5efe6;
-            flex: 1;
-        }
-        .chat-title .highlight {
-            background: linear-gradient(145deg, #f5b042, #d48f2b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .chat-title small {
-            display: block;
-            font-family: 'Noto Sans Arabic', sans-serif;
-            font-weight: 300;
-            font-size: 0.55rem;
-            color: #b0a99b;
-            -webkit-text-fill-color: #b0a99b;
-        }
+        @keyframes floatLogo { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-4px); } }
+        .chat-title { font-family:'Vazirmatn',sans-serif; font-weight:800; font-size:1.1rem; color:#f5efe6; flex:1; }
+        .chat-title .highlight { background:linear-gradient(145deg,#f5b042,#d48f2b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .chat-title small { display:block; font-family:'Noto Sans Arabic',sans-serif; font-weight:300; font-size:0.55rem; color:#b0a99b; -webkit-text-fill-color:#b0a99b; }
         .chat-status {
-            background: rgba(245, 176, 66, 0.1);
-            border: 1px solid rgba(245, 176, 66, 0.1);
-            border-radius: 40px;
-            padding: 2px 10px;
-            font-size: 0.5rem;
-            color: #f5b042;
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-shrink: 0;
+            background:rgba(245,176,66,0.1); border:1px solid rgba(245,176,66,0.1);
+            border-radius:40px; padding:2px 10px; font-size:0.5rem; color:#f5b042;
+            font-family:'Vazirmatn',sans-serif; font-weight:600; display:flex; align-items:center; gap:4px; flex-shrink:0;
         }
-        .chat-status i {
-            font-size: 0.4rem;
-            color: #4caf50;
-            animation: pulseDot 1.5s ease-in-out infinite;
-        }
-        @keyframes pulseDot {
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 0.2;
-                transform: scale(0.6);
-            }
-        }
-        .messages {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            padding: 4px 2px;
-            min-height: 0;
-            scroll-behavior: smooth;
-        }
-        .messages::-webkit-scrollbar {
-            width: 3px;
-        }
-        .messages::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .messages::-webkit-scrollbar-thumb {
-            background: rgba(255, 215, 100, 0.2);
-            border-radius: 10px;
-        }
-        .message {
-            display: flex;
-            gap: 6px;
-            align-items: flex-start;
-            animation: msgIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-            flex-shrink: 0;
-        }
-        .message.bot {
-            flex-direction: row;
-        }
-        .message.user {
-            flex-direction: row-reverse;
-        }
-        @keyframes msgIn {
-            0% {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        .chat-status i { font-size:0.4rem; color:#4caf50; animation:pulseDot 1.5s ease-in-out infinite; }
+        @keyframes pulseDot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.2; transform:scale(0.6); } }
+        .messages { flex:1; overflow-y:auto; margin-bottom:8px; display:flex; flex-direction:column; gap:6px; padding:4px 2px; min-height:0; scroll-behavior:smooth; }
+        .messages::-webkit-scrollbar { width:3px; }
+        .messages::-webkit-scrollbar-track { background:transparent; }
+        .messages::-webkit-scrollbar-thumb { background:rgba(255,215,100,0.2); border-radius:10px; }
+        .message { display:flex; gap:6px; align-items:flex-start; animation:msgIn 0.3s cubic-bezier(0.22,1,0.36,1); flex-shrink:0; }
+        .message.bot { flex-direction:row; }
+        .message.user { flex-direction:row-reverse; }
+        @keyframes msgIn { 0% { opacity:0; transform:translateY(8px); } 100% { opacity:1; transform:translateY(0); } }
         .message .avatar {
-            width: 28px;
-            height: 28px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            flex-shrink: 0;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 215, 100, 0.06);
-            color: #b0a99b;
+            width:28px; height:28px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+            font-size:0.7rem; flex-shrink:0; background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,215,100,0.06); color:#b0a99b;
         }
-        .message.bot .avatar {
-            background: rgba(245, 176, 66, 0.12);
-            color: #f5b042;
-            border-color: rgba(245, 176, 66, 0.1);
-        }
-        .message.user .avatar {
-            background: rgba(255, 255, 255, 0.06);
-            color: #eaeef2;
-        }
+        .message.bot .avatar { background:rgba(245,176,66,0.12); color:#f5b042; border-color:rgba(245,176,66,0.1); }
+        .message.user .avatar { background:rgba(255,255,255,0.06); color:#eaeef2; }
         .message .bubble {
-            max-width: 85%;
-            padding: 6px 12px;
-            border-radius: 14px;
-            font-size: 0.8rem;
-            line-height: 1.9;
-            word-break: break-word;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 100, 0.06);
-            color: #d6d0c4;
+            max-width:85%; padding:6px 12px; border-radius:14px; font-size:0.8rem; line-height:1.9;
+            word-break:break-word; background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.06);
+            color:#d6d0c4;
         }
-        .message.bot .bubble {
-            background: rgba(255, 215, 100, 0.04);
-            border-color: rgba(255, 215, 100, 0.08);
-            border-top-right-radius: 4px;
-        }
-        .message.user .bubble {
-            background: rgba(245, 176, 66, 0.08);
-            border-color: rgba(245, 176, 66, 0.12);
-            border-top-left-radius: 4px;
-            color: #f5efe6;
-        }
-        .message .bubble strong {
-            color: #f5b042;
-        }
-        .message .bubble i {
-            color: #f5b042;
-            margin-left: 2px;
-        }
+        .message.bot .bubble { background:rgba(255,215,100,0.04); border-color:rgba(255,215,100,0.08); border-top-right-radius:4px; }
+        .message.user .bubble { background:rgba(245,176,66,0.08); border-color:rgba(245,176,66,0.12); border-top-left-radius:4px; color:#f5efe6; }
+        .message .bubble strong { color:#f5b042; }
+        .message .bubble i { color:#f5b042; margin-left:2px; }
 
         .site-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 100, 0.08);
-            border-radius: 10px;
-            padding: 6px 8px;
-            margin: 4px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.08);
+            border-radius:10px; padding:6px 8px; margin:4px 0;
+            display:flex; align-items:center; gap:8px; flex-wrap:wrap;
         }
-        .site-card .site-img {
-            width: 34px;
-            height: 34px;
-            border-radius: 6px;
-            object-fit: cover;
-            background: #0b0b0e;
-            flex-shrink: 0;
-        }
-        .site-card .site-info {
-            flex: 1;
-            min-width: 50px;
-        }
-        .site-card .site-info .site-name {
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 700;
-            color: #f5efe6;
-            font-size: 0.75rem;
-        }
-        .site-card .site-info .site-desc {
-            font-size: 0.6rem;
-            color: #b0a99b;
-        }
-        .site-card .site-link {
-            color: #f5b042;
-            text-decoration: none;
-            font-size: 0.55rem;
-            font-weight: 600;
-            padding: 2px 10px;
-            border: 1px solid rgba(245, 176, 66, 0.15);
-            border-radius: 40px;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            flex-shrink: 0;
-        }
-        .site-card .site-link:hover {
-            background: rgba(245, 176, 66, 0.08);
-            border-color: #f5b042;
-        }
+        .site-card .site-img { width:34px; height:34px; border-radius:6px; object-fit:cover; background:#0b0b0e; flex-shrink:0; }
+        .site-card .site-info { flex:1; min-width:50px; }
+        .site-card .site-info .site-name { font-family:'Vazirmatn',sans-serif; font-weight:700; color:#f5efe6; font-size:0.75rem; }
+        .site-card .site-info .site-desc { font-size:0.6rem; color:#b0a99b; }
+        .site-card .site-link { color:#f5b042; text-decoration:none; font-size:0.55rem; font-weight:600; padding:2px 10px; border:1px solid rgba(245,176,66,0.15); border-radius:40px; transition:0.3s; display:inline-flex; align-items:center; gap:3px; flex-shrink:0; }
+        .site-card .site-link:hover { background:rgba(245,176,66,0.08); border-color:#f5b042; }
 
         .design-mini {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 215, 100, 0.06);
-            border-radius: 8px;
-            padding: 4px 8px;
-            margin: 3px 0;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            background:rgba(255,255,255,0.02); border:1px solid rgba(255,215,100,0.06);
+            border-radius:8px; padding:4px 8px; margin:3px 0;
+            display:flex; align-items:center; gap:6px;
         }
-        .design-mini .d-icon {
-            font-size: 0.9rem;
-            color: #f5b042;
-        }
-        .design-mini .d-name {
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 600;
-            color: #f5efe6;
-            font-size: 0.7rem;
-        }
-        .design-mini .d-desc {
-            font-size: 0.55rem;
-            color: #b0a99b;
-        }
+        .design-mini .d-icon { font-size:0.9rem; color:#f5b042; }
+        .design-mini .d-name { font-family:'Vazirmatn',sans-serif; font-weight:600; color:#f5efe6; font-size:0.7rem; }
+        .design-mini .d-desc { font-size:0.55rem; color:#b0a99b; }
 
-        .social-links {
-            display: flex;
-            gap: 4px;
-            margin-top: 4px;
-            flex-wrap: wrap;
-        }
-        .social-links a {
-            color: #f5b042;
-            text-decoration: none;
-            background: rgba(255, 215, 100, 0.05);
-            padding: 2px 10px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 215, 100, 0.1);
-            font-size: 0.6rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-        }
-        .social-links a:hover {
-            background: rgba(245, 176, 66, 0.1);
-        }
+        .social-links { display:flex; gap:4px; margin-top:4px; flex-wrap:wrap; }
+        .social-links a { color:#f5b042; text-decoration:none; background:rgba(255,215,100,0.05); padding:2px 10px; border-radius:40px; border:1px solid rgba(255,215,100,0.1); font-size:0.6rem; display:inline-flex; align-items:center; gap:3px; }
+        .social-links a:hover { background:rgba(245,176,66,0.1); }
 
         .quick-replies {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-bottom: 6px;
-            flex-shrink: 0;
+            display:flex; flex-wrap:wrap; gap:4px; margin-bottom:6px; flex-shrink:0;
         }
         .quick-replies button {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 215, 100, 0.08);
-            color: #b0a99b;
-            padding: 3px 10px;
-            border-radius: 40px;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 0.6rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap;
+            background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.08);
+            color:#b0a99b; padding:3px 10px; border-radius:40px;
+            font-family:'Vazirmatn',sans-serif; font-size:0.6rem; font-weight:600;
+            cursor:pointer; transition:0.3s; display:inline-flex; align-items:center; gap:4px; white-space:nowrap;
         }
-        .quick-replies button i {
-            color: #f5b042;
-            font-size: 0.55rem;
-        }
-        .quick-replies button:hover {
-            background: rgba(245, 176, 66, 0.08);
-            border-color: rgba(245, 176, 66, 0.2);
-            color: #f5efe6;
-            transform: translateY(-2px);
-        }
+        .quick-replies button i { color:#f5b042; font-size:0.55rem; }
+        .quick-replies button:hover { background:rgba(245,176,66,0.08); border-color:rgba(245,176,66,0.2); color:#f5efe6; transform:translateY(-2px); }
 
         .input-area {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 215, 100, 0.06);
-            border-radius: 60px;
-            padding: 2px 2px 2px 12px;
-            transition: 0.3s;
-            flex-shrink: 0;
+            display:flex; align-items:center; gap:4px; background:rgba(255,255,255,0.02);
+            border:1px solid rgba(255,215,100,0.06); border-radius:60px;
+            padding:2px 2px 2px 12px; transition:0.3s; flex-shrink:0;
         }
-        .input-area:focus-within {
-            border-color: rgba(245, 176, 66, 0.25);
-            background: rgba(255, 255, 255, 0.04);
-        }
-        .input-area input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #eaeef2;
-            font-family: 'Noto Sans Arabic', sans-serif;
-            font-size: 0.8rem;
-            padding: 8px 0;
-            outline: none;
-            min-width: 0;
-        }
-        .input-area input::placeholder {
-            color: #5f5a50;
-        }
+        .input-area:focus-within { border-color:rgba(245,176,66,0.25); background:rgba(255,255,255,0.04); }
+        .input-area input { flex:1; background:transparent; border:none; color:#eaeef2; font-family:'Noto Sans Arabic',sans-serif; font-size:0.8rem; padding:8px 0; outline:none; min-width:0; }
+        .input-area input::placeholder { color:#5f5a50; }
         .input-area .btn-send {
-            background: linear-gradient(145deg, #f5b042, #d48f2b);
-            border: none;
-            color: #0b0b0e;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            background:linear-gradient(145deg,#f5b042,#d48f2b); border:none; color:#0b0b0e;
+            width:38px; height:38px; border-radius:50%; font-size:0.9rem;
+            cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; flex-shrink:0;
         }
-        .input-area .btn-send:hover {
-            transform: scale(1.05);
-        }
-        .input-area .btn-send:active {
-            transform: scale(0.93);
-        }
+        .input-area .btn-send:hover { transform:scale(1.05); }
+        .input-area .btn-send:active { transform:scale(0.93); }
         .input-area .btn-search {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 215, 100, 0.1);
-            color: #b0a99b;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            background:rgba(255,255,255,0.05); border:1px solid rgba(255,215,100,0.1);
+            color:#b0a99b; width:38px; height:38px; border-radius:50%; font-size:0.8rem;
+            cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; flex-shrink:0;
         }
-        .input-area .btn-search:hover {
-            background: rgba(255, 215, 100, 0.08);
-            border-color: rgba(255, 215, 100, 0.2);
-            color: #f5b042;
-            transform: scale(1.05);
-        }
-        .input-area .btn-search:active {
-            transform: scale(0.93);
-        }
+        .input-area .btn-search:hover { background:rgba(255,215,100,0.08); border-color:rgba(255,215,100,0.2); color:#f5b042; transform:scale(1.05); }
+        .input-area .btn-search:active { transform:scale(0.93); }
 
-        .typing-indicator {
-            display: none;
-            padding: 3px 10px;
-            background: rgba(255, 215, 100, 0.04);
-            border: 1px solid rgba(255, 215, 100, 0.06);
-            border-radius: 40px;
-            color: #b0a99b;
-            font-size: 0.6rem;
-            align-self: flex-start;
-            margin-bottom: 3px;
-            flex-shrink: 0;
-        }
-        .typing-indicator i {
-            color: #f5b042;
-            animation: pulseIcon 1s ease-in-out infinite;
-        }
-        @keyframes pulseIcon {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-        }
-        .typing-indicator.show {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .typing-indicator { display:none; padding:3px 10px; background:rgba(255,215,100,0.04); border:1px solid rgba(255,215,100,0.06); border-radius:40px; color:#b0a99b; font-size:0.6rem; align-self:flex-start; margin-bottom:3px; flex-shrink:0; }
+        .typing-indicator i { color:#f5b042; animation:pulseIcon 1s ease-in-out infinite; }
+        @keyframes pulseIcon { 0%,100% { transform:scale(1); } 50% { transform:scale(1.2); } }
+        .typing-indicator.show { display:inline-flex; align-items:center; gap:4px; }
 
         .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 215, 100, 0.12);
-            border-radius: 20px;
-            padding: 16px 20px;
-            max-width: 400px;
-            width: 92%;
-            box-shadow: 0 24px 64px -16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            z-index: 9999;
-            animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+            background:rgba(255,255,255,0.05); backdrop-filter:blur(24px);
+            border:1px solid rgba(255,215,100,0.12); border-radius:20px;
+            padding:16px 20px; max-width:400px; width:92%;
+            box-shadow:0 24px 64px -16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+            z-index:9999; animation:slideUp 0.6s cubic-bezier(0.22,1,0.36,1);
+            transition:0.5s cubic-bezier(0.22,1,0.36,1);
         }
-        .notification.hide {
-            opacity: 0;
-            transform: translateX(-50%) translateY(40px) scale(0.92);
-            pointer-events: none;
-        }
-        @keyframes slideUp {
-            0% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(40px) scale(0.92);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0) scale(1);
-            }
-        }
-        .notification .notif-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-        .notification .notif-header .icon-box {
-            width: 40px;
-            height: 40px;
-            background: rgba(245, 176, 66, 0.12);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(245, 176, 66, 0.08);
-        }
-        .notification .notif-header .icon-box i {
-            font-size: 1.3rem;
-            color: #f5b042;
-        }
-        .notification .notif-header .title-group h3 {
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #f5efe6;
-            margin: 0;
-        }
-        .notification .notif-header .title-group .version {
-            font-size: 0.55rem;
-            color: #f5b042;
-            background: rgba(245, 176, 66, 0.08);
-            padding: 0px 8px;
-            border-radius: 40px;
-            display: inline-block;
-        }
-        .notification .notif-body {
-            font-family: 'Noto Sans Arabic', sans-serif;
-            font-size: 0.75rem;
-            color: #c0b9ad;
-            line-height: 1.9;
-            padding-right: 4px;
-        }
-        .notification .notif-body ul {
-            list-style: none;
-            padding-right: 6px;
-            margin: 4px 0;
-        }
-        .notification .notif-body ul li {
-            padding-right: 18px;
-            position: relative;
-            font-size: 0.7rem;
-        }
-        .notification .notif-body ul li i {
-            position: absolute;
-            right: 0;
-            top: 4px;
-            color: #f5b042;
-            font-size: 0.6rem;
-        }
-        .notification .notif-close {
-            position: absolute;
-            top: 10px;
-            left: 14px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: #6f6a60;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .notification .notif-close:hover {
-            color: #f5efe6;
-            background: rgba(255, 255, 255, 0.06);
-            transform: rotate(90deg);
+        .notification.hide { opacity:0; transform:translateX(-50%) translateY(40px) scale(0.92); pointer-events:none; }
+        @keyframes slideUp { 0% { opacity:0; transform:translateX(-50%) translateY(40px) scale(0.92); } 100% { opacity:1; transform:translateX(-50%) translateY(0) scale(1); } }
+        .notification .notif-header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+        .notification .notif-header .icon-box { width:40px; height:40px; background:rgba(245,176,66,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(245,176,66,0.08); }
+        .notification .notif-header .icon-box i { font-size:1.3rem; color:#f5b042; }
+        .notification .notif-header .title-group h3 { font-family:'Vazirmatn',sans-serif; font-weight:700; font-size:0.95rem; color:#f5efe6; margin:0; }
+        .notification .notif-header .title-group .version { font-size:0.55rem; color:#f5b042; background:rgba(245,176,66,0.08); padding:0px 8px; border-radius:40px; display:inline-block; }
+        .notification .notif-body { font-family:'Noto Sans Arabic',sans-serif; font-size:0.75rem; color:#c0b9ad; line-height:1.9; padding-right:4px; }
+        .notification .notif-body ul { list-style:none; padding-right:6px; margin:4px 0; }
+        .notification .notif-body ul li { padding-right:18px; position:relative; font-size:0.7rem; }
+        .notification .notif-body ul li i { position:absolute; right:0; top:4px; color:#f5b042; font-size:0.6rem; }
+        .notification .notif-close { position:absolute; top:10px; left:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#6f6a60; width:28px; height:28px; border-radius:50%; font-size:0.8rem; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; }
+        .notification .notif-close:hover { color:#f5efe6; background:rgba(255,255,255,0.06); transform:rotate(90deg); }
+
+        @media (max-width:380px) {
+            .chat-container { padding:6px 6px 8px; border-radius:12px; }
+            .chat-title { font-size:0.9rem; }
+            .chat-avatar { width:36px; height:36px; font-size:1rem; }
+            .message .bubble { font-size:0.7rem; padding:4px 8px; }
+            .quick-replies button { font-size:0.5rem; padding:2px 6px; }
+            .input-area input { font-size:0.7rem; padding:6px 0; }
+            .input-area .btn-send, .input-area .btn-search { width:32px; height:32px; font-size:0.75rem; }
+            .notification { padding:12px 14px; max-width:96%; bottom:14px; }
         }
 
-        @media (max-width: 380px) {
-            .chat-container {
-                padding: 6px 6px 8px;
-                border-radius: 12px;
-            }
-            .chat-title {
-                font-size: 0.9rem;
-            }
-            .chat-avatar {
-                width: 36px;
-                height: 36px;
-                font-size: 1rem;
-            }
-            .message .bubble {
-                font-size: 0.7rem;
-                padding: 4px 8px;
-            }
-            .quick-replies button {
-                font-size: 0.5rem;
-                padding: 2px 6px;
-            }
-            .input-area input {
-                font-size: 0.7rem;
-                padding: 6px 0;
-            }
-            .input-area .btn-send,
-            .input-area .btn-search {
-                width: 32px;
-                height: 32px;
-                font-size: 0.75rem;
-            }
-            .notification {
-                padding: 12px 14px;
-                max-width: 96%;
-                bottom: 14px;
-            }
-        }
-
-        /* ===== حالت ریاضی و آب و هوا ===== */
-        .math-mode {
-            border-color: #4caf50 !important;
-            box-shadow: 0 0 20px rgba(76, 175, 80, 0.2);
-        }
-        .weather-mode {
-            border-color: #2196f3 !important;
-            box-shadow: 0 0 20px rgba(33, 150, 243, 0.2);
-        }
-        .badge-mode {
+        /* ===== استایل حالت ریاضی ===== */
+        .math-mode-badge {
             display: inline-block;
-            background: rgba(245, 176, 66, 0.1);
-            border: 1px solid rgba(245, 176, 66, 0.15);
+            background: rgba(76, 175, 80, 0.15);
+            border: 1px solid rgba(76, 175, 80, 0.2);
             border-radius: 40px;
-            padding: 1px 10px;
+            padding: 2px 12px;
             font-size: 0.55rem;
-            color: #f5b042;
+            color: #4caf50;
             margin-top: 4px;
+            font-weight: 600;
+        }
+        .math-bubble {
+            background: rgba(76, 175, 80, 0.04) !important;
+            border-color: rgba(76, 175, 80, 0.15) !important;
+        }
+        .math-bubble .bubble {
+            background: rgba(76, 175, 80, 0.04) !important;
+            border-color: rgba(76, 175, 80, 0.15) !important;
         }
     </style>
 </head>
@@ -655,7 +197,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۱.۴.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۱.۴.۱</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -666,12 +208,12 @@
             <div class="message bot">
                 <div class="avatar"><i class="fas fa-robot"></i></div>
                 <div class="bubble">
-                    <i class="fas fa-hand-peace"></i> سلام داداش! <strong>MH Assistant v1.4.0</strong><br>
-                    <span style="color:#f5b042;">موتور قوی‌تر + آب و هوا ☀️</span><br><br>
+                    <i class="fas fa-hand-peace"></i> سلام داداش! <strong>MH Assistant v1.4.1</strong><br>
+                    <span style="color:#f5b042;">رفع دکمه ریاضی + حالت اختصاصی 🧮</span><br><br>
                     <span style="color:#b0a99b;font-size:0.7rem;">
                         📝 هر چیزی بپرس، جواب میدم<br>
-                        ☀️ برای آب و هوا اسم شهر رو بگو<br>
-                        🧮 برای ریاضی عبارت رو بنویس
+                        ☀️ آب و هوا با اسم شهر<br>
+                        🧮 ریاضی با دکمه مخصوص
                     </span>
                 </div>
             </div>
@@ -684,10 +226,9 @@
             <button onclick="askQuestion('مهارت‌ها')"><i class="fas fa-code"></i> مهارت‌ها</button>
             <button onclick="askQuestion('لینک اینستاگرام')"><i class="fab fa-instagram"></i> اینستا</button>
             <button onclick="askQuestion('لینک تلگرام')"><i class="fab fa-telegram-plane"></i> تلگرام</button>
-            <button onclick="askQuestion('۲ + ۲ چند میشه؟')"><i class="fas fa-calculator"></i> ریاضی</button>
-            <button onclick="askQuestion('آب و هوای تهران')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
+            <button onclick="askQuestion('🧮 ریاضی')"><i class="fas fa-calculator"></i> ریاضی</button>
+            <button onclick="askQuestion('☀️ آب و هوا')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
             <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
-            <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
         </div>
 
         <div class="input-area">
@@ -710,16 +251,15 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۱.۴.۰</span>
+                <span class="version">نسخه ۱.۴.۱</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🌤️ موتور آب و هوا (API واقعی)</li>
-                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی پیشرفته</li>
-                <li><i class="fas fa-check-circle"></i> 💡 پاسخ‌های هوشمندتر</li>
+                <li><i class="fas fa-check-circle"></i> 🧮 رفع دکمه ریاضی</li>
+                <li><i class="fas fa-check-circle"></i> 💬 حالت اختصاصی ریاضی</li>
+                <li><i class="fas fa-check-circle"></i> ☀️ بهبود آب و هوا</li>
                 <li><i class="fas fa-check-circle"></i> 🚀 موتور قوی‌تر</li>
-                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۳۵۰۰+ کلمه</li>
             </ul>
         </div>
     </div>
@@ -728,7 +268,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '1.4.0';
+        const APP_VERSION = '1.4.1';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -840,7 +380,6 @@
             'ورزش': 'والیبال و فوتبال رو دوست دارم 🏐⚽',
             'سریال': '«بازی تاج و تخت» و «بریکینگ بد» 📺',
             'بازی': 'بازی‌های استراتژی و ماجراجویی 🎮',
-            'هوا': '☀️ به حالت آب و هوا خوش آمدید! لطفاً اسم شهر یا کشور رو بگو تا آب و هواش رو برات بیارم 🌍',
             'زندگی': 'زندگی یعنی عشق، رشد و کمک به دیگران. هر روز یه فرصت جدید برای ساختن چیزای قشنگه ❤️',
             'عشق': 'عشق قشنگترین احساس دنیاست! عشق یعنی دیدن زیبایی‌ها در وجود دیگران و خودت ❤️',
             'هدف': 'هدف من اینه که بهترین دستیار برای تو باشم و هر روز بهتر از دیروز بشم 🎯',
@@ -876,11 +415,10 @@
         };
 
         // ============================================================
-        //  موتور آب و هوا (API واقعی)
+        //  موتور آب و هوا
         // ============================================================
         async function getWeather(city) {
             try {
-                // استفاده از API رایگان wttr.in
                 const response = await fetch(`https://wttr.in/${encodeURIComponent(city)}?format=%C+%t+%w&lang=fa`);
                 const data = await response.text();
 
@@ -937,13 +475,11 @@
         // ============================================================
         function solveMath(expression) {
             try {
-                // حذف فاصله‌ها و تبدیل کاراکترهای فارسی به انگلیسی
                 let clean = expression.replace(/\s/g, '');
                 clean = clean.replace(/[،,]/g, '.');
                 clean = clean.replace(/[×xX]/g, '*');
                 clean = clean.replace(/[÷]/g, '/');
 
-                // تشخیص عبارات ریاضی
                 const mathPattern = /^[\d+\-*/().]+$/;
                 if (mathPattern.test(clean)) {
                     const result = Function('"use strict"; return (' + clean + ')')();
@@ -959,6 +495,9 @@
                       </div>
                       <div style="color:#f5efe6; font-size:1rem; font-weight:600;">
                         ${clean} = ${formatted}
+                      </div>
+                      <div style="color:#b0a99b; font-size:0.65rem; margin-top:6px;">
+                        ✅ عدد رو وارد کن تا جواب بدم
                       </div>
                     </div>
                   `;
@@ -991,6 +530,22 @@
         }
 
         // ============================================================
+        //  تابع تشخیص حالت ریاضی
+        // ============================================================
+        function isMathMode(text) {
+            const lower = text.trim().toLowerCase();
+            // دکمه ریاضی
+            if (lower === '🧮 ریاضی' || lower === 'ریاضی' || lower === 'حالت ریاضی') {
+                return 'math';
+            }
+            // دکمه آب و هوا
+            if (lower === '☀️ آب و هوا' || lower === 'آب و هوا' || lower === 'هوا') {
+                return 'weather';
+            }
+            return null;
+        }
+
+        // ============================================================
         //  موتور پاسخگویی نهایی
         // ============================================================
         async function getReply(input) {
@@ -1002,16 +557,47 @@
 
             const lower = text.toLowerCase();
 
-            // ===== ۱. تشخیص آب و هوا =====
-            if (lower.includes('آب و هوا') || lower.includes('هوا') || lower.includes('آبوهوا')) {
-                // استخراج اسم شهر
+            // ===== ۱. تشخیص حالت ریاضی (دکمه) =====
+            const mode = isMathMode(text);
+            if (mode === 'math') {
+                return `
+              <div style="background:rgba(76,175,80,0.04); border:1px solid rgba(76,175,80,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
+                <div style="color:#4caf50; font-weight:700; font-size:0.9rem; margin-bottom:4px;">
+                  🧮 حالت ریاضی فعاله!
+                </div>
+                <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
+                  📝 لطفاً فقط عدد یا عبارت ریاضی رو بنویسید<br>
+                  مثلاً: <strong style="color:#f5b042;">۲ + ۲</strong> یا <strong style="color:#f5b042;">۵ * ۳</strong>
+                </div>
+                <div style="color:#b0a99b; font-size:0.65rem; margin-top:6px;">
+                  ✅ عدد رو وارد کن تا جواب بدم
+                </div>
+              </div>
+            `;
+            }
+
+            if (mode === 'weather') {
+                return `
+              <div style="background:rgba(33,150,243,0.04); border:1px solid rgba(33,150,243,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
+                <div style="color:#2196f3; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
+                  ☀️ به حالت آب و هوا خوش آمدید!
+                </div>
+                <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
+                  لطفاً اسم شهر یا کشور رو بگو تا آب و هواش رو برات بیارم 🌍<br>
+                  مثلاً: <strong style="color:#f5b042;">آب و هوای تهران</strong>
+                </div>
+              </div>
+            `;
+            }
+
+            // ===== ۲. تشخیص آب و هوا =====
+            if (lower.includes('آب و هوا') || lower.includes('آبوهوا') || lower.includes('هوای')) {
                 const cityMatch = text.match(/(?:آب و هوای|آبوهوای|هوای|آب و هوا|هوا)\s*([^\s؟]+)/i);
                 if (cityMatch) {
                     const city = cityMatch[1].trim();
                     const weatherResult = await getWeather(city);
                     return weatherResult;
                 } else {
-                    // اگه فقط گفت آب و هوا بدون اسم شهر
                     return `
                 <div style="background:rgba(33,150,243,0.04); border:1px solid rgba(33,150,243,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
                   <div style="color:#2196f3; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
@@ -1026,13 +612,13 @@
                 }
             }
 
-            // ===== ۲. حل ریاضی =====
+            // ===== ۳. حل ریاضی =====
             const mathResult = solveMath(text);
             if (mathResult) {
                 return mathResult;
             }
 
-            // ===== ۳. پاسخ از دیکشنری =====
+            // ===== ۴. پاسخ از دیکشنری =====
             const words = lower.split(/\s+/);
             let foundKey = null;
             let foundScore = 0;
@@ -1173,7 +759,7 @@
             🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             📝 "<strong>${text}</strong>" رو خوندم.<br><br>
             می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span> • <span style="color:#f5b042;">آب و هوای [شهر]</span> • <span style="color:#f5b042;">۲+۲</span> • <span style="color:#f5b042;">فیلم</span> • <span style="color:#f5b042;">کتاب</span> • <span style="color:#f5b042;">هدف</span> • <span style="color:#f5b042;">انگیزه</span>
+            <span style="color:#f5b042;">🧮 ریاضی</span> • <span style="color:#f5b042;">☀️ آب و هوا</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">اینستاگرام</span> • <span style="color:#f5b042;">تلگرام</span>
           `;
         }
 
@@ -1363,4 +949,4 @@
     </script>
 
 </body>
-</html>
+    </html>
