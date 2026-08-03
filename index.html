@@ -1,9 +1,9 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.9.4</title>
+    <title>MH Assistant | v3.9.5</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -241,7 +241,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۹.۴</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۹.۵</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -258,7 +258,8 @@
                     📚 ۶۵۰۰+ سوال و جواب<br>
                     🧮 ریاضی پیشرفته (درجه‌ای)<br>
                     ☀️ آب و هوا (فارسی)<br>
-                    🌍 ترجمه (آزمایشی)<br><br>
+                    🌍 ترجمه (آزمایشی)<br>
+                    💡 ایده‌ساز و کمک‌رسان<br><br>
                     هر چی بپرسی، جواب میدم! 😊
                 </div>
             </div>
@@ -299,16 +300,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۹.۴</span>
+                <span class="version">نسخه ۳.۹.۵</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با موتور جدید (LibreTranslate)</li>
+                <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با موتور جدید (Google Translate API)</li>
                 <li><i class="fas fa-check-circle"></i> 🧠 موتور دیکشنری تقویت شد</li>
+                <li><i class="fas fa-check-circle"></i> 💡 تشخیص حالت روحی و ایده‌سازی</li>
                 <li><i class="fas fa-check-circle"></i> 🧮 ریاضی با پشتیبانی از درجه</li>
                 <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۶۵۰۰+ سوال و جواب</li>
-                <li><i class="fas fa-check-circle"></i> 🚀 موتور پاسخگویی تقویت شد</li>
             </ul>
         </div>
     </div>
@@ -317,7 +318,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.9.4';
+        const APP_VERSION = '3.9.5';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -378,7 +379,7 @@
         }
 
         // ============================================================
-        //  ترجمه با API جدید (LibreTranslate)
+        //  ترجمه با Google Translate API (غیررسمی ولی کارآمد)
         // ============================================================
         async function translateText(text, targetLang) {
             try {
@@ -403,20 +404,10 @@
                     };
                 }
 
-                const url = 'https://libretranslate.de/translate';
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        q: text,
-                        source: fromLang,
-                        target: toLang,
-                        format: 'text'
-                    })
-                });
-
+                // استفاده از Google Translate (غیررسمی ولی همیشه کار میکنه)
+                const url =
+                    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${fromLang}&tl=${toLang}&dt=t&q=${encodeURIComponent(text)}`;
+                const response = await fetch(url);
                 if (!response.ok) {
                     return {
                         success: false,
@@ -425,11 +416,11 @@
                 }
 
                 const data = await response.json();
-
-                if (data && data.translatedText) {
+                if (data && data[0] && data[0][0] && data[0][0][0]) {
+                    const translatedText = data[0][0][0];
                     return {
                         success: true,
-                        text: data.translatedText,
+                        text: translatedText,
                         fromLang: fromLang,
                         toLang: toLang
                     };
@@ -442,7 +433,7 @@
             } catch (e) {
                 return {
                     success: false,
-                    error: 'خطا در اتصال به اینترنت یا سرور ترجمه!'
+                    error: 'خطا در اتصال به اینترنت!'
                 };
             }
         }
@@ -521,6 +512,75 @@
         }
 
         // ============================================================
+        //  تشخیص حالت روحی و ایده‌سازی
+        // ============================================================
+        function detectMood(text) {
+            const lower = text.toLowerCase();
+            const sad = ['ناراحت', 'غمگین', 'افسرده', 'دلم گرفته', 'حالم بده', 'بیچاره', 'دلخور', 'خسته', 'بی حوصله'];
+            const angry = ['عصبی', 'عصبانی', 'خشمگین', 'دلخور', 'ناراحت'];
+            const happy = ['خوشحال', 'خوشم', 'عالی', 'خوبه', 'ممنون', 'مرسی', 'دمت گرم'];
+
+            for (const word of sad) {
+                if (lower.includes(word)) return 'sad';
+            }
+            for (const word of angry) {
+                if (lower.includes(word)) return 'angry';
+            }
+            for (const word of happy) {
+                if (lower.includes(word)) return 'happy';
+            }
+            return 'neutral';
+        }
+
+        function generateIdea(text) {
+            const ideas = [
+                '💡 می‌تونی یه وب‌سایت ساده با HTML و CSS بسازی!',
+                '💡 یه ربات تلگرام با Python بساز!',
+                '💡 یه اپلیکیشن موبایل با React Native طراحی کن!',
+                '💡 یه فروشگاه اینترنتی کوچیک راه‌اندازی کن!',
+                '💡 یه وبلاگ شخصی با وردپرس بساز!',
+                '💡 یه گیم ساده با JavaScript بساز!',
+                '💡 یه پادکست درباره‌ی برنامه‌نویسی شروع کن!',
+                '💡 یه کانال یوتیوب برای آموزش کدنویسی باز کن!',
+                '💡 یه ابزار کوچیک برای اتوماسیون کارهات با Python بنویس!',
+                '💡 یه تم وردپرس اختصاصی طراحی کن!'
+            ];
+            return ideas[Math.floor(Math.random() * ideas.length)];
+        }
+
+        function getMoodResponse(mood) {
+            if (mood === 'sad') {
+                const responses = [
+                    '😔 متأسفم که ناراحتی. اگر دوست داری حرف بزن، من اینجام تا کمکت کنم.',
+                    '💙 ناراحت نباش! همیشه روزای بهتر پیش میاد. من کنارتم.',
+                    '🌺 غم گذراست، مثل ابرهای بهاری. به خودت زمان بده.',
+                    '💪 قوی باش! تو از این لحظات سخت عبور میکنی.',
+                    '🫂 تنها نیستی! من اینجام تا گوش کنم و کمکت کنم.'
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+            if (mood === 'angry') {
+                const responses = [
+                    '😤 آروم باش! عصبانی شدن هیچ مشکلی رو حل نمیکنه. یه نفس عمیق بکش.',
+                    '🧘 بیا با هم یه نفس عمیق بکشیم. آرامش رو به خودت هدیه کن.',
+                    '💪 خشم رو به انرژی مثبت تبدیل کن! تو از پسش برمیای.',
+                    '🌊 مثل دریا آروم باش، همه‌چیز آروم میشه.'
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+            if (mood === 'happy') {
+                const responses = [
+                    '😊 خوشحالم که حالت خوبه! ادامه بده که این انرژی رو حفظ کنی.',
+                    '🌟 چه انرژی مثبتی! ازت انرژی گرفتم.',
+                    '🎉 خوشحالم که راضی هستی! همیشه شاد باشی.',
+                    '💪 این حس خوب رو حفظ کن! تو می‌تونی.'
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+            return null;
+        }
+
+        // ============================================================
         //  دیتابیس اصلی (همه‌ی دیتاهای قبلی کامل)
         // ============================================================
         const data = {
@@ -559,7 +619,7 @@
         };
 
         // ============================================================
-        //  دیکشنری (همه‌ی دیتاهای قبلی کامل)
+        //  دیکشنری (همه‌ی دیتاهای قبلی کامل + جدید)
         // ============================================================
         function getRandomReply(replies) {
             return replies[Math.floor(Math.random() * replies.length)];
@@ -975,6 +1035,33 @@
             ],
             'امنیت': ['🔒 امنیت یعنی محافظت از اطلاعاتت!', '🛡️ امنیت رو جدی بگیر.',
                 '🔐 رمزهای قوی استفاده کن تا هک نشی.'
+            ],
+
+            // ===== حالت روحی و ایده (جدید) =====
+            'ناراحتم': [
+                '😔 متأسفم که ناراحتی. اگر دوست داری حرف بزن، من اینجام تا کمکت کنم.',
+                '💙 ناراحت نباش! همیشه روزای بهتر پیش میاد. من کنارتم.',
+                '🌺 غم گذراست، مثل ابرهای بهاری. به خودت زمان بده.',
+                '💪 قوی باش! تو از این لحظات سخت عبور میکنی.',
+                '🫂 تنها نیستی! من اینجام تا گوش کنم و کمکت کنم.'
+            ],
+            'عصبانیتم': [
+                '😤 آروم باش! عصبانی شدن هیچ مشکلی رو حل نمیکنه. یه نفس عمیق بکش.',
+                '🧘 بیا با هم یه نفس عمیق بکشیم. آرامش رو به خودت هدیه کن.',
+                '💪 خشم رو به انرژی مثبت تبدیل کن! تو از پسش برمیای.',
+                '🌊 مثل دریا آروم باش، همه‌چیز آروم میشه.'
+            ],
+            'ایده': [
+                '💡 می‌تونی یه وب‌سایت ساده با HTML و CSS بسازی!',
+                '💡 یه ربات تلگرام با Python بساز!',
+                '💡 یه اپلیکیشن موبایل با React Native طراحی کن!',
+                '💡 یه فروشگاه اینترنتی کوچیک راه‌اندازی کن!',
+                '💡 یه وبلاگ شخصی با وردپرس بساز!',
+                '💡 یه گیم ساده با JavaScript بساز!',
+                '💡 یه پادکست درباره‌ی برنامه‌نویسی شروع کن!',
+                '💡 یه کانال یوتیوب برای آموزش کدنویسی باز کن!',
+                '💡 یه ابزار کوچیک برای اتوماسیون کارهات با Python بنویس!',
+                '💡 یه تم وردپرس اختصاصی طراحی کن!'
             ]
         };
 
@@ -998,7 +1085,6 @@
                 clean = clean.replace(/√\(/g, 'Math.sqrt(');
                 clean = clean.replace(/\^/g, '**');
 
-                // تبدیل sin(30) به sin(30 * Math.PI / 180) برای درجه
                 clean = clean.replace(/sin\(([^)]+)\)/g, (match, p1) => {
                     const num = parseFloat(p1);
                     if (!isNaN(num)) return `Math.sin(${num} * Math.PI / 180)`;
@@ -1236,6 +1322,29 @@
                 return thanksList[Math.floor(Math.random() * thanksList.length)];
             }
 
+            // ===== ۲. تشخیص حالت روحی =====
+            const mood = detectMood(text);
+            if (mood !== 'neutral') {
+                const moodReply = getMoodResponse(mood);
+                if (moodReply) {
+                    // اگر کاربر ناراحت یا عصبانی بود، پیشنهاد ایده هم بده
+                    if (mood === 'sad' || mood === 'angry') {
+                        const idea = generateIdea(text);
+                        return `${moodReply}\n\n💡 یه پیشنهاد برات دارم:\n${idea}`;
+                    }
+                    return moodReply;
+                }
+            }
+
+            // ===== ۳. تشخیص ایده (اگر کاربر درباره‌ی چیزی صحبت کرد) =====
+            const ideaKeywords = ['ایده', 'نظر', 'پیشنهاد', 'چیکار', 'کار', 'پروژه', 'طرح', 'بسازم', 'شروع'];
+            for (const word of ideaKeywords) {
+                if (lower.includes(word)) {
+                    const idea = generateIdea(text);
+                    return `💡 <strong>ایده‌ای برات دارم:</strong>\n\n${idea}\n\nمی‌تونی این ایده رو شروع کنی و ازش یه پروژه‌ی قشنگ بسازی! 🚀`;
+                }
+            }
+
             const sentiment = analyzeSentiment(text);
             const mode = isMathMode(text);
 
@@ -1451,7 +1560,7 @@
                 return reply;
             }
 
-            // ===== ۹. پاسخ پیش‌فرض =====
+            // ===== ۹. پاسخ پیش‌فرض (با ایده) =====
             const randomReplies = [
                 `🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             📝 "<strong>${text}</strong>" رو خوندم.<br>
@@ -1476,7 +1585,14 @@
             🔥 هر چی بپرسی، جواب میدم! فقط کافیه بپرسی.`
             ];
 
-            return randomReplies[Math.floor(Math.random() * randomReplies.length)];
+            let reply = randomReplies[Math.floor(Math.random() * randomReplies.length)];
+
+            // اگه کاربر درباره‌ی ایده حرف زد، یه ایده هم اضافه کن
+            if (lower.includes('ایده') || lower.includes('نظر') || lower.includes('پیشنهاد')) {
+                reply += `\n\n💡 یه ایده برات دارم:\n${generateIdea(text)}`;
+            }
+
+            return reply;
         }
 
         // ============================================================
@@ -1573,7 +1689,7 @@
                 if (reply) addMessage('bot', reply);
                 isTyping = false;
                 userInput.focus();
-            }, 100);
+            }, 80);
         }
 
         function searchMessage() {
@@ -1657,4 +1773,4 @@
     </script>
 
 </body>
-    </html>
+</html>
