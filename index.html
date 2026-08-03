@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.9.3</title>
+    <title>MH Assistant | v3.9.4</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -241,7 +241,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۹.۳</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۹.۴</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -258,7 +258,7 @@
                     📚 ۶۵۰۰+ سوال و جواب<br>
                     🧮 ریاضی پیشرفته (درجه‌ای)<br>
                     ☀️ آب و هوا (فارسی)<br>
-                    🌍 ترجمه (Beta - جدید)<br><br>
+                    🌍 ترجمه (آزمایشی)<br><br>
                     هر چی بپرسی، جواب میدم! 😊
                 </div>
             </div>
@@ -276,7 +276,7 @@
             <button onclick="askQuestion('☀️ آب و هوا')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
             <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
             <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
-            <button onclick="setTranslateMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-language"></i> ترجمه (Beta)</button>
+            <button onclick="setTranslateMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-language"></i> ترجمه (آزمایشی)</button>
         </div>
 
         <div class="input-area">
@@ -299,17 +299,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۹.۳</span>
+                <span class="version">نسخه ۳.۹.۴</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
                 <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با موتور جدید (LibreTranslate)</li>
-                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی با پشتیبانی از درجه (sin, cos, tan)</li>
+                <li><i class="fas fa-check-circle"></i> 🧠 موتور دیکشنری تقویت شد</li>
+                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی با پشتیبانی از درجه</li>
                 <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۶۵۰۰+ سوال و جواب</li>
                 <li><i class="fas fa-check-circle"></i> 🚀 موتور پاسخگویی تقویت شد</li>
-                <li><i class="fas fa-check-circle"></i> ☀️ آب و هوا با پشتیبانی از فارسی</li>
-                <li><i class="fas fa-check-circle"></i> 💪 پاسخ‌های ۸-۱۵ تایی برای هر سوال</li>
             </ul>
         </div>
     </div>
@@ -318,7 +317,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.9.3';
+        const APP_VERSION = '3.9.4';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -350,7 +349,7 @@
         function setTranslateMode() {
             translateMode = true;
             const msg = `
-                🌍 <strong>حالت ترجمه فعال! (Beta)</strong><br><br>
+                🌍 <strong>حالت ترجمه فعال! (آزمایشی)</strong><br><br>
                 لطفاً زبان مورد نظر خود را انتخاب کنید:<br><br>
                 <div class="lang-options">
                     <button onclick="selectLang('fa')" class="${selectedLang === 'fa' ? 'active' : ''}">🇮🇷 فارسی</button>
@@ -386,7 +385,6 @@
                 const langMap = { fa: 'fa', en: 'en', ar: 'ar', tr: 'tr' };
                 const toLang = langMap[targetLang] || 'en';
 
-                // تشخیص زبان مبدأ
                 let fromLang = 'auto';
                 const persianRegex = /[\u0600-\u06FF]/;
                 if (persianRegex.test(text)) {
@@ -398,14 +396,13 @@
                     }
                 }
 
-                if (fromLang === toLang) {
+                if (fromLang === toLang && fromLang !== 'auto') {
                     return {
                         success: false,
                         error: 'زبان مبدأ و مقصد یکی است!'
                     };
                 }
 
-                // استفاده از LibreTranslate (رایگان و سریع)
                 const url = 'https://libretranslate.de/translate';
                 const response = await fetch(url, {
                     method: 'POST',
@@ -421,7 +418,10 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error('خطا در ارتباط با سرور ترجمه');
+                    return {
+                        success: false,
+                        error: 'خطا در ارتباط با سرور ترجمه'
+                    };
                 }
 
                 const data = await response.json();
@@ -1282,7 +1282,7 @@
                     translateMode = false;
                     const langNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
                     const msg = `
-                        🌍 <strong>ترجمه (Beta)</strong><br><br>
+                        🌍 <strong>ترجمه (آزمایشی)</strong><br><br>
                         📝 <strong>متن اصلی:</strong> "${text}"<br>
                         🇮🇷 <strong>زبان مقصد:</strong> ${langNames[selectedLang]}<br><br>
                         <div class="translation-box">
@@ -1309,7 +1309,7 @@
                     if (result.success) {
                         const langNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
                         const msg = `
-                            🌍 <strong>ترجمه (Beta)</strong><br><br>
+                            🌍 <strong>ترجمه (آزمایشی)</strong><br><br>
                             📝 <strong>متن اصلی:</strong> "${info.content}"<br>
                             🇮🇷 <strong>زبان مقصد:</strong> ${langNames[info.targetLang]}<br><br>
                             <div class="translation-box">
@@ -1457,7 +1457,7 @@
             📝 "<strong>${text}</strong>" رو خوندم.<br>
             💭 احساس: ${sentiment}<br><br>
             می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (Beta)</span><br><br>
+            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (آزمایشی)</span><br><br>
             <span style="color:#b0a99b;font-size:0.7rem;">💡 هر چی بپرسی، جواب میدم!</span>`,
 
                 `😊 <strong>MH Assistant</strong> اینجاست!<br><br>
@@ -1573,7 +1573,7 @@
                 if (reply) addMessage('bot', reply);
                 isTyping = false;
                 userInput.focus();
-            }, 120);
+            }, 100);
         }
 
         function searchMessage() {
@@ -1594,7 +1594,7 @@
                 addMessage('bot', reply);
                 isTyping = false;
                 userInput.focus();
-            }, 350);
+            }, 300);
         }
 
         function askQuestion(text) {
