@@ -7,13 +7,13 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { height: 100%; width: 100%; overflow: hidden; background: #0b0b0e; }
-        body { display: flex; align-items: center; justify-content: center; font-family: 'Noto Sans Arabic', 'Segoe UI', sans-serif; padding: 8px; }
+        body { display: flex; align-items: center; justify-content: center; font-family: 'Vazirmatn', sans-serif; padding: 8px; }
         .chat-container {
             width: 100%; max-width: 420px; height: 100%; max-height: 750px;
             background: rgba(255,255,255,0.03); backdrop-filter: blur(12px);
@@ -35,11 +35,11 @@
         @keyframes floatLogo { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-4px); } }
         .chat-title { font-family:'Vazirmatn',sans-serif; font-weight:800; font-size:1.1rem; color:#f5efe6; flex:1; }
         .chat-title .highlight { background:linear-gradient(145deg,#f5b042,#d48f2b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-        .chat-title small { display:block; font-family:'Noto Sans Arabic',sans-serif; font-weight:300; font-size:0.55rem; color:#b0a99b; -webkit-text-fill-color:#b0a99b; }
+        .chat-title small { display:block; font-weight:400; font-size:0.55rem; color:#b0a99b; -webkit-text-fill-color:#b0a99b; }
         .chat-status {
             background:rgba(245,176,66,0.1); border:1px solid rgba(245,176,66,0.1);
             border-radius:40px; padding:2px 10px; font-size:0.5rem; color:#f5b042;
-            font-family:'Vazirmatn',sans-serif; font-weight:600; display:flex; align-items:center; gap:4px; flex-shrink:0;
+            font-family:'Vazirmatn',sans-serif; font-weight:700; display:flex; align-items:center; gap:4px; flex-shrink:0;
         }
         .chat-status i { font-size:0.4rem; color:#4caf50; animation:pulseDot 1.5s ease-in-out infinite; }
         @keyframes pulseDot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.2; transform:scale(0.6); } }
@@ -55,17 +55,18 @@
             width:28px; height:28px; border-radius:10px; display:flex; align-items:center; justify-content:center;
             font-size:0.7rem; flex-shrink:0; background:rgba(255,255,255,0.04);
             border:1px solid rgba(255,215,100,0.06); color:#b0a99b;
+            font-family:'Vazirmatn',sans-serif; font-weight:400;
         }
         .message.bot .avatar { background:rgba(245,176,66,0.12); color:#f5b042; border-color:rgba(245,176,66,0.1); }
         .message.user .avatar { background:rgba(255,255,255,0.06); color:#eaeef2; }
         .message .bubble {
             max-width:85%; padding:6px 12px; border-radius:14px; font-size:0.8rem; line-height:1.9;
             word-break:break-word; background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.06);
-            color:#d6d0c4;
+            color:#d6d0c4; font-family:'Vazirmatn',sans-serif; font-weight:400;
         }
         .message.bot .bubble { background:rgba(255,215,100,0.04); border-color:rgba(255,215,100,0.08); border-top-right-radius:4px; }
         .message.user .bubble { background:rgba(245,176,66,0.08); border-color:rgba(245,176,66,0.12); border-top-left-radius:4px; color:#f5efe6; }
-        .message .bubble strong { color:#f5b042; }
+        .message .bubble strong { color:#f5b042; font-weight:700; }
         .message .bubble i { color:#f5b042; margin-left:2px; }
 
         .site-card {
@@ -76,8 +77,8 @@
         .site-card .site-img { width:34px; height:34px; border-radius:6px; object-fit:cover; background:#0b0b0e; flex-shrink:0; }
         .site-card .site-info { flex:1; min-width:50px; }
         .site-card .site-info .site-name { font-family:'Vazirmatn',sans-serif; font-weight:700; color:#f5efe6; font-size:0.75rem; }
-        .site-card .site-info .site-desc { font-size:0.6rem; color:#b0a99b; }
-        .site-card .site-link { color:#f5b042; text-decoration:none; font-size:0.55rem; font-weight:600; padding:2px 10px; border:1px solid rgba(245,176,66,0.15); border-radius:40px; transition:0.3s; display:inline-flex; align-items:center; gap:3px; flex-shrink:0; }
+        .site-card .site-info .site-desc { font-size:0.6rem; color:#b0a99b; font-weight:400; font-family:'Vazirmatn',sans-serif; }
+        .site-card .site-link { color:#f5b042; text-decoration:none; font-size:0.55rem; font-weight:600; padding:2px 10px; border:1px solid rgba(245,176,66,0.15); border-radius:40px; transition:0.3s; display:inline-flex; align-items:center; gap:3px; flex-shrink:0; font-family:'Vazirmatn',sans-serif; }
         .site-card .site-link:hover { background:rgba(245,176,66,0.08); border-color:#f5b042; }
 
         .design-mini {
@@ -86,17 +87,17 @@
             display:flex; align-items:center; gap:6px; flex-wrap:wrap;
         }
         .design-mini .d-icon { font-size:0.9rem; color:#f5b042; }
-        .design-mini .d-name { font-family:'Vazirmatn',sans-serif; font-weight:600; color:#f5efe6; font-size:0.7rem; }
-        .design-mini .d-desc { font-size:0.55rem; color:#b0a99b; }
+        .design-mini .d-name { font-family:'Vazirmatn',sans-serif; font-weight:700; color:#f5efe6; font-size:0.7rem; }
+        .design-mini .d-desc { font-size:0.55rem; color:#b0a99b; font-weight:400; font-family:'Vazirmatn',sans-serif; }
         .design-mini .d-link {
             color:#f5b042; text-decoration:none; font-size:0.55rem; font-weight:600;
             padding:2px 8px; border:1px solid rgba(245,176,66,0.15); border-radius:40px;
-            transition:0.3s; display:inline-flex; align-items:center; gap:3px;
+            transition:0.3s; display:inline-flex; align-items:center; gap:3px; font-family:'Vazirmatn',sans-serif;
         }
         .design-mini .d-link:hover { background:rgba(245,176,66,0.08); border-color:#f5b042; }
 
         .social-links { display:flex; gap:4px; margin-top:4px; flex-wrap:wrap; }
-        .social-links a { color:#f5b042; text-decoration:none; background:rgba(255,215,100,0.05); padding:2px 10px; border-radius:40px; border:1px solid rgba(255,215,100,0.1); font-size:0.6rem; display:inline-flex; align-items:center; gap:3px; }
+        .social-links a { color:#f5b042; text-decoration:none; background:rgba(255,215,100,0.05); padding:2px 10px; border-radius:40px; border:1px solid rgba(255,215,100,0.1); font-size:0.6rem; display:inline-flex; align-items:center; gap:3px; font-family:'Vazirmatn',sans-serif; font-weight:400; }
         .social-links a:hover { background:rgba(245,176,66,0.1); }
 
         .quick-replies {
@@ -117,12 +118,13 @@
             padding:2px 2px 2px 12px; transition:0.3s; flex-shrink:0;
         }
         .input-area:focus-within { border-color:rgba(245,176,66,0.25); background:rgba(255,255,255,0.04); }
-        .input-area input { flex:1; background:transparent; border:none; color:#eaeef2; font-family:'Noto Sans Arabic',sans-serif; font-size:0.8rem; padding:8px 0; outline:none; min-width:0; }
+        .input-area input { flex:1; background:transparent; border:none; color:#eaeef2; font-family:'Vazirmatn',sans-serif; font-weight:400; font-size:0.8rem; padding:8px 0; outline:none; min-width:0; }
         .input-area input::placeholder { color:#5f5a50; }
         .input-area .btn-send {
             background:linear-gradient(145deg,#f5b042,#d48f2b); border:none; color:#0b0b0e;
             width:38px; height:38px; border-radius:50%; font-size:0.9rem;
             cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+            font-family:'Vazirmatn',sans-serif; font-weight:400;
         }
         .input-area .btn-send:hover { transform:scale(1.05); }
         .input-area .btn-send:active { transform:scale(0.93); }
@@ -130,11 +132,12 @@
             background:rgba(255,255,255,0.05); border:1px solid rgba(255,215,100,0.1);
             color:#b0a99b; width:38px; height:38px; border-radius:50%; font-size:0.8rem;
             cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+            font-family:'Vazirmatn',sans-serif; font-weight:400;
         }
         .input-area .btn-search:hover { background:rgba(255,215,100,0.08); border-color:rgba(255,215,100,0.2); color:#f5b042; transform:scale(1.05); }
         .input-area .btn-search:active { transform:scale(0.93); }
 
-        .typing-indicator { display:none; padding:3px 10px; background:rgba(255,215,100,0.04); border:1px solid rgba(255,215,100,0.06); border-radius:40px; color:#b0a99b; font-size:0.6rem; align-self:flex-start; margin-bottom:3px; flex-shrink:0; }
+        .typing-indicator { display:none; padding:3px 10px; background:rgba(255,215,100,0.04); border:1px solid rgba(255,215,100,0.06); border-radius:40px; color:#b0a99b; font-size:0.6rem; align-self:flex-start; margin-bottom:3px; flex-shrink:0; font-family:'Vazirmatn',sans-serif; font-weight:400; }
         .typing-indicator i { color:#f5b042; animation:pulseIcon 1s ease-in-out infinite; }
         @keyframes pulseIcon { 0%,100% { transform:scale(1); } 50% { transform:scale(1.2); } }
         .typing-indicator.show { display:inline-flex; align-items:center; gap:4px; }
@@ -154,12 +157,12 @@
         .notification .notif-header .icon-box { width:40px; height:40px; background:rgba(245,176,66,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(245,176,66,0.08); }
         .notification .notif-header .icon-box i { font-size:1.3rem; color:#f5b042; }
         .notification .notif-header .title-group h3 { font-family:'Vazirmatn',sans-serif; font-weight:700; font-size:0.95rem; color:#f5efe6; margin:0; }
-        .notification .notif-header .title-group .version { font-size:0.55rem; color:#f5b042; background:rgba(245,176,66,0.08); padding:0px 8px; border-radius:40px; display:inline-block; }
-        .notification .notif-body { font-family:'Noto Sans Arabic',sans-serif; font-size:0.75rem; color:#c0b9ad; line-height:1.9; padding-right:4px; }
+        .notification .notif-header .title-group .version { font-size:0.55rem; color:#f5b042; background:rgba(245,176,66,0.08); padding:0px 8px; border-radius:40px; display:inline-block; font-family:'Vazirmatn',sans-serif; font-weight:400; }
+        .notification .notif-body { font-family:'Vazirmatn',sans-serif; font-weight:400; font-size:0.75rem; color:#c0b9ad; line-height:1.9; padding-right:4px; }
         .notification .notif-body ul { list-style:none; padding-right:6px; margin:4px 0; }
-        .notification .notif-body ul li { padding-right:18px; position:relative; font-size:0.7rem; }
+        .notification .notif-body ul li { padding-right:18px; position:relative; font-size:0.7rem; font-weight:400; }
         .notification .notif-body ul li i { position:absolute; right:0; top:4px; color:#f5b042; font-size:0.6rem; }
-        .notification .notif-close { position:absolute; top:10px; left:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#6f6a60; width:28px; height:28px; border-radius:50%; font-size:0.8rem; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; }
+        .notification .notif-close { position:absolute; top:10px; left:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#6f6a60; width:28px; height:28px; border-radius:50%; font-size:0.8rem; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; font-family:'Vazirmatn',sans-serif; font-weight:400; }
         .notification .notif-close:hover { color:#f5efe6; background:rgba(255,255,255,0.06); transform:rotate(90deg); }
 
         @media (max-width:380px) {
@@ -193,29 +196,18 @@
             <div class="message bot">
                 <div class="avatar"><i class="fas fa-robot"></i></div>
                 <div class="bubble">
-                    🚀 <strong>MH Assistant v3.4.0</strong><br><br>
-                    🔥 دیکشنری ۴۵۰۰+ سوال و جواب!<br><br>
-                    <span style="color:#f5b042;">✨ هر چی بپرسی، جواب دارم:</span><br>
+                    <strong style="color:#f5b042;">💬 MH Assistant</strong><br><br>
+                    سلام داداش! به <strong>MH Assistant</strong> خوش اومدی. 🤖<br>
+                    من دستیار خودمونی‌ات هستم، ساخته‌شده توسط <strong>mohamad hossein snti</strong>.<br><br>
+                    📚 <strong>دیکشنری ۴۵۰۰+</strong> سوال و جواب!<br>
                     🧮 ریاضی پیشرفته<br>
                     ☀️ آب و هوا<br>
-                    💬 سوالات عمومی و اختصاصی<br>
-                    🎨 طراحی‌ها و سایت‌ها<br>
-                    🧠 روانشناسی و ذهن<br>
-                    ❤️ روابط و عشق<br>
-                    💰 پول و اقتصاد<br>
-                    🏥 سلامتی و پزشکی<br>
-                    🌌 نجوم و فضا<br>
-                    📜 تاریخ و تمدن<br>
-                    🎵 هنر و موسیقی<br>
-                    ⚽ ورزش و فوتبال<br>
-                    🏛️ سیاست و جامعه<br>
-                    🌍 محیط زیست<br><br>
-                    👇 هر چی دلت میخواد بپرس!
+                    🧠 روانشناسی، روابط، پول، سلامتی، نجوم، تاریخ، هنر، ورزش، سیاست، محیط‌زیست<br><br>
+                    👇 هر چی دلت میخواد بپرس، جواب میدم! 😊
                 </div>
             </div>
         </div>
 
-        <!-- فقط همون دکمه‌های قبلی، هیچ چیز اضافه! -->
         <div class="quick-replies">
             <button onclick="askQuestion('سلام')"><i class="fas fa-hand-peace"></i> سلام</button>
             <button onclick="askQuestion('کی هستی؟')"><i class="fas fa-question"></i> کی هستی؟</button>
@@ -1722,4 +1714,4 @@
     </script>
 
 </body>
-</html>
+    </html>
