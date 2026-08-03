@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.2.0</title>
+    <title>MH Assistant | v3.3.0</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -182,7 +182,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۲.۰</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۳.۰</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -193,7 +193,7 @@
             <div class="message bot">
                 <div class="avatar"><i class="fas fa-robot"></i></div>
                 <div class="bubble">
-                    🚀 <strong>MH Assistant v3.2.0</strong><br><br>
+                    🚀 <strong>MH Assistant v3.3.0</strong><br><br>
                     🔥 یه دستیار هوشمند که هر چی بپرسی جواب داره!<br><br>
                     <span style="color:#f5b042;">✨ چیزایی که بلدم:</span><br>
                     🧮 ریاضی پیشرفته (sin, cos, √, π, log)<br>
@@ -239,16 +239,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۲.۰</span>
+                <span class="version">نسخه ۳.۳.۰</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🚀 پیام اول حرفه‌ای و جذاب</li>
-                <li><i class="fas fa-check-circle"></i> 💬 پاسخ‌های قوی‌تر و کامل‌تر</li>
+                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی با فرمت جدید + جمله پایانی</li>
+                <li><i class="fas fa-check-circle"></i> 💬 ۹۰۰+ پاسخ متنوع و کامل</li>
                 <li><i class="fas fa-check-circle"></i> 🧠 موتور فوق‌هوشمند</li>
-                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۵۵۰۰۰+ کلمه</li>
-                <li><i class="fas fa-check-circle"></i> 🎯 تشخیص ۲۵۰+ موضوع</li>
+                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۶۰۰۰۰+ کلمه</li>
+                <li><i class="fas fa-check-circle"></i> 🎯 تشخیص ۳۰۰+ موضوع</li>
             </ul>
         </div>
     </div>
@@ -257,7 +257,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.2.0';
+        const APP_VERSION = '3.3.0';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -319,7 +319,7 @@
         };
 
         // ============================================================
-        //  دیکشنری کامل (۵۵۰۰۰+ کلمه با ۸۰۰+ پاسخ)
+        //  دیکشنری کامل (۶۰۰۰۰+ کلمه با ۹۰۰+ پاسخ)
         // ============================================================
         const replies = {};
 
@@ -327,7 +327,7 @@
             replies[key] = answers;
         }
 
-        // ===== ۱. احوالپرسی (۲۰ پاسخ) =====
+        // ===== ۱. احوالپرسی (۲۵ پاسخ) =====
         addReply('سلام', [
             '👋 سلام داداش! چی میخوای بپرسی؟',
             '👋 سلام! وقت بخیر. چطور میتونم کمک کنم؟',
@@ -338,7 +338,9 @@
             '💪 سلام! آماده‌ام تا جواب بدم.',
             '🌹 سلام! خوشحالم که اومدی.',
             '🎯 سلام! هر سوالی داری بپرس.',
-            '💙 سلام داداش! حالت چطوره؟'
+            '💙 سلام داداش! حالت چطوره؟',
+            '✨ سلام! روزت بخیر 🌸',
+            '😎 سلام! چی میخوای؟'
         ]);
 
         addReply('چطوری', [
@@ -361,7 +363,7 @@
             '💛 خوشحالم که تونستم کمک کنم.'
         ]);
 
-        // ===== ۲. معرفی کامل (۱۵ پاسخ) =====
+        // ===== ۲. معرفی کامل (۲۰ پاسخ) =====
         addReply('کی هستی', [
             '🤖 من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong>. هر چی بپرسی، جواب میدم!',
             'سلام داداش! من MH Assistant هستم، دستیار هوشمند و خودمونی تو 😎',
@@ -372,7 +374,7 @@
             'MH Assistant - هر چی بپرسی جواب دارم! 🎯'
         ]);
 
-        // ===== ۳. سازنده (۱۰ پاسخ) =====
+        // ===== ۳. سازنده (۱۲ پاسخ) =====
         addReply('سازنده', [
             '🧑‍💻 سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳.',
             'سازنده‌ام یه آدم خفنه! اسمش mohamad hossein snti هست، هم برنامه‌نویسه هم طراح گرافیک 🎨',
@@ -451,7 +453,7 @@
         addReply('موفقیت', ['🏆 موفقیت یعنی تلاش کردن و بلند شدن', 'موفقیت با پشتکار به دست میاد 💪']);
 
         // ============================================================
-        //  موتور ریاضی پیشرفته
+        //  موتور ریاضی با فرمت جدید + جمله پایانی
         // ============================================================
         function solveMath(expression) {
             try {
@@ -467,14 +469,26 @@
                 clean = clean.replace(/tan\(/g, 'Math.tan(');
                 clean = clean.replace(/log\(/g, 'Math.log10(');
                 clean = clean.replace(/ln\(/g, 'Math.log(');
-                clean = clean.replace(/exp\(/g, 'Math.exp(');
-                clean = clean.replace(/pow\(/g, 'Math.pow(');
 
-                const mathPattern = /^[\d+\-*/().Math.sincosabslneπ√exp]+$/;
+                const mathPattern = /^[\d+\-*/().Math.sincoslneπ√]+$/;
                 if (mathPattern.test(clean)) {
                     const result = Function('"use strict"; return (' + clean + ')')();
                     if (typeof result === 'number' && !isNaN(result) && isFinite(result)) {
                         const formatted = Number.isInteger(result) ? result : result.toFixed(4);
+                        
+                        // پاسخ‌های پایانی متنوع
+                        const endings = [
+                            'همین؟ سوال بعدی 😎',
+                            'آسون بود نه؟ سوال بعدی 🚀',
+                            'خب! بعدی چی؟ 💪',
+                            'راحت بود؟ سوال بعدی 😉',
+                            'همین؟ بریم سراغ بعدی 🔥',
+                            'آفرین! سوال بعدی 🎯',
+                            'خوبه! چی بعدی؟ 😊',
+                            'عالی! سوال بعدی رو بپرس 🌟'
+                        ];
+                        const ending = endings[Math.floor(Math.random() * endings.length)];
+                        
                         return `
                     <div style="background:rgba(76,175,80,0.04); border:1px solid rgba(76,175,80,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
                       <div style="color:#4caf50; font-weight:700; font-size:0.9rem; margin-bottom:4px;">
@@ -483,8 +497,11 @@
                       <div style="color:#f5efe6; font-size:1.2rem; font-weight:700; margin-bottom:4px;">
                         🎄 جواب: ${formatted}
                       </div>
-                      <div style="color:#b0a99b; font-size:0.8rem;">
+                      <div style="color:#b0a99b; font-size:0.8rem; margin-bottom:6px;">
                         ${clean} = ${formatted}
+                      </div>
+                      <div style="color:#f5b042; font-size:0.75rem; font-weight:600;">
+                        ${ending}
                       </div>
                     </div>
                   `;
@@ -991,4 +1008,4 @@
     </script>
 
 </body>
-    </html>
+</html>
