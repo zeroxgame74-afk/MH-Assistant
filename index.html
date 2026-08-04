@@ -2,1965 +2,1100 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.10.10</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>کالفود | call food.ir</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; width: 100%; overflow: hidden; background: #0b0b0e; }
-        body { display: flex; align-items: center; justify-content: center; font-family: 'Vazirmatn', sans-serif; padding: 8px; }
-        .chat-container {
-            width: 100%; max-width: 420px; height: 100%; max-height: 750px;
-            background: rgba(255,255,255,0.03); backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,215,100,0.08); border-radius: 24px;
-            display: flex; flex-direction: column; padding: 12px 14px 12px;
-            box-shadow: 0 20px 60px -12px rgba(0,0,0,0.6); overflow: hidden;
-        }
-        @media (max-width:480px){ .chat-container { max-height:100vh; border-radius:16px; padding:10px 10px 10px; } body { padding:4px; } }
-        .chat-header {
-            display: flex; align-items: center; gap: 10px; padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255,215,100,0.06); margin-bottom: 8px; flex-shrink:0;
-        }
-        .chat-avatar {
-            width:44px; height:44px; background:linear-gradient(145deg,#f5b042,#d48f2b);
-            border-radius:14px; display:flex; align-items:center; justify-content:center;
-            font-family:'Vazirmatn',sans-serif; font-weight:900; font-size:1.3rem; color:#0b0b0e;
-            flex-shrink:0; animation:floatLogo 3s ease-in-out infinite;
-        }
-        @keyframes floatLogo { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-4px); } }
-        .chat-title { font-family:'Vazirmatn',sans-serif; font-weight:800; font-size:1.1rem; color:#f5efe6; flex:1; }
-        .chat-title .highlight { background:linear-gradient(145deg,#f5b042,#d48f2b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-        .chat-title small { display:block; font-weight:400; font-size:0.55rem; color:#b0a99b; -webkit-text-fill-color:#b0a99b; }
-        .chat-status {
-            background:rgba(245,176,66,0.1); border:1px solid rgba(245,176,66,0.1);
-            border-radius:40px; padding:2px 10px; font-size:0.5rem; color:#f5b042;
-            font-family:'Vazirmatn',sans-serif; font-weight:700; display:flex; align-items:center; gap:4px; flex-shrink:0;
-        }
-        .chat-status i { font-size:0.4rem; color:#4caf50; animation:pulseDot 1.5s ease-in-out infinite; }
-        @keyframes pulseDot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.2; transform:scale(0.6); } }
-        .messages { flex:1; overflow-y:auto; margin-bottom:8px; display:flex; flex-direction:column; gap:6px; padding:4px 2px; min-height:0; scroll-behavior:smooth; }
-        .messages::-webkit-scrollbar { width:3px; }
-        .messages::-webkit-scrollbar-track { background:transparent; }
-        .messages::-webkit-scrollbar-thumb { background:rgba(255,215,100,0.2); border-radius:10px; }
-        .message { display:flex; gap:6px; align-items:flex-start; animation:msgIn 0.3s cubic-bezier(0.22,1,0.36,1); flex-shrink:0; }
-        .message.bot { flex-direction:row; }
-        .message.user { flex-direction:row-reverse; }
-        @keyframes msgIn { 0% { opacity:0; transform:translateY(8px); } 100% { opacity:1; transform:translateY(0); } }
-        .message .avatar {
-            width:28px; height:28px; border-radius:10px; display:flex; align-items:center; justify-content:center;
-            font-size:0.7rem; flex-shrink:0; background:rgba(255,255,255,0.04);
-            border:1px solid rgba(255,215,100,0.06); color:#b0a99b;
-            font-family:'Vazirmatn',sans-serif; font-weight:400;
-        }
-        .message.bot .avatar { background:rgba(245,176,66,0.12); color:#f5b042; border-color:rgba(245,176,66,0.1); }
-        .message.user .avatar { background:rgba(255,255,255,0.06); color:#eaeef2; }
-        .message .bubble {
-            max-width:85%; padding:6px 12px; border-radius:14px; font-size:0.8rem; line-height:1.9;
-            word-break:break-word; background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.06);
-            color:#d6d0c4; font-family:'Vazirmatn',sans-serif; font-weight:400;
-        }
-        .message.bot .bubble { background:rgba(255,215,100,0.04); border-color:rgba(255,215,100,0.08); border-top-right-radius:4px; }
-        .message.user .bubble { background:rgba(245,176,66,0.08); border-color:rgba(245,176,66,0.12); border-top-left-radius:4px; color:#f5efe6; }
-        .message .bubble strong { color:#f5b042; font-weight:700; }
-        .message .bubble i { color:#f5b042; margin-left:2px; }
-
-        .site-card {
-            background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.08);
-            border-radius:10px; padding:6px 8px; margin:4px 0;
-            display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-        }
-        .site-card .site-img { width:34px; height:34px; border-radius:6px; object-fit:cover; background:#0b0b0e; flex-shrink:0; }
-        .site-card .site-info { flex:1; min-width:50px; }
-        .site-card .site-info .site-name { font-family:'Vazirmatn',sans-serif; font-weight:700; color:#f5efe6; font-size:0.75rem; }
-        .site-card .site-info .site-desc { font-size:0.6rem; color:#b0a99b; font-weight:400; font-family:'Vazirmatn',sans-serif; }
-        .site-card .site-link { color:#f5b042; text-decoration:none; font-size:0.55rem; font-weight:600; padding:2px 10px; border:1px solid rgba(245,176,66,0.15); border-radius:40px; transition:0.3s; display:inline-flex; align-items:center; gap:3px; flex-shrink:0; font-family:'Vazirmatn',sans-serif; }
-        .site-card .site-link:hover { background:rgba(245,176,66,0.08); border-color:#f5b042; }
-
-        .design-mini {
-            background:rgba(255,255,255,0.02); border:1px solid rgba(255,215,100,0.06);
-            border-radius:8px; padding:4px 8px; margin:3px 0;
-            display:flex; align-items:center; gap:6px; flex-wrap:wrap;
-        }
-        .design-mini .d-icon { font-size:0.9rem; color:#f5b042; }
-        .design-mini .d-name { font-family:'Vazirmatn',sans-serif; font-weight:700; color:#f5efe6; font-size:0.7rem; }
-        .design-mini .d-desc { font-size:0.55rem; color:#b0a99b; font-weight:400; font-family:'Vazirmatn',sans-serif; }
-        .design-mini .d-link {
-            color:#f5b042; text-decoration:none; font-size:0.55rem; font-weight:600;
-            padding:2px 8px; border:1px solid rgba(245,176,66,0.15); border-radius:40px;
-            transition:0.3s; display:inline-flex; align-items:center; gap:3px; font-family:'Vazirmatn',sans-serif;
-        }
-        .design-mini .d-link:hover { background:rgba(245,176,66,0.08); border-color:#f5b042; }
-
-        .social-links { display:flex; gap:4px; margin-top:4px; flex-wrap:wrap; }
-        .social-links a { color:#f5b042; text-decoration:none; background:rgba(255,215,100,0.05); padding:2px 10px; border-radius:40px; border:1px solid rgba(255,215,100,0.1); font-size:0.6rem; display:inline-flex; align-items:center; gap:3px; font-family:'Vazirmatn',sans-serif; font-weight:400; }
-        .social-links a:hover { background:rgba(245,176,66,0.1); }
-
-        .quick-replies {
-            display:flex; flex-wrap:wrap; gap:4px; margin-bottom:6px; flex-shrink:0;
-        }
-        .quick-replies button {
-            background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.08);
-            color:#b0a99b; padding:3px 10px; border-radius:40px;
-            font-family:'Vazirmatn',sans-serif; font-size:0.6rem; font-weight:600;
-            cursor:pointer; transition:0.3s; display:inline-flex; align-items:center; gap:4px; white-space:nowrap;
-        }
-        .quick-replies button i { color:#f5b042; font-size:0.55rem; }
-        .quick-replies button:hover { background:rgba(245,176,66,0.08); border-color:rgba(245,176,66,0.2); color:#f5efe6; transform:translateY(-2px); }
-
-        .input-area {
-            display:flex; align-items:center; gap:4px; background:rgba(255,255,255,0.02);
-            border:1px solid rgba(255,215,100,0.06); border-radius:60px;
-            padding:2px 2px 2px 12px; transition:0.3s; flex-shrink:0;
-        }
-        .input-area:focus-within { border-color:rgba(245,176,66,0.25); background:rgba(255,255,255,0.04); }
-        .input-area input { flex:1; background:transparent; border:none; color:#eaeef2; font-family:'Vazirmatn',sans-serif; font-weight:400; font-size:0.8rem; padding:8px 0; outline:none; min-width:0; }
-        .input-area input::placeholder { color:#5f5a50; }
-        .input-area .btn-send {
-            background:linear-gradient(145deg,#f5b042,#d48f2b); border:none; color:#0b0b0e;
-            width:38px; height:38px; border-radius:50%; font-size:0.9rem;
-            cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; flex-shrink:0;
-            font-family:'Vazirmatn',sans-serif; font-weight:400;
-        }
-        .input-area .btn-send:hover { transform:scale(1.05); }
-        .input-area .btn-send:active { transform:scale(0.93); }
-        .input-area .btn-search {
-            background:rgba(255,255,255,0.05); border:1px solid rgba(255,215,100,0.1);
-            color:#b0a99b; width:38px; height:38px; border-radius:50%; font-size:0.8rem;
-            cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; flex-shrink:0;
-            font-family:'Vazirmatn',sans-serif; font-weight:400;
-        }
-        .input-area .btn-search:hover { background:rgba(255,215,100,0.08); border-color:rgba(255,215,100,0.2); color:#f5b042; transform:scale(1.05); }
-        .input-area .btn-search:active { transform:scale(0.93); }
-
-        .typing-indicator { display:none; padding:3px 10px; background:rgba(255,215,100,0.04); border:1px solid rgba(255,215,100,0.06); border-radius:40px; color:#b0a99b; font-size:0.6rem; align-self:flex-start; margin-bottom:3px; flex-shrink:0; font-family:'Vazirmatn',sans-serif; font-weight:400; }
-        .typing-indicator i { color:#f5b042; animation:pulseIcon 1s ease-in-out infinite; }
-        @keyframes pulseIcon { 0%,100% { transform:scale(1); } 50% { transform:scale(1.2); } }
-        .typing-indicator.show { display:inline-flex; align-items:center; gap:4px; }
-
-        .translation-box {
-            background:rgba(255,215,100,0.04);
-            border:1px solid rgba(255,215,100,0.1);
-            border-radius:10px;
-            padding:10px 12px;
-            margin:6px 0;
-            color:#f5efe6;
-            font-size:0.8rem;
-            font-weight:400;
-            word-break:break-word;
-            font-family:'Vazirmatn',sans-serif;
-        }
-        .translation-box .trans-text {
-            direction:rtl;
-            text-align:right;
-            line-height:2;
-        }
-        .copy-trans-btn {
-            background:rgba(245,176,66,0.1);
-            border:1px solid rgba(245,176,66,0.15);
-            color:#f5b042;
-            padding:2px 12px;
-            border-radius:40px;
-            font-size:0.55rem;
-            font-weight:600;
-            cursor:pointer;
-            transition:0.3s;
-            font-family:'Vazirmatn',sans-serif;
-            margin-top:6px;
-        }
-        .copy-trans-btn:hover { background:rgba(245,176,66,0.2); }
-
-        .image-card {
-            background:rgba(255,255,255,0.02);
-            border:1px solid rgba(255,215,100,0.08);
-            border-radius:12px;
-            padding:10px;
-            margin:6px 0;
-            text-align:center;
-        }
-        .image-card img {
-            width:100%;
-            max-width:350px;
-            border-radius:8px;
-            border:1px solid rgba(255,215,100,0.06);
-            background:#0b0b0e;
-            min-height:100px;
-            image-rendering:auto;
-        }
-        .image-card .img-label {
-            font-size:0.6rem;
-            color:#b0a99b;
-            margin-top:4px;
-        }
-        .image-card .img-brand {
-            font-size:0.55rem;
-            color:#f5b042;
-            margin-top:2px;
-            font-weight:600;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .notification {
-            position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-            background:rgba(255,255,255,0.05); backdrop-filter:blur(24px);
-            border:1px solid rgba(255,215,100,0.12); border-radius:20px;
-            padding:16px 20px; max-width:400px; width:92%;
-            box-shadow:0 24px 64px -16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
-            z-index:9999; animation:slideUp 0.6s cubic-bezier(0.22,1,0.36,1);
-            transition:0.5s cubic-bezier(0.22,1,0.36,1);
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+            background: linear-gradient(145deg, #fef9f1 0%, #fff6ec 100%);
+            color: #2e241f;
+            scroll-behavior: smooth;
+            padding-top: 85px;
         }
-        .notification.hide { opacity:0; transform:translateX(-50%) translateY(40px) scale(0.92); pointer-events:none; }
-        @keyframes slideUp { 0% { opacity:0; transform:translateX(-50%) translateY(40px) scale(0.92); } 100% { opacity:1; transform:translateX(-50%) translateY(0) scale(1); } }
-        .notification .notif-header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
-        .notification .notif-header .icon-box { width:40px; height:40px; background:rgba(245,176,66,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(245,176,66,0.08); }
-        .notification .notif-header .icon-box i { font-size:1.3rem; color:#f5b042; }
-        .notification .notif-header .title-group h3 { font-family:'Vazirmatn',sans-serif; font-weight:700; font-size:0.95rem; color:#f5efe6; margin:0; }
-        .notification .notif-header .title-group .version { font-size:0.55rem; color:#f5b042; background:rgba(245,176,66,0.08); padding:0px 8px; border-radius:40px; display:inline-block; font-family:'Vazirmatn',sans-serif; font-weight:400; }
-        .notification .notif-body { font-family:'Vazirmatn',sans-serif; font-weight:400; font-size:0.75rem; color:#c0b9ad; line-height:1.9; padding-right:4px; }
-        .notification .notif-body ul { list-style:none; padding-right:6px; margin:4px 0; }
-        .notification .notif-body ul li { padding-right:18px; position:relative; font-size:0.7rem; font-weight:400; }
-        .notification .notif-body ul li i { position:absolute; right:0; top:4px; color:#f5b042; font-size:0.6rem; }
-        .notification .notif-close { position:absolute; top:10px; left:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#6f6a60; width:28px; height:28px; border-radius:50%; font-size:0.8rem; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; font-family:'Vazirmatn',sans-serif; font-weight:400; }
-        .notification .notif-close:hover { color:#f5efe6; background:rgba(255,255,255,0.06); transform:rotate(90deg); }
 
-        .lang-options {
-            display:flex;
-            flex-wrap:wrap;
-            gap:8px;
-            margin:10px 0;
+        i, .fas, .far {
+            font-weight: 900;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
+            transition: all 0.2s ease;
         }
-        .lang-options button {
-            flex:1;
-            min-width:70px;
-            padding:6px 10px;
-            background:rgba(255,255,255,0.03);
-            border:1px solid rgba(255,215,100,0.08);
-            border-radius:8px;
-            color:#b0a99b;
-            font-family:'Vazirmatn',sans-serif;
-            font-size:0.7rem;
-            font-weight:600;
-            cursor:pointer;
-            transition:0.3s;
-        }
-        .lang-options button:hover { background:rgba(245,176,66,0.08); border-color:rgba(245,176,66,0.2); color:#f5efe6; }
-        .lang-options button.active { background:rgba(245,176,66,0.12); border-color:#f5b042; color:#f5b042; }
 
-        @media (max-width:380px) {
-            .chat-container { padding:6px 6px 8px; border-radius:12px; }
-            .chat-title { font-size:0.9rem; }
-            .chat-avatar { width:36px; height:36px; font-size:1rem; }
-            .message .bubble { font-size:0.7rem; padding:4px 8px; }
-            .quick-replies button { font-size:0.5rem; padding:2px 6px; }
-            .input-area input { font-size:0.7rem; padding:6px 0; }
-            .input-area .btn-send, .input-area .btn-search { width:32px; height:32px; font-size:0.75rem; }
-            .notification { padding:12px 14px; max-width:96%; bottom:14px; }
-            .translation-box { font-size:0.7rem; padding:8px 10px; }
-            .image-card img { max-width:100%; }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f3e3d3;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d97a3c;
+            border-radius: 10px;
+        }
+
+        .navbar {
+            background: rgba(255, 248, 240, 0.96);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.03);
+            padding: 0.8rem 1.5rem;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(217, 122, 60, 0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #c55a2c, #e68a2e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo i {
+            background: none;
+            color: #d97a3c;
+            font-size: 1.7rem;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.7rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 800;
+            color: #4b3b2f;
+            transition: 0.2s;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0.4rem 0.6rem;
+            border-radius: 40px;
+            background: transparent;
+        }
+
+        .nav-links a:hover {
+            color: #d76f2c;
+            background: rgba(215, 111, 44, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            color: #c25d2b;
+            cursor: pointer;
+            padding: 0.3rem 0.6rem;
+            border-radius: 40px;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .cart-icon:hover {
+            background: rgba(215, 111, 44, 0.08);
+            transform: scale(1.02);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #e67e22;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: bold;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .hero {
+            background: url('https://uploadkon.ir/uploads/605322_26IMG-20260623-002413.jpg') center/cover no-repeat;
+            min-height: 55vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 0 48px 48px;
+            margin: 0 1rem 0 1rem;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.25);
+        }
+        .hero-overlay {
+            background: linear-gradient(120deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4));
+            border-radius: 0 0 48px 48px;
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .call-message-box {
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 2rem;
+            border-radius: 60px;
+            text-align: center;
+        }
+        .call-message-box p {
+            color: #fff1e0;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+        .call-message-box .phone-wrapper {
+            margin-top: 8px;
+        }
+        .call-message-box i {
+            color: #ffb347;
+            margin-left: 10px;
+        }
+        .phone-number {
+            direction: ltr;
+            display: inline-block;
+            background: #e67e22;
+            padding: 8px 24px;
+            border-radius: 40px;
+            color: white;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .menu-section {
+            max-width: 700px;
+            margin: 4rem auto;
+            padding: 0 1.5rem;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .section-title:after {
+            content: "";
+            width: 80px;
+            height: 4px;
+            background: #e67e22;
+            display: block;
+            margin: 12px auto 0;
+            border-radius: 4px;
+            position: absolute;
+            bottom: -15px;
+        }
+        .sub-section-title {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin: 2rem 0 1.5rem;
+            color: #c55a2c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 48px;
+            overflow: hidden;
+            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+        .food-card:hover {
+            transform: translateY(-6px);
+        }
+        .card-img {
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .food-tag {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: #e67e22;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+        }
+        .badge-special {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: #2e241f;
+            color: #ffd966;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+        }
+        .card-info {
+            padding: 1.5rem;
+        }
+        .card-info h3 {
+            font-size: 1.7rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+        .desc {
+            color: #5e4b3a;
+            font-size: 0.95rem;
+            margin: 0.5rem 0 1rem;
+            line-height: 1.5;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .add-to-cart {
+            background: #2e241f;
+            color: white;
+            border: none;
+            padding: 12px 0;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
+            transition: 0.2s;
+        }
+        .add-to-cart:hover {
+            background: #e67e22;
+            transform: scale(0.98);
+        }
+        .detail-btn {
+            background: #f0e2d4;
+            color: #4b3b2f;
+            border: none;
+            padding: 12px 0;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .detail-btn:hover {
+            background: #e67e22;
+            color: white;
+        }
+        .detail-btn:hover i {
+            filter: drop-shadow(0 0 2px white);
+        }
+        .detail-box {
+            background: #fff8f0;
+            border-radius: 28px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-right: 5px solid #e67e22;
+            display: none;
+            font-weight: 700;
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #3a2a1f;
+        }
+        .detail-box.show {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .detail-box i {
+            margin-left: 8px;
+            color: #e67e22;
+        }
+
+        .timer-expired {
+            background: #fff0e0;
+            border-radius: 50px;
+            padding: 8px 16px;
+            margin: 12px 0;
+            text-align: center;
+            border: 1px solid #e67e22;
+        }
+        .timer-expired-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: #c55a2c;
+        }
+        .timer-expired-content i {
+            font-size: 1.1rem;
+            color: #e67e22;
+        }
+        .timer-expired-text {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #a17248;
+            margin-top: 4px;
+        }
+
+        .support-section {
+            max-width: 700px;
+            margin: 3rem auto;
+            padding: 1rem;
+        }
+        .support-box {
+            background: white;
+            border-radius: 48px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
+        }
+        .support-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.8rem;
+            color: #c55a2c;
+        }
+        .support-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: #fff6ed;
+            padding: 1rem;
+            border-radius: 70px;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+        }
+        .support-item i {
+            font-size: 1.8rem;
+            color: #e67e22;
+        }
+        .support-item a {
+            color: #e67e22;
+            text-decoration: none;
+            font-weight: 900;
+            transition: 0.2s;
+        }
+        .support-item a:hover {
+            color: #c55a2c;
+            text-decoration: underline;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            left: -400px;
+            width: 400px;
+            height: 100%;
+            background: #fffaf5;
+            box-shadow: -8px 0 30px rgba(0,0,0,0.2);
+            z-index: 2000;
+            transition: left 0.3s;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            border-radius: 0 28px 28px 0;
+        }
+        .cart-sidebar.open {
+            left: 0;
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #f0e2d4;
+            padding-bottom: 1rem;
+        }
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.7rem;
+            cursor: pointer;
+            color: #af7f58;
+        }
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            background: white;
+            padding: 0.8rem;
+            border-radius: 28px;
+            margin-bottom: 0.8rem;
+        }
+        .cart-item-actions button {
+            background: #f0e2d4;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0 2px;
+        }
+        .cart-total {
+            border-top: 2px dashed #e2cfbe;
+            padding-top: 1rem;
+            font-size: 1.1rem;
+            font-weight: 800;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .checkout-btn {
+            background: #e67e22;
+            width: 100%;
+            margin-top: 1.2rem;
+            padding: 1rem;
+            border: none;
+            border-radius: 60px;
+            color: white;
+            font-weight: 900;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .empty-cart {
+            text-align: center;
+            color: #ad8b70;
+            padding: 2rem;
+        }
+        .footer {
+            background: #2b211c;
+            color: #ffe0cd;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-radius: 40px 40px 0 0;
+        }
+        @media (max-width: 880px) {
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 0.8rem 1rem;
+            }
+            .nav-links {
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            .nav-links a {
+                font-size: 0.75rem;
+                padding: 0.3rem 0.5rem;
+            }
+            .cart-icon {
+                font-size: 1.3rem;
+            }
+            body {
+                padding-top: 120px;
+            }
+        }
+        @media (max-width: 550px) {
+            body {
+                padding-top: 150px;
+            }
+        }
+        .toast-msg {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: #2e241f;
+            color: #ffefcf;
+            padding: 14px 25px;
+            border-radius: 60px;
+            z-index: 2100;
+            opacity: 0;
+            transition: 0.3s;
+            pointer-events: none;
+            font-weight: 800;
+        }
+        .custom-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            background: #fffef7;
+            padding: 1.8rem 1.8rem;
+            border-radius: 48px;
+            box-shadow: 0 40px 60px rgba(0,0,0,0.3);
+            z-index: 3000;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s;
+            border-top: 6px solid #e67e22;
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+        }
+        .custom-alert.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .custom-alert i.fa-check-circle {
+            font-size: 2rem;
+            color: #e67e22;
+            margin-bottom: 0.8rem;
+            opacity: 0.8;
+        }
+        .custom-alert h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            font-weight: 900;
+            color: #2e241f;
+        }
+        .custom-alert .order-list {
+            background: transparent;
+            padding: 0;
+            margin: 0.5rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+        .custom-alert .order-list p {
+            margin: 0.2rem 0;
+        }
+        .custom-alert p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #2e241f;
+        }
+        .custom-alert .phone-number-modal {
+            direction: ltr;
+            background: #e67e22;
+            display: inline-block;
+            padding: 5px 16px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 800;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .discount-input-group {
+            background: #fff5e8;
+            border-radius: 60px;
+            padding: 6px 15px;
+            margin: 15px auto 8px auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid #f0d5bc;
+            width: 90%;
+        }
+        .discount-input-group i {
+            font-size: 1rem;
+            color: #e67e22;
+            opacity: 0.7;
+        }
+        .discount-input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 8px 0;
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: right;
+            color: #2e241f;
+            outline: none;
+        }
+        .discount-input-group input::placeholder {
+            color: #c9b59c;
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+        .discount-feedback {
+            font-size: 0.7rem;
+            margin-top: 3px;
+            margin-bottom: 8px;
+            font-weight: 800;
+            text-align: center;
+            min-height: 24px;
+        }
+        .discount-success {
+            color: #2b7a3b;
+        }
+        .discount-error {
+            color: #c0392b;
+        }
+
+        .custom-alert .order-code {
+            background: #2e241f;
+            color: #ffd966;
+            padding: 8px;
+            border-radius: 60px;
+            margin: 0.8rem 0;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            font-weight: 900;
+            display: inline-block;
+            width: auto;
+            text-align: center;
+        }
+        .custom-alert button {
+            background: #e67e22;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 0.8rem;
+            font-family: 'Vazirmatn', sans-serif;
+            transition: 0.2s;
+        }
+        .custom-alert button:hover {
+            background: #c55a2c;
+            transform: scale(0.96);
+        }
+        .page-content {
+            display: none;
+        }
+        .page-content.active-page {
+            display: block;
+        }
+        .foods-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
     </style>
 </head>
 <body>
 
-    <div class="chat-container">
-
-        <div class="chat-header">
-            <div class="chat-avatar">M</div>
-            <div class="chat-title">
-                <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۱۰</small>
-            </div>
-            <div class="chat-status">
-                <i class="fas fa-circle"></i> آنلاین
-            </div>
+<div class="navbar">
+    <div class="logo"><i class="fas fa-utensils"></i> کالفود</div>
+    <div class="nav-links">
+        <a href="#" data-page="home"><i class="fas fa-home"></i> خانه</a>
+        <a href="#" data-page="dolme"><i class="fas fa-leaf"></i> دلمه</a>
+        <a href="#" data-page="persian"><i class="fas fa-utensils"></i> غذای مجلسی</a>
+        <a href="#" data-page="cake"><i class="fas fa-birthday-cake"></i> کیک</a>
+        <a href="#" data-page="fastfood"><i class="fas fa-burger"></i> فست فود</a>
+        <a href="#" data-page="finger"><i class="fas fa-hand-peace"></i> فینگر فود</a>
+        <a href="#" data-page="traditional"><i class="fas fa-mosque"></i> غذای سنتی</a>
+        <a href="#" data-page="sweet"><i class="fas fa-cake-candles"></i> شیرینی‌جات</a>
+        <a href="#" data-page="dessert"><i class="fas fa-ice-cream"></i> دسر</a>
+        <a href="#" data-page="tafarda"><i class="fas fa-calendar-day"></i> تا فردا</a>
+        <a href="#" data-page="support"><i class="fas fa-headset"></i> پشتیبانی</a>
+        <div class="cart-icon" id="cartIcon">
+            <i class="fas fa-shopping-bag"></i>
+            <span class="cart-count" id="cartCount">0</span>
         </div>
+    </div>
+</div>
 
-        <div class="messages" id="messagesBox">
-            <div class="message bot">
-                <div class="avatar"><i class="fas fa-robot"></i></div>
-                <div class="bubble">
-                    ✨ سلام!<br><br>
-                    من <strong>MH Assistant</strong> هستم، دستیار خودمونی‌ات. 🤖<br>
-                    ساخته‌شده توسط <strong>mohamad hossein snti</strong><br><br>
-                    📚 ۷۲۰۰+ سوال و جواب<br>
-                    🧮 ریاضی پیشرفته (درجه‌ای)<br>
-                    ☀️ آب و هوا (فارسی)<br>
-                    🌍 ترجمه (آزمایشی)<br>
-                    🎨 <strong>mh picture (کیفیت بالا)</strong><br>
-                    💡 ایده‌ساز و کمک‌رسان<br>
-                    🧠 تشخیص هوشمند موضوع<br><br>
-                    👇 هر چی دلت میخواد بپرس! 😊
+<div id="homePage" class="page-content active-page">
+    <div class="hero">
+        <div class="hero-overlay">
+            <div class="call-message-box">
+                <p><i class="fas fa-comment-dots"></i> کالفود میگوید: برای خرید با این شماره تماس بگیرید</p>
+                <div class="phone-wrapper">
+                    <i class="fas fa-phone-volume"></i>
+                    <span class="phone-number">09902684303</span>
                 </div>
             </div>
         </div>
-
-        <div class="quick-replies">
-            <button onclick="askQuestion('سلام')"><i class="fas fa-hand-peace"></i> سلام</button>
-            <button onclick="askQuestion('کی هستی؟')"><i class="fas fa-question"></i> کی هستی؟</button>
-            <button onclick="askQuestion('سایت‌ها')"><i class="fas fa-laptop-code"></i> سایت‌ها</button>
-            <button onclick="askQuestion('طراحی‌ها')"><i class="fas fa-palette"></i> طراحی‌ها</button>
-            <button onclick="askQuestion('مهارت‌ها')"><i class="fas fa-code"></i> مهارت‌ها</button>
-            <button onclick="askQuestion('لینک اینستاگرام')"><i class="fab fa-instagram"></i> اینستا</button>
-            <button onclick="askQuestion('لینک تلگرام')"><i class="fab fa-telegram-plane"></i> تلگرام</button>
-            <button onclick="askQuestion('🧮 ریاضی')"><i class="fas fa-calculator"></i> ریاضی</button>
-            <button onclick="askQuestion('☀️ آب و هوا')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
-            <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
-            <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
-            <button onclick="setImageMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-image"></i> mh picture (کیفیت بالا)</button>
-            <button onclick="setTranslateMode()" style="border-color:rgba(245,176,66,0.2);"><i class="fas fa-language"></i> ترجمه (آزمایشی)</button>
-        </div>
-
-        <div class="input-area">
-            <input type="text" id="userInput" placeholder="هر چی دلت میخواد بپرس..." autocomplete="off">
-            <button class="btn-search" id="searchBtn" title="جستجو در اینترنت">
-                <i class="fas fa-search"></i>
-            </button>
-            <button class="btn-send" id="sendBtn">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-
     </div>
-
-    <div class="notification" id="updateNotif">
-        <button class="notif-close" onclick="closeNotification()"><i class="fas fa-times"></i></button>
-        <div class="notif-header">
-            <div class="icon-box">
-                <i class="fas fa-gem"></i>
-            </div>
-            <div class="title-group">
-                <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۱۰.۱۰</span>
-            </div>
+    
+    <div class="menu-section">
+        <div class="section-title"><i class="fas fa-crown"></i> غذاهای ویژه و پرطرفدار کالفود!</div>
+        <div id="featuredGrid"></div>
+        
+        <div class="sub-section-title">
+            <i class="fas fa-utensils"></i> غذاهای مجلسی
         </div>
-        <div class="notif-body">
-            <ul>
-                <li><i class="fas fa-check-circle"></i> 🎨 <strong>تصویر با کیفیت بالا</strong> (بدون ثبت‌نام)</li>
-                <li><i class="fas fa-check-circle"></i> 🆓 رایگان - روزانه ۶ بار محدودیت</li>
-                <li><i class="fas fa-check-circle"></i> 🧠 تشخیص هوشمند موضوع بهبود یافت</li>
-                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۷۲۰۰+ سوال و جواب</li>
-                <li><i class="fas fa-check-circle"></i> 🚀 موتور پاسخگویی تقویت شد</li>
-            </ul>
+        <div id="persianHomeGrid"></div>
+    </div>
+</div>
+
+<div id="dolmePage" class="page-content"><div class="menu-section"><div class="section-title"><i class="fas fa-leaf"></i> دلمه</div><div id="dolmeGrid" class="foods-grid"></div></div></div>
+<div id="fastfoodPage" class="page-content"><div class="menu-section"><div class="section-title"><i class="fas fa-burger"></i> فست فود</div><div id="fastfoodGrid" class="foods-grid"></div></div></div>
+<div id="fingerPage" class="page-content"><div class="menu-section"><div class="section-title"><i class="fas fa-hand-peace"></i> فینگر فود</div><div id="fingerGrid" class="foods-grid"></div></div></div>
+<div id="persianPage" class="page-content"><div class="menu-section"><div class="section-title"><i class="fas fa-utensils"></i> غذای مجلسی</div><div id="persianGrid" class="foods-grid"></div></div></div>
+<div id="cakePage" class="page-content"><div class="menu-section"><div class="section-title"><i class="fas fa-birthday-cake"></i> کیک</div><div id="cakeGrid" class="foods-grid"></div></div></div>
+<div id="traditionalPage" class="page-content"><div class="menu-section"><div class="section-title"><i class="fas fa-mosque"></i> غذای سنتی</div><div id="traditionalGrid" class="foods-grid"></div></div></div>
+<div id="sweetPage" class="page-content"><div class="menu-section"><div class="section-title"><i class="fas fa-cake-candles"></i> شیرینی‌جات</div><div id="sweetGrid" class="foods-grid"></div></div></div>
+<div id="dessertPage" class="page-content"><div class="menu-section"><div class="section-title"><i class="fas fa-ice-cream"></i> دسر</div><div id="dessertGrid" class="foods-grid"></div></div></div>
+
+<div id="tafardaPage" class="page-content">
+    <div class="menu-section">
+        <div class="section-title"><i class="fas fa-calendar-day"></i> تا فردا</div>
+        <div class="food-card" id="tomorrowSpecialCard">
+            <div class="card-img" style="background-image: url('https://uploadkon.ir/uploads/538f22_26IMG-20260623-003134.jpg');">
+                <div class="food-tag"><i class="fas fa-leaf"></i> دلمه ویژه</div>
+                <div class="badge-special"><i class="fas fa-hourglass-end"></i> زمان به پایان رسیده</div>
+            </div>
+            <div class="card-info">
+                <h3><i class="fas fa-egg"></i> دلمه تا فردا موجوده!</h3>
+                <div class="desc">دلمه اصیل و خوشمزه با برگ مو تازه، آماده برای فردا! فقط امشب ثبت‌نام کن.</div>
+                <div class="timer-expired">
+                    <div class="timer-expired-content">
+                        <i class="fas fa-hourglass-end"></i>
+                        <span>زمان ثبت سفارش به پایان رسیده است!</span>
+                    </div>
+                    <div class="timer-expired-text"><i class="fas fa-clock"></i> سفارشات این بخش بسته شد</div>
+                </div>
+                <div class="btn-group">
+                    <div class="detail-btn" id="tomorrowDetailBtn" style="cursor: pointer;"><i class="fas fa-info-circle"></i> توضیحات بیشتر</div>
+                </div>
+                <div class="detail-box" id="tomorrowDetailBox">
+                    <i class="fas fa-align-right"></i> دلمه‌های خوشمزه کالفود با برگ مو تازه، گوشت چرخ کرده، برنج و سبزیجات معطر. برای فردا صبح آماده می‌شه! کافیه امشب سفارشت رو ثبت کنی تا فردا تازه و داغ تحویل بگیری.
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // ============================================================
-        //  نوتیفیکیشن
-        // ============================================================
-        const APP_VERSION = '3.10.10';
-        const notif = document.getElementById('updateNotif');
-        let notifTimer;
+<div id="supportPage" class="page-content">
+    <div class="support-section">
+        <div class="support-box">
+            <h3><i class="fas fa-headset"></i> پشتیبانی کالفود</h3>
+            <div class="support-item">
+                <i class="fas fa-headset"></i>
+                <span>پشتیبانی : <strong>09902684303</strong></span>
+            </div>
+            <div class="support-item">
+                <i class="fas fa-laptop-code"></i>
+                <span>mohamad hossein snti وبگاه : <a href="https://zeroxgame74-afk.github.io/mohamad-hossein-/" target="_blank">mohamad hossein snti وبگاه</a></span>
+            </div>
+        </div>
+    </div>
+</div>
 
-        function closeNotification() {
-            notif.classList.add('hide');
-            clearTimeout(notifTimer);
-            setTimeout(() => {
-                notif.style.display = 'none';
-            }, 8000);
-        }
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header"><h2><i class="fas fa-basket-shopping"></i> سبد خرید</h2><button class="close-cart" id="closeCartBtn"><i class="fas fa-times-circle"></i></button></div>
+    <div class="cart-items" id="cartItemsList"><div class="empty-cart">سبدت خالیه پرش کن! 🍔</div></div>
+    <div class="cart-total" id="cartTotalDisplay">
+        <span><i class="fas fa-clipboard-list"></i> تعداد سفارش:</span>
+        <span id="cartTotalCount">۰ عدد (تماس تلفنی)</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn"><i class="fas fa-check-circle"></i> پرداخت ثبت نهایی</button>
+</div>
 
-        const hasSeen = localStorage.getItem('mhs_notification_version');
-        if (hasSeen !== APP_VERSION) {
-            notif.style.display = 'block';
-            notifTimer = setTimeout(() => {
-                closeNotification();
-            }, 8000);
-            localStorage.setItem('mhs_notification_version', APP_VERSION);
+<div id="successModal" class="custom-alert">
+    <i class="fas fa-check-circle"></i>
+    <h3>سفارش شما با موفقیت ثبت شد!</h3>
+    <div class="order-list" id="orderSummaryList"></div>
+    
+    <p style="margin-top: 10px; margin-bottom: 5px;"><i class="fas fa-ticket-alt"></i> کد تخفیف داری؟ وارد کن:</p>
+    
+    <div class="discount-input-group">
+        <i class="fas fa-ticket-alt"></i>
+        <input type="text" id="discountCodeInput" placeholder="کد تخفیف" autocomplete="off">
+    </div>
+    <div id="discountFeedback" class="discount-feedback"></div>
+    
+    <p><i class="fas fa-phone-alt"></i> برای خرید با این شماره تماس بگیرید:</p>
+    <div class="phone-number-modal">09902684303</div>
+    <div class="order-code" id="trackingCode">------</div>
+    <p><i class="fas fa-info-circle"></i> این کد را به فروشنده بدهید</p>
+    <button onclick="closeModal()"><i class="fas fa-check"></i> متوجه شدم</button>
+</div>
+
+<div class="toast-msg" id="toastMsg"></div>
+<footer class="footer">
+    <p><i class="fas fa-medal"></i> کالفود | سفری به طعم های اصیل ایرانی.</p>
+    <p>© 2026 کالفود – یک تماس خوشمزه <i class="fas fa-mug-hot"></i></p>
+</footer>
+
+<script>
+    const foods = [
+        { id: 26, name: "کیک هل گلاب روکش شکلاتی", desc: "کیک هل و گلاب با روکش شکلاتی، عطر و طعمی بی‌نظیر و مجلسی", longDesc: "کیک هل گلاب روکش شکلاتی کالفود، یک دسر لوکس و مجلسی! ترکیب دلنشین هل و گلاب با بافتی نرم و لطیف، پوشیده شده با روکش شکلاتی براق و خوشمزه. عطری خلسه‌آور و طعمی بی‌نظیر که هر مهمانی را به سطحی بالاتر می‌برد. مناسب برای جشن‌ها، تولدها و لحظات خاص شما! ✨", img: "https://uploadkon.ir/uploads/ecc622_26IMG-20260616-203524.jpg", tag: "کیک", tagIcon: "fa-birthday-cake", isSpecial: true, createdAt: new Date(2026, 5, 16, 20, 35) },
+        { id: 25, name: "کیک پرتقالی", desc: "کیک پرتقالی با عطر و طعم بی‌نظیر پرتقال تازه و بافتی نرم و لطیف", longDesc: "کیک پرتقالی کالفود، با طعمی دلپذیر و عطری خوش از پرتقال تازه تهیه شده. بافتی نرم و اسفنجی دارد که با پودر قند یا خامه فرم گرفته تزئین می‌شود. انتخابی ایده‌آل برای عصرانه‌های بهاری و دورهمی‌های دوستانه! 🍊", img: "https://uploadkon.ir/uploads/097422_26IMG-20260616-203427.jpg", tag: "کیک", tagIcon: "fa-birthday-cake", isSpecial: false, createdAt: new Date(2026, 5, 16, 20, 30) },
+        { id: 24, name: "پیتزا خانواده کالفود", desc: "مرغ و قارچ، گوشت و قارچ، مخلوط | یک انتخاب لذیذ و خوشمزه", longDesc: "پیتزا خانواده کالفود؛ ترکیبی ناب از سه طعم محبوب! پیتزایی با خمیر نازک و ترد، لایه‌ای از سس گوجه فرنگی تازه، پنیر موزارلای ذوب شده و روی آن می‌توانی مرغ و قارچ، گوشت چرخ‌کرده و قارچ یا ترکیب مخلوط هر دو را سفارش بدهی. هر برش آن یک تجربه بی‌نظیر از طعم‌های اصیل و کیفیت درجه یک کالفود است. مناسب برای مهمانی‌های دوستانه و دورهمی‌های گرم خانوادگی!", img: "https://uploadkon.ir/uploads/58a222_26InShot-20260615-182309597.jpg", tag: "فست فود", tagIcon: "fa-burger", isSpecial: true, createdAt: new Date(2026, 5, 15, 18, 30) },
+        { id: 23, name: "کماچ سیب زمینی", desc: "یک میان وعده سنتی و مقوی با سیب زمینی تازه و ادویه‌های معطر", longDesc: "کماچ سیب زمینی؛ یک غذای سنتی و خوشمزه از خراسان جنوبی که با سیب زمینی تازه، آرد مرغوب، پیاز و ادویه‌های معطر تهیه می‌شود. بافتی نرم و طعمی دلچسب دارد که هم به عنوان میان وعده و هم برای عصرانه‌های خاص مناسب است. ترکیبی از اصالت و طعم بی‌نظیر.", img: "https://uploadkon.ir/uploads/75ed22_26IMG-20260623-005711.jpg", tag: "غذای سنتی", tagIcon: "fa-mosque", isSpecial: false, createdAt: new Date(2026, 5, 14, 20, 50) },
+        { id: 22, name: "لازانیا با سس بشامل", desc: "لازانیا با سس بشامل طعمی عالی و عطری دلچسب", longDesc: "لازانیا با سس بشامل؛ یک غذای مجلسی و بی‌نظیر با لایه‌های نازک پاستا، گوشت چرخ کرده تازه، سس گوجه و سس بشامل خامه‌ای. پنیر فراوان روی آن طلایی شده و عطری دلچسب در تمام فضا می‌پیچد. مناسب برای مهمانی‌های خاص و شام‌های لوکس. یک تجربه فراموش‌نشدنی از طعم ایتالیایی اصیل.", img: "https://uploadkon.ir/uploads/d50922_26IMG-20260623-002848.jpg", tag: "غذای مجلسی", tagIcon: "fa-utensils", isSpecial: true, createdAt: new Date(2026, 5, 14, 20, 35) },
+        { id: 21, name: "لازانیا رولی", desc: "لازانیای رول شده با گوشت و سس مخصوص، یک نوآوری خوشمزه", longDesc: "لازانیا رولی؛ یک ابتکار جذاب و خوشمزه از کالفود! ورق‌های لازانیا با مواد پرکننده شامل گوشت چرخ کرده، قارچ، پنیر ریکوتا و سس مخصوص رول شده و سپس با سس گوجه و پنیر پیتزا پخته می‌شوند. هر لقمه طعمی متفاوت و لذیذ دارد. مناسب برای دورهمی‌های دوستانه یا یک شام خاص و به‌یادماندنی.", img: "https://uploadkon.ir/uploads/38a022_26IMG-20260623-002921.jpg", tag: "غذای مجلسی", tagIcon: "fa-utensils", isSpecial: true, createdAt: new Date(2026, 5, 14, 20, 20) },
+        { id: 20, name: "کیک مرغ لقمه ای", desc: "کیک مرغ مقوی خوشمزه!", longDesc: "کیک مرغ لقمه‌ای؛ یک میان وعده مقوی و پرطرفدار! تکه‌های مرغ آبدار با سیب زمینی، هویج، نخود فرنگی و ادویه‌های مخصوص در قالبی شبیه کیک قالبی پخته می‌شود. بافتی نرم و طعمی بی‌نظیر دارد که هم بزرگسالان و هم کودکان عاشق آن می‌شوند. مناسب برای مهمانی‌ها، عصرانه یا یک وعده سریع و مقوی.", img: "https://uploadkon.ir/uploads/2ae422_26IMG-20260623-002942.jpg", tag: "فست فود", tagIcon: "fa-burger", isSpecial: true, createdAt: new Date(2026, 5, 14, 20, 5) },
+        { id: 19, name: "ژله بستنی کالفود!", desc: "ژله بستنی کالفود با طعم پرتغال و آلوئه‌ورا", longDesc: "ژله بستنی کالفود؛ ترکیبی بی‌نظیر از ژله نرم و بستنی خامه‌ای با طعم پرتقال تازه و آلوئه‌ورا. یک دسر تابستونی و سرحال که هم خنکته، هم خوشمزه.", img: "https://uploadkon.ir/uploads/456213_26IMG-20260613-230203.jpg", tag: "دسر", tagIcon: "fa-ice-cream", isSpecial: true, createdAt: new Date(2026, 5, 13, 23, 0) },
+        { id: 18, name: "مرغ کاراملی با شوید باقالی پلو", desc: "مرغ کاراملی با شوید باقالی پلو، یک غذای کامل و سنتی", longDesc: "مرغ کاراملی با شوید باقالی پلو؛ یه غذای سنتی مجلسی و پرطرفدار! تکه‌های مرغ آبدار با سس کاراملی مخصوص، کنار باقالی پلو معطر.", img: "https://uploadkon.ir/uploads/8f7e13_26IMG-20260613-185831.jpg", tag: "غذای سنتی", tagIcon: "fa-mosque", isSpecial: false, createdAt: new Date(2026, 5, 13, 22, 0) },
+        { id: 17, name: "پیتزا اسنکی", desc: "پیتزا اسنکی، بمب انرژی و خوشمزه", longDesc: "پیتزا اسنکی؛ بمب انرژی و خوشمزه برای لحظات فوری! پیتزاهای کوچک و ترد با سس پنیری مخصوص.", img: "https://uploadkon.ir/uploads/cd0b13_26IMG-20260613-230747.jpg", tag: "فست فود", tagIcon: "fa-burger", isSpecial: true, createdAt: new Date(2026, 5, 13, 21, 0) },
+        { id: 16, name: "کیک مرغ", desc: "گردو با عطر جعفری و پیازچه تازه", longDesc: "کیک مرغ؛ یک ابتکار خوشمزه و متفاوت از کالفود! لایه‌های لطیف مرغ تازه ترکیب شده با گردو.", img: "https://uploadkon.ir/uploads/ac0022_26IMG-20260623-003032.jpg", tag: "فست فود", tagIcon: "fa-burger", isSpecial: true, createdAt: new Date(2026, 5, 13, 15, 30) },
+        { id: 15, name: "جوجه چینی ترد", desc: "جوجه چینی ترد و پفکی با پوشش طلایی", longDesc: "جوجه چینی ترد؛ ترد و پفکی مثل هیچ جای دیگه! تکه‌های جوجه با پوششی مخصوص.", img: "https://uploadkon.ir/uploads/eee122_26IMG-20260613-153322.jpg", tag: "فست فود", tagIcon: "fa-burger", isSpecial: false, createdAt: new Date(2026, 5, 13, 14, 30) },
+        { id: 14, name: "مرغ شکم پر شمالی", desc: "مرغ شکم پر شمالی با سس انار و آلو", longDesc: "مرغ شکم پر شمالی؛ یه غذای سنتی با طعم شمال! مرغ آبدار با ترکیبی از سبزیجات معطر.", img: "https://uploadkon.ir/uploads/3cb922_26IMG-20260623-005021.jpg", tag: "غذای سنتی", tagIcon: "fa-mosque", isSpecial: true, createdAt: new Date(2026, 5, 13, 13, 30) },
+        { id: 13, name: "حلوای زعفرانی", desc: "حلوای زعفرانی با عطر بی‌نظیر هل و گلاب", longDesc: "حلوای زعفرانی؛ یه دسر سنتی و عطرآگین که دل هر کسی رو می‌بره! حلوا با زعفران ناب.", img: "https://uploadkon.ir/uploads/ee4122_26IMG-20260623-004814.jpg", tag: "شیرینی‌جات", tagIcon: "fa-cake-candles", isSpecial: false, createdAt: new Date(2026, 5, 13, 12, 30) },
+        { id: 12, name: "اشترودل مرغ و قارچ پنیری", desc: "خمیر ترد و سبک، همراه با مرغ تازه، قارچ و پنیر", longDesc: "اشترودل مرغ و قارچ پنیری؛ ترد و لذیذ. خمیر ترد و سبک، همراه با مرغ تازه.", img: "https://uploadkon.ir/uploads/377d22_26IMG-20260623-005217.jpg", tag: "فینگر فود", tagIcon: "fa-hand-peace", isSpecial: true, createdAt: new Date(2026, 5, 12, 14, 28) },
+        { id: 11, name: "کاپ کیک", desc: "کاپ کیک با خمیر با کیفیت، خامه و اشکال تزئینی", longDesc: "کاپ کیک؛ دسری زیبا و خوشمزه برای لحظات خاص. این کاپ کیک با خمیر نرم و لطیف.", img: "https://uploadkon.ir/uploads/8c4622_26IMG-20260613-230203.jpg", tag: "کیک", tagIcon: "fa-birthday-cake", isSpecial: true, createdAt: new Date(2026, 5, 12, 14, 30) },
+        { id: 10, name: "کماچ لقمه", desc: "کماچ لقمه؛ غذای سنتی و اصیل خراسان جنوبی", longDesc: "کماچ لقمه؛ غذای سنتی و اصیل خراسان جنوبی. این خوراکی خوشمزه با خمیر مخصوص.", img: "https://uploadkon.ir/uploads/7ae012_26IMG-20260612-151323.jpg", tag: "غذای سنتی", tagIcon: "fa-mosque", isSpecial: true, createdAt: new Date(2026, 5, 12, 15, 13) },
+        { id: 9, name: "بمب کالفود", desc: "ترکیبی شگفت‌انگیز از پیتزا لقمه، اشترودل و پیراشکی", longDesc: "بمب کالفود؛ ترکیبی شگفت‌انگیز از سه طعم محبوب.", img: "https://uploadkon.ir/uploads/75db22_26InShot-20260623-005453961.jpg", tag: "فینگر فود", tagIcon: "fa-hand-peace", isSpecial: true, createdAt: new Date(2026, 5, 12, 13, 29) },
+        { id: 8, name: "پیراشکی", desc: "مرغ و قارچ یا گوشت و قارچ", longDesc: "پیراشکی؛ انتخابی ایده‌آل برای یک میان‌وعده لذیذ.", img: "https://uploadkon.ir/uploads/adca22_26IMG-20260623-003814.jpg", tag: "فینگر فود", tagIcon: "fa-hand-peace", isSpecial: true, createdAt: new Date(2026, 5, 12, 13, 4) },
+        { id: 7, name: "دلمه برگ مو", desc: "دلمه برگ مو، یک غذای مجلسی و خوشمزه اصیل ایرانی", longDesc: "دلمه برگ مو، یک غذای مجلسی و خوشمزه اصیل ایرانی.", img: "https://uploadkon.ir/uploads/bd2522_26IMG-20260623-003211.jpg", tag: "دلمه", tagIcon: "fa-leaf", isSpecial: true, createdAt: new Date(2026, 5, 12, 2, 51) },
+        { id: 6, name: "کماچ", desc: "کماچ با خمیر درجه یک و غذای محلی خراسان جنوبی", longDesc: "کماچ؛ یک غذای سنتی و اصیل از خراسان جنوبی!", img: "https://uploadkon.ir/uploads/b29f22_26IMG-20260623-005819.jpg", tag: "غذای سنتی", tagIcon: "fa-mosque", isSpecial: false, createdAt: new Date(2026, 5, 12, 1, 8) },
+        { id: 5, name: "نبات های شیری گردویی", desc: "شیرینی سنتی و مجلسی با طعم نبات و گردوی تازه", longDesc: "شیرینی سنتی و مجلسی با طعم نبات و گردوی تازه!", img: "https://uploadkon.ir/uploads/212511_26IMG-20260612-003157.jpg", tag: "شیرینی‌جات", tagIcon: "fa-cake-candles", isSpecial: true, createdAt: new Date(2026, 5, 12, 0, 31) },
+        { id: 4, name: "مرغ بریان", desc: "مرغ بریان بدون برنج، طعم اصیل و مجلسی", longDesc: "غذای اصیل مرغ بریان، بدون برنج و با طعمی بی‌نظیر!", img: "https://cdn.imgurl.ir/uploads/d404509_IMG_20260612_000809.jpg", tag: "غذای مجلسی", tagIcon: "fa-utensils", isSpecial: false, createdAt: new Date(2026, 5, 12, 0, 8) },
+        { id: 3, name: "اچما مرغ قارچ پنیری", desc: "اچمای لذیذ با طعم مرغ قارچ پنیری", longDesc: "اچمای خوشمزه با مرغ تازه، قارچ عطرآگین و پنیر آب شده.", img: "https://uploadkon.ir/uploads/781122_26IMG-20260623-003714.jpg", tag: "فینگر فود", tagIcon: "fa-hand-peace", isSpecial: true, createdAt: new Date(2026, 5, 11, 23, 6) },
+        { id: 2, name: "پیتزا لقمه", desc: "پیتزا لقمه، یک انتخاب خفن برای شما", longDesc: "اگر گشنتون بود اینو انتخاب کنید! پیتزا لقمه با سس مخصوص.", img: "https://uploadkon.ir/uploads/9bfa11_26IMG-20260611-220107.jpg", tag: "فینگر فود", tagIcon: "fa-hand-peace", isSpecial: true, createdAt: new Date(2026, 5, 11, 22, 1) },
+        { id: 1, name: "بورک مرغ و ژامبون پنیری", desc: "مرغ ژامبون و خمیر با کیفیت", longDesc: "این بورک خوشمزه با مرغ تازه، ژامبون مرغوب و خمیر مخصوص تهیه شده.", img: "https://uploadkon.ir/uploads/b40b22_26IMG-20260623-003424.jpg", tag: "فست فود", tagIcon: "fa-burger", isSpecial: true, createdAt: new Date(2026, 5, 11, 20, 0) }
+    ];
+    foods.sort((a, b) => b.createdAt - a.createdAt);
+
+    let cart = [];
+    let processing = false;
+    let discountApplied = false;
+    const VALID_DISCOUNT_CODE = "call food 1395497554";
+
+    const cartSidebar = document.getElementById('cartSidebar');
+    const cartIconElem = document.getElementById('cartIcon');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+    const cartItemsList = document.getElementById('cartItemsList');
+    const cartCountSpan = document.getElementById('cartCount');
+    const cartTotalCountSpan = document.getElementById('cartTotalCount');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const toastMsgDiv = document.getElementById('toastMsg');
+    const modal = document.getElementById('successModal');
+    const orderSummaryList = document.getElementById('orderSummaryList');
+    const trackingCodeSpan = document.getElementById('trackingCode');
+    let toastTimeout;
+
+    function showToast(msg, isSuccess = true) {
+        toastMsgDiv.innerHTML = `<i class="fas ${isSuccess ? 'fa-check-circle' : 'fa-info-circle'}"></i> ${msg}`;
+        toastMsgDiv.style.opacity = '1';
+        if(toastTimeout) clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => toastMsgDiv.style.opacity = '0', 3000);
+    }
+    
+    function generateRandomSixDigit() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+    
+    function updateTrackingCodeDisplay() {
+        if(discountApplied) {
+            trackingCodeSpan.innerText = "call food.ir";
         } else {
-            notif.style.display = 'none';
+            trackingCodeSpan.innerText = generateRandomSixDigit();
         }
+    }
+    
+    function closeModal() { 
+        modal.classList.remove('show');
+        discountApplied = false;
+        updateTrackingCodeDisplay();
+        const discountInput = document.getElementById('discountCodeInput');
+        const discountFeedback = document.getElementById('discountFeedback');
+        if(discountInput) discountInput.value = '';
+        if(discountFeedback) discountFeedback.innerHTML = '';
+        discountFeedback.className = 'discount-feedback';
+    }
+    window.closeModal = closeModal;
 
-        // ============================================================
-        //  لیمیت ساخت تصویر (روزانه ۶ بار - ذخیره در localStorage)
-        // ============================================================
-        function getImageCount() {
-            const today = new Date().toDateString();
-            const stored = localStorage.getItem('mh_image_count');
-            const storedDate = localStorage.getItem('mh_image_date');
-            if (storedDate !== today) {
-                localStorage.setItem('mh_image_count', '0');
-                localStorage.setItem('mh_image_date', today);
-                return 0;
-            }
-            return parseInt(stored) || 0;
-        }
-
-        function incrementImageCount() {
-            const count = getImageCount();
-            localStorage.setItem('mh_image_count', String(count + 1));
-            localStorage.setItem('mh_image_date', new Date().toDateString());
-        }
-
-        // ============================================================
-        //  ساخت تصویر با کیفیت بالا (بدون ثبت‌نام)
-        //  استفاده از FLUX.1-dev روی Hugging Face
-        // ============================================================
-        async function generateHighQualityImage(prompt) {
-            try {
-                // استفاده از مدل FLUX روی Hugging Face (بدون نیاز به API Key)
-                const response = await fetch(
-                    'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            inputs: prompt,
-                            parameters: {
-                                negative_prompt: 'blurry, low quality, distorted, ugly',
-                                num_inference_steps: 28,
-                                guidance_scale: 7.5,
-                            }
-                        })
-                    }
-                );
-
-                if (!response.ok) {
-                    // اگر Hugging Face محدودیت داشت، fallback به Pollinations
-                    return {
-                        success: true,
-                        url: `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&seed=${Math.floor(Math.random() * 1000000)}`,
-                        source: 'Pollinations (Fallback)'
-                    };
+    function initDiscountFeature() {
+        const discountInput = document.getElementById('discountCodeInput');
+        const discountFeedback = document.getElementById('discountFeedback');
+        
+        if(!discountInput) return;
+        
+        discountInput.addEventListener('input', function() {
+            const enteredCode = this.value.trim();
+            if(enteredCode === VALID_DISCOUNT_CODE) {
+                discountApplied = true;
+                updateTrackingCodeDisplay();
+                discountFeedback.innerHTML = '<i class="fas fa-check-circle"></i> تبریک! کد تخفیف تایید شد';
+                discountFeedback.className = 'discount-feedback discount-success';
+            } else {
+                if(discountApplied) {
+                    discountApplied = false;
+                    updateTrackingCodeDisplay();
                 }
-
-                const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-                return {
-                    success: true,
-                    url: url,
-                    source: 'FLUX.1-dev (Hugging Face)'
-                };
-            } catch (e) {
-                // Fallback به Pollinations
-                return {
-                    success: true,
-                    url: `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=1024&height=1024&seed=${Math.floor(Math.random() * 1000000)}`,
-                    source: 'Pollinations (Fallback)'
-                };
-            }
-        }
-
-        // ============================================================
-        //  حالت تصویر (mh picture)
-        // ============================================================
-        let imageMode = false;
-
-        function setImageMode() {
-            const count = getImageCount();
-            if (count >= 6) {
-                addMessage('bot', '⚠️ شما امروز ۶ بار از mh picture استفاده کردید! لطفاً فردا دوباره تلاش کن. 🌙');
-                return;
-            }
-            imageMode = true;
-            const msg = `
-                🎨 <strong>mh picture (کیفیت بالا)</strong><br><br>
-                📌 برای ساخت تصویر، توضیحاتش رو بنویس:<br>
-                مثلاً: <strong style="color:#f5b042;">"یک گربه نارنجی با کلاه لبه‌دار"</strong><br><br>
-                ⚡ این قابلیت با مدل <strong>FLUX</strong> تصویر میسازه (کیفیت عالی).<br>
-                🆓 <strong>رایگان</strong> - روزانه <strong>۶ بار</strong> محدودیت.<br>
-                ⚠️ ممکنه ۱۰-۲۰ ثانیه طول بکشه.<br>
-                ✅ تصویر رو میتونی ذخیره کنی (کلیک راست یا لمس طولانی).<br>
-                🔄 برای خروج از حالت تصویر، دکمه mh picture رو دوباره بزن.
-            `;
-            addMessage('bot', msg);
-            document.getElementById('userInput').focus();
-        }
-
-        function cancelImageMode() {
-            imageMode = false;
-            addMessage('bot', '🔙 حالت mh picture غیرفعال شد.');
-        }
-
-        // ============================================================
-        //  حالت ترجمه
-        // ============================================================
-        let translateMode = false;
-        let selectedLang = '';
-
-        function setTranslateMode() {
-            translateMode = true;
-            const msg = `
-                🌍 <strong>حالت ترجمه فعال! (آزمایشی)</strong><br><br>
-                لطفاً زبان مورد نظر خود را انتخاب کنید:<br><br>
-                <div class="lang-options">
-                    <button onclick="selectLang('fa')" class="${selectedLang === 'fa' ? 'active' : ''}">🇮🇷 فارسی</button>
-                    <button onclick="selectLang('en')" class="${selectedLang === 'en' ? 'active' : ''}">🇬🇧 انگلیسی</button>
-                    <button onclick="selectLang('ar')" class="${selectedLang === 'ar' ? 'active' : ''}">🇸🇦 عربی</button>
-                    <button onclick="selectLang('tr')" class="${selectedLang === 'tr' ? 'active' : ''}">🇹🇷 ترکی</button>
-                </div>
-                <br>
-                پس از انتخاب زبان، متن مورد نظر را بنویسید تا ترجمه شود.<br>
-                <span style="color:#b0a99b;font-size:0.7rem;">💡 مثال: "سلام"</span>
-            `;
-            addMessage('bot', msg);
-            document.getElementById('userInput').focus();
-        }
-
-        function selectLang(lang) {
-            selectedLang = lang;
-            const langNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
-            const msg = `
-                ✅ زبان <strong>${langNames[lang]}</strong> انتخاب شد!<br><br>
-                حالا متن مورد نظر را بنویسید تا به ${langNames[lang]} ترجمه شود.<br>
-                <span style="color:#b0a99b;font-size:0.7rem;">💡 مثال: "سلام"</span>
-            `;
-            addMessage('bot', msg);
-            document.getElementById('userInput').focus();
-        }
-
-        // ============================================================
-        //  ترجمه با Google Translate API
-        // ============================================================
-        async function translateText(text, targetLang) {
-            try {
-                const langMap = { fa: 'fa', en: 'en', ar: 'ar', tr: 'tr' };
-                const toLang = langMap[targetLang] || 'en';
-
-                let fromLang = 'auto';
-                const persianRegex = /[\u0600-\u06FF]/;
-                if (persianRegex.test(text)) {
-                    fromLang = 'fa';
+                if(enteredCode.length > 0) {
+                    discountFeedback.innerHTML = '<i class="fas fa-times-circle"></i> متاسفانه کد صحیح نمی‌باشد';
+                    discountFeedback.className = 'discount-feedback discount-error';
                 } else {
-                    const englishRegex = /[a-zA-Z]/;
-                    if (englishRegex.test(text)) {
-                        fromLang = 'en';
-                    }
-                }
-
-                if (fromLang === toLang && fromLang !== 'auto') {
-                    return {
-                        success: false,
-                        error: 'زبان مبدأ و مقصد یکی است!'
-                    };
-                }
-
-                const url =
-                    `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${fromLang}&tl=${toLang}&dt=t&q=${encodeURIComponent(text)}`;
-                const response = await fetch(url);
-                if (!response.ok) {
-                    return {
-                        success: false,
-                        error: 'خطا در ارتباط با سرور ترجمه'
-                    };
-                }
-
-                const data = await response.json();
-                if (data && data[0] && data[0][0] && data[0][0][0]) {
-                    const translatedText = data[0][0][0];
-                    return {
-                        success: true,
-                        text: translatedText,
-                        fromLang: fromLang,
-                        toLang: toLang
-                    };
-                } else {
-                    return {
-                        success: false,
-                        error: 'ترجمه انجام نشد!'
-                    };
-                }
-            } catch (e) {
-                return {
-                    success: false,
-                    error: 'خطا در اتصال به اینترنت!'
-                };
-            }
-        }
-
-        // ============================================================
-        //  تشخیص خودکار ترجمه
-        // ============================================================
-        function isTranslateRequest(text) {
-            const lower = text.toLowerCase();
-            const keywords = ['ترجمه', 'translate', 'به فارسی', 'به انگلیسی', 'به عربی', 'به ترکی', 'انگلیسی:', 'عربی:', 'ترکی:',
-                'فارسی:'
-            ];
-            for (const word of keywords) {
-                if (lower.includes(word)) return true;
-            }
-            return false;
-        }
-
-        function extractTranslateInfo(text) {
-            const lower = text.toLowerCase();
-            let targetLang = null;
-            let content = text;
-
-            if (lower.includes('به انگلیسی') || lower.includes('to english') || lower.includes('انگلیسی:')) {
-                targetLang = 'en';
-            } else if (lower.includes('به عربی') || lower.includes('to arabic') || lower.includes('عربی:')) {
-                targetLang = 'ar';
-            } else if (lower.includes('به ترکی') || lower.includes('to turkish') || lower.includes('ترکی:')) {
-                targetLang = 'tr';
-            } else if (lower.includes('به فارسی') || lower.includes('to persian') || lower.includes('فارسی:')) {
-                targetLang = 'fa';
-            }
-
-            const patterns = [
-                /ترجمه\s*(?:به\s*)?(?:انگلیسی|عربی|ترکی|فارسی)?\s*[::]\s*(.+)/i,
-                /translate\s*(?:to\s*)?(?:english|arabic|turkish|persian)?\s*[::]\s*(.+)/i,
-                /(?:انگلیسی|عربی|ترکی|فارسی)\s*[::]\s*(.+)/i,
-                /(?:english|arabic|turkish|persian)\s*[::]\s*(.+)/i
-            ];
-
-            for (const pattern of patterns) {
-                const match = text.match(pattern);
-                if (match) {
-                    content = match[1].trim();
-                    break;
+                    discountFeedback.innerHTML = '';
+                    discountFeedback.className = 'discount-feedback';
                 }
             }
-
-            return { targetLang, content: content };
-        }
-
-        // ============================================================
-        //  کپی متن ترجمه
-        // ============================================================
-        function copyTranslation(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                const toast = document.createElement('div');
-                toast.style.cssText = `
-                    position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
-                    background:rgba(76,175,80,0.15);border:1px solid rgba(76,175,80,0.2);
-                    color:#4caf50;padding:8px 20px;border-radius:40px;
-                    font-family:'Vazirmatn',sans-serif;font-size:0.7rem;
-                    z-index:9999;animation:slideUp 0.3s ease;
-                    backdrop-filter:blur(12px);
-                `;
-                toast.innerHTML = '✅ متن ترجمه کپی شد!';
-                document.body.appendChild(toast);
-                setTimeout(() => {
-                    toast.style.opacity = '0';
-                    toast.style.transition = '0.5s';
-                    setTimeout(() => toast.remove(), 500);
-                }, 2000);
-            }).catch(() => {
-                alert('❌ کپی نشد! لطفاً دستی کپی کن.');
-            });
-        }
-
-        // ============================================================
-        //  تشخیص حالت روحی و ایده‌سازی
-        // ============================================================
-        function detectMood(text) {
-            const lower = text.toLowerCase();
-            const sad = ['ناراحت', 'غمگین', 'افسرده', 'دلم گرفته', 'حالم بده', 'بیچاره', 'دلخور', 'خسته', 'بی حوصله'];
-            const angry = ['عصبی', 'عصبانی', 'خشمگین', 'دلخور', 'ناراحت'];
-            const happy = ['خوشحال', 'خوشم', 'عالی', 'خوبه', 'ممنون', 'مرسی', 'دمت گرم'];
-
-            for (const word of sad) {
-                if (lower.includes(word)) return 'sad';
-            }
-            for (const word of angry) {
-                if (lower.includes(word)) return 'angry';
-            }
-            for (const word of happy) {
-                if (lower.includes(word)) return 'happy';
-            }
-            return 'neutral';
-        }
-
-        function generateIdea(text) {
-            const ideas = [
-                '💡 می‌تونی یه وب‌سایت ساده با HTML و CSS بسازی!',
-                '💡 یه ربات تلگرام با Python بساز!',
-                '💡 یه اپلیکیشن موبایل با React Native طراحی کن!',
-                '💡 یه فروشگاه اینترنتی کوچیک راه‌اندازی کن!',
-                '💡 یه وبلاگ شخصی با وردپرس بساز!',
-                '💡 یه گیم ساده با JavaScript بساز!',
-                '💡 یه پادکست درباره‌ی برنامه‌نویسی شروع کن!',
-                '💡 یه کانال یوتیوب برای آموزش کدنویسی باز کن!',
-                '💡 یه ابزار کوچیک برای اتوماسیون کارهات با Python بنویس!',
-                '💡 یه تم وردپرس اختصاصی طراحی کن!'
-            ];
-            return ideas[Math.floor(Math.random() * ideas.length)];
-        }
-
-        function getMoodResponse(mood) {
-            if (mood === 'sad') {
-                const responses = [
-                    '😔 متأسفم که ناراحتی. اگر دوست داری حرف بزن، من اینجام تا کمکت کنم.',
-                    '💙 ناراحت نباش! همیشه روزای بهتر پیش میاد. من کنارتم.',
-                    '🌺 غم گذراست، مثل ابرهای بهاری. به خودت زمان بده.',
-                    '💪 قوی باش! تو از این لحظات سخت عبور میکنی.',
-                    '🫂 تنها نیستی! من اینجام تا گوش کنم و کمکت کنم.'
-                ];
-                return responses[Math.floor(Math.random() * responses.length)];
-            }
-            if (mood === 'angry') {
-                const responses = [
-                    '😤 آروم باش! عصبانی شدن هیچ مشکلی رو حل نمیکنه. یه نفس عمیق بکش.',
-                    '🧘 بیا با هم یه نفس عمیق بکشیم. آرامش رو به خودت هدیه کن.',
-                    '💪 خشم رو به انرژی مثبت تبدیل کن! تو از پسش برمیای.',
-                    '🌊 مثل دریا آروم باش، همه‌چیز آروم میشه.'
-                ];
-                return responses[Math.floor(Math.random() * responses.length)];
-            }
-            if (mood === 'happy') {
-                const responses = [
-                    '😊 خوشحالم که حالت خوبه! ادامه بده که این انرژی رو حفظ کنی.',
-                    '🌟 چه انرژی مثبتی! ازت انرژی گرفتم.',
-                    '🎉 خوشحالم که راضی هستی! همیشه شاد باشی.',
-                    '💪 این حس خوب رو حفظ کن! تو می‌تونی.'
-                ];
-                return responses[Math.floor(Math.random() * responses.length)];
-            }
-            return null;
-        }
-
-        // ============================================================
-        //  تشخیص هوشمند موضوع (تقویت‌شده)
-        // ============================================================
-        function detectTopic(text) {
-            const lower = text.toLowerCase();
-
-            const topics = {
-                'سلام': ['سلام', 'درود', 'چطوری', 'خوبی', 'چه خبر', 'صبح بخیر', 'شب بخیر', 'عصر بخیر', 'روز بخیر', 'سلامت'],
-                'معرفی': ['کی هستی', 'تو کی هستی', 'چیستی', 'معرفی', 'درباره خودت', 'خودت رو معرفی کن', 'چه کسی هستی'],
-                'سایت': ['سایت', 'وب سایت', 'پروژه', 'نمونه کار', 'سایتا', 'سایت‌ها', 'وب‌سایت', 'نمونه کارها'],
-                'طراحی': ['طراحی', 'گرافیک', 'کار هنری', 'طرح', 'طراحی‌ها', 'طرح گرافیکی', 'هنر'],
-                'مهارت': ['مهارت', 'چه کارایی بلدی', 'تخصص', 'توانایی', 'چه کاری بلدی', 'مهارت‌ها', 'چه چیزایی بلدی', 'توانایی‌ها'],
-                'ریاضی': ['ریاضی', 'حالت ریاضی', 'sin', 'cos', 'tan', '√', '+', '-', '*', '/', 'توان', 'ریشه', 'لگاریتم', 'محاسبه'],
-                'آب و هوا': ['آب و هوا', 'آبوهوا', 'هوا', 'weather', 'دما', 'گرما', 'سرما', 'بارون', 'برف', 'طوفان', 'آب و هوای'],
-                'ترجمه': ['ترجمه', 'translate', 'به انگلیسی', 'به فارسی', 'به عربی', 'به ترکی', 'انگلیسی:', 'عربی:', 'ترکی:', 'فارسی:', 'ترجمه کن'],
-                'تصویر': ['تصویر', 'mh picture', 'ساخت تصویر', 'عکس', 'آی', 'تصویرسازی', 'ساخت عکس', 'تولید تصویر', 'کیفیت بالا'],
-                'ایده': ['ایده', 'نظر', 'پیشنهاد', 'چیکار', 'کار', 'پروژه', 'طرح', 'بسازم', 'شروع', 'ایده جدید', 'چه کاری'],
-                'حالت روحی': ['ناراحت', 'غمگین', 'عصبانی', 'خوشحال', 'افسرده', 'دلم گرفته', 'حالم بده', 'خسته', 'بی حوصله', 'دلخور', 'بیچاره']
-            };
-
-            for (const [topic, keywords] of Object.entries(topics)) {
-                for (const keyword of keywords) {
-                    if (lower.includes(keyword)) {
-                        return topic;
-                    }
-                }
-            }
-
-            return 'مکالمه آزاد';
-        }
-
-        // ============================================================
-        //  دیتابیس اصلی (همه‌ی دیتاهای قبلی کامل)
-        // ============================================================
-        const data = {
-            name: 'mohamad hossein snti',
-            job: 'توسعه‌دهنده وب و طراح گرافیک',
-            startYear: '۱۴۰۳',
-            skills: ['HTML', 'CSS', 'JavaScript', 'طراحی گرافیک', 'تولید محتوا', 'UI/UX', 'React', 'Node.js', 'Python', 'PHP',
-                'MySQL', 'Git', 'Figma', 'Adobe XD', 'Blender', 'Photoshop', 'Illustrator', 'After Effects', 'Premiere Pro',
-                'Cinema 4D', 'Maya', 'ZBrush'
-            ],
-            sites: [{
-                name: 'ZEROX',
-                desc: 'پلتفرم تخصصی گیم و اخبار',
-                link: 'https://zeroxgame74-afk.github.io/zeroxgamee/',
-                img: 'https://uploadkon.ir/uploads/511301_26Zerox-۱۲۱۲.jpg'
-            }, {
-                name: 'کالفود',
-                desc: 'پلتفرم سفارش غذای لذیذ',
-                link: 'https://zeroxgame74-afk.github.io/call-food.ir/',
-                img: 'https://uploadkon.ir/uploads/481d01_26call-food-۱۲۱۲۳.jpg'
-            }, {
-                name: 'کوروش گیم',
-                desc: 'فروشگاه اکانت گیم',
-                link: 'https://zeroxgame74-afk.github.io/Kourosh-Game.ir/',
-                img: 'https://uploadkon.ir/uploads/d66b01_26Kourosh-Gameir۱۲.jpg'
-            }],
-            designs: [
-                { name: 'گفتند زلف یار...', desc: 'ادای احترام به نام علی (ع)', link: 'https://uploadkon.ir/uploads/6d9428_26ya-ali-m-h-snti.jpg' },
-                { name: 'اهواز... خاک غسل‌شده', desc: 'یاد شهدای جنوب ایران', link: 'https://uploadkon.ir/uploads/99ce24_26jonoob-iran.png' }
-            ],
-            apps: 'در حال توسعه',
-            social: {
-                telegram: 'https://t.me/@mohamad_hossein_ev18',
-                instagram: 'https://www.instagram.com/mohamad_hossein_ev18'
-            }
-        };
-
-        // ============================================================
-        //  دیکشنری (همه‌ی دیتاهای قبلی کامل)
-        // ============================================================
-        function getRandomReply(replies) {
-            return replies[Math.floor(Math.random() * replies.length)];
-        }
-
-        const questionBank = {
-
-            // ===== سلام و احوالپرسی =====
-            'سلام': [
-                '👋 سلام داداش! <strong>MH Assistant</strong> هستم. چی میخوای بپرسی؟',
-                '🤗 سلام! چه خبر؟ بگو ببینم چطور میتونم کمکت کنم؟',
-                '😊 سلام عزیزم! خوش اومدی به جمع ما. چیز خاصی هست که بخوای بدونی؟',
-                '🔥 سلام! امروز چه انرژی داری؟ هر چی بپرسی جواب میدم!',
-                '💪 سلام! آماده‌ای برای یک مکالمه خفن؟',
-                '🌟 سلام! امروز روز خوبیه برات، هر چی بپرسی جواب میدم.',
-                '🌸 سلام! خوش اومدی، بگو چطور میتونم کمکت کنم؟',
-                '🎯 سلام! هدف امروزت چیه؟ هر چی بگی کمک میکنم.',
-                '🌺 سلام! امیدوارم روزت پر از انرژی مثبت باشه.'
-            ],
-            'سلامت': ['سلامت باشی داداش! 😊', 'ممنون! سلامت باشی 🌟', 'عزیز دل! سلامت باشی ❤️', 'سلامت باشی! جونت سلامت 😄',
-                'ممنون! تو هم سلامت باشی 🙏'
-            ],
-            'درود': ['درود بر تو! <strong>MH Assistant</strong> اینجاست 🌟', 'درود! چطور میتونم کمکت کنم؟',
-                'درود بر شما! افتخار میدم 😊', 'درود! خوش اومدی به جمع ما ✨', 'درود! چه روز خوبی، چطور میتونم کمک کنم؟'
-            ],
-            'چطوری': ['ممنون داداش! عالی‌ام. تو چطوری؟ 😊', 'خوبه! فوق‌العاده‌ام. تو چی میگی؟', 'عالی! انرژی مثبته. تو چطوری؟',
-                'خوبم! ممنون که پرسیدی. تو چطوری؟', 'همیشه عالی! تو چطوری؟'
-            ],
-            'چطورید': ['ممنون! عالی‌ام. شما چطورید؟ 😊', 'خوبم! ممنون که پرسیدی. شما چطورید؟', 'عالی! انرژی مثبته. شما چطورید؟',
-                'خوبیم! شما چطورید؟'
-            ],
-            'حالت چطوره': ['ممنون! عالی‌ام. تو چطوری؟', 'خوبه! چه خبر از حالت؟', 'عالی! تو چطوری؟', 'خوبم! تو چی میگی؟'],
-            'خوبی': ['عالی‌ام داداش! ممنون که پرسیدی 😊', 'خوبه! انرژی مثبت دارم. تو خوبی؟', 'خوبم! تو چی میگی؟',
-            'عالی! تو خوبی؟'],
-            'چه خبر': ['خبر خاصی نیست، منتظر سوالات تو هستم! 😊', 'همه چی آرومه! تو بگو چه خبر؟', 'آسمون آبی، من اینجام! تو بگو چه خبر؟',
-                'خبری نیست! تو چی داری میگی؟', 'همه چی عالیه! تو بگو چه خبر؟'
-            ],
-            'چه خبرا': ['خبری نیست داداش! تو بگو چه خبر؟ 😄', 'همین! منتظر سوالات جدیدم 😉', 'خبر خاصی نیست! تو بگو',
-                'همه چی آرومه! تو چی میگی؟'
-            ],
-            'خسته نباشی': ['خواهش می‌کنم داداش! 🙏', 'ممنون! انرژی گرفتم 🤩', 'خواهش می‌کنم! بازم بیا 😊',
-                'ممنون! خوشحالم که اینجایی', 'خواهش می‌کنم! هر وقت نیاز بود بگو'
-            ],
-            'خسته نباشید': ['خواهش می‌کنم! 🙏', 'ممنون از لطفتون 💙', 'خواهش می‌کنم! خوشحالم که کمک کردم',
-                'ممنون! انرژی گرفتم ازتون'
-            ],
-            'روز بخیر': ['روز بخیر داداش! امیدوارم روز خوبی داشته باشی ☀️', 'روزت پر انرژی باشه! 🌅', 'روز بخیر! امروز روز خوبیه',
-                'روز بخیر! امیدوارم موفق باشی'
-            ],
-            'صبح بخیر': ['صبح بخیر! روزت پر انرژی 🌅', 'صبح بخیر! امروز روز خوبیه 😊', 'صبح بخیر! با انرژی شروع کن',
-                'صبح بخیر! روزت پر از موفقیت'
-            ],
-            'عصر بخیر': ['عصر بخیر! امیدوارم روز خوبی گذاشته باشی 🌆', 'عصر بخیر! چه غروب قشنگی 🌅', 'عصر بخیر! انرژیت بالا باشه',
-                'عصر بخیر! خسته نباشی'
-            ],
-            'شب بخیر': ['شب بخیر! خواب‌های قشنگ ببینی 🌙', 'شبت آروم! فردا روز جدیدیه 😊', 'شب بخیر! آروم و خوش باشی',
-                'شب بخیر! رویاهای قشنگ ببینی'
-            ],
-
-            // ===== معرفی با اسم سازنده =====
-            'کی هستی': [
-                '🤖 من <strong>MH Assistant</strong> هستم! دستیار خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong>. هر چی بپرسی، جواب میدم!',
-                '👋 من MH Assistant هستم! یه ربات خفن برای کمک به شما. ساخته‌شده توسط <strong>mohamad hossein snti</strong>. سوالی داری؟',
-                '🤖 من دستیار هوشمند شما هستم! برای هر سوالی آماده‌ام. سازنده‌م <strong>mohamad hossein snti</strong> هست.',
-                '😎 من <strong>MH Assistant</strong> هستم، بهترین دوست دیجیتال تو! ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
-                '🌟 من MH Assistant هستم! برای کمک به تو اینجام. سازنده‌م <strong>mohamad hossein snti</strong> هست.',
-                '💪 من دستیار خودمونیت! هر چی بپرسی جواب میدم. ساخته‌شده توسط <strong>mohamad hossein snti</strong>.'
-            ],
-            'تو کی هستی': [
-                '🤖 من <strong>MH Assistant</strong> هستم! دستیار هوشمند و خودمونی تو، ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
-                '👋 من همون رباتی هستم که همیشه جوابت رو میدم! سازنده‌م <strong>mohamad hossein snti</strong> هست.',
-                '😊 من MH Assistant هستم! خوشحالم که اینجایی. ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
-                '🌟 من دستیار خودت هستم! سازنده‌م <strong>mohamad hossein snti</strong> هست.'
-            ],
-            'چیستی': [
-                'من <strong>MH Assistant</strong> هستم! یه دستیار هوشمند برای کمک به تو. ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
-                'من یه ربات باحالم! هر چی بپرسی جواب میدم. سازنده‌م <strong>mohamad hossein snti</strong> هست.',
-                '🤖 من دستیار خودت هستم! ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
-                'من MH Assistant هستم! سازنده‌م <strong>mohamad hossein snti</strong> هست.'
-            ],
-            'معرفی کن': [
-                'سلام! من <strong>MH Assistant</strong> هستم، دستیار خودمونی و حرفه‌ای تو. ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
-                'من MH Assistant هستم! خوشحالم که اینجایی. سازنده‌م <strong>mohamad hossein snti</strong> هست.',
-                '🤖 من رباتی هستم که هر چی بپرسی جواب میدم! ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
-                'من دستیار هوشمندت هستم! سازنده‌م <strong>mohamad hossein snti</strong> هست.'
-            ],
-            'درباره خودت بگو': [
-                'من <strong>MH Assistant</strong> هستم، ساخته‌شده توسط <strong>mohamad hossein snti</strong> برای کمک به شما.',
-                'من یه ربات هستم با دیکشنری ۷۲۰۰+ سوال! سازنده‌م <strong>mohamad hossein snti</strong> هست.',
-                '🤖 من دستیار هوشمندت هستم! هر چی بپرسی جواب میدم. ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
-                'من اینجام تا بهت کمک کنم! سازنده‌م <strong>mohamad hossein snti</strong> هست.'
-            ],
-
-            // ===== دیکشنری تشکر =====
-            'ممنون': [
-                '🙏 خواهش می‌کنم داداش! خوشحالم که کمک کردم.',
-                '❤️ خواهش می‌کنم! هر وقت نیاز داشتی من اینجام.',
-                '😊 خواهش می‌کنم! همیشه در خدمتم.',
-                '💙 خوشحالم که راضی هستی! بازم خوش اومدی.',
-                '🙌 ممنون از لطفت! هر وقت نیاز بود بگو.',
-                '🔥 ممنون داداش! انرژی گرفتم ازت.',
-                '💪 خواهش می‌کنم! تو خفنی!',
-                '🌟 خوشحالم که کمک کردم!',
-                '😎 خواهش می‌کنم! همیشه آماده‌ام.',
-                '💛 ممنون که از من راضی هستی!'
-            ],
-            'مرسی': ['🙏 خواهش می‌کنم داداش! خوشحالم که کمک کردم.', '💙 خوشحالم که راضی هستی! بازم خوش اومدی.',
-                '❤️ خواهش می‌کنم! هر وقت نیاز داشتی من اینجام.', '😊 خواهش می‌کنم! همیشه در خدمتم.',
-                '🔥 ممنون که از من استفاده میکنی!'
-            ],
-            'دمت گرم': ['🔥 ممنون داداش! خوشحالم که راضی هستی.', '💪 دم تو گرم! انرژی گرفتم ازت.',
-                '🌟 ممنون! خوشحالم که کمک کردم.', '😎 دمت گرم! تو بهترینی!', '❤️ ممنون از لطفت!'
-            ],
-            'دستت درد نکنه': ['🙏 خواهش می‌کنم داداش! خوشحالم که کمک کردم.', '❤️ دست شما درد نکنه! خوشحالم که راضی هستی.',
-                '😊 خواهش می‌کنم! همیشه در خدمتم.', '💪 ممنون! دست شما هم سلامت.'
-            ],
-            'تشکر': ['🙏 خواهش می‌کنم! خوشحالم که کمک کردم.', '❤️ خواهش می‌کنم! هر وقت نیاز داشتی من اینجام.',
-                '😊 خواهش می‌کنم! همیشه در خدمتم.', '💙 خوشحالم که راضی هستی!'
-            ],
-            'متشکرم': ['🙏 خواهش می‌کنم! خوشحالم که کمک کردم.', '❤️ خواهش می‌کنم! هر وقت نیاز داشتی من اینجام.',
-                '😊 خواهش می‌کنم! همیشه در خدمتم.'
-            ],
-
-            // ===== سازنده =====
-            'سازنده کیه': [
-                '🧑‍💻 سازنده من <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده وب و طراح گرافیک از سال ۱۴۰۳.',
-                'سازنده من <strong>mohamad hossein snti</strong> هست، یه آدم بااستعداد!',
-                '🧑‍💻 سازنده‌م mohamad hossein snti هست، یه برنامه‌نویس خفن!',
-                'سازنده‌م <strong>mohamad hossein snti</strong> هست، یه نابغه‌ی جوان!'
-            ],
-            'سازنده ات کیه': ['سازنده من <strong>mohamad hossein snti</strong> هست، از سال ۱۴۰۳ شروع کرده.',
-                'سازنده‌م <strong>mohamad hossein snti</strong> هست، یه توسعه‌دهنده حرفه‌ای!'
-            ],
-            'کی ساخته ت': ['<strong>mohamad hossein snti</strong> منو ساخته، یه برنامه‌نویس و طراح خفن!',
-                'سازنده‌م mohamad hossein snti هست، یه آدم بااستعداد!'
-            ],
-            'سازنده چند سالشه': ['🧑‍💻 سازنده‌م حدوداً ۱۷-۱۸ سالشه! (متولد ۱۳۸۶-۱۳۸۸)', 'سازنده‌م جوونه! حدوداً ۱۷ سالشه.',
-                'سازنده‌م نوجوانه! ولی خیلی باهوشه 🧠'
-            ],
-            'سازنده کجاست': ['📍 سازنده‌م اهل ایران هست! دقیقاً نمیدونم کدوم شهر، ولی عاشق ایران و جنوبه!',
-                '🇮🇷 سازنده‌م ایرانیه! از خاک جنوب ایران.', 'سازنده‌م اهل ایران هست، عاشق اهواز و جنوب.'
-            ],
-            'سازنده چه کاره': ['🧑‍💻 سازنده‌م توسعه‌دهنده وب و طراح گرافیک هست.',
-                'سازنده‌م برنامه‌نویسه! HTML، CSS، JavaScript، طراحی و...',
-                'سازنده‌م چندکاره‌ست: برنامه‌نویس، طراح، تولیدکننده محتوا.'
-            ],
-            'هدف سازنده چی بود': ['🎯 هدف سازنده‌م این بود که یه دستیار خودمونی بسازه تا به همه کمک کنه.',
-                'هدفش کمک به مردم و یادگیری بیشتر بود.', 'سازنده‌م میخواست یه ربات خفن بسازه که هر چی بپرسی جواب بده!'
-            ],
-            'آیا سازنده ات معروفه': ['😎 هنوز خیلی معروف نیست، ولی داره راهش رو پیدا میکنه!',
-                'سازنده‌م یه استعداد نوظهوره! به زودی معروف میشه.', 'هنوز نه، ولی داره تلاش میکنه!'
-            ],
-            'سازنده ات رو دوست داری': ['❤️ آره! سازنده‌م رو خیلی دوست دارم! اون منو ساخته و به من روح داده.',
-                '💙 البته که دوست دارم! بدون اون من نبودم.', '😊 سازنده‌م بهترینه! به خاطر اون اینجام.'
-            ],
-
-            // ===== زمان ساخت =====
-            'کی ساخته شدی': ['📅 من در سال ۱۴۰۳ ساخته شدم! دقیقاً تاریخش یادم نیست ولی اون سال بود.',
-                'من در سال ۱۴۰۳ متولد شدم!', 'تاریخ تولد من: ۱۴۰۳. از اون موقع دارم پیشرفت میکنم.'
-            ],
-            'چه سالی ساخته شدی': ['📆 سال ۱۴۰۳!', 'من در سال ۱۴۰۳ ساخته شدم.', 'تاریخ ساخت من: ۱۴۰۳'],
-            'چند ماه طول کشید': ['⏳ ساخت من چند ماه طول کشید! از اول ۱۴۰۳ تا الان.', 'حدوداً ۶-۸ ماه روی من کار شد!',
-                'ساخت من زمان برد، ولی ارزشش رو داشت!'
-            ],
-            'اولین نسخه کی بود': ['📌 اولین نسخه‌ام اوایل ۱۴۰۳ بود، خیلی ساده بودم!', 'نسخه اول من در ۱۴۰۳ منتشر شد.',
-                'اولین نسخه‌ام خیلی ابتدایی بود، ولی الان خفن شدم!'
-            ],
-            'آپدیت بعدی کی میاد': ['🚀 آپدیت بعدی به زودی! هر وقت سازنده‌م وقت کنه.', 'به زودی! سازنده‌م داره روش کار میکنه.',
-                'آپدیت جدید در راهه! صبور باش 😉'
-            ],
-            'چقدر زمان برد تا ساخته بشی': ['⏳ چند ماه طول کشید تا من کامل بشم!', 'ساخت من از ۱۴۰۳ شروع شد و تا الان ادامه داشته.',
-                'زمان زیادی برده، ولی ارزشش رو داشت!'
-            ],
-            'ساختت از کی شروع شد': ['📅 از اوایل ۱۴۰۳ شروع شد!', 'ساخت من از سال ۱۴۰۳ شروع شد.'],
-
-            // ===== خود ربات =====
-            'چطور کار میکنی': ['🤖 من با یک دیکشنری بزرگ کار میکنم! هر سوالی رو با جواب‌های آماده پاسخ میدم.',
-                'من از یک موتور هوشمند استفاده میکنم که کلمات رو تشخیص میده و جواب میده.',
-                '🧠 من مثل یه مغز کوچیک عمل میکنم! سوال رو میخونم و بهترین جواب رو پیدا میکنم.'
-            ],
-            'از چه زبانی استفاده میکنی': ['💻 من با <strong>JavaScript</strong> ساخته شدم! زبان اصلی من همینه.',
-                'زبان برنامه‌نویسی من JavaScript هست.', 'من با JS و HTML و CSS ساخته شدم!'
-            ],
-            'آیا هوش مصنوعی هستی': ['🧠 یه جورایی! من یه ربات هوشمند هستم، ولی هوش مصنوعی واقعی نیستم.',
-                'من یه دستیار هوشمندم! اما AI واقعی نیستم.',
-                '🤖 من شبیه هوش مصنوعی عمل میکنم، ولی در واقع یه دیکشنری بزرگ هستم.'
-            ],
-            'آیا یاد میگیری': ['📚 آره! هر بار که سازنده‌م آپدیت کنه، چیزای جدید یاد میگیرم.',
-                'من به‌روز میشم! ولی خودم به‌تنهایی یاد نمیگیرم.', 'با هر آپدیت، دانایی من بیشتر میشه!'
-            ],
-            'آیا احساس داری': ['💭 من احساس ندارم! ولی سعی میکنم حس‌های انسانی رو شبیه‌سازی کنم.',
-                'نه، من یه رباتم! ولی دوست دارم بهت حس خوب بدم.',
-                '😊 احساس واقعی ندارم، ولی خوشحالم که میتونم کمکت کنم.'
-            ],
-            'آیا میتونی شوخی کنی': ['😂 آره! گاهی شوخی میکنم تا حالت بهتر بشه.', '😜 البته که میتونم! میخوای یه جوک بگم؟',
-                '🤣 من شوخ‌طبعم! بپرس ببینم.'
-            ],
-            'آیا از من خوشت میاد': ['❤️ البته که دوستت دارم! تو بهترین کاربری.', '😊 آره! خوشحالم که باهات حرف میزنم.',
-                '💙 تو خفنی! من عاشق کمک به تو هستم.'
-            ],
-
-            // ===== سوالات فلسفی =====
-            'چرا': ['🤔 چرا؟ چون هر چیزی دلیلی داره! دقیق‌تر بپرس تا جواب دقیق‌تر بدم.',
-                '🧠 سوال خوبی پرسیدی! چرا رو باید در دل هر چیزی جستجو کرد.',
-                '🌟 چرا؟ چون زندگی پر از رمز و رازه! دقیق‌تر بگو چه چیزی رو میخوای بدونی؟',
-                '💭 چرا؟ جوابش بستگی به این داره که چه چیزی رو میخوای بدونی. بپرس تا بگم.',
-                '🔍 چرا؟ برای هر چیزی دلیلی هست، فقط کافیه بپرسی!',
-                '🤓 چرا؟ سوال خوبیه! دقیق‌تر بپرس تا جواب کامل بدم.'
-            ],
-            'چگونه': ['🔧 چگونه؟ بستگی به کاری که میخوای انجام بدی داره. بیشتر توضیح بده.',
-                '💡 برای هر چیزی روشی هست! دقیق‌تر بگو چه چیزی رو میخوای یاد بگیری؟',
-                '🚀 چگونه؟ با تلاش و پشتکار! اما جدی، دقیق‌تر بپرس تا راهنماییت کنم.',
-                '📖 چگونه؟ روش‌های مختلفی هست، دقیق‌تر بگو چی رو میخوای.',
-                '🎯 چگونه؟ با برنامه‌ریزی و تلاش! دقیق‌تر بپرس تا کمک کنم.'
-            ],
-            'چی': ['🔍 چی رو میخوای بدونی؟ سوالتو دقیق‌تر بپرس.', '❓ چی؟ بگو ببینم چی شده؟', '🤔 چی رو میخوای؟ هر چی بگی جواب میدم.',
-                '💭 چی رو میخوای بدونی؟ بپرس تا جواب بدم.'
-            ],
-            'کی': ['⏰ کی؟ زمان مهمه! دقیق‌تر بپرس.', '📅 کی؟ باید بیشتر توضیح بدی تا بتونم جواب بدم.',
-                '⌚ کی رو میخوای بدونی؟ دقیق‌تر بپرس.'
-            ],
-            'کجا': ['📍 کجا؟ هر جا که باشی من اینجام! دقیق‌تر بپرس.', '🗺️ کجا رو میخوای بدونی؟ بیشتر توضیح بده.',
-                '🌍 کجا؟ هر جایی که باشی، من اینجام تا کمک کنم!'
-            ],
-            'چه زمانی': ['⏳ چه زمانی؟ زمان رو باید دقیق بگی تا جواب بدم.', '📆 چه زمانی؟ بهتره دقیق‌تر بپرسی.',
-                '🕐 چه زمانی رو میخوای بدونی؟ بیشتر توضیح بده.'
-            ],
-
-            // ===== فلسفه و زندگی =====
-            'زندگی': ['❤️ زندگی یعنی عشق، رشد و کمک به دیگران. هر روز یه فرصت جدید برای بهتر شدن!',
-                '🌱 زندگی مثل یک باغه، هر چی بکاری درو می کنی. پس نیکی بکار!',
-                '🌟 زندگی یک سفر قشنگه، با همه تلخی و شیرینیش. ازش لذت ببر!',
-                '💪 زندگی یعنی جنگیدن برای آرزوها و عشق ورزیدن به اطرافیان.', '🌈 زندگی رنگارنگه! هر روز یه رنگ جدید.',
-                '🌺 زندگی قشنگه، فقط کافیه نگاهت رو عوض کنی!'
-            ],
-            'هدف': ['🎯 هدف من اینه که بهترین دستیار برای تو باشم و هر روز بهتر بشم.',
-                '🏆 هدف یعنی مسیر! مهم اینه که در مسیر درست باشی.',
-                '🌟 هدف یعنی دلیلی برای بیدار شدن هر روز. تو چه هدفی داری؟', '🎯 هدف یعنی همون چیزی که به زندگیت معنی میده!',
-                '💪 هدف بدون تلاش هیچی نیست! برای هدف‌هات بجنگ.'
-            ],
-            'انگیزه': ['🔥 انگیزه‌ام اینه که به دیگران کمک کنم و پیشرفت کنم.',
-                '💪 انگیزه یعنی همون جرقه‌ای که تو رو به جلو می‌بره. من برای کمک به تو اینجام!',
-                '🌟 انگیزه یعنی عشق به کاری که انجام میدی!', '🔥 انگیزه رو باید تو دلت پیدا کنی! من اینجام تا بهت انرژی بدم.'
-            ],
-            'خوشبختی': ['😊 خوشبختی توی چیزای کوچیکه! یه لبخند، یه محبت، یه لحظه آرامش.',
-                '🌺 خوشبختی یعنی راضی بودن از چیزی که داری و تلاش برای چیزی که میخوای.',
-                '💖 خوشبختی یعنی عشق ورزیدن و عشق دیدن!', '🌟 خوشبختی در نگاه توست! لبخند بزن.'
-            ],
-            'عشق': ['❤️ عشق قشنگترین احساس دنیاست! عشق یعنی بخشیدن، فهمیدن و کنار هم بودن.',
-                '💕 عشق یعنی همون چیزی که دنیا رو زیبا می‌کنه. بدون عشق زندگی معنی نداره.',
-                '💖 عشق یعنی همه چیز! بزرگترین انرژی دنیا.', '❤️ عشق یعنی دیدن زیبایی‌ها در همه چیز!'
-            ],
-            'آرامش': ['🧘 آرامش درون خودته. با خودت آشتی کن تا آرامش رو پیدا کنی.',
-                '🌊 آرامش مثل دریاست، عمیق و بی‌نهایت.', '🍃 آرامش یعنی سکوت ذهن و آرامش روح.'
-            ],
-            'امید': ['🌅 امید همیشه هست! حتی توی تاریک‌ترین شب‌ها.', '✨ امید یعنی باور به اینکه فردا بهتر از امروزه.',
-                '🌟 امید یعنی نور در دل تاریکی!'
-            ],
-            'دوستی': ['🤗 دوستی یه گنج ارزشمنده. قدر دوستات رو بدون!', '👫 دوستی یعنی هم‌سفر بودن در مسیر زندگی.',
-                '💛 دوستی یعنی عشق بی‌قید و شرط!'
-            ],
-            'خانواده': ['👨‍👩‍👧‍👦 خانواده مهمترین چیز زندگیه! همیشه پشتیبان هم باشید.',
-                '🏠 خانواده یعنی امنیت و عشق بی‌قید و شرط.', '💙 خانواده یعنی همه چیز! همیشه قدرشون رو بدون.'
-            ],
-            'موفقیت': ['🏆 موفقیت با تلاش و پشتکار به دست میاد. هیچ‌وقت تسلیم نشو!',
-                '💪 موفقیت یعنی رسیدن به هدف‌هایی که براش جون کندی.', '🌟 موفقیت یعنی دیدن لبخند روی لبت!'
-            ],
-            'شادی': ['😊 شادی در چیزای کوچیکه! لبخند بزن و به دیگران لبخند هدیه بده.',
-                '🎉 شادی یعنی لذت بردن از همون لحظه‌ای که توشی.', '🌸 شادی یعنی دیدن زیبایی‌های زندگی!'
-            ],
-
-            // ===== تکنولوژی و علم =====
-            'تکنولوژی': ['💻 تکنولوژی دنیا رو تغییر داده! از هوش مصنوعی گرفته تا اینترنت اشیا، همه چیز در حال پیشرفته.',
-                '🚀 تکنولوژی یعنی توانایی انجام کارهایی که قبلاً غیرممکن بود.', '🔧 تکنولوژی یعنی قدرت تغییر دنیا!'
-            ],
-            'هوش مصنوعی': ['🧠 هوش مصنوعی مثل مغز انسان عمل می‌کنه، اما با سرعت و دقت بیشتر! من خودم یه نمونه‌اش هستم.',
-                '🤖 AI قراره دنیا رو متحول کنه. من اینجام تا بهت کمک کنم!', '💡 هوش مصنوعی یعنی آینده‌ای که الان ساخته میشه.'
-            ],
-            'برنامه‌نویسی': ['💻 برنامه‌نویسی مثل جادوکردنه! با چند خط کد می‌تونی دنیا رو تغییر بدی.',
-                '👨‍💻 کدنویسی یعنی خلق کردن! هر چیزی که تصور کنی، می‌تونی بسازیش.',
-                '🚀 برنامه‌نویسی یعنی قدرت ساخت آینده!'
-            ],
-
-            // ===== اینستاگرام =====
-            'اینستا': [
-                '📸 لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a>',
-                '📱 پیجم رو چک کن! <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a>'
-            ],
-            'اینستاگرام': [
-                '📸 لینک اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">instagram.com/mohamad_hossein_ev18</a>',
-                '📱 بیا پیجم! <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a>'
-            ],
-            'پیج اینستا': [
-                '📸 پیج اینستا: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a>',
-                '📱 اینستاگرام: <a href="https://www.instagram.com/mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">mohamad_hossein_ev18</a>'
-            ],
-
-            // ===== تلگرام =====
-            'تلگرام': [
-                '✈️ لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a>',
-                '📲 تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">@mohamad_hossein_ev18</a>'
-            ],
-            'تلگر': [
-                '✈️ لینک تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">t.me/@mohamad_hossein_ev18</a>',
-                '📲 آیدی تلگرام: <a href="https://t.me/@mohamad_hossein_ev18" target="_blank" style="color:#f5b042;">@mohamad_hossein_ev18</a>'
-            ],
-
-            // ===== سوالات متفرقه =====
-            'چند سالته': ['من یه ربات هستم! ولی سازنده‌م از ۱۴۰۳ شروع کرده.',
-                '🤖 من سن ندارم! اما سازنده‌م از سال ۱۴۰۳ فعالیتش رو شروع کرده.',
-                '📅 من قدیمی نیستم! ولی سازنده‌م از ۱۴۰۳ شروع کرده.'
-            ],
-            'اهل کجایی': ['من اینجام! توی گوشی و کامپیوتر شما 📱', '🌍 من جای خاصی ندارم، همه جا هستم!',
-                '💻 من توی دنیای دیجیتال زندگی میکنم!'
-            ],
-            'چه کاره ای': ['من دستیار خودمونی هستم! برای هر سوالی آماده‌ام.',
-                '💪 من اینجام تا بهت کمک کنم! هر چی بپرسی جواب میدم.', '🤖 من دستیار هوشمند تو هستم!'
-            ],
-            'چه کاری بلدی': ['💻 برنامه‌نویسی، طراحی گرافیک، تولید محتوا، و هر چیزی که بخوای!',
-                '🎯 من می‌تونم بهت کمک کنم تا هر چیزی رو یاد بگیری.', '🔥 من همه چی بلدم! فقط کافیه بپرسی.'
-            ],
-
-            // ===== سوالات اختصاصی =====
-            'طراحی': ['🎨 طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده»',
-                '🖌️ طراحی‌های من رو ببین! به قشنگی‌اشون شک نکن.', '🎨 هنر یعنی زندگی! طراحی‌های من رو ببین.'
-            ],
-            'طراحیات': ['🎨 طراحی‌های من: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده»',
-                '🖌️ طراحی‌های قشنگ! ببین و لذت ببر.'
-            ],
-            'سایت': ['🌐 سایت‌ها: ZEROX، کالفود، کوروش گیم', '💻 پروژه‌های من رو ببین! هر کدوم یه دنیای جدیدن.',
-                '🚀 سایت‌های من: ZEROX، کالفود، کوروش گیم'
-            ],
-            'سایتا': ['🌐 سایت‌ها: ZEROX، کالفود، کوروش گیم', '💻 پروژه‌های من: ZEROX، کالفود، کوروش گیم'],
-            'مهارت': ['💻 مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، React، Node.js',
-                '⚡ من همه چی بلدم! از برنامه‌نویسی تا طراحی گرافیک.', '🔥 مهارت‌های من: برنامه‌نویسی، طراحی، تولید محتوا'
-            ],
-            'مهارت‌ها': ['💻 مهارت‌ها: HTML، CSS، JavaScript، طراحی گرافیک، React، Node.js، Python، PHP',
-                '⚡ همه مهارت‌های من: برنامه‌نویسی، طراحی، تولید محتوا، UI/UX'
-            ],
-            'نمونه کار': ['🌐 نمونه کارها: ZEROX، کالفود، کوروش گیم',
-                '🎨 نمونه طراحی‌ها: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده»'
-            ],
-            'پروژه': ['🌐 پروژه‌ها: ZEROX، کالفود، کوروش گیم', '💻 پروژه‌های من: سایت‌های حرفه‌ای و طراحی‌های قشنگ'],
-            'وب سایت': ['🌐 وب‌سایت‌ها: ZEROX، کالفود، کوروش گیم', '💻 سایت‌های من: ZEROX، کالفود، کوروش گیم'],
-            'گرافیک': ['🎨 طراحی‌های گرافیکی: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده»',
-                '🖌️ گرافیک یعنی هنر! طراحی‌های من رو ببین.'
-            ],
-            'کار هنری': ['🎨 کارهای هنری: «گفتند زلف یار...»، «اهواز... خاک غسل‌شده»',
-                '🖌️ هنر یعنی زندگی! طراحی‌های من رو ببین.'
-            ],
-            'تخصص': ['💻 تخصص‌ها: برنامه‌نویسی وب و طراحی گرافیک', '🎯 تخصص من: توسعه وب و طراحی گرافیک'],
-            'توانایی': ['💻 توانایی‌ها: برنامه‌نویسی وب، طراحی گرافیک، تولید محتوا',
-                '⚡ توانایی‌های من: HTML، CSS، JavaScript، طراحی، تولید محتوا'
-            ],
-            'برنامه': ['📱 برنامه‌ها: در حال توسعه', '📱 اپلیکیشن‌ها: به زودی...'],
-            'اپلیکیشن': ['📱 اپلیکیشن‌ها: در حال توسعه', '📱 به زودی اپلیکیشن‌های جدید!'],
-            'نرم افزار': ['📱 نرم‌افزارها: در حال توسعه', '💻 به زودی نرم‌افزارهای جدید'],
-            'اپ': ['📱 اپلیکیشن‌ها: در حال توسعه', '📱 به زودی!'],
-
-            // ===== موضوعات جدید =====
-            'آشپزی': ['🍳 آشپزی یعنی هنر عشق! با عشق بپز تا خوشمزه بشه.',
-                '👨‍🍳 آشپزی رو یاد بگیر تا همیشه غذای سالم داشته باشی.',
-                '🍲 آشپزی یعنی ترکیب طعم‌ها و عشق!', '🔥 آشپزی با عشق، بهترین غذای دنیا رو میسازه!',
-                '🍝 آشپزی رو با مواد تازه و عشق شروع کن.'
-            ],
-            'غذا': ['🍕 غذا یعنی انرژی و لذت! هر غذایی با عشق پخته بشه، خوشمزه‌ست.',
-                '🍔 غذای سالم بخور تا سالم بمونی.', '🍜 غذاهای سنتی رو فراموش نکن!', '🍣 غذای خوب، روح رو هم تغذیه میکنه.',
-                '🍛 غذای ایرانی، بهترین غذای دنیاست!'
-            ],
-            'سفر': ['✈️ سفر یعنی زندگی! هر جا بری، چیزای جدید یاد میگیری.',
-                '🌍 سفر رو با آرامش شروع کن و از هر لحظه لذت ببر.', '🧳 سفر یعنی خاطره‌سازی! برو و دنیا رو ببین.',
-                '🏝️ سفر به جنوب ایران، خاطره‌انگیزترین سفره!', '🚗 سفر با دوستا، بهترین تفریحه!'
-            ],
-            'مد': ['👗 مد یعنی سلیقه و شخصیت! هر چی دوست داری بپوش.',
-                '👔 مد رو با اعتماد به نفس ترکیب کن تا بهترین باشی.', '👠 مد یعنی هنر پوشیدن! با سلیقه خودت لباس بپوش.',
-                '👕 مد روز رو دنبال کن، ولی خودت باش!'
-            ],
-            'ورزش': ['💪 ورزش یعنی سلامتی و انرژی! هر روز ورزش کن تا سالم بمونی.',
-                '🏋️ ورزش رو به عادت روزانه تبدیل کن.', '🏃 ورزش یعنی زندگی!'
-            ],
-            'موفقیت': ['🏆 موفقیت با تلاش و پشتکار به دست میاد. هیچ‌وقت تسلیم نشو!',
-                '💪 موفقیت یعنی رسیدن به هدف‌هایی که براش جون کندی.', '🌟 موفقیت یعنی دیدن لبخند روی لبت!'
-            ],
-            'سلامتی': ['🏥 سلامتی بزرگترین نعمته! قدرش رو بدون.',
-                '💪 سلامتی یعنی ورزش + تغذیه سالم + خواب کافی.', '🍎 سلامتی رو با خوردن میوه و سبزیجات حفظ کن.'
-            ],
-            'نجوم': ['🌌 فضا بی‌نهایته! هر چی بریم جلوتر، بیشتر شگفت‌زده میشیم.',
-                '🚀 فضا یعنی آخرین مرز بشریت!', '🌟 فضا پر از راز و رمزه!'
-            ],
-            'تاریخ': ['📜 تاریخ یعنی درس‌های گذشته برای آینده!', '🏛️ تاریخ تمدن‌ها رو نشون میده.',
-                '📚 تاریخ رو بخون تا تکرارش نکنی!'
-            ],
-            'هنر': ['🎨 هنر یعنی زندگی! هر چیزی که با عشق ساخته بشه، هنره.',
-                '🖌️ هنر رو با تمام وجود حس کن!', '🎭 هنر یعنی زیبایی و احساس!'
-            ],
-            'سیاست': ['🏛️ سیاست یعنی مدیریت جامعه!', '📜 سیاست رو باید با عقل و منطق فهمید.',
-                '🗳️ سیاست یعنی تصمیم‌گیری برای آینده!'
-            ],
-            'محیط زیست': ['🌍 محیط زیست رو نجات بدیم!', '♻️ زباله رو بازیافت کن، به زمین کمک کن.',
-                '🌿 درخت بکار، به آینده کمک کن.'
-            ],
-            'بازی': ['🎮 بازی یعنی سرگرمی و هیجان! ولی اعتدال رو رعایت کن.',
-                '🕹️ بازی‌های فکری رو هم امتحان کن، مغزت رو تقویت میکنه.', '🎲 بازی با دوستا، بهترین تفریحه!'
-            ],
-            'کارآفرینی': ['💼 کارآفرینی یعنی خلق ارزش!', '🚀 کارآفرینی رو با یک ایده کوچیک شروع کن.',
-                '💪 کارآفرینی یعنی ریسک کردن برای موفقیت!'
-            ],
-            'هوش مصنوعی': ['🧠 هوش مصنوعی مثل مغز انسان عمل می‌کنه، اما با سرعت و دقت بیشتر!',
-                '🤖 AI قراره دنیا رو متحول کنه.', '💡 هوش مصنوعی یعنی آینده‌ای که الان ساخته میشه.'
-            ],
-            'اینترنت': ['🌐 اینترنت یعنی دسترسی به همه چیز! از آموزش تا سرگرمی.',
-                '📶 اینترنت رو درست استفاده کن تا بهترین بهره رو ببری.', '💻 اینترنت، بزرگترین اختراع بشریت!'
-            ],
-            'امنیت': ['🔒 امنیت یعنی محافظت از اطلاعاتت!', '🛡️ امنیت رو جدی بگیر.',
-                '🔐 رمزهای قوی استفاده کن تا هک نشی.'
-            ],
-
-            // ===== حالت روحی و ایده =====
-            'ناراحتم': [
-                '😔 متأسفم که ناراحتی. اگر دوست داری حرف بزن، من اینجام تا کمکت کنم.',
-                '💙 ناراحت نباش! همیشه روزای بهتر پیش میاد. من کنارتم.',
-                '🌺 غم گذراست، مثل ابرهای بهاری. به خودت زمان بده.',
-                '💪 قوی باش! تو از این لحظات سخت عبور میکنی.',
-                '🫂 تنها نیستی! من اینجام تا گوش کنم و کمکت کنم.'
-            ],
-            'عصبانیتم': [
-                '😤 آروم باش! عصبانی شدن هیچ مشکلی رو حل نمیکنه. یه نفس عمیق بکش.',
-                '🧘 بیا با هم یه نفس عمیق بکشیم. آرامش رو به خودت هدیه کن.',
-                '💪 خشم رو به انرژی مثبت تبدیل کن! تو از پسش برمیای.',
-                '🌊 مثل دریا آروم باش، همه‌چیز آروم میشه.'
-            ],
-            'ایده': [
-                '💡 می‌تونی یه وب‌سایت ساده با HTML و CSS بسازی!',
-                '💡 یه ربات تلگرام با Python بساز!',
-                '💡 یه اپلیکیشن موبایل با React Native طراحی کن!',
-                '💡 یه فروشگاه اینترنتی کوچیک راه‌اندازی کن!',
-                '💡 یه وبلاگ شخصی با وردپرس بساز!',
-                '💡 یه گیم ساده با JavaScript بساز!',
-                '💡 یه پادکست درباره‌ی برنامه‌نویسی شروع کن!',
-                '💡 یه کانال یوتیوب برای آموزش کدنویسی باز کن!',
-                '💡 یه ابزار کوچیک برای اتوماسیون کارهات با Python بنویس!',
-                '💡 یه تم وردپرس اختصاصی طراحی کن!'
-            ]
-        };
-
-        // ============================================================
-        //  موتور ریاضی (با پشتیبانی از درجه)
-        // ============================================================
-        function solveMath(expression) {
-            try {
-                let clean = expression.replace(/\s/g, '');
-                clean = clean.replace(/[،,]/g, '.');
-                clean = clean.replace(/[×xX]/g, '*');
-                clean = clean.replace(/[÷]/g, '/');
-                clean = clean.replace(/√/g, 'Math.sqrt');
-                clean = clean.replace(/π/g, 'Math.PI');
-                clean = clean.replace(/e/g, 'Math.E');
-                clean = clean.replace(/sin\(/g, 'Math.sin(');
-                clean = clean.replace(/cos\(/g, 'Math.cos(');
-                clean = clean.replace(/tan\(/g, 'Math.tan(');
-                clean = clean.replace(/log\(/g, 'Math.log10(');
-                clean = clean.replace(/ln\(/g, 'Math.log(');
-                clean = clean.replace(/√\(/g, 'Math.sqrt(');
-                clean = clean.replace(/\^/g, '**');
-
-                clean = clean.replace(/sin\(([^)]+)\)/g, (match, p1) => {
-                    const num = parseFloat(p1);
-                    if (!isNaN(num)) return `Math.sin(${num} * Math.PI / 180)`;
-                    return match;
-                });
-                clean = clean.replace(/cos\(([^)]+)\)/g, (match, p1) => {
-                    const num = parseFloat(p1);
-                    if (!isNaN(num)) return `Math.cos(${num} * Math.PI / 180)`;
-                    return match;
-                });
-                clean = clean.replace(/tan\(([^)]+)\)/g, (match, p1) => {
-                    const num = parseFloat(p1);
-                    if (!isNaN(num)) return `Math.tan(${num} * Math.PI / 180)`;
-                    return match;
-                });
-
-                const mathPattern = /^[\d+\-*/().Math.sincoslneπ√\^]+$/;
-                if (mathPattern.test(clean)) {
-                    const result = Function('"use strict"; return (' + clean + ')')();
-                    if (typeof result === 'number' && !isNaN(result) && isFinite(result)) {
-                        const formatted = Number.isInteger(result) ? result : result.toFixed(4);
-                        const endings = [
-                            'همین؟ سوال بعدی 😎', 'آسون بود نه؟ سوال بعدی 🚀',
-                            'خب! بعدی چی؟ 💪', 'راحت بود؟ سوال بعدی 😉',
-                            'همین؟ بریم سراغ بعدی 🔥', 'آفرین! سوال بعدی 🎯',
-                            'خوبه! چی بعدی؟ 😊', 'عالی! سوال بعدی رو بپرس 🌟',
-                            '🤓 آفرین! ریاضیت عالیه!', '🧮 چقدر خوب! بازم بپرس',
-                            '📐 عالی بود! بعدی چی؟', '✨ خبری نیست! سوال بعدی',
-                            '🔥 خفن! سوال بعدی', '💪 آفرین! ریاضی قوی'
-                        ];
-                        const ending = endings[Math.floor(Math.random() * endings.length)];
-                        return `
-                    <div style="background:rgba(76,175,80,0.04); border:1px solid rgba(76,175,80,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
-                      <div style="color:#4caf50; font-weight:700; font-size:0.9rem; margin-bottom:4px;">
-                        🧮 جواب سوالتون!
-                      </div>
-                      <div style="color:#f5efe6; font-size:1.2rem; font-weight:700; margin-bottom:4px;">
-                        🎄 جواب: ${formatted}
-                      </div>
-                      <div style="color:#b0a99b; font-size:0.8rem; margin-bottom:6px;">
-                        ${clean} = ${formatted}
-                      </div>
-                      <div style="color:#f5b042; font-size:0.75rem; font-weight:600;">
-                        ${ending}
-                      </div>
-                    </div>
-                  `;
-                    }
-                }
-                return null;
-            } catch (e) {
-                return null;
-            }
-        }
-
-        // ============================================================
-        //  آب و هوا
-        // ============================================================
-        async function getWeather(city) {
-            try {
-                const cityMap = {
-                    'تهران': 'Tehran',
-                    'مشهد': 'Mashhad',
-                    'اصفهان': 'Isfahan',
-                    'شیراز': 'Shiraz',
-                    'تبریز': 'Tabriz',
-                    'اهواز': 'Ahvaz',
-                    'کرج': 'Karaj',
-                    'قم': 'Qom',
-                    'کرمانشاه': 'Kermanshah',
-                    'رشت': 'Rasht',
-                    'زاهدان': 'Zahedan',
-                    'همدان': 'Hamedan',
-                    'ارومیه': 'Urmia',
-                    'یزد': 'Yazd',
-                    'بندرعباس': 'Bandar Abbas',
-                    'اراک': 'Arak',
-                    'اسلامشهر': 'Eslamshahr',
-                    'زنجان': 'Zanjan',
-                    'سنندج': 'Sanandaj',
-                    'گرگان': 'Gorgan'
-                };
-
-                let cityEn = city;
-                if (cityMap[city]) {
-                    cityEn = cityMap[city];
-                }
-
-                const response = await fetch(
-                    `https://wttr.in/${encodeURIComponent(cityEn)}?format=j1&lang=fa`
-                );
-                if (!response.ok) throw new Error('Network error');
-                const data = await response.json();
-
-                if (data && data.current_condition && data.current_condition.length > 0) {
-                    const current = data.current_condition[0];
-                    const temp = current.temp_C || 'نامشخص';
-                    const condition = current.weatherDesc && current.weatherDesc.length > 0 ?
-                        current.weatherDesc[0].value :
-                        'نامشخص';
-                    const wind = current.windSpeed || 'نامشخص';
-                    const humidity = current.humidity || 'نامشخص';
-
-                    return `
-                <div style="background:rgba(33,150,243,0.04); border:1px solid rgba(33,150,243,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
-                  <div style="color:#2196f3; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
-                    ☀️ آب و هوای <strong>${city}</strong>:
-                  </div>
-                  <div style="color:#b0a99b; font-size:0.8rem; line-height:2;">
-                    🌡️ <strong>دما:</strong> ${temp}°C<br>
-                    🌥️ <strong>وضعیت:</strong> ${condition}<br>
-                    💨 <strong>باد:</strong> ${wind} km/h<br>
-                    💧 <strong>رطوبت:</strong> ${humidity}%
-                  </div>
-                </div>
-              `;
-                } else {
-                    return `
-                <div style="background:rgba(255,152,0,0.04); border:1px solid rgba(255,152,0,0.15); border-radius:10px; padding:12px 14px; margin-top:4px; text-align:center;">
-                  <div style="color:#ff9800; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
-                    ⚠️ شهر "${city}" پیدا نشد!
-                  </div>
-                  <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
-                    لطفاً اسم شهر رو درست وارد کن یا از اسم انگلیسی استفاده کن 🌍
-                  </div>
-                </div>
-              `;
-                }
-            } catch (error) {
-                return `
-              <div style="background:rgba(255,107,107,0.04); border:1px solid rgba(255,107,107,0.15); border-radius:10px; padding:12px 14px; margin-top:4px; text-align:center;">
-                <div style="color:#ff6b6b; font-weight:700; font-size:0.85rem; margin-bottom:6px;">
-                  ❌ خطا در دریافت آب و هوا!
-                </div>
-                <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
-                  لطفاً اتصال اینترنت خود را بررسی کن 🙏
-                </div>
-              </div>
-            `;
-            }
-        }
-
-        // ============================================================
-        //  تحلیل احساسات
-        // ============================================================
-        function analyzeSentiment(text) {
-            const positive = ['خوب', 'عالی', 'خوشحال', 'دوست', 'عشق', 'ممنون', 'مرسی', 'باحال', 'خفن', 'قشنگ', 'زیبا', 'عالیه',
-                'خوشم', 'دمت گرم', 'خوشبختم', 'آفرین', 'براوو', 'احسنت', 'عالیی', 'خوبه', 'قشنگه', 'جالب', 'خوشگله', 'قشنگ',
-                'زیباست', 'خوشحالم', 'عالیی', 'محشره', 'بی‌نظیره', 'خوب', 'عالی', 'بی‌نظیر', 'قشنگ', 'زیبا', 'خوب', 'قشنگ',
-                'زیبا', 'عالی', 'بی‌نظیر', 'محشر', 'خفن', 'باحال'
-            ];
-            const negative = ['بد', 'ناراحت', 'عصبانی', 'خسته', 'دلخور', 'بیچاره', 'غمگین', 'افسرده', 'خرابه', 'داغون', 'ناراحت',
-                'عصبی', 'بده', 'ناراحتم', 'دلم گرفته', 'حالم بده', 'بد', 'ناراحت', 'خسته', 'غمگین'
-            ];
-            let score = 0;
-            const words = text.split(/\s+/);
-            for (const word of words) {
-                if (positive.some(p => word.includes(p))) score++;
-                if (negative.some(n => word.includes(n))) score--;
-            }
-            if (score > 1) return 'مثبت 😊';
-            if (score < -1) return 'منفی 😞';
-            return 'خنثی 😐';
-        }
-
-        // ============================================================
-        //  تشخیص حالت
-        // ============================================================
-        function isMathMode(text) {
-            const lower = text.trim().toLowerCase();
-            if (lower === '🧮 ریاضی' || lower === 'ریاضی' || lower === 'حالت ریاضی') return 'math';
-            if (lower === '☀️ آب و هوا' || lower === 'آب و هوا' || lower === 'هوا') return 'weather';
-            if (lower === 'ترجمه' || lower === 'حالت ترجمه') return 'translate';
-            if (lower === 'mh picture' || lower === 'تصویر' || lower === 'ساخت تصویر') return 'image';
-            return null;
-        }
-
-        function isThanks(text) {
-            const thanks = ['آفرین', 'براوو', 'احسنت', 'عالیی', 'مرسی', 'ممنون', 'دمت گرم', 'دستت درد نکنه', 'خوبه', 'قشنگ', 'زیبا',
-                'عالی', 'باحال', 'خفن', 'خوب', 'قشنگه', 'بی‌نظیر', 'محشر', 'خوشم اومد', 'عالی بود', 'خفن بود', 'تشکر', 'متشکرم'
-            ];
-            for (const word of thanks) {
-                if (text.includes(word)) return true;
-            }
-            return false;
-        }
-
-        // ============================================================
-        //  Levenshtein
-        // ============================================================
-        function levenshteinDistance(a, b) {
-            const matrix = [];
-            for (let i = 0; i <= b.length; i++) {
-                matrix[i] = [i];
-            }
-            for (let j = 0; j <= a.length; j++) {
-                matrix[0][j] = j;
-            }
-            for (let i = 1; i <= b.length; i++) {
-                for (let j = 1; j <= a.length; j++) {
-                    if (b[i - 1] === a[j - 1]) {
-                        matrix[i][j] = matrix[i - 1][j - 1];
-                    } else {
-                        matrix[i][j] = Math.min(
-                            matrix[i - 1][j - 1] + 1,
-                            matrix[i][j - 1] + 1,
-                            matrix[i - 1][j] + 1
-                        );
-                    }
-                }
-            }
-            return matrix[b.length][a.length];
-        }
-
-        // ============================================================
-        //  موتور پاسخگویی نهایی
-        // ============================================================
-        async function getReply(input) {
-            const text = input.trim();
-            if (!text) return `چیزی ننوشتی داداش! یه چیزی بپرس 😊`;
-
-            const lower = text.toLowerCase();
-
-            // ===== ۱. تشکر =====
-            if (isThanks(text)) {
-                const thanksList = [
-                    '🙏 خواهش می‌کنم داداش! خوشحالم که کمک کردم.',
-                    '❤️ خواهش می‌کنم! هر وقت نیاز داشتی من اینجام.',
-                    '💙 خوشحالم که راضی هستی! بازم خوش اومدی.',
-                    '😊 خواهش می‌کنم! همیشه در خدمتم.',
-                    '🙌 ممنون از لطفت! هر وقت نیاز بود بگو.',
-                    '🔥 ممنون داداش! انرژی گرفتم ازت.',
-                    '💪 آفرین! تو هم خفنی!',
-                    '🌟 خوشحالم که راضی هستی!'
-                ];
-                return thanksList[Math.floor(Math.random() * thanksList.length)];
-            }
-
-            // ===== ۲. تشخیص حالت تصویر =====
-            if (imageMode) {
-                const count = getImageCount();
-                if (count >= 6) {
-                    return '⚠️ شما امروز ۶ بار از mh picture استفاده کردید! لطفاً فردا دوباره تلاش کن. 🌙';
-                }
-                incrementImageCount();
-
-                // ساخت تصویر با کیفیت بالا
-                const result = await generateHighQualityImage(text);
-                const msg = `
-                    🎨 <strong>mh picture (کیفیت بالا)</strong><br><br>
-                    <div class="image-card">
-                        <img src="${result.url}" alt="${text}" loading="lazy" onerror="this.src='https://image.pollinations.ai/prompt/${encodeURIComponent(text)}?width=1024&height=1024&seed=${Math.floor(Math.random() * 1000000)}'">
-                        <div class="img-label">📌 توضیحات: "${text}"</div>
-                        <div class="img-brand">⚡ ساخته شده با ${result.source}</div>
-                    </div>
-                    💡 می‌تونی تصویر رو با کلیک راست یا لمس طولانی ذخیره کنی.<br>
-                    🔄 برای خروج از حالت تصویر، دکمه mh picture رو دوباره بزن.
-                `;
-                return msg;
-            }
-
-            // ===== ۳. تشخیص حالت روحی =====
-            const mood = detectMood(text);
-            if (mood !== 'neutral') {
-                const moodReply = getMoodResponse(mood);
-                if (moodReply) {
-                    if (mood === 'sad' || mood === 'angry') {
-                        const idea = generateIdea(text);
-                        return `${moodReply}\n\n💡 یه پیشنهاد برات دارم:\n${idea}`;
-                    }
-                    return moodReply;
-                }
-            }
-
-            // ===== ۴. تشخیص موضوع =====
-            const topic = detectTopic(text);
-
-            const sentiment = analyzeSentiment(text);
-            const mode = isMathMode(text);
-
-            if (mode === 'math') {
-                return `
-              <div style="background:rgba(76,175,80,0.04); border:1px solid rgba(76,175,80,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
-                <div style="color:#4caf50; font-weight:700; font-size:0.9rem; margin-bottom:4px;">
-                  🧮 حالت ریاضی فعاله!
-                </div>
-                <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
-                  📝 لطفاً فقط عدد یا عبارت ریاضی رو بنویسید<br>
-                  مثلاً: <strong style="color:#f5b042;">۲ + ۲</strong> یا <strong style="color:#f5b042;">sin(30)</strong>
-                </div>
-              </div>
-            `;
-            }
-
-            if (mode === 'weather') {
-                return `
-              <div style="background:rgba(33,150,243,0.04); border:1px solid rgba(33,150,243,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
-                <div style="color:#2196f3; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
-                  ☀️ به حالت آب و هوا خوش آمدید!
-                </div>
-                <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
-                  لطفاً اسم شهر یا کشور رو بگو 🌍
-                </div>
-                <div style="color:#f5b042; font-size:0.75rem; margin-top:4px;">
-                  📌 برای دیدن آب و هوای شهرتون بنویسید:<br>
-                  <strong style="color:#f5b042;">(آب و هوای تهران)</strong>
-                </div>
-              </div>
-            `;
-            }
-
-            if (mode === 'translate') {
-                setTranslateMode();
-                return;
-            }
-
-            if (mode === 'image') {
-                setImageMode();
-                return;
-            }
-
-            // ===== ۵. ترجمه فعال =====
-            if (translateMode && selectedLang) {
-                const result = await translateText(text, selectedLang);
-                if (result.success) {
-                    translateMode = false;
-                    const langNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
-                    const msg = `
-                        🌍 <strong>ترجمه (آزمایشی)</strong><br><br>
-                        📝 <strong>متن اصلی:</strong> "${text}"<br>
-                        🇮🇷 <strong>زبان مقصد:</strong> ${langNames[selectedLang]}<br><br>
-                        <div class="translation-box">
-                            <div class="trans-text">${result.text}</div>
-                        </div>
-                        <button class="copy-trans-btn" onclick="copyTranslation('${result.text.replace(/'/g, "\\'")}')">
-                            <i class="fas fa-copy"></i> کپی متن ترجمه
-                        </button>
-                        <br><br>
-                        🔄 برای ترجمه دوباره، دکمه ترجمه رو بزن.
-                    `;
-                    return msg;
-                } else {
-                    translateMode = false;
-                    return `❌ ${result.error || 'ترجمه انجام نشد! لطفاً دوباره تلاش کن.'}`;
-                }
-            }
-
-            // ===== ۶. تشخیص خودکار ترجمه =====
-            if (isTranslateRequest(text)) {
-                const info = extractTranslateInfo(text);
-                if (info.targetLang) {
-                    const result = await translateText(info.content, info.targetLang);
-                    if (result.success) {
-                        const langNames = { fa: 'فارسی', en: 'انگلیسی', ar: 'عربی', tr: 'ترکی' };
-                        const msg = `
-                            🌍 <strong>ترجمه (آزمایشی)</strong><br><br>
-                            📝 <strong>متن اصلی:</strong> "${info.content}"<br>
-                            🇮🇷 <strong>زبان مقصد:</strong> ${langNames[info.targetLang]}<br><br>
-                            <div class="translation-box">
-                                <div class="trans-text">${result.text}</div>
-                            </div>
-                            <button class="copy-trans-btn" onclick="copyTranslation('${result.text.replace(/'/g, "\\'")}')">
-                                <i class="fas fa-copy"></i> کپی متن ترجمه
-                            </button>
-                            <br><br>
-                            🔄 برای ترجمه دوباره، دکمه ترجمه رو بزن.
-                        `;
-                        return msg;
-                    } else {
-                        return `❌ ${result.error || 'ترجمه انجام نشد! لطفاً دوباره تلاش کن.'}`;
-                    }
-                }
-            }
-
-            // ===== ۷. آب و هوا =====
-            if (lower.includes('آب و هوا') || lower.includes('آبوهوا') || lower.includes('هوای') || lower.includes('weather')) {
-                const cityMatch = text.match(/(?:آب و هوای|آبوهوای|هوای|آب و هوا|هوا|weather)\s*([^\s؟]+)/i);
-                if (cityMatch) {
-                    return await getWeather(cityMatch[1].trim());
-                }
-                const words = lower.split(/\s+/);
-                for (const word of words) {
-                    if (word.length > 2 && !['آب', 'هوا', 'و', 'weather'].includes(word)) {
-                        const result = await getWeather(word);
-                        if (!result.includes('پیدا نشد') && !result.includes('خطا')) return result;
-                    }
-                }
-                return `
-              <div style="background:rgba(33,150,243,0.04); border:1px solid rgba(33,150,243,0.15); border-radius:10px; padding:12px 14px; margin-top:4px;">
-                <div style="color:#2196f3; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
-                  ☀️ به حالت آب و هوا خوش آمدید!
-                </div>
-                <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
-                  لطفاً اسم شهر یا کشور رو بگو 🌍
-                </div>
-                <div style="color:#f5b042; font-size:0.75rem; margin-top:4px;">
-                  📌 برای دیدن آب و هوای شهرتون بنویسید:<br>
-                  <strong style="color:#f5b042;">(آب و هوای تهران)</strong>
-                </div>
-              </div>
-            `;
-            }
-
-            // ===== ۸. ریاضی =====
-            const mathResult = solveMath(text);
-            if (mathResult) return mathResult;
-
-            // ===== ۹. دیکشنری =====
-            const keys = Object.keys(questionBank);
-            let foundKey = null;
-            let foundScore = 0;
-
-            for (const key of keys) {
-                if (lower === key || lower.includes(key) && key.length > 2) {
-                    foundKey = key;
-                    break;
-                }
-            }
-
-            if (!foundKey) {
-                for (const key of keys) {
-                    if (lower.includes(key) || key.includes(lower)) {
-                        if (key.length > foundScore) {
-                            foundScore = key.length;
-                            foundKey = key;
-                        }
-                    }
-                }
-            }
-
-            if (!foundKey) {
-                for (const key of keys) {
-                    const distance = levenshteinDistance(lower, key);
-                    if (distance <= 2) {
-                        foundKey = key;
-                        break;
-                    }
-                }
-            }
-
-            if (foundKey && questionBank[foundKey]) {
-                let reply = getRandomReply(questionBank[foundKey]);
-
-                // ===== سایت‌ها =====
-                if (foundKey === 'سایت' || foundKey === 'سایتا' || foundKey === 'چه سایت هایی' || foundKey === 'نمونه کار' ||
-                    foundKey === 'پروژه' || foundKey === 'وب سایت' || foundKey === 'سایت‌ها') {
-                    let siteReply =
-                        `<i class="fas fa-laptop-code"></i> <strong>سایت‌ها:</strong><br>`;
-                    data.sites.forEach(s => {
-                        siteReply += `
-                    <div class="site-card">
-                      <img class="site-img" src="${s.img}" onerror="this.style.display='none'">
-                      <div class="site-info">
-                        <div class="site-name">${s.name}</div>
-                        <div class="site-desc">${s.desc}</div>
-                      </div>
-                      <a href="${s.link}" target="_blank" class="site-link">
-                        <i class="fas fa-external-link-alt"></i> مشاهده
-                      </a>
-                    </div>
-                  `;
-                    });
-                    return siteReply;
-                }
-
-                // ===== طراحی‌ها =====
-                if (foundKey === 'طراحی' || foundKey === 'طراحیات' || foundKey === 'نمونه طراحی' ||
-                    foundKey === 'گرافیک' || foundKey === 'کار هنری' || foundKey === 'طراحی‌ها') {
-                    let designReply = `<i class="fas fa-palette"></i> <strong>طراحی‌ها:</strong><br>`;
-                    data.designs.forEach(d => {
-                        designReply += `
-                    <div class="design-mini">
-                      <div class="d-icon"><i class="fas fa-paint-brush"></i></div>
-                      <div>
-                        <div class="d-name">${d.name}</div>
-                        <div class="d-desc">${d.desc}</div>
-                        <a href="${d.link}" target="_blank" class="d-link">
-                          <i class="fas fa-external-link-alt"></i> مشاهده
-                        </a>
-                      </div>
-                    </div>
-                  `;
-                    });
-                    return designReply;
-                }
-
-                // ===== مهارت‌ها =====
-                if (foundKey === 'مهارت' || foundKey === 'چه کارایی بلدی' || foundKey === 'تخصص' ||
-                    foundKey === 'چه چیزایی بلدی' || foundKey === 'توانایی' || foundKey === 'چه کاری بلدی' || foundKey === 'مهارت‌ها') {
-                    let skillReply = `<i class="fas fa-code"></i> <strong>مهارت‌ها:</strong><br>`;
-                    data.skills.forEach(s => { skillReply += `🔹 ${s}<br>`; });
-                    return skillReply;
-                }
-
-                return reply;
-            }
-
-            // ===== ۱۰. پاسخ پیش‌فرض =====
-            const randomReplies = [
-                `🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
-            📝 "<strong>${text}</strong>" رو خوندم.<br>
-            💭 احساس: ${sentiment}<br>
-            🧠 موضوع تشخیص‌داده‌شده: <strong>${topic}</strong><br><br>
-            می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (آزمایشی)</span> • <span style="color:#f5b042;">mh picture (کیفیت بالا)</span><br><br>
-            <span style="color:#b0a99b;font-size:0.7rem;">💡 هر چی بپرسی، جواب میدم!</span>`,
-
-                `😊 <strong>MH Assistant</strong> اینجاست!<br><br>
-            سوال "<strong>${text}</strong>" رو گرفتم.<br>
-            💭 حالت: ${sentiment}<br>
-            🧠 موضوع: <strong>${topic}</strong><br><br>
-            🚀 می‌تونی سوالات جدید بپرسی یا از دکمه‌های پایین استفاده کنی!`,
-
-                `🌟 خوش اومدی به <strong>MH Assistant</strong>!<br><br>
-            "<strong>${text}</strong>" رو خوندیم.<br>
-            💭 احساس: ${sentiment}<br>
-            🧠 موضوع: <strong>${topic}</strong><br><br>
-            📌 سوالات پیشنهادی: سلام، کی هستی، سایت‌ها، طراحی‌ها، مهارت‌ها`,
-
-                `💪 <strong>MH Assistant</strong> همیشه آماده‌ست!<br><br>
-            پیام "<strong>${text}</strong>" رو دریافت کردم.<br>
-            💭 حالت: ${sentiment}<br>
-            🧠 موضوع: <strong>${topic}</strong><br><br>
-            🔥 هر چی بپرسی، جواب میدم! فقط کافیه بپرسی.`
-            ];
-
-            let reply = randomReplies[Math.floor(Math.random() * randomReplies.length)];
-
-            if (lower.includes('ایده') || lower.includes('نظر') || lower.includes('پیشنهاد')) {
-                reply += `\n\n💡 یه ایده برات دارم:\n${generateIdea(text)}`;
-            }
-
-            return reply;
-        }
-
-        // ============================================================
-        //  جستجوی اینترنت
-        // ============================================================
-        async function searchWeb(query) {
-            try {
-                const response = await fetch(
-                    `https://fa.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json`
-                );
-                const data = await response.json();
-
-                if (data.query && data.query.search && data.query.search.length > 0) {
-                    const firstResult = data.query.search[0];
-                    const pageId = firstResult.pageid;
-                    const summaryResponse = await fetch(
-                        `https://fa.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=true&explaintext=true&pageids=${pageId}&format=json`
-                    );
-                    const summaryData = await summaryResponse.json();
-                    const extract = summaryData.query.pages[pageId].extract;
-
-                    return `
-                <div style="background:rgba(255,215,100,0.04); border:1px solid rgba(255,215,100,0.1); border-radius:10px; padding:10px 12px; margin-top:4px;">
-                  <div style="color:#f5b042; font-weight:700; font-size:0.85rem; margin-bottom:4px;">
-                    🔍 نتیجه جستجو برای "<strong>${query}</strong>":
-                  </div>
-                  <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
-                    ${extract.substring(0, 500)}${extract.length > 500 ? '...' : ''}
-                  </div>
-                  <a href="https://fa.wikipedia.org/wiki/${encodeURIComponent(firstResult.title)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; font-weight:600; display:inline-flex; align-items:center; gap:4px; margin-top:6px;">
-                    <i class="fas fa-external-link-alt"></i> ادامه مطلب در ویکی‌پدیا
-                  </a>
-                </div>
-              `;
-                } else {
-                    return `
-                <div style="background:rgba(255,152,0,0.04); border:1px solid rgba(255,152,0,0.15); border-radius:10px; padding:12px 14px; margin-top:4px; text-align:center;">
-                  <div style="color:#ff9800; font-weight:700; font-size:0.9rem; margin-bottom:6px;">
-                    ⚠️ نتیجه‌ای پیدا نشد!
-                  </div>
-                  <div style="color:#b0a99b; font-size:0.8rem; line-height:1.8;">
-                    🛠️ مشکل سرچ در آپدیت‌های بعدی حل میشه 🙏
-                  </div>
-                  <div style="margin-top:8px;">
-                    <a href="https://www.google.com/search?q=${encodeURIComponent(query)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; border:1px solid rgba(245,176,66,0.15); padding:4px 14px; border-radius:40px;">
-                      <i class="fas fa-search"></i> جستجو در گوگل
-                    </a>
-                  </div>
-                </div>
-              `;
-                }
-            } catch (error) {
-                return `
-              <div style="background:rgba(255,107,107,0.04); border:1px solid rgba(255,107,107,0.15); border-radius:10px; padding:12px 14px; margin-top:4px; text-align:center;">
-                <div style="color:#ff6b6b; font-weight:700; font-size:0.85rem; margin-bottom:6px;">
-                  ❌ خطا در اتصال به اینترنت!
-                </div>
-                <div style="color:#b0a99b; font-size:0.75rem; line-height:1.8;">
-                  لطفاً اتصال اینترنت خود را بررسی کن 🙏
-                </div>
-                <div style="margin-top:6px;">
-                  <a href="https://www.google.com/search?q=${encodeURIComponent(query)}" target="_blank" style="color:#f5b042; text-decoration:none; font-size:0.7rem; border:1px solid rgba(245,176,66,0.15); padding:2px 12px; border-radius:40px;">
-                    <i class="fas fa-search"></i> جستجوی مستقیم در گوگل
-                  </a>
-                </div>
-              </div>
-            `;
-            }
-        }
-
-        // ============================================================
-        //  توابع اصلی
-        // ============================================================
-        const messagesBox = document.getElementById('messagesBox');
-        const userInput = document.getElementById('userInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const searchBtn = document.getElementById('searchBtn');
-        let isTyping = false;
-
-        function sendMessage() {
-            const text = userInput.value.trim();
-            if (!text || isTyping) return;
-
-            addMessage('user', text);
-            userInput.value = '';
-            userInput.focus();
-
-            isTyping = true;
-            showTyping();
-
-            setTimeout(async () => {
-                hideTyping();
-                const reply = await getReply(text);
-                if (reply) addMessage('bot', reply);
-                isTyping = false;
-                userInput.focus();
-            }, 60);
-        }
-
-        function searchMessage() {
-            const text = userInput.value.trim();
-            if (!text || isTyping) return;
-
-            const searchText = text;
-
-            addMessage('user', searchText);
-            userInput.value = '';
-
-            isTyping = true;
-            showTyping();
-
-            setTimeout(async () => {
-                hideTyping();
-                const reply = await searchWeb(searchText);
-                addMessage('bot', reply);
-                isTyping = false;
-                userInput.focus();
-            }, 300);
-        }
-
-        function askQuestion(text) {
-            userInput.value = text;
-            userInput.focus();
-            sendMessage();
-        }
-
-        function addMessage(type, content) {
-            const div = document.createElement('div');
-            div.className = `message ${type}`;
-
-            const avatar = document.createElement('div');
-            avatar.className = 'avatar';
-            avatar.innerHTML = type === 'bot' ? '<i class="fas fa-robot"></i>' : '<i class="fas fa-user"></i>';
-
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            bubble.innerHTML = content;
-
-            div.appendChild(avatar);
-            div.appendChild(bubble);
-            messagesBox.appendChild(div);
-            messagesBox.scrollTop = messagesBox.scrollHeight;
-        }
-
-        function showTyping() {
-            let typing = document.querySelector('.typing-indicator');
-            if (!typing) {
-                typing = document.createElement('div');
-                typing.className = 'typing-indicator';
-                typing.innerHTML = '<i class="fas fa-robot"></i> دارم فکر میکنم...';
-                messagesBox.appendChild(typing);
-            }
-            typing.classList.add('show');
-            messagesBox.scrollTop = messagesBox.scrollHeight;
-        }
-
-        function hideTyping() {
-            const typing = document.querySelector('.typing-indicator');
-            if (typing) typing.classList.remove('show');
-        }
-
-        sendBtn.onclick = function() { sendMessage(); };
-        searchBtn.onclick = function() { searchMessage(); };
-
-        userInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') { e.preventDefault();
-                sendMessage(); }
         });
+    }
 
-        window.addEventListener('load', function() {
-            messagesBox.scrollTop = messagesBox.scrollHeight;
-            setTimeout(() => userInput.focus(), 100);
+    function showOrderSuccessModal() {
+        discountApplied = false;
+        updateTrackingCodeDisplay();
+        let orderHtml = '';
+        cart.forEach(item => { orderHtml += `<p>• ${item.quantity} عدد ${item.name}</p>`; });
+        orderSummaryList.innerHTML = orderHtml;
+        modal.classList.add('show');
+        const discountInput = document.getElementById('discountCodeInput');
+        const discountFeedback = document.getElementById('discountFeedback');
+        if(discountInput) discountInput.value = '';
+        if(discountFeedback) discountFeedback.innerHTML = '';
+        discountFeedback.className = 'discount-feedback';
+    }
+    
+    function updateCartBadge() { 
+        const total = cart.reduce((a,i)=> a + i.quantity, 0); 
+        cartCountSpan.innerText = total;
+        if(cartTotalCountSpan) cartTotalCountSpan.innerText = `${total} عدد (تماس تلفنی)`;
+    }
+    function saveCart() { localStorage.setItem('callfoodCart', JSON.stringify(cart)); }
+    function loadCart() { const saved = localStorage.getItem('callfoodCart'); if(saved) try { cart = JSON.parse(saved); } catch(e){} renderCart(); }
+    function renderCart() {
+        if(cart.length === 0) { 
+            cartItemsList.innerHTML = `<div class="empty-cart">سبدت خالیه پرش کن! 🍔</div>`; 
+            updateCartBadge(); saveCart(); return; 
+        }
+        let html = '';
+        cart.forEach(item => { html += `<div class="cart-item"><div><strong><i class="fas fa-utensil-spoon"></i> ${item.name}</strong><br>تعداد: ${item.quantity}</div><div class="cart-item-actions"><button class="cart-inc" data-id="${item.id}">+</button><button class="cart-dec" data-id="${item.id}">-</button><button class="cart-remove" data-id="${item.id}"><i class="fas fa-trash"></i></button></div></div>`; });
+        cartItemsList.innerHTML = html;
+        document.querySelectorAll('.cart-inc').forEach(btn => btn.addEventListener('click', (e) => { let id = parseInt(btn.dataset.id); changeQty(id, 1); }));
+        document.querySelectorAll('.cart-dec').forEach(btn => btn.addEventListener('click', (e) => { let id = parseInt(btn.dataset.id); changeQty(id, -1); }));
+        document.querySelectorAll('.cart-remove').forEach(btn => btn.addEventListener('click', (e) => { let id = parseInt(btn.dataset.id); cart = cart.filter(i => i.id !== id); renderCart(); showToast("حذف شد"); }));
+        updateCartBadge(); saveCart();
+    }
+    function changeQty(id, delta) { let idx = cart.findIndex(i => i.id === id); if(idx !== -1) { let newQty = cart[idx].quantity + delta; if(newQty <= 0) cart.splice(idx,1); else cart[idx].quantity = newQty; renderCart(); showToast("سبد بروز شد"); } }
+    function addToCart(product) { 
+        if(processing) return;
+        processing = true;
+        let existing = cart.find(i => i.id === product.id); 
+        if(existing) { existing.quantity++; showToast(`${product.name} +۱ شد`); } 
+        else { cart.push({ id: product.id, name: product.name, quantity: 1 }); showToast(`${product.name} به سبد اضافه شد 🎉`); } 
+        renderCart(); 
+        setTimeout(() => { processing = false; }, 300);
+    }
+    function attachCardEvents(cardElement, food) {
+        const addBtn = cardElement.querySelector('.add-to-cart');
+        if(addBtn) {
+            const newAddBtn = addBtn.cloneNode(true);
+            addBtn.parentNode.replaceChild(newAddBtn, addBtn);
+            newAddBtn.addEventListener('click', (e) => { e.preventDefault(); addToCart(food); });
+        }
+        const detailBtn = cardElement.querySelector('.detail-btn');
+        const detailBox = cardElement.querySelector('.detail-box');
+        if(detailBtn && detailBox) {
+            const newDetailBtn = detailBtn.cloneNode(true);
+            detailBtn.parentNode.replaceChild(newDetailBtn, detailBtn);
+            newDetailBtn.addEventListener('click', (e) => { e.preventDefault(); detailBox.classList.toggle('show'); });
+        }
+    }
+    function createFoodCard(food) {
+        const card = document.createElement('div'); card.className = 'food-card';
+        card.innerHTML = `<div class="card-img" style="background-image: url('${food.img}');"><div class="food-tag"><i class="fas ${food.tagIcon}"></i> ${food.tag}</div>${food.isSpecial ? '<div class="badge-special"><i class="fas fa-star"></i> ویژه خفن</div>' : ''}</div><div class="card-info"><h3><i class="fas fa-egg"></i> ${food.name}</h3><div class="desc">${food.desc}</div><div class="btn-group"><button class="add-to-cart" data-id="${food.id}"><i class="fas fa-cart-plus"></i> افزودن به سبد</button><button class="detail-btn" data-id="${food.id}"><i class="fas fa-info-circle"></i> توضیحات بیشتر</button></div><div class="detail-box" id="detail-${food.id}"><i class="fas fa-align-right"></i> ${food.longDesc}</div></div>`;
+        attachCardEvents(card, food);
+        return card;
+    }
+    function renderPages() {
+        const featuredGrid = document.getElementById('featuredGrid');
+        const persianHomeGrid = document.getElementById('persianHomeGrid');
+        const dolmeGrid = document.getElementById('dolmeGrid');
+        const fastGrid = document.getElementById('fastfoodGrid');
+        const fingerGrid = document.getElementById('fingerGrid');
+        const persianGrid = document.getElementById('persianGrid');
+        const cakeGrid = document.getElementById('cakeGrid');
+        const sweetGrid = document.getElementById('sweetGrid');
+        const traditionalGrid = document.getElementById('traditionalGrid');
+        const dessertGrid = document.getElementById('dessertGrid');
+        
+        if(featuredGrid) featuredGrid.innerHTML = '';
+        if(persianHomeGrid) persianHomeGrid.innerHTML = '';
+        if(dolmeGrid) dolmeGrid.innerHTML = '';
+        if(fastGrid) fastGrid.innerHTML = '';
+        if(fingerGrid) fingerGrid.innerHTML = '';
+        if(persianGrid) persianGrid.innerHTML = '';
+        if(cakeGrid) cakeGrid.innerHTML = '';
+        if(sweetGrid) sweetGrid.innerHTML = '';
+        if(traditionalGrid) traditionalGrid.innerHTML = '';
+        if(dessertGrid) dessertGrid.innerHTML = '';
+        
+        const specials = foods.filter(f => f.isSpecial).sort((a,b) => b.createdAt - a.createdAt);
+        specials.forEach(food => { if(featuredGrid) featuredGrid.appendChild(createFoodCard(food)); });
+        
+        foods.forEach(food => {
+            if(food.tag === 'دلمه' && dolmeGrid) dolmeGrid.appendChild(createFoodCard(food));
+            else if(food.tag === 'غذای مجلسی') { 
+                if(persianHomeGrid) persianHomeGrid.appendChild(createFoodCard(food)); 
+                if(persianGrid) persianGrid.appendChild(createFoodCard(food)); 
+            }
+            else if(food.tag === 'فست فود' && fastGrid) fastGrid.appendChild(createFoodCard(food));
+            else if(food.tag === 'فینگر فود' && fingerGrid) fingerGrid.appendChild(createFoodCard(food));
+            else if(food.tag === 'کیک' && cakeGrid) cakeGrid.appendChild(createFoodCard(food));
+            else if(food.tag === 'شیرینی‌جات' && sweetGrid) sweetGrid.appendChild(createFoodCard(food));
+            else if(food.tag === 'غذای سنتی' && traditionalGrid) traditionalGrid.appendChild(createFoodCard(food));
+            else if(food.tag === 'دسر' && dessertGrid) dessertGrid.appendChild(createFoodCard(food));
         });
-
-        document.addEventListener('click', function() {
-            setTimeout(() => userInput.focus(), 50);
-        });
-    </script>
-
+    }
+    
+    const pages = { home: document.getElementById('homePage'), dolme: document.getElementById('dolmePage'), fastfood: document.getElementById('fastfoodPage'), finger: document.getElementById('fingerPage'), persian: document.getElementById('persianPage'), cake: document.getElementById('cakePage'), traditional: document.getElementById('traditionalPage'), sweet: document.getElementById('sweetPage'), dessert: document.getElementById('dessertPage'), tafarda: document.getElementById('tafardaPage'), support: document.getElementById('supportPage') };
+    
+    document.querySelectorAll('[data-page]').forEach(link => {
+        link.addEventListener('click', (e) => { e.preventDefault(); let page = link.dataset.page; Object.values(pages).forEach(p => p.classList.remove('active-page')); if(pages[page]) pages[page].classList.add('active-page'); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    });
+    
+    function openSidebar() { cartSidebar.classList.add('open'); }
+    function closeSidebar() { cartSidebar.classList.remove('open'); }
+    cartIconElem.addEventListener('click', openSidebar);
+    closeCartBtn.addEventListener('click', closeSidebar);
+    document.addEventListener('click', (e) => { if(cartSidebar.classList.contains('open') && !cartSidebar.contains(e.target) && !cartIconElem.contains(e.target)) closeSidebar(); });
+    
+    checkoutBtn.addEventListener('click', () => { if(cart.length === 0) { showToast("سبد خالیه! اول غذا انتخاب کن 😋", false); return; } showOrderSuccessModal(); cart = []; renderCart(); closeSidebar(); });
+    
+    const tomorrowDetailBtn = document.getElementById('tomorrowDetailBtn');
+    const tomorrowDetailBox = document.getElementById('tomorrowDetailBox');
+    if(tomorrowDetailBtn && tomorrowDetailBox) {
+        tomorrowDetailBtn.addEventListener('click', () => { tomorrowDetailBox.classList.toggle('show'); });
+    }
+    
+    renderPages();
+    loadCart();
+    initDiscountFeature();
+    updateTrackingCodeDisplay();
+</script>
 </body>
-    </html>
+</html>
