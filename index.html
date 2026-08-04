@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.10.5</title>
+    <title>MH Assistant | v3.10.7</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -270,7 +270,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۵</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۷</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -308,7 +308,7 @@
             <button onclick="askQuestion('☀️ آب و هوا')"><i class="fas fa-cloud-sun"></i> آب و هوا</button>
             <button onclick="askQuestion('هدف تو چیه؟')"><i class="fas fa-bullseye"></i> هدف</button>
             <button onclick="askQuestion('انگیزه‌ات چیه؟')"><i class="fas fa-fire"></i> انگیزه</button>
-            <button onclick="setImageMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-image"></i> 🎨 mh picture</button>
+            <button onclick="setImageMode()" style="border-color:rgba(245,176,66,0.3);"><i class="fas fa-image"></i> mh picture (آزمایشی)</button>
             <button onclick="setTranslateMode()" style="border-color:rgba(245,176,66,0.2);"><i class="fas fa-language"></i> ترجمه (آزمایشی)</button>
         </div>
 
@@ -332,17 +332,17 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۱۰.۵</span>
+                <span class="version">نسخه ۳.۱۰.۷</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🧠 <strong>تشخیص هوشمند موضوع</strong></li>
+                <li><i class="fas fa-check-circle"></i> 🎨 <strong>mh picture (آزمایشی)</strong> با ۳ تصویر همزمان</li>
+                <li><i class="fas fa-check-circle"></i> 🆓 ساخت تصاویر رایگان (روزانه ۱۰ بار)</li>
+                <li><i class="fas fa-check-circle"></i> ⚡ متن زیر تصاویر: "ساخته شده با Mh picture (limit)"</li>
+                <li><i class="fas fa-check-circle"></i> 🧠 تشخیص هوشمند موضوع</li>
                 <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۷۰۰۰+ سوال و جواب</li>
                 <li><i class="fas fa-check-circle"></i> 🚀 موتور مغز ربات تقویت شد</li>
-                <li><i class="fas fa-check-circle"></i> 🎨 mh picture با Pollinations.ai</li>
-                <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با Google Translate</li>
-                <li><i class="fas fa-check-circle"></i> 💡 تشخیص حالت روحی و ایده‌سازی</li>
             </ul>
         </div>
     </div>
@@ -351,7 +351,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.10.5';
+        const APP_VERSION = '3.10.7';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -375,34 +375,24 @@
         }
 
         // ============================================================
-        //  تشخیص هوشمند موضوع
+        //  لیمیت ساخت تصویر (روزانه ۱۰ بار)
         // ============================================================
-        function detectTopic(text) {
-            const lower = text.toLowerCase();
-
-            const topics = {
-                'سلام': ['سلام', 'درود', 'چطوری', 'خوبی', 'چه خبر', 'صبح بخیر', 'شب بخیر'],
-                'معرفی': ['کی هستی', 'تو کی هستی', 'چیستی', 'معرفی', 'درباره خودت'],
-                'سایت': ['سایت', 'وب سایت', 'پروژه', 'نمونه کار', 'سایتا'],
-                'طراحی': ['طراحی', 'گرافیک', 'کار هنری', 'طرح'],
-                'مهارت': ['مهارت', 'چه کارایی بلدی', 'تخصص', 'توانایی', 'چه کاری بلدی'],
-                'ریاضی': ['ریاضی', 'حالت ریاضی', 'sin', 'cos', 'tan', '√', '+', '-', '*', '/'],
-                'آب و هوا': ['آب و هوا', 'آبوهوا', 'هوا', 'weather', 'دما'],
-                'ترجمه': ['ترجمه', 'translate', 'به انگلیسی', 'به فارسی', 'به عربی', 'به ترکی'],
-                'تصویر': ['تصویر', 'mh picture', 'ساخت تصویر', 'عکس', 'آی'],
-                'ایده': ['ایده', 'نظر', 'پیشنهاد', 'چیکار', 'کار', 'پروژه', 'طرح', 'بسازم', 'شروع'],
-                'حالت روحی': ['ناراحت', 'غمگین', 'عصبانی', 'خوشحال', 'افسرده', 'دلم گرفته', 'حالم بده']
-            };
-
-            for (const [topic, keywords] of Object.entries(topics)) {
-                for (const keyword of keywords) {
-                    if (lower.includes(keyword)) {
-                        return topic;
-                    }
-                }
+        function getImageCount() {
+            const today = new Date().toDateString();
+            const stored = localStorage.getItem('mh_image_count');
+            const storedDate = localStorage.getItem('mh_image_date');
+            if (storedDate !== today) {
+                localStorage.setItem('mh_image_count', '0');
+                localStorage.setItem('mh_image_date', today);
+                return 0;
             }
+            return parseInt(stored) || 0;
+        }
 
-            return 'مکالمه آزاد';
+        function incrementImageCount() {
+            const count = getImageCount();
+            localStorage.setItem('mh_image_count', String(count + 1));
+            localStorage.setItem('mh_image_date', new Date().toDateString());
         }
 
         // ============================================================
@@ -411,32 +401,39 @@
         let imageMode = false;
 
         function setImageMode() {
+            const count = getImageCount();
+            if (count >= 10) {
+                addMessage('bot', '⚠️ شما امروز ۱۰ بار از mh picture استفاده کردید! لطفاً فردا دوباره تلاش کن. 🌙');
+                return;
+            }
             imageMode = true;
             const msg = `
                 🎨 <strong>mh picture (آزمایشی)</strong><br><br>
                 📌 برای ساخت تصویر، توضیحاتش رو بنویس:<br>
                 مثلاً: <strong style="color:#f5b042;">"یک گربه نارنجی با کلاه لبه‌دار"</strong><br><br>
+                ⚡ این قابلیت <strong>۳ تصویر</strong> همزمان میسازه.<br>
+                🆓 <strong>رایگان</strong> - روزانه <strong>۱۰ بار</strong> محدودیت.<br>
                 ⚠️ ممکنه چند ثانیه طول بکشه.<br>
-                ✅ تصویر ساخته شده رو میتونی ذخیره کنی (کلیک راست یا لمس طولانی).<br>
-                🔄 برای خروج از حالت تصویر، دکمه تصویر رو دوباره بزن.
+                ✅ تصاویر رو میتونی ذخیره کنی (کلیک راست یا لمس طولانی).<br>
+                🔄 برای خروج از حالت تصویر، دکمه mh picture رو دوباره بزن.
             `;
             addMessage('bot', msg);
             document.getElementById('userInput').focus();
         }
 
         // ============================================================
-        //  ساخت تصویر با Pollinations.ai
+        //  ساخت ۳ تصویر با Pollinations.ai
         // ============================================================
-        function generateImage(prompt) {
+        function generateImages(prompt) {
             const cleanPrompt = prompt.replace(/\s+/g, '+').trim();
-            const imageUrl =
-                `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=1024&height=1024`;
-            return {
-                success: true,
-                url: imageUrl,
-                prompt: prompt,
-                source: 'Pollinations.ai'
-            };
+            const images = [];
+            for (let i = 0; i < 3; i++) {
+                const seed = Math.floor(Math.random() * 1000000);
+                const url =
+                    `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=1024&height=1024&seed=${seed}`;
+                images.push({ url: url, index: i + 1 });
+            }
+            return images;
         }
 
         // ============================================================
@@ -678,7 +675,38 @@
         }
 
         // ============================================================
-        //  دیتابیس اصلی (همه‌ی دیتاهای قبلی کامل + جدید)
+        //  تشخیص هوشمند موضوع
+        // ============================================================
+        function detectTopic(text) {
+            const lower = text.toLowerCase();
+
+            const topics = {
+                'سلام': ['سلام', 'درود', 'چطوری', 'خوبی', 'چه خبر', 'صبح بخیر', 'شب بخیر'],
+                'معرفی': ['کی هستی', 'تو کی هستی', 'چیستی', 'معرفی', 'درباره خودت'],
+                'سایت': ['سایت', 'وب سایت', 'پروژه', 'نمونه کار', 'سایتا'],
+                'طراحی': ['طراحی', 'گرافیک', 'کار هنری', 'طرح'],
+                'مهارت': ['مهارت', 'چه کارایی بلدی', 'تخصص', 'توانایی', 'چه کاری بلدی'],
+                'ریاضی': ['ریاضی', 'حالت ریاضی', 'sin', 'cos', 'tan', '√', '+', '-', '*', '/'],
+                'آب و هوا': ['آب و هوا', 'آبوهوا', 'هوا', 'weather', 'دما'],
+                'ترجمه': ['ترجمه', 'translate', 'به انگلیسی', 'به فارسی', 'به عربی', 'به ترکی'],
+                'تصویر': ['تصویر', 'mh picture', 'ساخت تصویر', 'عکس', 'آی'],
+                'ایده': ['ایده', 'نظر', 'پیشنهاد', 'چیکار', 'کار', 'پروژه', 'طرح', 'بسازم', 'شروع'],
+                'حالت روحی': ['ناراحت', 'غمگین', 'عصبانی', 'خوشحال', 'افسرده', 'دلم گرفته', 'حالم بده']
+            };
+
+            for (const [topic, keywords] of Object.entries(topics)) {
+                for (const keyword of keywords) {
+                    if (lower.includes(keyword)) {
+                        return topic;
+                    }
+                }
+            }
+
+            return 'مکالمه آزاد';
+        }
+
+        // ============================================================
+        //  دیتابیس اصلی (همه‌ی دیتاهای قبلی کامل)
         // ============================================================
         const data = {
             name: 'mohamad hossein snti',
@@ -746,7 +774,7 @@
                 'خوبم! ممنون که پرسیدی. تو چطوری؟', 'همیشه عالی! تو چطوری؟'
             ],
             'چطورید': ['ممنون! عالی‌ام. شما چطورید؟ 😊', 'خوبم! ممنون که پرسیدی. شما چطورید؟', 'عالی! انرژی مثبته. شما چطورید؟',
-                'خوبیم! شما چطورید？'
+                'خوبیم! شما چطورید؟'
             ],
             'حالت چطوره': ['ممنون! عالی‌ام. تو چطوری؟', 'خوبه! چه خبر از حالت؟', 'عالی! تو چطوری؟', 'خوبم! تو چی میگی؟'],
             'خوبی': ['عالی‌ام داداش! ممنون که پرسیدی 😊', 'خوبه! انرژی مثبت دارم. تو خوبی؟', 'خوبم! تو چی میگی؟',
@@ -755,7 +783,7 @@
                 'خبری نیست! تو چی داری میگی؟', 'همه چی عالیه! تو بگو چه خبر؟'
             ],
             'چه خبرا': ['خبری نیست داداش! تو بگو چه خبر؟ 😄', 'همین! منتظر سوالات جدیدم 😉', 'خبر خاصی نیست! تو بگو',
-                'همه چی آرومه! تو چی میگی？'
+                'همه چی آرومه! تو چی میگی؟'
             ],
             'خسته نباشی': ['خواهش می‌کنم داداش! 🙏', 'ممنون! انرژی گرفتم 🤩', 'خواهش می‌کنم! بازم بیا 😊',
                 'ممنون! خوشحالم که اینجایی', 'خواهش می‌کنم! هر وقت نیاز بود بگو'
@@ -1370,7 +1398,7 @@
         }
 
         // ============================================================
-        //  Levenshtein (تقویت‌شده)
+        //  Levenshtein
         // ============================================================
         function levenshteinDistance(a, b) {
             const matrix = [];
@@ -1397,7 +1425,7 @@
         }
 
         // ============================================================
-        //  موتور پاسخگویی نهایی (با تشخیص موضوع)
+        //  موتور پاسخگویی نهایی
         // ============================================================
         async function getReply(input) {
             const text = input.trim();
@@ -1423,15 +1451,28 @@
             // ===== ۲. تشخیص حالت تصویر =====
             if (imageMode) {
                 imageMode = false;
-                const result = generateImage(text);
+                const count = getImageCount();
+                if (count >= 10) {
+                    return '⚠️ شما امروز ۱۰ بار از mh picture استفاده کردید! لطفاً فردا دوباره تلاش کن. 🌙';
+                }
+                incrementImageCount();
+
+                const images = generateImages(text);
+                let imagesHtml = '';
+                images.forEach((img) => {
+                    imagesHtml += `
+                        <div class="image-card">
+                            <img src="${img.url}" alt="${text} - تصویر ${img.index}" loading="lazy" onerror="this.src='https://image.pollinations.ai/prompt/${encodeURIComponent(text)}?width=1024&height=1024&seed=${Math.random() * 1000000}'">
+                            <div class="img-label">📌 تصویر ${img.index} - "${text}"</div>
+                            <div class="img-brand">⚡ ساخته شده با Mh picture (limit)</div>
+                        </div>
+                    `;
+                });
+
                 const msg = `
                     🎨 <strong>mh picture (آزمایشی)</strong><br><br>
-                    <div class="image-card">
-                        <img src="${result.url}" alt="${text}" loading="lazy" onerror="this.src='https://image.pollinations.ai/prompt/${encodeURIComponent(text)}?width=1024&height=1024'">
-                        <div class="img-label">📌 توضیحات: "${text}"</div>
-                        <div class="img-brand">⚡ ساخته شده با ${result.source || 'mh picture'}</div>
-                    </div>
-                    💡 می‌تونی تصویر رو با کلیک راست یا لمس طولانی ذخیره کنی.<br>
+                    ${imagesHtml}
+                    💡 می‌تونی تصاویر رو با کلیک راست یا لمس طولانی ذخیره کنی.<br>
                     🔄 برای ساخت تصویر جدید، دکمه mh picture رو بزن.
                 `;
                 return msg;
@@ -1452,12 +1493,6 @@
 
             // ===== ۴. تشخیص موضوع =====
             const topic = detectTopic(text);
-
-            // ===== ۵. پاسخ بر اساس موضوع =====
-            if (topic === 'سایت' || topic === 'طراحی' || topic === 'مهارت' || topic === 'معرفی' || topic === 'سلام' || topic ===
-                'ایده' || topic === 'حالت روحی') {
-                // این موضوعات در دیکشنری موجود هستن
-            }
 
             const sentiment = analyzeSentiment(text);
             const mode = isMathMode(text);
@@ -1503,7 +1538,7 @@
                 return;
             }
 
-            // ===== ۶. ترجمه فعال =====
+            // ===== ۵. ترجمه فعال =====
             if (translateMode && selectedLang) {
                 const result = await translateText(text, selectedLang);
                 if (result.success) {
@@ -1529,7 +1564,7 @@
                 }
             }
 
-            // ===== ۷. تشخیص خودکار ترجمه =====
+            // ===== ۶. تشخیص خودکار ترجمه =====
             if (isTranslateRequest(text)) {
                 const info = extractTranslateInfo(text);
                 if (info.targetLang) {
@@ -1556,7 +1591,7 @@
                 }
             }
 
-            // ===== ۸. آب و هوا =====
+            // ===== ۷. آب و هوا =====
             if (lower.includes('آب و هوا') || lower.includes('آبوهوا') || lower.includes('هوای') || lower.includes('weather')) {
                 const cityMatch = text.match(/(?:آب و هوای|آبوهوای|هوای|آب و هوا|هوا|weather)\s*([^\s؟]+)/i);
                 if (cityMatch) {
@@ -1585,11 +1620,11 @@
             `;
             }
 
-            // ===== ۹. ریاضی =====
+            // ===== ۸. ریاضی =====
             const mathResult = solveMath(text);
             if (mathResult) return mathResult;
 
-            // ===== ۱۰. دیکشنری =====
+            // ===== ۹. دیکشنری =====
             const keys = Object.keys(questionBank);
             let foundKey = null;
             let foundScore = 0;
@@ -1679,14 +1714,14 @@
                 return reply;
             }
 
-            // ===== ۱۱. پاسخ پیش‌فرض با تشخیص موضوع =====
+            // ===== ۱۰. پاسخ پیش‌فرض =====
             const randomReplies = [
                 `🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             📝 "<strong>${text}</strong>" رو خوندم.<br>
             💭 احساس: ${sentiment}<br>
             🧠 موضوع تشخیص‌داده‌شده: <strong>${topic}</strong><br><br>
             می‌تونی از اینا بپرسی:<br>
-            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (آزمایشی)</span> • <span style="color:#f5b042;">🎨 mh picture</span><br><br>
+            <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (آزمایشی)</span> • <span style="color:#f5b042;">mh picture (آزمایشی)</span><br><br>
             <span style="color:#b0a99b;font-size:0.7rem;">💡 هر چی بپرسی، جواب میدم!</span>`,
 
                 `😊 <strong>MH Assistant</strong> اینجاست!<br><br>
@@ -1895,4 +1930,4 @@
     </script>
 
 </body>
-                        </html>
+</html>
