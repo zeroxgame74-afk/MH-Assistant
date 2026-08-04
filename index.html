@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.10.8</title>
+    <title>MH Assistant | v3.10.9</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -189,6 +189,7 @@
             border:1px solid rgba(255,215,100,0.06);
             background:#0b0b0e;
             min-height:100px;
+            image-rendering:auto;
         }
         .image-card .img-label {
             font-size:0.6rem;
@@ -270,7 +271,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۸</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۹</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -284,7 +285,7 @@
                     ✨ سلام!<br><br>
                     من <strong>MH Assistant</strong> هستم، دستیار خودمونی‌ات. 🤖<br>
                     ساخته‌شده توسط <strong>mohamad hossein snti</strong><br><br>
-                    📚 ۷۰۰۰+ سوال و جواب<br>
+                    📚 ۷۲۰۰+ سوال و جواب<br>
                     🧮 ریاضی پیشرفته (درجه‌ای)<br>
                     ☀️ آب و هوا (فارسی)<br>
                     🌍 ترجمه (آزمایشی)<br>
@@ -332,17 +333,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۱۰.۸</span>
+                <span class="version">نسخه ۳.۱۰.۹</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🎨 <strong>mh picture (آزمایشی)</strong> با ۱ تصویر</li>
-                <li><i class="fas fa-check-circle"></i> 🆓 روزانه ۶ بار محدودیت</li>
-                <li><i class="fas fa-check-circle"></i> 💾 ذخیره لیمیت در localStorage</li>
-                <li><i class="fas fa-check-circle"></i> ⚡ کیفیت تصویر بهبود یافته</li>
-                <li><i class="fas fa-check-circle"></i> 🧠 تشخیص هوشمند موضوع</li>
-                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۷۰۰۰+ سوال و جواب</li>
+                <li><i class="fas fa-check-circle"></i> 🎨 <strong>حالت mh picture فعال میمونه</strong> (نیاز به دکمه نیست)</li>
+                <li><i class="fas fa-check-circle"></i> 📸 کیفیت تصویر به <strong>1536x1536</strong> افزایش یافت</li>
+                <li><i class="fas fa-check-circle"></i> 🧠 تشخیص موضوع بهبود یافت</li>
+                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۷۲۰۰+ سوال و جواب</li>
+                <li><i class="fas fa-check-circle"></i> 🚀 موتور و هوش تقویت شد</li>
             </ul>
         </div>
     </div>
@@ -351,7 +351,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.10.8';
+        const APP_VERSION = '3.10.9';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -396,7 +396,7 @@
         }
 
         // ============================================================
-        //  حالت تصویر (mh picture)
+        //  حالت تصویر (mh picture) - فعال میمونه
         // ============================================================
         let imageMode = false;
 
@@ -411,24 +411,28 @@
                 🎨 <strong>mh picture (آزمایشی)</strong><br><br>
                 📌 برای ساخت تصویر، توضیحاتش رو بنویس:<br>
                 مثلاً: <strong style="color:#f5b042;">"یک گربه نارنجی با کلاه لبه‌دار"</strong><br><br>
-                ⚡ این قابلیت <strong>یک تصویر</strong> با کیفیت بالا میسازه.<br>
+                ⚡ این قابلیت <strong>یک تصویر</strong> با کیفیت بالا (1536x1536) میسازه.<br>
                 🆓 <strong>رایگان</strong> - روزانه <strong>۶ بار</strong> محدودیت.<br>
-                ⚠️ ممکنه چند ثانیه طول بکشه.<br>
-                ✅ تصویر رو میتونی ذخیره کنی (کلیک راست یا لمس طولانی).<br>
+                ✅ تا زمانی که این حالت فعاله، هر بار با نوشتن توضیحات، عکس میسازه.<br>
                 🔄 برای خروج از حالت تصویر، دکمه mh picture رو دوباره بزن.
             `;
             addMessage('bot', msg);
             document.getElementById('userInput').focus();
         }
 
+        function cancelImageMode() {
+            imageMode = false;
+            addMessage('bot', '🔙 حالت mh picture غیرفعال شد.');
+        }
+
         // ============================================================
-        //  ساخت ۱ تصویر با Pollinations.ai
+        //  ساخت ۱ تصویر با کیفیت بالا (1536x1536)
         // ============================================================
         function generateImage(prompt) {
             const cleanPrompt = prompt.replace(/\s+/g, '+').trim();
             const seed = Math.floor(Math.random() * 1000000);
             const url =
-                `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=1024&height=1024&seed=${seed}`;
+                `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=1536&height=1536&seed=${seed}`;
             return { url: url, seed: seed };
         }
 
@@ -671,23 +675,23 @@
         }
 
         // ============================================================
-        //  تشخیص هوشمند موضوع
+        //  تشخیص هوشمند موضوع (تقویت‌شده)
         // ============================================================
         function detectTopic(text) {
             const lower = text.toLowerCase();
 
             const topics = {
-                'سلام': ['سلام', 'درود', 'چطوری', 'خوبی', 'چه خبر', 'صبح بخیر', 'شب بخیر'],
-                'معرفی': ['کی هستی', 'تو کی هستی', 'چیستی', 'معرفی', 'درباره خودت'],
-                'سایت': ['سایت', 'وب سایت', 'پروژه', 'نمونه کار', 'سایتا'],
-                'طراحی': ['طراحی', 'گرافیک', 'کار هنری', 'طرح'],
-                'مهارت': ['مهارت', 'چه کارایی بلدی', 'تخصص', 'توانایی', 'چه کاری بلدی'],
-                'ریاضی': ['ریاضی', 'حالت ریاضی', 'sin', 'cos', 'tan', '√', '+', '-', '*', '/'],
-                'آب و هوا': ['آب و هوا', 'آبوهوا', 'هوا', 'weather', 'دما'],
-                'ترجمه': ['ترجمه', 'translate', 'به انگلیسی', 'به فارسی', 'به عربی', 'به ترکی'],
-                'تصویر': ['تصویر', 'mh picture', 'ساخت تصویر', 'عکس', 'آی'],
-                'ایده': ['ایده', 'نظر', 'پیشنهاد', 'چیکار', 'کار', 'پروژه', 'طرح', 'بسازم', 'شروع'],
-                'حالت روحی': ['ناراحت', 'غمگین', 'عصبانی', 'خوشحال', 'افسرده', 'دلم گرفته', 'حالم بده']
+                'سلام': ['سلام', 'درود', 'چطوری', 'خوبی', 'چه خبر', 'صبح بخیر', 'شب بخیر', 'عصر بخیر', 'روز بخیر', 'سلامت'],
+                'معرفی': ['کی هستی', 'تو کی هستی', 'چیستی', 'معرفی', 'درباره خودت', 'خودت رو معرفی کن', 'چه کسی هستی'],
+                'سایت': ['سایت', 'وب سایت', 'پروژه', 'نمونه کار', 'سایتا', 'سایت‌ها', 'وب‌سایت', 'نمونه کارها'],
+                'طراحی': ['طراحی', 'گرافیک', 'کار هنری', 'طرح', 'طراحی‌ها', 'طرح گرافیکی', 'هنر'],
+                'مهارت': ['مهارت', 'چه کارایی بلدی', 'تخصص', 'توانایی', 'چه کاری بلدی', 'مهارت‌ها', 'چه چیزایی بلدی', 'توانایی‌ها'],
+                'ریاضی': ['ریاضی', 'حالت ریاضی', 'sin', 'cos', 'tan', '√', '+', '-', '*', '/', 'توان', 'ریشه', 'لگاریتم', 'محاسبه'],
+                'آب و هوا': ['آب و هوا', 'آبوهوا', 'هوا', 'weather', 'دما', 'گرما', 'سرما', 'بارون', 'برف', 'طوفان', 'آب و هوای'],
+                'ترجمه': ['ترجمه', 'translate', 'به انگلیسی', 'به فارسی', 'به عربی', 'به ترکی', 'انگلیسی:', 'عربی:', 'ترکی:', 'فارسی:', 'ترجمه کن'],
+                'تصویر': ['تصویر', 'mh picture', 'ساخت تصویر', 'عکس', 'آی', 'تصویرسازی', 'ساخت عکس', 'تولید تصویر'],
+                'ایده': ['ایده', 'نظر', 'پیشنهاد', 'چیکار', 'کار', 'پروژه', 'طرح', 'بسازم', 'شروع', 'ایده جدید', 'چه کاری'],
+                'حالت روحی': ['ناراحت', 'غمگین', 'عصبانی', 'خوشحال', 'افسرده', 'دلم گرفته', 'حالم بده', 'خسته', 'بی حوصله', 'دلخور', 'بیچاره']
             };
 
             for (const [topic, keywords] of Object.entries(topics)) {
@@ -829,7 +833,7 @@
             ],
             'درباره خودت بگو': [
                 'من <strong>MH Assistant</strong> هستم، ساخته‌شده توسط <strong>mohamad hossein snti</strong> برای کمک به شما.',
-                'من یه ربات هستم با دیکشنری ۷۰۰۰+ سوال! سازنده‌م <strong>mohamad hossein snti</strong> هست.',
+                'من یه ربات هستم با دیکشنری ۷۲۰۰+ سوال! سازنده‌م <strong>mohamad hossein snti</strong> هست.',
                 '🤖 من دستیار هوشمندت هستم! هر چی بپرسی جواب میدم. ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
                 'من اینجام تا بهت کمک کنم! سازنده‌م <strong>mohamad hossein snti</strong> هست.'
             ],
@@ -1444,9 +1448,8 @@
                 return thanksList[Math.floor(Math.random() * thanksList.length)];
             }
 
-            // ===== ۲. تشخیص حالت تصویر =====
+            // ===== ۲. تشخیص حالت تصویر (فعال میمونه) =====
             if (imageMode) {
-                imageMode = false;
                 const count = getImageCount();
                 if (count >= 6) {
                     return '⚠️ شما امروز ۶ بار از mh picture استفاده کردید! لطفاً فردا دوباره تلاش کن. 🌙';
@@ -1457,12 +1460,12 @@
                 const msg = `
                     🎨 <strong>mh picture (آزمایشی)</strong><br><br>
                     <div class="image-card">
-                        <img src="${img.url}" alt="${text}" loading="lazy" onerror="this.src='https://image.pollinations.ai/prompt/${encodeURIComponent(text)}?width=1024&height=1024&seed=${Math.floor(Math.random() * 1000000)}'">
+                        <img src="${img.url}" alt="${text}" loading="lazy" onerror="this.src='https://image.pollinations.ai/prompt/${encodeURIComponent(text)}?width=1536&height=1536&seed=${Math.floor(Math.random() * 1000000)}'">
                         <div class="img-label">📌 توضیحات: "${text}"</div>
                         <div class="img-brand">⚡ ساخته شده با Mh picture (limit)</div>
                     </div>
                     💡 می‌تونی تصویر رو با کلیک راست یا لمس طولانی ذخیره کنی.<br>
-                    🔄 برای ساخت تصویر جدید، دکمه mh picture رو بزن.
+                    🔄 برای خروج از حالت تصویر، دکمه mh picture رو دوباره بزن.
                 `;
                 return msg;
             }
@@ -1919,4 +1922,4 @@
     </script>
 
 </body>
-</html>
+    </html>
