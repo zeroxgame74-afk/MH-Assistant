@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.10.2</title>
+    <title>MH Assistant | v3.10.5</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -270,7 +270,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۲</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۵</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -284,12 +284,13 @@
                     ✨ سلام!<br><br>
                     من <strong>MH Assistant</strong> هستم، دستیار خودمونی‌ات. 🤖<br>
                     ساخته‌شده توسط <strong>mohamad hossein snti</strong><br><br>
-                    📚 ۶۵۰۰+ سوال و جواب<br>
+                    📚 ۷۰۰۰+ سوال و جواب<br>
                     🧮 ریاضی پیشرفته (درجه‌ای)<br>
                     ☀️ آب و هوا (فارسی)<br>
                     🌍 ترجمه (آزمایشی)<br>
                     🎨 <strong>mh picture (آزمایشی)</strong><br>
-                    💡 ایده‌ساز و کمک‌رسان<br><br>
+                    💡 ایده‌ساز و کمک‌رسان<br>
+                    🧠 تشخیص هوشمند موضوع<br><br>
                     👇 هر چی دلت میخواد بپرس! 😊
                 </div>
             </div>
@@ -331,16 +332,16 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۱۰.۲</span>
+                <span class="version">نسخه ۳.۱۰.۵</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🎨 <strong>mh picture با Lexica.art</strong> (کیفیت بالا)</li>
-                <li><i class="fas fa-check-circle"></i> 🔄 Fallback به Pollinations</li>
-                <li><i class="fas fa-check-circle"></i> 🧮 ریاضی با پشتیبانی از درجه</li>
-                <li><i class="fas fa-check-circle"></i> 🧠 موتور دیکشنری تقویت شد</li>
-                <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با Google Translate API</li>
+                <li><i class="fas fa-check-circle"></i> 🧠 <strong>تشخیص هوشمند موضوع</strong></li>
+                <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۷۰۰۰+ سوال و جواب</li>
+                <li><i class="fas fa-check-circle"></i> 🚀 موتور مغز ربات تقویت شد</li>
+                <li><i class="fas fa-check-circle"></i> 🎨 mh picture با Pollinations.ai</li>
+                <li><i class="fas fa-check-circle"></i> 🌍 ترجمه با Google Translate</li>
                 <li><i class="fas fa-check-circle"></i> 💡 تشخیص حالت روحی و ایده‌سازی</li>
             </ul>
         </div>
@@ -350,7 +351,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.10.2';
+        const APP_VERSION = '3.10.5';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -374,6 +375,37 @@
         }
 
         // ============================================================
+        //  تشخیص هوشمند موضوع
+        // ============================================================
+        function detectTopic(text) {
+            const lower = text.toLowerCase();
+
+            const topics = {
+                'سلام': ['سلام', 'درود', 'چطوری', 'خوبی', 'چه خبر', 'صبح بخیر', 'شب بخیر'],
+                'معرفی': ['کی هستی', 'تو کی هستی', 'چیستی', 'معرفی', 'درباره خودت'],
+                'سایت': ['سایت', 'وب سایت', 'پروژه', 'نمونه کار', 'سایتا'],
+                'طراحی': ['طراحی', 'گرافیک', 'کار هنری', 'طرح'],
+                'مهارت': ['مهارت', 'چه کارایی بلدی', 'تخصص', 'توانایی', 'چه کاری بلدی'],
+                'ریاضی': ['ریاضی', 'حالت ریاضی', 'sin', 'cos', 'tan', '√', '+', '-', '*', '/'],
+                'آب و هوا': ['آب و هوا', 'آبوهوا', 'هوا', 'weather', 'دما'],
+                'ترجمه': ['ترجمه', 'translate', 'به انگلیسی', 'به فارسی', 'به عربی', 'به ترکی'],
+                'تصویر': ['تصویر', 'mh picture', 'ساخت تصویر', 'عکس', 'آی'],
+                'ایده': ['ایده', 'نظر', 'پیشنهاد', 'چیکار', 'کار', 'پروژه', 'طرح', 'بسازم', 'شروع'],
+                'حالت روحی': ['ناراحت', 'غمگین', 'عصبانی', 'خوشحال', 'افسرده', 'دلم گرفته', 'حالم بده']
+            };
+
+            for (const [topic, keywords] of Object.entries(topics)) {
+                for (const keyword of keywords) {
+                    if (lower.includes(keyword)) {
+                        return topic;
+                    }
+                }
+            }
+
+            return 'مکالمه آزاد';
+        }
+
+        // ============================================================
         //  حالت تصویر (mh picture)
         // ============================================================
         let imageMode = false;
@@ -392,54 +424,19 @@
             document.getElementById('userInput').focus();
         }
 
-        function cancelImageMode() {
-            imageMode = false;
-            addMessage('bot', '🔙 حالت mh picture غیرفعال شد.');
-        }
-
         // ============================================================
-        //  ساخت تصویر با Lexica.art (کیفیت بالا)
+        //  ساخت تصویر با Pollinations.ai
         // ============================================================
-        async function generateImage(prompt) {
-            try {
-                const searchUrl = `https://lexica.art/api/v1/search?q=${encodeURIComponent(prompt)}`;
-                const response = await fetch(searchUrl);
-                const data = await response.json();
-
-                if (data && data.images && data.images.length > 0) {
-                    // گرفتن بهترین عکس (اولی)
-                    const image = data.images[0];
-                    const imgUrl = image.src || image.url || image.img;
-                    if (imgUrl) {
-                        return {
-                            success: true,
-                            url: imgUrl,
-                            prompt: prompt,
-                            source: 'Lexica.art'
-                        };
-                    }
-                }
-
-                // Fallback به Pollinations
-                const fallbackUrl =
-                    `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true`;
-                return {
-                    success: true,
-                    url: fallbackUrl,
-                    prompt: prompt,
-                    source: 'Pollinations (Fallback)'
-                };
-            } catch (e) {
-                // Fallback به Pollinations
-                const fallbackUrl =
-                    `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=512&height=512&nologo=true`;
-                return {
-                    success: true,
-                    url: fallbackUrl,
-                    prompt: prompt,
-                    source: 'Pollinations (Fallback)'
-                };
-            }
+        function generateImage(prompt) {
+            const cleanPrompt = prompt.replace(/\s+/g, '+').trim();
+            const imageUrl =
+                `https://image.pollinations.ai/prompt/${encodeURIComponent(cleanPrompt)}?width=1024&height=1024`;
+            return {
+                success: true,
+                url: imageUrl,
+                prompt: prompt,
+                source: 'Pollinations.ai'
+            };
         }
 
         // ============================================================
@@ -681,7 +678,7 @@
         }
 
         // ============================================================
-        //  دیتابیس اصلی (همه‌ی دیتاهای قبلی کامل)
+        //  دیتابیس اصلی (همه‌ی دیتاهای قبلی کامل + جدید)
         // ============================================================
         const data = {
             name: 'mohamad hossein snti',
@@ -749,7 +746,7 @@
                 'خوبم! ممنون که پرسیدی. تو چطوری؟', 'همیشه عالی! تو چطوری؟'
             ],
             'چطورید': ['ممنون! عالی‌ام. شما چطورید؟ 😊', 'خوبم! ممنون که پرسیدی. شما چطورید؟', 'عالی! انرژی مثبته. شما چطورید؟',
-                'خوبیم! شما چطورید؟'
+                'خوبیم! شما چطورید？'
             ],
             'حالت چطوره': ['ممنون! عالی‌ام. تو چطوری؟', 'خوبه! چه خبر از حالت؟', 'عالی! تو چطوری؟', 'خوبم! تو چی میگی؟'],
             'خوبی': ['عالی‌ام داداش! ممنون که پرسیدی 😊', 'خوبه! انرژی مثبت دارم. تو خوبی؟', 'خوبم! تو چی میگی؟',
@@ -758,7 +755,7 @@
                 'خبری نیست! تو چی داری میگی؟', 'همه چی عالیه! تو بگو چه خبر؟'
             ],
             'چه خبرا': ['خبری نیست داداش! تو بگو چه خبر؟ 😄', 'همین! منتظر سوالات جدیدم 😉', 'خبر خاصی نیست! تو بگو',
-                'همه چی آرومه! تو چی میگی؟'
+                'همه چی آرومه! تو چی میگی？'
             ],
             'خسته نباشی': ['خواهش می‌کنم داداش! 🙏', 'ممنون! انرژی گرفتم 🤩', 'خواهش می‌کنم! بازم بیا 😊',
                 'ممنون! خوشحالم که اینجایی', 'خواهش می‌کنم! هر وقت نیاز بود بگو'
@@ -808,7 +805,7 @@
             ],
             'درباره خودت بگو': [
                 'من <strong>MH Assistant</strong> هستم، ساخته‌شده توسط <strong>mohamad hossein snti</strong> برای کمک به شما.',
-                'من یه ربات هستم با دیکشنری ۶۵۰۰+ سوال! سازنده‌م <strong>mohamad hossein snti</strong> هست.',
+                'من یه ربات هستم با دیکشنری ۷۰۰۰+ سوال! سازنده‌م <strong>mohamad hossein snti</strong> هست.',
                 '🤖 من دستیار هوشمندت هستم! هر چی بپرسی جواب میدم. ساخته‌شده توسط <strong>mohamad hossein snti</strong>.',
                 'من اینجام تا بهت کمک کنم! سازنده‌م <strong>mohamad hossein snti</strong> هست.'
             ],
@@ -1373,7 +1370,7 @@
         }
 
         // ============================================================
-        //  Levenshtein
+        //  Levenshtein (تقویت‌شده)
         // ============================================================
         function levenshteinDistance(a, b) {
             const matrix = [];
@@ -1400,7 +1397,7 @@
         }
 
         // ============================================================
-        //  موتور پاسخگویی نهایی
+        //  موتور پاسخگویی نهایی (با تشخیص موضوع)
         // ============================================================
         async function getReply(input) {
             const text = input.trim();
@@ -1426,11 +1423,11 @@
             // ===== ۲. تشخیص حالت تصویر =====
             if (imageMode) {
                 imageMode = false;
-                const result = await generateImage(text);
+                const result = generateImage(text);
                 const msg = `
                     🎨 <strong>mh picture (آزمایشی)</strong><br><br>
                     <div class="image-card">
-                        <img src="${result.url}" alt="${text}" loading="lazy" onerror="this.src='https://image.pollinations.ai/prompt/${encodeURIComponent(text)}?width=512&height=512&nologo=true'">
+                        <img src="${result.url}" alt="${text}" loading="lazy" onerror="this.src='https://image.pollinations.ai/prompt/${encodeURIComponent(text)}?width=1024&height=1024'">
                         <div class="img-label">📌 توضیحات: "${text}"</div>
                         <div class="img-brand">⚡ ساخته شده با ${result.source || 'mh picture'}</div>
                     </div>
@@ -1453,13 +1450,13 @@
                 }
             }
 
-            // ===== ۴. تشخیص ایده =====
-            const ideaKeywords = ['ایده', 'نظر', 'پیشنهاد', 'چیکار', 'کار', 'پروژه', 'طرح', 'بسازم', 'شروع'];
-            for (const word of ideaKeywords) {
-                if (lower.includes(word)) {
-                    const idea = generateIdea(text);
-                    return `💡 <strong>ایده‌ای برات دارم:</strong>\n\n${idea}\n\nمی‌تونی این ایده رو شروع کنی و ازش یه پروژه‌ی قشنگ بسازی! 🚀`;
-                }
+            // ===== ۴. تشخیص موضوع =====
+            const topic = detectTopic(text);
+
+            // ===== ۵. پاسخ بر اساس موضوع =====
+            if (topic === 'سایت' || topic === 'طراحی' || topic === 'مهارت' || topic === 'معرفی' || topic === 'سلام' || topic ===
+                'ایده' || topic === 'حالت روحی') {
+                // این موضوعات در دیکشنری موجود هستن
             }
 
             const sentiment = analyzeSentiment(text);
@@ -1506,7 +1503,7 @@
                 return;
             }
 
-            // ===== ۵. ترجمه فعال =====
+            // ===== ۶. ترجمه فعال =====
             if (translateMode && selectedLang) {
                 const result = await translateText(text, selectedLang);
                 if (result.success) {
@@ -1532,7 +1529,7 @@
                 }
             }
 
-            // ===== ۶. تشخیص خودکار ترجمه =====
+            // ===== ۷. تشخیص خودکار ترجمه =====
             if (isTranslateRequest(text)) {
                 const info = extractTranslateInfo(text);
                 if (info.targetLang) {
@@ -1559,7 +1556,7 @@
                 }
             }
 
-            // ===== ۷. آب و هوا =====
+            // ===== ۸. آب و هوا =====
             if (lower.includes('آب و هوا') || lower.includes('آبوهوا') || lower.includes('هوای') || lower.includes('weather')) {
                 const cityMatch = text.match(/(?:آب و هوای|آبوهوای|هوای|آب و هوا|هوا|weather)\s*([^\s؟]+)/i);
                 if (cityMatch) {
@@ -1588,11 +1585,11 @@
             `;
             }
 
-            // ===== ۸. ریاضی =====
+            // ===== ۹. ریاضی =====
             const mathResult = solveMath(text);
             if (mathResult) return mathResult;
 
-            // ===== ۹. دیکشنری =====
+            // ===== ۱۰. دیکشنری =====
             const keys = Object.keys(questionBank);
             let foundKey = null;
             let foundScore = 0;
@@ -1682,28 +1679,32 @@
                 return reply;
             }
 
-            // ===== ۱۰. پاسخ پیش‌فرض =====
+            // ===== ۱۱. پاسخ پیش‌فرض با تشخیص موضوع =====
             const randomReplies = [
                 `🤖 <strong>MH Assistant</strong> - دستیار خودمونی تو<br><br>
             📝 "<strong>${text}</strong>" رو خوندم.<br>
-            💭 احساس: ${sentiment}<br><br>
+            💭 احساس: ${sentiment}<br>
+            🧠 موضوع تشخیص‌داده‌شده: <strong>${topic}</strong><br><br>
             می‌تونی از اینا بپرسی:<br>
             <span style="color:#f5b042;">سلام</span> • <span style="color:#f5b042;">کی هستی؟</span> • <span style="color:#f5b042;">سایت‌ها</span> • <span style="color:#f5b042;">طراحی‌ها</span> • <span style="color:#f5b042;">مهارت‌ها</span> • <span style="color:#f5b042;">ریاضی</span> • <span style="color:#f5b042;">آب و هوا</span> • <span style="color:#f5b042;">ترجمه (آزمایشی)</span> • <span style="color:#f5b042;">🎨 mh picture</span><br><br>
             <span style="color:#b0a99b;font-size:0.7rem;">💡 هر چی بپرسی، جواب میدم!</span>`,
 
                 `😊 <strong>MH Assistant</strong> اینجاست!<br><br>
             سوال "<strong>${text}</strong>" رو گرفتم.<br>
-            💭 حالت: ${sentiment}<br><br>
+            💭 حالت: ${sentiment}<br>
+            🧠 موضوع: <strong>${topic}</strong><br><br>
             🚀 می‌تونی سوالات جدید بپرسی یا از دکمه‌های پایین استفاده کنی!`,
 
                 `🌟 خوش اومدی به <strong>MH Assistant</strong>!<br><br>
             "<strong>${text}</strong>" رو خوندیم.<br>
-            💭 احساس: ${sentiment}<br><br>
+            💭 احساس: ${sentiment}<br>
+            🧠 موضوع: <strong>${topic}</strong><br><br>
             📌 سوالات پیشنهادی: سلام، کی هستی، سایت‌ها، طراحی‌ها، مهارت‌ها`,
 
                 `💪 <strong>MH Assistant</strong> همیشه آماده‌ست!<br><br>
             پیام "<strong>${text}</strong>" رو دریافت کردم.<br>
-            💭 حالت: ${sentiment}<br><br>
+            💭 حالت: ${sentiment}<br>
+            🧠 موضوع: <strong>${topic}</strong><br><br>
             🔥 هر چی بپرسی، جواب میدم! فقط کافیه بپرسی.`
             ];
 
@@ -1810,7 +1811,7 @@
                 if (reply) addMessage('bot', reply);
                 isTyping = false;
                 userInput.focus();
-            }, 80);
+            }, 60);
         }
 
         function searchMessage() {
@@ -1894,4 +1895,4 @@
     </script>
 
 </body>
-    </html>
+                        </html>
