@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MH Assistant | v3.10.14</title>
+    <title>MH Assistant | v3.10.15</title>
 
-    <!-- فونت Yekan Bakh -->
+    <!-- فونت Vazirmatn (ضخیم‌تر و حرفه‌ای) -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- فونت Yekan Bakh به عنوان پشتیبان -->
     <link href="https://fonts.googleapis.com/css2?family=Yekan+Bakh:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -16,7 +18,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Yekan Bakh', 'Vazirmatn', sans-serif;
+            font-family: 'Vazirmatn', 'Yekan Bakh', sans-serif;
             padding: 8px;
         }
         .chat-container {
@@ -34,17 +36,17 @@
         .chat-avatar {
             width:44px; height:44px; background:linear-gradient(145deg,#f5b042,#d48f2b);
             border-radius:14px; display:flex; align-items:center; justify-content:center;
-            font-family:'Yekan Bakh',sans-serif; font-weight:900; font-size:1.3rem; color:#0b0b0e;
+            font-family:'Vazirmatn',sans-serif; font-weight:900; font-size:1.3rem; color:#0b0b0e;
             flex-shrink:0; animation:floatLogo 3s ease-in-out infinite;
         }
         @keyframes floatLogo { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-4px); } }
-        .chat-title { font-family:'Yekan Bakh',sans-serif; font-weight:800; font-size:1.1rem; color:#f5efe6; flex:1; }
+        .chat-title { font-family:'Vazirmatn',sans-serif; font-weight:800; font-size:1.1rem; color:#f5efe6; flex:1; }
         .chat-title .highlight { background:linear-gradient(145deg,#f5b042,#d48f2b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
         .chat-title small { display:block; font-weight:400; font-size:0.55rem; color:#b0a99b; -webkit-text-fill-color:#b0a99b; }
         .chat-status {
             background:rgba(245,176,66,0.1); border:1px solid rgba(245,176,66,0.1);
             border-radius:40px; padding:2px 10px; font-size:0.5rem; color:#f5b042;
-            font-family:'Yekan Bakh',sans-serif; font-weight:700; display:flex; align-items:center; gap:4px; flex-shrink:0;
+            font-family:'Vazirmatn',sans-serif; font-weight:700; display:flex; align-items:center; gap:4px; flex-shrink:0;
         }
         .chat-status i { font-size:0.4rem; color:#4caf50; animation:pulseDot 1.5s ease-in-out infinite; }
         @keyframes pulseDot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.2; transform:scale(0.6); } }
@@ -60,14 +62,14 @@
             width:28px; height:28px; border-radius:10px; display:flex; align-items:center; justify-content:center;
             font-size:0.7rem; flex-shrink:0; background:rgba(255,255,255,0.04);
             border:1px solid rgba(255,215,100,0.06); color:#b0a99b;
-            font-family:'Yekan Bakh',sans-serif; font-weight:400;
+            font-family:'Vazirmatn',sans-serif; font-weight:400;
         }
         .message.bot .avatar { background:rgba(245,176,66,0.12); color:#f5b042; border-color:rgba(245,176,66,0.1); }
         .message.user .avatar { background:rgba(255,255,255,0.06); color:#eaeef2; }
         .message .bubble {
             max-width:85%; padding:6px 12px; border-radius:14px; font-size:0.8rem; line-height:1.9;
             word-break:break-word; background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.06);
-            color:#d6d0c4; font-family:'Yekan Bakh',sans-serif; font-weight:400;
+            color:#d6d0c4; font-family:'Vazirmatn',sans-serif; font-weight:400;
         }
         .message.bot .bubble { background:rgba(255,215,100,0.04); border-color:rgba(255,215,100,0.08); border-top-right-radius:4px; }
         .message.user .bubble { background:rgba(245,176,66,0.08); border-color:rgba(245,176,66,0.12); border-top-left-radius:4px; color:#f5efe6; }
@@ -81,9 +83,9 @@
         }
         .site-card .site-img { width:34px; height:34px; border-radius:6px; object-fit:cover; background:#0b0b0e; flex-shrink:0; }
         .site-card .site-info { flex:1; min-width:50px; }
-        .site-card .site-info .site-name { font-family:'Yekan Bakh',sans-serif; font-weight:700; color:#f5efe6; font-size:0.75rem; }
-        .site-card .site-info .site-desc { font-size:0.6rem; color:#b0a99b; font-weight:400; font-family:'Yekan Bakh',sans-serif; }
-        .site-card .site-link { color:#f5b042; text-decoration:none; font-size:0.55rem; font-weight:600; padding:2px 10px; border:1px solid rgba(245,176,66,0.15); border-radius:40px; transition:0.3s; display:inline-flex; align-items:center; gap:3px; flex-shrink:0; font-family:'Yekan Bakh',sans-serif; }
+        .site-card .site-info .site-name { font-family:'Vazirmatn',sans-serif; font-weight:700; color:#f5efe6; font-size:0.75rem; }
+        .site-card .site-info .site-desc { font-size:0.6rem; color:#b0a99b; font-weight:400; font-family:'Vazirmatn',sans-serif; }
+        .site-card .site-link { color:#f5b042; text-decoration:none; font-size:0.55rem; font-weight:600; padding:2px 10px; border:1px solid rgba(245,176,66,0.15); border-radius:40px; transition:0.3s; display:inline-flex; align-items:center; gap:3px; flex-shrink:0; font-family:'Vazirmatn',sans-serif; }
         .site-card .site-link:hover { background:rgba(245,176,66,0.08); border-color:#f5b042; }
 
         .design-mini {
@@ -92,17 +94,17 @@
             display:flex; align-items:center; gap:6px; flex-wrap:wrap;
         }
         .design-mini .d-icon { font-size:0.9rem; color:#f5b042; }
-        .design-mini .d-name { font-family:'Yekan Bakh',sans-serif; font-weight:700; color:#f5efe6; font-size:0.7rem; }
-        .design-mini .d-desc { font-size:0.55rem; color:#b0a99b; font-weight:400; font-family:'Yekan Bakh',sans-serif; }
+        .design-mini .d-name { font-family:'Vazirmatn',sans-serif; font-weight:700; color:#f5efe6; font-size:0.7rem; }
+        .design-mini .d-desc { font-size:0.55rem; color:#b0a99b; font-weight:400; font-family:'Vazirmatn',sans-serif; }
         .design-mini .d-link {
             color:#f5b042; text-decoration:none; font-size:0.55rem; font-weight:600;
             padding:2px 8px; border:1px solid rgba(245,176,66,0.15); border-radius:40px;
-            transition:0.3s; display:inline-flex; align-items:center; gap:3px; font-family:'Yekan Bakh',sans-serif;
+            transition:0.3s; display:inline-flex; align-items:center; gap:3px; font-family:'Vazirmatn',sans-serif;
         }
         .design-mini .d-link:hover { background:rgba(245,176,66,0.08); border-color:#f5b042; }
 
         .social-links { display:flex; gap:4px; margin-top:4px; flex-wrap:wrap; }
-        .social-links a { color:#f5b042; text-decoration:none; background:rgba(255,215,100,0.05); padding:2px 10px; border-radius:40px; border:1px solid rgba(255,215,100,0.1); font-size:0.6rem; display:inline-flex; align-items:center; gap:3px; font-family:'Yekan Bakh',sans-serif; font-weight:400; }
+        .social-links a { color:#f5b042; text-decoration:none; background:rgba(255,215,100,0.05); padding:2px 10px; border-radius:40px; border:1px solid rgba(255,215,100,0.1); font-size:0.6rem; display:inline-flex; align-items:center; gap:3px; font-family:'Vazirmatn',sans-serif; font-weight:400; }
         .social-links a:hover { background:rgba(245,176,66,0.1); }
 
         .quick-replies {
@@ -111,7 +113,7 @@
         .quick-replies button {
             background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,100,0.08);
             color:#b0a99b; padding:3px 10px; border-radius:40px;
-            font-family:'Yekan Bakh',sans-serif; font-size:0.6rem; font-weight:600;
+            font-family:'Vazirmatn',sans-serif; font-size:0.6rem; font-weight:600;
             cursor:pointer; transition:0.3s; display:inline-flex; align-items:center; gap:4px; white-space:nowrap;
         }
         .quick-replies button i { color:#f5b042; font-size:0.55rem; }
@@ -141,7 +143,7 @@
             background: transparent;
             border: none;
             color: #f5efe6;
-            font-family: 'Yekan Bakh', 'Vazirmatn', sans-serif;
+            font-family: 'Vazirmatn', 'Yekan Bakh', sans-serif;
             font-weight: 400;
             font-size: 0.85rem;
             padding: 10px 0;
@@ -168,7 +170,7 @@
             justify-content: center;
             flex-shrink: 0;
             box-shadow: 0 4px 12px rgba(245, 176, 66, 0.2);
-            font-family: 'Yekan Bakh', sans-serif;
+            font-family: 'Vazirmatn', sans-serif;
         }
         .input-area .btn-send:hover {
             transform: scale(1.06) translateY(-2px);
@@ -202,7 +204,7 @@
             transform: scale(0.93);
         }
 
-        .typing-indicator { display:none; padding:3px 10px; background:rgba(255,215,100,0.04); border:1px solid rgba(255,215,100,0.06); border-radius:40px; color:#b0a99b; font-size:0.6rem; align-self:flex-start; margin-bottom:3px; flex-shrink:0; font-family:'Yekan Bakh',sans-serif; font-weight:400; }
+        .typing-indicator { display:none; padding:3px 10px; background:rgba(255,215,100,0.04); border:1px solid rgba(255,215,100,0.06); border-radius:40px; color:#b0a99b; font-size:0.6rem; align-self:flex-start; margin-bottom:3px; flex-shrink:0; font-family:'Vazirmatn',sans-serif; font-weight:400; }
         .typing-indicator i { color:#f5b042; animation:pulseIcon 1s ease-in-out infinite; }
         @keyframes pulseIcon { 0%,100% { transform:scale(1); } 50% { transform:scale(1.2); } }
         .typing-indicator.show { display:inline-flex; align-items:center; gap:4px; }
@@ -217,7 +219,7 @@
             font-size:0.8rem;
             font-weight:400;
             word-break:break-word;
-            font-family:'Yekan Bakh',sans-serif;
+            font-family:'Vazirmatn',sans-serif;
         }
         .translation-box .trans-text {
             direction:rtl;
@@ -234,7 +236,7 @@
             font-weight:600;
             cursor:pointer;
             transition:0.3s;
-            font-family:'Yekan Bakh',sans-serif;
+            font-family:'Vazirmatn',sans-serif;
             margin-top:6px;
         }
         .copy-trans-btn:hover { background:rgba(245,176,66,0.2); }
@@ -260,14 +262,14 @@
             font-size:0.6rem;
             color:#b0a99b;
             margin-top:4px;
-            font-family:'Yekan Bakh',sans-serif;
+            font-family:'Vazirmatn',sans-serif;
         }
         .image-card .img-brand {
             font-size:0.55rem;
             color:#f5b042;
             margin-top:2px;
             font-weight:600;
-            font-family:'Yekan Bakh',sans-serif;
+            font-family:'Vazirmatn',sans-serif;
         }
 
         .notification {
@@ -284,13 +286,13 @@
         .notification .notif-header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
         .notification .notif-header .icon-box { width:40px; height:40px; background:rgba(245,176,66,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(245,176,66,0.08); }
         .notification .notif-header .icon-box i { font-size:1.3rem; color:#f5b042; }
-        .notification .notif-header .title-group h3 { font-family:'Yekan Bakh',sans-serif; font-weight:700; font-size:0.95rem; color:#f5efe6; margin:0; }
-        .notification .notif-header .title-group .version { font-size:0.55rem; color:#f5b042; background:rgba(245,176,66,0.08); padding:0px 8px; border-radius:40px; display:inline-block; font-family:'Yekan Bakh',sans-serif; font-weight:400; }
-        .notification .notif-body { font-family:'Yekan Bakh',sans-serif; font-weight:400; font-size:0.75rem; color:#c0b9ad; line-height:1.9; padding-right:4px; }
+        .notification .notif-header .title-group h3 { font-family:'Vazirmatn',sans-serif; font-weight:700; font-size:0.95rem; color:#f5efe6; margin:0; }
+        .notification .notif-header .title-group .version { font-size:0.55rem; color:#f5b042; background:rgba(245,176,66,0.08); padding:0px 8px; border-radius:40px; display:inline-block; font-family:'Vazirmatn',sans-serif; font-weight:400; }
+        .notification .notif-body { font-family:'Vazirmatn',sans-serif; font-weight:400; font-size:0.75rem; color:#c0b9ad; line-height:1.9; padding-right:4px; }
         .notification .notif-body ul { list-style:none; padding-right:6px; margin:4px 0; }
         .notification .notif-body ul li { padding-right:18px; position:relative; font-size:0.7rem; font-weight:400; }
         .notification .notif-body ul li i { position:absolute; right:0; top:4px; color:#f5b042; font-size:0.6rem; }
-        .notification .notif-close { position:absolute; top:10px; left:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#6f6a60; width:28px; height:28px; border-radius:50%; font-size:0.8rem; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; font-family:'Yekan Bakh',sans-serif; font-weight:400; }
+        .notification .notif-close { position:absolute; top:10px; left:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#6f6a60; width:28px; height:28px; border-radius:50%; font-size:0.8rem; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; font-family:'Vazirmatn',sans-serif; font-weight:400; }
         .notification .notif-close:hover { color:#f5efe6; background:rgba(255,255,255,0.06); transform:rotate(90deg); }
 
         .lang-options {
@@ -307,7 +309,7 @@
             border:1px solid rgba(255,215,100,0.08);
             border-radius:8px;
             color:#b0a99b;
-            font-family:'Yekan Bakh',sans-serif;
+            font-family:'Vazirmatn',sans-serif;
             font-size:0.7rem;
             font-weight:600;
             cursor:pointer;
@@ -339,7 +341,7 @@
             <div class="chat-avatar">M</div>
             <div class="chat-title">
                 <span class="highlight">MH Assistant</span>
-                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۱۴</small>
+                <small><i class="fas fa-robot"></i> نسخه ۳.۱۰.۱۵</small>
             </div>
             <div class="chat-status">
                 <i class="fas fa-circle"></i> آنلاین
@@ -401,13 +403,13 @@
             </div>
             <div class="title-group">
                 <h3>🎉 آپدیت جدید</h3>
-                <span class="version">نسخه ۳.۱۰.۱۴</span>
+                <span class="version">نسخه ۳.۱۰.۱۵</span>
             </div>
         </div>
         <div class="notif-body">
             <ul>
-                <li><i class="fas fa-check-circle"></i> 🖌️ <strong>فونت Yekan Bakh</strong> اضافه شد</li>
-                <li><i class="fas fa-check-circle"></i> ✨ باکس پیام شیشه‌ای خوشگل‌تر</li>
+                <li><i class="fas fa-check-circle"></i> 🖌️ <strong>فونت Vazirmatn</strong> (ضخیم‌تر و حرفه‌ای)</li>
+                <li><i class="fas fa-check-circle"></i> ✨ باکس پیام شیشه‌ای خوشگل</li>
                 <li><i class="fas fa-check-circle"></i> 📚 دیکشنری ۱۰۰۰۰+</li>
                 <li><i class="fas fa-check-circle"></i> 🚀 موتور پاسخگویی تقویت شد</li>
                 <li><i class="fas fa-check-circle"></i> 🎨 mh picture با کیفیت بالا</li>
@@ -419,7 +421,7 @@
         // ============================================================
         //  نوتیفیکیشن
         // ============================================================
-        const APP_VERSION = '3.10.14';
+        const APP_VERSION = '3.10.15';
         const notif = document.getElementById('updateNotif');
         let notifTimer;
 
@@ -688,7 +690,7 @@
                     position:fixed;bottom:80px;left:50%;transform:translateX(-50%);
                     background:rgba(76,175,80,0.15);border:1px solid rgba(76,175,80,0.2);
                     color:#4caf50;padding:8px 20px;border-radius:40px;
-                    font-family:'Yekan Bakh',sans-serif;font-size:0.7rem;
+                    font-family:'Vazirmatn',sans-serif;font-size:0.7rem;
                     z-index:9999;animation:slideUp 0.3s ease;
                     backdrop-filter:blur(12px);
                 `;
@@ -2272,4 +2274,4 @@
     </script>
 
 </body>
-</html>
+    </html>
