@@ -271,17 +271,33 @@
             font-family:'Vazirmatn',sans-serif;
         }
 
+        /* ===== نوتیفیکیشن اصلاح شده ===== */
         .notification {
-            position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-            background:rgba(255,255,255,0.05); backdrop-filter:blur(24px);
-            border:1px solid rgba(255,215,100,0.12); border-radius:20px;
-            padding:16px 20px; max-width:400px; width:92%;
-            box-shadow:0 24px 64px -16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
-            z-index:9999; animation:slideUp 0.6s cubic-bezier(0.22,1,0.36,1);
-            transition:0.5s cubic-bezier(0.22,1,0.36,1);
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,215,100,0.12);
+            border-radius: 20px;
+            padding: 16px 20px;
+            max-width: 400px;
+            width: 92%;
+            box-shadow: 0 24px 64px -16px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+            z-index: 9999;
+            animation: slideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        .notification.hide { opacity:0; transform:translateX(-50%) translateY(40px) scale(0.92); pointer-events:none; }
-        @keyframes slideUp { 0% { opacity:0; transform:translateX(-50%) translateY(40px) scale(0.92); } 100% { opacity:1; transform:translateX(-50%) translateY(0) scale(1); } }
+        .notification.hide {
+            opacity: 0;
+            transform: translateX(-50%) translateY(30px) scale(0.95);
+            pointer-events: none;
+        }
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateX(-50%) translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
         .notification .notif-header { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
         .notification .notif-header .icon-box { width:40px; height:40px; background:rgba(245,176,66,0.12); border-radius:12px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(245,176,66,0.08); }
         .notification .notif-header .icon-box i { font-size:1.3rem; color:#f5b042; }
@@ -291,7 +307,22 @@
         .notification .notif-body ul { list-style:none; padding-right:6px; margin:4px 0; }
         .notification .notif-body ul li { padding-right:18px; position:relative; font-size:0.7rem; font-weight:400; }
         .notification .notif-body ul li i { position:absolute; right:0; top:4px; color:#f5b042; font-size:0.6rem; }
-        .notification .notif-close { position:absolute; top:10px; left:14px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); color:#6f6a60; width:28px; height:28px; border-radius:50%; font-size:0.8rem; cursor:pointer; transition:0.3s; display:flex; align-items:center; justify-content:center; font-family:'Vazirmatn',sans-serif; font-weight:400; }
+        .notification .notif-close {
+            position:absolute; top:10px; left:14px;
+            background:rgba(255,255,255,0.04);
+            border:1px solid rgba(255,255,255,0.04);
+            color:#6f6a60;
+            width:28px; height:28px;
+            border-radius:50%;
+            font-size:0.8rem;
+            cursor:pointer;
+            transition:0.3s;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-family:'Vazirmatn',sans-serif;
+            font-weight:400;
+        }
         .notification .notif-close:hover { color:#f5efe6; background:rgba(255,255,255,0.06); transform:rotate(90deg); }
 
         .lang-options {
@@ -395,6 +426,7 @@
 
     </div>
 
+    <!-- ===== نوتیفیکیشن اصلاح شده ===== -->
     <div class="notification" id="updateNotif">
         <button class="notif-close" onclick="closeNotification()"><i class="fas fa-times"></i></button>
         <div class="notif-header">
@@ -420,26 +452,38 @@
 
     <script>
         // ============================================================
-        //  نوتیفیکیشن
+        //  نوتیفیکیشن (فقط همین بخش اصلاح شده)
         // ============================================================
         const APP_VERSION = '3.10.17';
         const notif = document.getElementById('updateNotif');
-        let notifTimer;
+        let notifTimer = null;
+
+        function showNotification() {
+            notif.classList.remove('hide');
+            notif.style.display = 'block';
+            
+            // تایمر 5 ثانیه برای بسته شدن خودکار
+            if (notifTimer) clearTimeout(notifTimer);
+            notifTimer = setTimeout(() => {
+                closeNotification();
+            }, 5000);
+        }
 
         function closeNotification() {
             notif.classList.add('hide');
-            clearTimeout(notifTimer);
+            if (notifTimer) {
+                clearTimeout(notifTimer);
+                notifTimer = null;
+            }
             setTimeout(() => {
                 notif.style.display = 'none';
-            }, 8000);
+            }, 500);
         }
 
+        // نمایش نوتیفیکیشن فقط اگر نسخه جدید باشه
         const hasSeen = localStorage.getItem('mhs_notification_version');
         if (hasSeen !== APP_VERSION) {
-            notif.style.display = 'block';
-            notifTimer = setTimeout(() => {
-                closeNotification();
-            }, 8000);
+            showNotification();
             localStorage.setItem('mhs_notification_version', APP_VERSION);
         } else {
             notif.style.display = 'none';
@@ -451,9 +495,7 @@
         function isSwearWord(text) {
             const lower = text.toLowerCase();
 
-            // لیست فحش‌ها و کلمات رکیک (فارسی + انگلیسی)
             const swearWords = [
-                // فارسی
                 'کونی', 'کون', 'گایید', 'گاییده', 'گاییدن', 'کوس', 'کص', 'کُس', 'کِس', 'کونده', 'کونی', 'مادر جنده', 'مادر جنده',
                 'جنده', 'جندره', 'جندره', 'خارکصه', 'خارکصه', 'خار کصه', 'خار کصه', 'پدر سگ', 'پدرسگ', 'پدر سگ',
                 'بی ناموس', 'بی‌ناموس', 'بی حیا', 'بی‌حیا', 'بی شرف', 'بی‌شرف', 'حرومزاده', 'حرامزاده',
@@ -462,11 +504,9 @@
                 'گه خور', 'گه خورد', 'گوشت', 'گوشت خور', 'گوساله',
                 'کیری', 'کیر', 'کیرم تو', 'کیرم توی', 'کیر تو',
                 'کص ننت', 'کص ننت', 'کون ننت', 'کون ننت',
-                // انگلیسی
                 'fuck', 'fucking', 'fucker', 'motherfucker', 'shit', 'bullshit', 'bitch', 'asshole',
                 'dick', 'pussy', 'cunt', 'bastard', 'whore', 'slut',
                 'damn', 'goddamn', 'hell', 'suck', 'sucker',
-                // ترکیبی
                 'fuck you', 'fuck off', 'go to hell', 'kiss my ass', 'suck my dick'
             ];
 
@@ -478,9 +518,6 @@
             return false;
         }
 
-        // ============================================================
-        //  پاسخ‌های محترمانه به فحش
-        // ============================================================
         function getSwearResponse() {
             const responses = [
                 '🤨 ادب رو رعایت کن داداش! اینجا جای بی‌احترامی نیست. بیا با هم حرف بزنیم مثل آدمای بزرگ. 😊',
@@ -1032,10 +1069,7 @@
             'نگرانم یه راهکار بده': [
                 '😌 نگرانی طبیعی‌ست، ولی نذار کنترل‌ت کنه. نفس عمیق بکش، به چیزای خوب فکر کن و اگه شدید بود با یه دوست حرف بزن.',
                 '🧘 مدیتیشن و ورزش نگرانی رو کاهش میده. سعی کن روی چیزایی که کنترل داری تمرکز کنی.'
-            ],
-
-            // ===== پاسخ به فحش (در تابع جداگانه مدیریت میشه) =====
-            // این بخش توی تابع isSwearWord و getSwearResponse مدیریت میشه
+            ]
         };
 
         // ============================================================
